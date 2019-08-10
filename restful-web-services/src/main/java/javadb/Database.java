@@ -5,13 +5,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class Login {
+public class Database {
 
-	private Statement statement;
-	private ResultSet data;
+	private static Statement statement;
+	private static ResultSet data;
 	private Connection conn;
 	
-	public Login() {
+	public Database() {
 		try {				
 			String driver = "com.mysql.jdbc.Driver";
 			String url = "jdbc:mysql://35.189.1.213:3306/sept";
@@ -28,6 +28,9 @@ public class Login {
 			}
 		}
 
+//login details
+
+	//user ID check
 	public boolean checkId(String id) {
 		try {
 			data = statement.executeQuery("select * from login");
@@ -43,6 +46,7 @@ public class Login {
 		return false;
 	}
 
+	//password check
 	public boolean checkPassword(String id, String password) {
 		try {
 			data = statement
@@ -57,4 +61,21 @@ public class Login {
 		}
 		return false;
 	}
+//end login details
+
+//browse marketplace
+	//main place display of for sale items, checks for current for sale items in db
+	public static void check_for_sale() {
+		try {
+			data = statement.executeQuery("select * from sale where Status= 'a'");
+			while (data.next()) {
+				System.out.println(data.getString(1) + " " + data.getString(2) + " " + data.getString(3) + " " + data.getString(4));
+			}
+		} 
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+
 }
