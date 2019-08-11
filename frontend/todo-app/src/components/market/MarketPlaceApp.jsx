@@ -3,17 +3,18 @@ import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
 
 import HeaderComponent from '../todo/HeaderComponent.jsx'
 import FooterComponent from '../todo/FooterComponent.jsx'
+import MarketComponent from './MarketComponent'
 
 
-class TodoApp extends Component {
+class MarketPlaceApp extends Component {
     render() {
         return (
-            <div className="TodoApp">
+            <div className="MarketPlaceApp">
                 <Router>
                     <>
                         <HeaderComponent/>
                         <Switch>
-                            hello
+                           <Route path = "/browse" exact component = {MarketComponent}/>
                         </Switch>
                         <FooterComponent/>
                     </>
@@ -25,4 +26,4 @@ class TodoApp extends Component {
     }
 }
 
-export default TodoApp
+export default MarketPlaceApp
