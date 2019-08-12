@@ -4,6 +4,7 @@ import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
 import HeaderComponent from '../todo/HeaderComponent.jsx'
 import FooterComponent from '../todo/FooterComponent.jsx'
 import MarketComponent from './MarketComponent'
+import PostComponent from './PostComponent.jsx';
 
 
 class MarketPlaceApp extends Component {

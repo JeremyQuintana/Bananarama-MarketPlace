@@ -69,14 +69,21 @@
 
 .postPrice{
   font-weight: bolder;
-  float:right;
+  
 }
 
+span.postPrice{
+  float: right;
+}
 .postPrice::after{
   clear:both;
 }
 
 .marketTitle{
   text-align:center;
+}
+
+div.postPrice {
+  text-align: right;
 }
 
