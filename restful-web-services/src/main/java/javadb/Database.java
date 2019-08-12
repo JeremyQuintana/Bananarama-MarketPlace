@@ -25,8 +25,8 @@ public class Database {
 		
 		catch (Exception e) {
 			System.out.println(e);
-			}
 		}
+	}
 
 //login details
 
