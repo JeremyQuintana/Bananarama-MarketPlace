@@ -39,3 +39,36 @@
     transform: rotate(360deg);
   }
 }
+
+.container img {
+  height: 50px;
+}
+
+.posting{
+  border: 1px solid black;
+}
+
+.postTitle{
+  font-size: 150%;
+}
+
+.postDescription{
+
+}
+
+.postSeller{
+  font-style: italic;
+}
+
+.postPrice{
+  font-weight: bolder;
+  float:right;
+}
+
+.postPrice::after{
+  clear:both;
+}
+
+.marketTitle{
+  text-align:center;
+}

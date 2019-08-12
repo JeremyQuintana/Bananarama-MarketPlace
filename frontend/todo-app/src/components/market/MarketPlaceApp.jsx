@@ -14,7 +14,7 @@ class MarketPlaceApp extends Component {
                     <>
                         <HeaderComponent/>
                         <Switch>
-                           <Route path = "/browse" exact component = {MarketComponent}/>
+                           <Route path = "/" exact component = {MarketComponent}/>
                         </Switch>
                         <FooterComponent/>
                     </>
