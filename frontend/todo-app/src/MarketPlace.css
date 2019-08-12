@@ -42,10 +42,17 @@
 
 .container img {
   height: 50px;
+  border: 1px solid black;
+  margin: 10px 10px 10px 0px;
 }
 
 .posting{
   border: 1px solid black;
+}
+
+.posting:hover{
+  cursor:pointer;
+  background: rgba(250, 200, 200, 10);
 }
 
 .postTitle{
@@ -72,3 +79,4 @@
 .marketTitle{
   text-align:center;
 }
+

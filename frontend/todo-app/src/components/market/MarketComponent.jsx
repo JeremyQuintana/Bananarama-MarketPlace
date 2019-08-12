@@ -1,4 +1,6 @@
 import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
+import { withRouter } from "react-router-dom";
 
 var allPostings = [
     ["1", "Item 1 Title", "Item 1 Description", "Item 1 Seller", "$Item 1 Price"],
@@ -13,7 +15,7 @@ class MarketComponent extends Component {
             <div>
                 <h1 className="marketTitle">Browse Marketplace</h1>
                 <div className="container">
-                    <Items></Items>
+                    <Items history={this.props.history}></Items>
                 </div>
             </div>
         );
@@ -28,9 +30,9 @@ class Items extends Component {
     render() {
         var retVal = [];
         for (var r = 0; r < allPostings.length; r++) {
+            let postId = allPostings[r][0];
             retVal.push(
-
-                <div className="posting container" onClick={this.routeChange(allPostings[r][0])}>
+                <div className="posting container" onClick={() => this.routeChange(postId)}>
                     <span className="postTitle"><img src={'post_images/' + allPostings[r][0] + '.jpg'}></img>{allPostings[r][1]}</span> <br></br>
                     <span className="postDescription">{allPostings[r][2]}</span> <br></br>
                     <span className="postPrice">{allPostings[r][4]}</span> <br></br>
@@ -38,8 +40,9 @@ class Items extends Component {
 
                     <br></br>
                 </div>
+               
 
-            )
+            );
         }
 
 
@@ -47,10 +50,10 @@ class Items extends Component {
     }
 
     routeChange(x) {
-        // reroute something
+        this.props.history.push("/posts/" + x);
     }
 }
 
 
 
-export default MarketComponent
+export default withRouter(MarketComponent)
