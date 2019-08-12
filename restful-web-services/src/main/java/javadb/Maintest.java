@@ -37,7 +37,6 @@ public class Maintest {
 			
 			if (db.checkPassword(id, password) == true) {
 				System.out.println("USER PASSWORD VALID");
-				Database.check_for_sale();
 				looppassword = false;
 				
 			} 
@@ -45,5 +44,9 @@ public class Maintest {
 				System.out.println("USER PASSWORD INVALID");
 			}
 		}
+		Database.check_for_sale();
+		System.out.println("history of sales for id");
+		Database.sale_history(id);
+		Database.sell_item(id, "table", "Large, round table", 12);
 	}
 }

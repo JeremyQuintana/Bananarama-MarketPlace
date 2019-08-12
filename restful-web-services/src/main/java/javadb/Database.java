@@ -10,6 +10,8 @@ public class Database {
 	private static Statement statement;
 	private static ResultSet data;
 	private Connection conn;
+	String id;
+	String password;
 	
 	public Database() {
 		try {				
@@ -76,6 +78,30 @@ public class Database {
 			e.printStackTrace();
 		}
 	}
+ 
+	//Show history of sale items for user
+	public static void sale_history(String id) {
+		try {
+			data = statement.executeQuery("select * from sale where ID='" + id + "'");
+			
+			while (data.next()) {
+				System.out.println(data.getString(1) + " " + data.getString(2) + " " + data.getString(3) + " " + data.getString(4));
+			}
+		} 
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 
+//Post sell items in marketplace
+	public static void sell_item(String id, String itemname, String descpt, int price) {
+		try {
+			statement.executeUpdate("insert into sale(ID, Item_Name, Item_Description, Price, Status) VALUES ('"+ id +"','"+itemname+"','"+descpt+"','"+price+"', 'a')");
+		} 
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 
+	
 }
