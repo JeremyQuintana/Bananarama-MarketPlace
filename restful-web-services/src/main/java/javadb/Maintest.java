@@ -1,11 +1,8 @@
 package javadb;
 import javadb.Database;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
 import java.util.Scanner;
+
 
 public class Maintest {
 
@@ -47,6 +44,14 @@ public class Maintest {
 		Database.check_for_sale();
 		System.out.println("history of sales for id");
 		Database.sale_history(id);
-		Database.sell_item(id, "table", "Large, round table", 12);
+		
+	//	Database.sell_item(id, "Chair", "New, white", 20, "Household");
+		System.out.println("confirmed");
+	//	Database.edit_price(3, 100);
+	//	Database.edit_item_name(4 , "Not a chair");
+	//	Database.edit_description(7, "new item description");
+	//	Database.delete_item(8);
+		Database.sold_item(9);
+		Database.sale_history(id);
 	}
 }
