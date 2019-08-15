@@ -53,10 +53,11 @@ public class Maintest {
 	//	Database.edit_description(7, "new item description");
 	//	Database.delete_item(8);
 	//	Database.sold_item(9);
+		Database.search_by_category("Household"); 
 		System.out.println("confirmed");
 		System.out.println("confirmed");
 		System.out.println("confirmed");
-	//	Database.search_by_category("Household"); 
-		Database.search_by_category_descpt("Household", "Table Square");
+	
+		Database.search_by_category_descpt("Household", "horse");
 	}
 }

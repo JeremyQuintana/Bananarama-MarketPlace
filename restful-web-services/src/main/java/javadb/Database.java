@@ -5,17 +5,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import com.mysql.jdbc.PreparedStatement;
-
 import java.sql.Date;
 
 public class Database {
-	private static java.sql.PreparedStatement statements;
-	private static ResultSet datas;
-	private static Connection conns;
+
 	private static Statement statement;
 	private static ResultSet data;
-	private static Connection conn;
+	private Connection conn;
 	String id;
 	String password;
 	String cate;
@@ -107,18 +103,9 @@ public class Database {
 //Search category & description
 	public static void search_by_category_descpt(String cate_descpt, String search_word) {
 		try {
-			
-			
-			String sql = "select * from sale where Category=? and Item_Description like ?";
-			statements = conn.prepareStatement(sql);
-			statements.setString(1, cate_descpt);
-			statements.setString(2, "%" +search_word+ "%");
-			
-			
-			datas = statements.executeQuery();
-			
-			while (datas.next()) {
-				System.out.println(datas.getString(2) + " " + datas.getString(3) + " " + datas.getString(4) + " " + datas.getString(5)+" " + datas.getString(7) + " " + datas.getString(8));
+			data = statement.executeQuery("select * from sale where Category='"+cate_descpt+"'AND Item_Description like'%"+ search_word +"%'");
+			while (data.next()) {
+				System.out.println(data.getString(2) + " " + data.getString(3) + " " + data.getString(4) + " " + data.getString(5)+" " + data.getString(7) + " " + data.getString(8));
 			}
 		} 
 		catch (SQLException e) {
@@ -126,10 +113,12 @@ public class Database {
 		}
 	}
 	
-
 	
 	
-	//Show history of sale items for user
+	
+	
+	
+//Show history of sale items for user
 	public static void sale_history(String id) {
 		try {
 			data = statement.executeQuery("select * from sale where ID='" + id + "'");
