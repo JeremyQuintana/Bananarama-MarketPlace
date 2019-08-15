@@ -5,13 +5,17 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import com.mysql.jdbc.PreparedStatement;
+
 import java.sql.Date;
 
 public class Database {
-
+	private static java.sql.PreparedStatement statements;
+	private static ResultSet datas;
+	private static Connection conns;
 	private static Statement statement;
 	private static ResultSet data;
-	private Connection conn;
+	private static Connection conn;
 	String id;
 	String password;
 	String cate;
@@ -19,6 +23,8 @@ public class Database {
 	int new_price;
 	String new_title;
 	String new_despt;
+	String cate_descpt;
+	String search_word;
 	
 	public Database() {
 		try {				
@@ -85,7 +91,44 @@ public class Database {
 			e.printStackTrace();
 		}
 	}
- 
+
+//Search category only
+	public static void search_by_category(String cate_descpt) {
+		try {
+			data = statement.executeQuery("select * from sale where Category='"+cate_descpt+"'");
+			while (data.next()) {
+				System.out.println(data.getString(2) + " " + data.getString(3) + " " + data.getString(4) + " " + data.getString(5)+" " + data.getString(7) + " " + data.getString(8));
+			}
+		} 
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+//Search category & description
+	public static void search_by_category_descpt(String cate_descpt, String search_word) {
+		try {
+			
+			
+			String sql = "select * from sale where Category=? and Item_Description like ?";
+			statements = conn.prepareStatement(sql);
+			statements.setString(1, cate_descpt);
+			statements.setString(2, "%" +search_word+ "%");
+			
+			
+			datas = statements.executeQuery();
+			
+			while (datas.next()) {
+				System.out.println(datas.getString(2) + " " + datas.getString(3) + " " + datas.getString(4) + " " + datas.getString(5)+" " + datas.getString(7) + " " + datas.getString(8));
+			}
+		} 
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+
+	
+	
 	//Show history of sale items for user
 	public static void sale_history(String id) {
 		try {
@@ -99,7 +142,7 @@ public class Database {
 			e.printStackTrace();
 		}
 	}
-
+	
 //Post sell items in marketplace
 	public static void sell_item(String id, String itemname, String descpt, int price, String cate) {
 		java.sql.Date curdate = new java.sql.Date(new java.util.Date().getTime());
@@ -164,4 +207,6 @@ public class Database {
 			e.printStackTrace();
 		}
 	}
+	
+
 }
