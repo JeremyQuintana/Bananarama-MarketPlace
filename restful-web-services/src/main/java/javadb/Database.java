@@ -19,6 +19,8 @@ public class Database {
 	int new_price;
 	String new_title;
 	String new_despt;
+	String cate_descpt;
+	String search_word;
 	
 	public Database() {
 		try {				
@@ -85,8 +87,38 @@ public class Database {
 			e.printStackTrace();
 		}
 	}
- 
-	//Show history of sale items for user
+
+//Search category only
+	public static void search_by_category(String cate_descpt) {
+		try {
+			data = statement.executeQuery("select * from sale where Category='"+cate_descpt+"'");
+			while (data.next()) {
+				System.out.println(data.getString(2) + " " + data.getString(3) + " " + data.getString(4) + " " + data.getString(5)+" " + data.getString(7) + " " + data.getString(8));
+			}
+		} 
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+//Search category & description
+	public static void search_by_category_descpt(String cate_descpt, String search_word) {
+		try {
+			data = statement.executeQuery("select * from sale where Category='"+cate_descpt+"'AND Item_Description like'%"+ search_word +"%'");
+			while (data.next()) {
+				System.out.println(data.getString(2) + " " + data.getString(3) + " " + data.getString(4) + " " + data.getString(5)+" " + data.getString(7) + " " + data.getString(8));
+			}
+		} 
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
+	
+	
+	
+	
+//Show history of sale items for user
 	public static void sale_history(String id) {
 		try {
 			data = statement.executeQuery("select * from sale where ID='" + id + "'");
@@ -99,7 +131,7 @@ public class Database {
 			e.printStackTrace();
 		}
 	}
-
+	
 //Post sell items in marketplace
 	public static void sell_item(String id, String itemname, String descpt, int price, String cate) {
 		java.sql.Date curdate = new java.sql.Date(new java.util.Date().getTime());
@@ -164,4 +196,6 @@ public class Database {
 			e.printStackTrace();
 		}
 	}
+	
+
 }

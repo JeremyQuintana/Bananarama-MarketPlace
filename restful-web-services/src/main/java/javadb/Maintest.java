@@ -1,6 +1,7 @@
 package javadb;
 import javadb.Database;
 
+import java.sql.SQLException;
 import java.util.Scanner;
 
 
@@ -41,9 +42,9 @@ public class Maintest {
 				System.out.println("USER PASSWORD INVALID");
 			}
 		}
-		Database.check_for_sale();
-		System.out.println("history of sales for id");
-		Database.sale_history(id);
+		//Database.check_for_sale();
+	//	System.out.println("history of sales for id");
+		//Database.sale_history(id);
 		
 	//	Database.sell_item(id, "Chair", "New, white", 20, "Household");
 		System.out.println("confirmed");
@@ -51,7 +52,12 @@ public class Maintest {
 	//	Database.edit_item_name(4 , "Not a chair");
 	//	Database.edit_description(7, "new item description");
 	//	Database.delete_item(8);
-		Database.sold_item(9);
-		Database.sale_history(id);
+	//	Database.sold_item(9);
+		Database.search_by_category("Household"); 
+		System.out.println("confirmed");
+		System.out.println("confirmed");
+		System.out.println("confirmed");
+	
+		Database.search_by_category_descpt("Household", "horse");
 	}
 }
