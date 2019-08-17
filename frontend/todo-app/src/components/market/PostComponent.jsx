@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import { withRouter } from "react-router-dom";
 import MarketComponent from "./MarketComponent.jsx";
+import MarketDataService from "../../api/market/MarketDataService.js"
 
 var allPostings = [
     ["1", "Confetti", "Beautiful multicolored confetti. Used but like new.", "georgemichael99", "$20"],
@@ -12,39 +13,60 @@ var allPostings = [
 
 class PostComponent extends Component {
 
+
     constructor(props) {
-        super(props)
+        super(props);
+        //this.allPostings = allPostings;
+        
+        
+        this.state = {
+            backPostings: [[]],
+            // backPostings: allPostings,
+        }
+        this.refreshPosts()
+        // console.log("HELLO");
+        // console.log("hello" + this.state.backPostings);
+        // console.log("hello")
     }
 
     render() {
         let retVal;
-        if(parseInt(this.props.match.params.postID)-1 < allPostings.length && parseInt(this.props.match.params.postID)-1 >= 0){
+        if (parseInt(this.props.match.params.postID) - 1 < this.state.backPostings.length && parseInt(this.props.match.params.postID) - 1 >= 0) {
             retVal = (
-            
+
                 <div>
-                    <h1 className="marketTitle">{allPostings[parseInt(this.props.match.params.postID)-1][1]}</h1>
+                    <h1 className="marketTitle">{this.state.backPostings[parseInt(this.props.match.params.postID) - 1][1]}</h1>
                     <div className="container postDescription">
-                        <img src={'../post_images/' + allPostings[parseInt(this.props.match.params.postID)-1][0] + '.jpg'}></img>
-                        {allPostings[parseInt(this.props.match.params.postID)-1][2]}
+                        <img src={'../post_images/' + this.state.backPostings[parseInt(this.props.match.params.postID) - 1][0] + '.jpg'}></img>
+                        {this.state.backPostings[parseInt(this.props.match.params.postID) - 1][2]}
                     </div>
                     <div className="container postPrice">
-                        {allPostings[parseInt(this.props.match.params.postID)-1][4]}
+                        {this.state.backPostings[parseInt(this.props.match.params.postID) - 1][4]}
                     </div>
                     <div className="container postSeller">
-                        {allPostings[parseInt(this.props.match.params.postID)-1][3]}
+                        {this.state.backPostings[parseInt(this.props.match.params.postID) - 1][3]}
                     </div>
                     <div className="container postSeller"><Link to="chat/seller1">Contact Seller</Link></div>
-    
-    
+
+
                 </div>
             );
         } else {
             retVal = null;
         }
-        
+
         return retVal;
     }
 
+    refreshPosts() {
+
+        this.allPostings = MarketDataService.retrieveAllPosts().then(
+            response => {
+                //console.log(response.data);
+                this.setState({ backPostings: response.data })
+            }
+        ).catch(error => console.log("network error"));
+    }
 
 }
 
