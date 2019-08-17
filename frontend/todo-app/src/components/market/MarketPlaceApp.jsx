@@ -15,7 +15,8 @@ class MarketPlaceApp extends Component {
                     <>
                         <HeaderComponent/>
                         <Switch>
-                           <Route path = "/" exact component = {MarketComponent}/>
+                           <Route path = "/market" exact component = {MarketComponent}/>
+                           <Route path = "/posts/:postID" exact component = {PostComponent}/>
                         </Switch>
                         <FooterComponent/>
                     </>

@@ -10,19 +10,25 @@ var allPostings = [
 ];
 
 class PostComponent extends Component {
+
+    constructor(props) {
+        super(props)
+    }
+
     render() {
         let retVal = (
+            
             <div>
-                <h1 className="marketTitle">{allPostings[0][1]}</h1>
+                <h1 className="marketTitle">{allPostings[parseInt(this.props.match.params.postID)-1][1]}</h1>
                 <div className="container postDescription">
-                    <img src={'post_images/' + allPostings[0][0] + '.jpg'}></img>
-                    {allPostings[0][2]}
+                    <img src={'../post_images/' + allPostings[parseInt(this.props.match.params.postID)-1][0] + '.jpg'}></img>
+                    {allPostings[parseInt(this.props.match.params.postID)-1][2]}
                 </div>
                 <div className="container postPrice">
-                    {allPostings[0][4]}
+                    {allPostings[parseInt(this.props.match.params.postID)-1][4]}
                 </div>
                 <div className="container postSeller">
-                    {allPostings[0][3]}
+                    {allPostings[parseInt(this.props.match.params.postID)-1][3]}
                 </div>
                 <div className="container postSeller"><Link to="chat/seller1">Contact Seller</Link></div>
 
