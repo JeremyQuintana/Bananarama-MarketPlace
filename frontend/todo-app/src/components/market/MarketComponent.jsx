@@ -3,10 +3,10 @@ import { Link } from 'react-router-dom'
 import { withRouter } from "react-router-dom";
 
 var allPostings = [
-    ["1", "Item 1 Title", "Item 1 Description", "Item 1 Seller", "$Item 1 Price"],
-    ["2", "Item 2 Title", "Item 2 Description", "Item 2 Seller", "$Item 2 Price"],
-    ["3", "Item 3 Title", "Item 3 Description", "Item 3 Seller", "$Item 3 Price"],
-    ["4", "Item 4 Title", "Item 4 Description", "Item 4 Seller", "$Item 4 Price"]
+    ["1", "Confetti", "Beautiful multicolored confetti. Used but like new.", "georgemichael99", "$20"],
+    ["2", "Green Capsicum", "Giant green capsicum. Found it at the beach. Still contains some sand.", "DONNYT1946", "$100"],
+    ["3", "Small Blue Star", "Blue star, fell from the sky into my backyard. Fits in pocket. Still warm.", "not_an_alien", "$0.50"],
+    ["4", "Vines - 50ft", "Green climbing vines. Organic, just cut. Perfect for a wedding.", "tree_hater", "$25.47"]
 ];
 
 class MarketComponent extends Component {
