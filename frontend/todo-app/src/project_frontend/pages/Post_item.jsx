@@ -27,7 +27,7 @@ class Post_item extends Component {
               <label for="item_cost" class="definitions">Item Cost: </label>
             </div>
             <div class="formInputs">
-              <textarea name="item_description" class="input" placeholder="Mushy Explination" value={this.state.item_description} onChange={this.handleChange} />
+              <textarea name="item_description" class="input" placeholder="Mushy Explanation" value={this.state.item_description} onChange={this.handleChange} />
               <input required type="text" name="item_name" class="input" placeholder="Banana Name" value={this.state.item_name} onChange={this.handleChange} />
               <input required type="number" name="item_cost" class="input" placeholder="$000.00" min="000.01" step="0.01" pattern="\d.\d" value={this.state.item_cost} onChange={this.handleChange} />
             </div>
