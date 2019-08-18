@@ -43,39 +43,39 @@ public class Post {
 	private String id;
 	
 	//edit price items in marketplace
-		public void edit(Column column, String edit) {
-			DatabaseRef.update(column, edit, id);
-		}
+	public void edit(Column column, String edit) {
+		DatabaseRef.update(column, edit, id);
+	}
 
 	//Delete item from Marketplace
-		public void delete() {
-			DatabaseRef.update(Column.STATUS, "D", id);
-		}
+	public void delete() {
+		DatabaseRef.update(Column.STATUS, "D", id);
+	}
 
 	//Marked Item as sold on Marketplace
-		public void sold() {
-			DatabaseRef.update(Column.STATUS, "S", id);
+	public void sold() {
+		DatabaseRef.update(Column.STATUS, "S", id);
+	}
+	
+	public enum Action
+	{
+		SELL, SOLD, DELETE, EDIT
+	}
+	public enum Column
+	{
+		DESC("Item_Description"), NAME("Item_Name"), PRICE("Price"), STATUS("Status");
+		
+		private String key;
+		private Column(String key)
+		{
+			this.key = key;
 		}
 		
-		public enum Action
+		public String key()
 		{
-			SELL, SOLD, DELETE, EDIT
+			return key;
 		}
-		public enum Column
-		{
-			DESC("Item_Description"), NAME("Item_Name"), PRICE("Price"), STATUS("Status");
-			
-			private String key;
-			private Column(String key)
-			{
-				this.key = key;
-			}
-			
-			public String key()
-			{
-				return key;
-			}
-		}
+	}
 	
 	public String toString()
 	{
