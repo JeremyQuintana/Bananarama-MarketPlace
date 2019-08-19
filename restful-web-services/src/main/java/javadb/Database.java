@@ -36,8 +36,8 @@ public class Database {
 		
 		catch (Exception e) {
 			System.out.println(e);
-			}
 		}
+	}
 
 	//user ID check
 	public boolean checkId(String id) {
