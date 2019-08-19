@@ -57,7 +57,11 @@ public class Maintest {
 		System.out.println("confirmed");
 		System.out.println("confirmed");
 		System.out.println("confirmed");
+		
+
+		
 		System.out.println(Database.check_for_sale());
-	//	Database.search_by_category_descpt("Household", "horse");
+		//DatabaseRef.sale_history(id);
+		//	Database.search_by_category_descpt("Household", "horse");
 	}
 }

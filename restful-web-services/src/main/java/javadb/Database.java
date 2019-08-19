@@ -11,6 +11,7 @@ public class Database {
 
 	private static Statement statement;
 	private static ResultSet data;
+	private static ResultSet rowcount;
 	private Connection conn;
 	String id;
 	String password;
@@ -86,7 +87,7 @@ public class Database {
 		}
 	}
 */
-		
+	/*	
 //browse marketplace
 	//main place display of for sale items, checks for current for sale items in db
 	public static ArrayList<String> check_for_sale() {
@@ -110,7 +111,44 @@ public class Database {
 			
 		}
 		return null;
-	}
+	}*/
+	//main place display of for sale items, checks for current for sale items in db
+		public static String[][] check_for_sale() {
+			try {
+				int norow=0;
+				int columns =8;
+				rowcount = statement.executeQuery("select count(*) from sale where Status= 'A'");
+				while(rowcount.next()) {
+					norow = rowcount.getInt(1);
+				}
+				System.out.println(norow);
+				String[][] resultSet = new String[norow][columns];
+				data = statement.executeQuery("select * from sale where Status= 'A'");
+				int row = 0;
+				while (data.next()) {
+					for (int i = 0; i < columns; i++) {
+			            resultSet[row][i] = data.getString(i+1);
+			        }
+			        row++;
+			    
+				}
+				for(int i = 0; i<norow; i++)
+				{
+				    for(int j = 0; j<columns; j++)
+				    {
+				        System.out.print(resultSet[i][j]);
+				    }
+				    System.out.println();
+				}
+				return resultSet;
+			} 
+			catch (SQLException e) {
+				e.printStackTrace();
+				
+			}
+			return null;
+		}
+	  
 	
 	
 /*	

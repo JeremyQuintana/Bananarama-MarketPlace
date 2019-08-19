@@ -8,10 +8,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import javadb.Post.Action;
-import javadb.Post.Column;
-
 import java.sql.Date;
 
 public class DatabaseRef {
@@ -27,7 +23,7 @@ public class DatabaseRef {
 	String new_title;
 	String new_despt;
 	
-	static Map<String, Post> posts;
+	Map<String, Post> posts;
 	
 	public DatabaseRef() {
 		try {				
@@ -93,7 +89,7 @@ public class DatabaseRef {
 	
 //browse marketplace
 	//main place display of for sale items, checks for current for sale items in db
-	public static void check_for_sale() 
+	public void check_for_sale() 
 	{
 //		data = query("select * from sale where Status= 'a'");
 //		while (data.next()) {
@@ -105,7 +101,7 @@ public class DatabaseRef {
 	}
  
 	//Show history of sale items for user
-	public static void sale_history(String ownerId) {
+	public void sale_history(String ownerId) {
 //			data = query("select * from sale where ID='" + id + "'");
 //			
 //			while (data.next()) {
