@@ -112,22 +112,29 @@ public class Database {
 		}
 		return null;
 	}*/
+	
+	
 	//main place display of for sale items, checks for current for sale items in db
 		public static String[][] check_for_sale() {
 			try {
+				//rowcount
 				int norow=0;
-				int columns =8;
 				rowcount = statement.executeQuery("select count(*) from sale where Status= 'A'");
 				while(rowcount.next()) {
 					norow = rowcount.getInt(1);
 				}
-				System.out.println(norow);
-				String[][] resultSet = new String[norow][columns];
+				
 				data = statement.executeQuery("select * from sale where Status= 'A'");
 				int row = 0;
+				//column count
+				int columns = data.getMetaData().getColumnCount();
+				System.out.println(columns);
+				
+				//array of array
+				String[][] arrayofsale = new String[norow][columns];
 				while (data.next()) {
 					for (int i = 0; i < columns; i++) {
-			            resultSet[row][i] = data.getString(i+1);
+			            arrayofsale[row][i] = data.getString(i+1);
 			        }
 			        row++;
 			    
@@ -136,11 +143,11 @@ public class Database {
 				{
 				    for(int j = 0; j<columns; j++)
 				    {
-				        System.out.print(resultSet[i][j]);
+				        System.out.print(arrayofsale[i][j]);
 				    }
 				    System.out.println();
 				}
-				return resultSet;
+				return arrayofsale;
 			} 
 			catch (SQLException e) {
 				e.printStackTrace();

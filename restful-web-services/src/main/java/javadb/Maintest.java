@@ -60,7 +60,7 @@ public class Maintest {
 		
 
 		
-		System.out.println(Database.check_for_sale());
+		Database.check_for_sale();
 		//DatabaseRef.sale_history(id);
 		//	Database.search_by_category_descpt("Household", "horse");
 	}
