@@ -8,7 +8,7 @@ it('renders post item page', () => {
   ReactDOM.unmountComponentAtNode(div);
 });
 
-it('does not accept empty fields' () => {
+it('renders all needed inputs' () => {
 
 });
 
@@ -17,5 +17,17 @@ it('rejects current session user id' () => {
 });
 
 it('rejects negative cost' () => {
+
+});
+
+it('rejects no cost' () => {
+
+});
+
+it('rejects no name' () => {
+
+});
+
+it('disallows text in cost' () => {
 
 });
