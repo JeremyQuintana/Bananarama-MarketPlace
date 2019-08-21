@@ -1,6 +1,5 @@
 import axios from 'axios'
-import { JPA_API_URL } from '../../Constants'
-//import { API_URL } from '../../Constants'
+import { API_URL, JPA_API_URL } from '../../Constants'
 
 class TodoDataService {
 

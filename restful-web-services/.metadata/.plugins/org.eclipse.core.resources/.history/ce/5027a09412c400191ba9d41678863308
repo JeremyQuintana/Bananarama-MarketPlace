@@ -1,0 +1,5 @@
+package com.sept.rest.basic.auth;
+
+public class CorsFilter {
+
+}

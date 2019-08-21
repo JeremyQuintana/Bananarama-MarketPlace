@@ -1,7 +1,5 @@
 package com.sept.rest.webservices.restfulwebservices.jwt;
 
-
-
 import java.io.IOException;
 
 import javax.servlet.FilterChain;
