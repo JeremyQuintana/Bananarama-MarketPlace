@@ -19,6 +19,17 @@ import java.sql.Date;
 
 public class DatabaseRef {
 
+	
+	public static void main(String[] args) throws SQLException
+	{
+//		DatabaseRef db = new DatabaseRef();
+//		
+//		DatabaseRef.update("delete from sale where PostID = 26");
+		
+		
+		
+		
+	}
 	private static Statement statement;
 	private static ResultSet data;
 	private Connection conn;
@@ -33,14 +44,7 @@ public class DatabaseRef {
 	
 	public DatabaseRef() {
 		try {				
-			String driver = "com.mysql.jdbc.Driver";
-			String url = "jdbc:mysql://35.189.1.213:3306/sept";
-			String username = "root";
-			String password = "bananasept";
-			Class.forName(driver);
-			conn = DriverManager.getConnection(url, username, password);
-			statement = conn.createStatement();
-			System.out.println("Connected");
+			canConnect();
 			
 			posts = new HashMap<>();
 			data = statement.executeQuery("select * from sale");
@@ -56,6 +60,26 @@ public class DatabaseRef {
 		}
 	}
 	
+	public boolean canConnect()
+	{
+		try
+		{
+			String driver = "com.mysql.jdbc.Driver";
+			String url = "jdbc:mysql://35.189.1.213:3306/sept";
+			String username = "root";
+			String password = "bananasept";
+			Class.forName(driver);
+			conn = DriverManager.getConnection(url, username, password);
+			statement = conn.createStatement();
+			System.out.println("Connected");
+			return true;
+		}
+		catch (Exception e) {
+			System.out.println(e);
+		}
+		return false;
+	}
+	
 	
 	
 	
@@ -68,7 +92,7 @@ public class DatabaseRef {
 	//user ID check
 	public boolean checkId(String id) throws SQLException 
 	{
-		data = statement.executeQuery("select * from login");
+		data = statement.executeQuery("select * from login where ID='" + id + "'");
 		while (data.next())
 			if (id.equalsIgnoreCase(data.getString("ID")))
 				return true;
@@ -78,7 +102,7 @@ public class DatabaseRef {
 	//password check
 	public boolean checkPassword(String id, String password) throws SQLException
 	{
-		data = statement.executeQuery("select * from login");
+		data = statement.executeQuery("select * from login where ID='" + id + "' AND password='" + password + "'");
 		while (data.next())
 			if (id.equalsIgnoreCase(data.getString("ID")) && password.equals(data.getString("password")))
 				return true;
@@ -95,27 +119,27 @@ public class DatabaseRef {
 	
 	//browse marketplace
 		//main place display of for sale items, checks for current for sale items in db
-		public void check_for_sale() throws SQLException
+		public Map<Integer, Post> check_for_sale() throws SQLException
 		{
-			printPosts("select * from sale where Status= 'a'");
+			return getPosts("select * from sale where Status= 'a'");
 		}
 	 
 		//Show history of sale items for user
-		public void sale_history(String ownerId) throws SQLException 
+		public Map<Integer, Post> sale_history(String ownerId) throws SQLException 
 		{
-			printPosts("select * from sale where ID='" + ownerId + "'");
+			return getPosts("select * from sale where ID='" + ownerId + "'");
 		}
 		
 		//Show history of sale items for user
-		public void searchCategory(String cate_desc) throws SQLException 
+		public Map<Integer, Post> searchCategory(String cate_desc) throws SQLException 
 		{
-			printPosts("select * from sale where Category='"+cate_desc+"'");
+			return getPosts("select * from sale where Category='"+cate_desc+"'");
 		}
 		
 		//Show history of sale items for user
-		public void sale_history(String cate_word, String desc_word) throws SQLException 
+		public Map<Integer, Post> sale_history(String cate_word, String desc_word) throws SQLException 
 		{
-			printPosts("select * from sale where Category='"+cate_word+"'AND Item_Description like'%"+ desc_word +"%'");
+			return getPosts("select * from sale where Category='"+cate_word+"'AND Item_Description like'%"+ desc_word +"%'");
 		}
 		
 //
@@ -178,14 +202,11 @@ public class DatabaseRef {
 		java.sql.Date curdate = new java.sql.Date(new java.util.Date().getTime());
 		update("insert into sale(ID, Item_Name, Item_Description, Price, Status, Date, Category) VALUES ('"+ owner +"','"+title+"','"+desc+"','"+price+"', 'A', '"+curdate+"','"+cate+"')");
 		
-		LinkedList<Integer> sorted = new LinkedList<>(posts.keySet());
-		Collections.sort(sorted);
-		int id = sorted.getLast()+1;
-		posts.put(id, new Post(id, owner, title, desc, price, curdate, cate));
-		/*may not work*/
+		data = statement.executeQuery("select * from sale");
+		while (data.next())
+			if (data.isLast())
+				posts.put(data.getInt(1), new Post(data.getInt(1), owner, title, desc, price, curdate, cate));
 	}
-
-
 	
 	
 	
@@ -207,27 +228,17 @@ public class DatabaseRef {
 		}
 	}
 	
-	public Map<Integer, Post> printPosts(String str) throws SQLException
+	public Map<Integer, Post> getPosts(String str) throws SQLException
 	{
 		Map<Integer, Post> matched = new HashMap<>();
-		try
-		{
-			data = statement.executeQuery(str);
-			while (data.next()) {
-				int id = data.getInt(1);
-				
-				System.out.println(posts.get(id));
-				matched.put(id, posts.get(id));
-			}
-		}
-		catch (SQLException e) {
-			e.printStackTrace();
+		
+		data = statement.executeQuery(str);
+		while (data.next()) {
+			int id = data.getInt(1);
+			matched.put(id, posts.get(id));
 		}
 		
 		return matched;
-		
-		
 	}
-	
 	
 }
