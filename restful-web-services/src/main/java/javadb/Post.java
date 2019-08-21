@@ -1,35 +1,38 @@
 package javadb;
 
 import java.awt.image.BufferedImage;
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import javadb.Post.Column;
+
 public class Post {
 	
-	/*functionality not added*/
-	public Post(String title, String description, double price, BufferedImage photo, String ownerId)
+	public Post(int id, String owner, String title, String description, double price, Date date, String category)
 	{
-		this(title, description, price, ownerId);
-	}
-	
-	public Post(String title, String description, double price, String ownerId)
-	{
-		super();
+		this.id = id;
+		this.ownerId = owner;
 		this.title = title;
 		this.description = description;
 		this.price = price;
+		this.category = category;
+		this.status = Status.AVAILABLE;
+		this.datePosted = date;
+		/*DATE posted ???*/
 	}
 	
-	public Post(ResultSet post, DatabaseRef db)
+	public Post(ResultSet post)
 	{
 		try {
-//			ResultSet post = db.find("select * from sale where PostID=" + identifier);
-			id = post.getString(0);
-			ownerId = post.getString(1);
-			title = post.getString(2);
-			description = post.getString(3);
-			price = post.getDouble(4);
-			description = post.getString(5);
+			id = post.getInt(1);
+			ownerId = post.getString(2);
+			title = post.getString(3);
+			description = post.getString(4);
+			price = post.getDouble(5);
+			status = Status.getStatus(post.getString(6));
+			datePosted = post.getDate(7);
+			category = post.getString(8);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -39,31 +42,87 @@ public class Post {
 	private String title;
 	private double price;
 	private String ownerId;
-	private char status;
-	private String id;
+	private Status status;
+	private Date datePosted;
+	private String category;
+	private int id;
 	
-	//edit price items in marketplace
+	//edit post column in marketplace
 	public void edit(Column column, String edit) {
-		DatabaseRef.update(column, edit, id);
+		update(column, edit);
+		update(column, edit, "" + id);
+
 	}
 
 	//Delete item from Marketplace
 	public void delete() {
-		DatabaseRef.update(Column.STATUS, "D", id);
+		update(Column.STATUS, "D");
+		update(Column.STATUS, "D", "" + id);
 	}
 
 	//Marked Item as sold on Marketplace
 	public void sold() {
-		DatabaseRef.update(Column.STATUS, "S", id);
+		update(Column.STATUS, "S");
+		update(Column.STATUS, "S", "" + id);
 	}
+	
+	private void update(Column column, String edit)
+	{
+		switch (column)
+		{
+			case NAME : 	title = edit;					break;
+			case DESC : 	description = edit;				break;
+			case STATUS :	status = Status.getStatus(edit);break;
+			case CATEGORY : category = edit;				break;
+			case PRICE : price = Integer.parseInt(edit);	break;
+		}
+	}
+	
+	public static void update(Column column, String value, String id)
+	{
+		DatabaseRef.update("Update sale set " + column.key() + "='"+ value +"' where PostID='"+id+"'");
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	public enum Action
 	{
 		SELL, SOLD, DELETE, EDIT
 	}
+	
+	public enum Status
+	{
+		AVAILABLE, DELETED, SOLD, TOFFEE;
+		
+		public static Status getStatus(String str)
+		{
+			switch (str)
+			{
+				case "a" : case "A" : return AVAILABLE; 
+				case "s" : case "S" : return SOLD; 
+				case "d" : case "D" : return DELETED; 
+				case "t" : case "T" : return TOFFEE; 
+			}
+			throw new NullPointerException("post status not defined");
+		}
+	}
+	
 	public enum Column
 	{
-		DESC("Item_Description"), NAME("Item_Name"), PRICE("Price"), STATUS("Status");
+		DESC("Item_Description"), NAME("Item_Name"), PRICE("Price"), STATUS("Status"), CATEGORY("Category");
 		
 		private String key;
 		private Column(String key)
@@ -79,9 +138,11 @@ public class Post {
 	
 	public String toString()
 	{
-		return description + " " + title + " " + price + " " + ownerId + " " + status + " ";
+		return id + " " + ownerId + " " + title + " " + description + " " + price + " " + status + " " + datePosted + " " + category;
 	}
 	
-	public char getStatus()		{return status;}
+	public int getId()			{return id;}
+	public void setId(int id)	{this.id = id;}
+	public Status getStatus()		{return status;}
 	public String getOwnerId()	{return ownerId;}
 }
