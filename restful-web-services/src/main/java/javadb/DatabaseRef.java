@@ -29,7 +29,6 @@ public class DatabaseRef {
 	int new_price;
 	String new_title;
 	String new_despt;
-	
 	public Map<Integer, Post> posts;
 	
 	public DatabaseRef() {
@@ -87,7 +86,6 @@ public class DatabaseRef {
 	}
 //end login details
 
-	
 	
 	
 	

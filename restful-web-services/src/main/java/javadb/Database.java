@@ -4,13 +4,14 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-
+import java.util.ArrayList;
 import java.sql.Date;
 
 public class Database {
 
 	private static Statement statement;
 	private static ResultSet data;
+	private static ResultSet rowcount;
 	private Connection conn;
 	String id;
 	String password;
@@ -38,8 +39,6 @@ public class Database {
 			System.out.println(e);
 		}
 	}
-
-//login details
 
 	//user ID check
 	public boolean checkId(String id) {
@@ -73,7 +72,7 @@ public class Database {
 		return false;
 	}
 //end login details
-
+/*
 //browse marketplace
 	//main place display of for sale items, checks for current for sale items in db
 	public static void check_for_sale() {
@@ -87,7 +86,79 @@ public class Database {
 			e.printStackTrace();
 		}
 	}
+*/
+	/*	
+//browse marketplace
+	//main place display of for sale items, checks for current for sale items in db
+	public static ArrayList<String> check_for_sale() {
+		try {
 
+			ArrayList<String> salelist= new ArrayList<String>();
+			data = statement.executeQuery("select * from sale where Status= 'a'");
+			while (data.next()) {
+				salelist.add(data.getString(2));
+				salelist.add(data.getString(3));
+				salelist.add(data.getString(4));
+				salelist.add(data.getString(5));
+				salelist.add(data.getString(7));
+				salelist.add(data.getString(8));
+			}
+			String[] arraysalelist = salelist.toArray(new String[0]); 
+			return salelist;
+		} 
+		catch (SQLException e) {
+			e.printStackTrace();
+			
+		}
+		return null;
+	}*/
+	
+	
+	//main place display of for sale items, checks for current for sale items in db
+		public static String[][] check_for_sale() {
+			try {
+				//rowcount
+				int norow=0;
+				rowcount = statement.executeQuery("select count(*) from sale where Status= 'A'");
+				while(rowcount.next()) {
+					norow = rowcount.getInt(1);
+				}
+				
+				data = statement.executeQuery("select * from sale where Status= 'A'");
+				int row = 0;
+				//column count
+				int columns = data.getMetaData().getColumnCount();
+				System.out.println(columns);
+				
+				//array of array
+				String[][] arrayofsale = new String[norow][columns];
+				while (data.next()) {
+					for (int i = 0; i < columns; i++) {
+			            arrayofsale[row][i] = data.getString(i+1);
+			        }
+			        row++;
+			    
+				}
+				for(int i = 0; i<norow; i++)
+				{
+				    for(int j = 0; j<columns; j++)
+				    {
+				        System.out.print(arrayofsale[i][j]);
+				    }
+				    System.out.println();
+				}
+				return arrayofsale;
+			} 
+			catch (SQLException e) {
+				e.printStackTrace();
+				
+			}
+			return null;
+		}
+	  
+	
+	
+/*	
 //Search category only
 	public static void search_by_category(String cate_descpt) {
 		try {
@@ -100,6 +171,30 @@ public class Database {
 			e.printStackTrace();
 		}
 	}
+*/
+	
+//Search category only
+	public static ArrayList<String> search_by_category(String cate_descpt) {
+		try {
+			ArrayList<String> searchcatelist= new ArrayList<String>();
+			data = statement.executeQuery("select * from sale where Category='"+cate_descpt+"'");
+			while (data.next()) {
+				searchcatelist.add(data.getString(2));
+				searchcatelist.add(data.getString(3));
+				searchcatelist.add(data.getString(4));
+				searchcatelist.add(data.getString(5));
+				searchcatelist.add(data.getString(7));
+				searchcatelist.add(data.getString(8));
+			}
+			return searchcatelist;
+		} 
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+/*	
 //Search category & description
 	public static void search_by_category_descpt(String cate_descpt, String search_word) {
 		try {
@@ -111,13 +206,33 @@ public class Database {
 		catch (SQLException e) {
 			e.printStackTrace();
 		}
-	}
+	}*/
+	
+	//Search category & description
+		public static ArrayList<String> search_by_category_descpt(String cate_descpt, String search_word) {
+			try {
+				ArrayList<String> searchcatedescptlist= new ArrayList<String>();
+				data = statement.executeQuery("select * from sale where Category='"+cate_descpt+"'AND Item_Description like'%"+ search_word +"%'");
+				while (data.next()) {
+					searchcatedescptlist.add(data.getString(2));
+					searchcatedescptlist.add(data.getString(3));
+					searchcatedescptlist.add(data.getString(4));
+					searchcatedescptlist.add(data.getString(5));
+					searchcatedescptlist.add(data.getString(7));
+					searchcatedescptlist.add(data.getString(8));
+				
+				}
+			} 
+			catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return null;
+		}
 	
 	
 	
 	
-	
-	
+/*	
 //Show history of sale items for user
 	public static void sale_history(String id) {
 		try {
@@ -130,6 +245,36 @@ public class Database {
 		catch (SQLException e) {
 			e.printStackTrace();
 		}
+	}
+	*/
+	
+	
+	
+	
+
+//Show history of sale items for user
+	public static ArrayList<String> sale_history(String id) {
+		try {
+
+			ArrayList<String> salehist= new ArrayList<String>();
+			
+			data = statement.executeQuery("select * from sale where ID='" + id + "'");
+			
+			while (data.next()) {
+				salehist.add(data.getString(2));
+				salehist.add(data.getString(3));
+				salehist.add(data.getString(4));
+				salehist.add(data.getString(5));
+				salehist.add(data.getString(7));
+				salehist.add(data.getString(8));
+			
+			}
+			return salehist;
+		} 
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 	
 //Post sell items in marketplace
