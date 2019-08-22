@@ -1,4 +1,4 @@
-!SESSION 2019-08-21 23:25:48.260 -----------------------------------------------
+!SESSION 2019-08-22 10:07:04.962 -----------------------------------------------
 eclipse.buildId=4.7.3.M20180330-0640
 java.version=1.8.0_201
 java.vendor=Oracle Corporation
@@ -6,8 +6,8 @@ BootLoader constants: OS=linux, ARCH=x86_64, WS=gtk, NL=en_AU
 Framework arguments:  -product org.eclipse.epp.package.java.product
 Command-line arguments:  -os linux -ws gtk -arch x86_64 -product org.eclipse.epp.package.java.product
 
-!ENTRY org.eclipse.e4.ui.workbench 4 0 2019-08-21 23:26:01.668
-!MESSAGE Unable to create class 'org.eclipse.jubula.rc.rcp.e4.swt.starter.SwtProcessor' from bundle '2023'
+!ENTRY org.eclipse.e4.ui.workbench 4 0 2019-08-22 10:07:22.950
+!MESSAGE Unable to create class 'org.eclipse.jubula.rc.rcp.e4.swt.starter.SwtProcessor' from bundle '2035'
 !STACK 0
 org.eclipse.e4.core.di.InjectionException: java.lang.NoClassDefFoundError: org/eclipse/e4/ui/model/application/ui/MUIElement
 	at org.eclipse.e4.core.internal.di.InjectorImpl.internalMake(InjectorImpl.java:410)
@@ -57,18 +57,18 @@ Caused by: java.lang.ClassNotFoundException: org.eclipse.e4.ui.model.application
 	at java.lang.ClassLoader.loadClass(ClassLoader.java:357)
 	... 36 more
 
-!ENTRY org.eclipse.e4.ui.workbench 2 0 2019-08-21 23:26:01.698
+!ENTRY org.eclipse.e4.ui.workbench 2 0 2019-08-22 10:07:23.112
 !MESSAGE Unable to create processor org.eclipse.jubula.rc.rcp.e4.swt.starter.SwtProcessor from org.eclipse.jubula.rc.rcp.e4.swt
 
-!ENTRY org.eclipse.jface 2 0 2019-08-21 23:26:26.321
+!ENTRY org.eclipse.jface 2 0 2019-08-22 10:07:46.732
 !MESSAGE Keybinding conflicts occurred.  They may interfere with normal accelerator operation.
-!SUBENTRY 1 org.eclipse.jface 2 0 2019-08-21 23:26:26.321
+!SUBENTRY 1 org.eclipse.jface 2 0 2019-08-22 10:07:46.732
 !MESSAGE A conflict occurred for SHIFT+F9:
 Binding(SHIFT+F9,
 	ParameterizedCommand(Command(org.eclipse.cdt.make.ui.targetBuildCommand,Build Target Build,
 		Invoke a make target build for the selected container.,
 		Category(org.eclipse.ui.category.project,Project,null,true),
-		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@4f1dd46b,
+		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@756837b8,
 		,,true),null),
 	org.eclipse.ui.defaultAcceleratorConfiguration,
 	org.eclipse.ui.contexts.window,,,system)
@@ -76,17 +76,17 @@ Binding(SHIFT+F9,
 	ParameterizedCommand(Command(org.eclipse.jubula.client.ui.rcp.commands.ShowFromClipboard,Open Element from Clipboard,
 		,
 		Category(org.eclipse.jubula.client.ui.rcp.commands,Functional Test,null,true),
-		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@d3bf018,
+		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@41019f9d,
 		,,true),null),
 	org.eclipse.ui.defaultAcceleratorConfiguration,
 	org.eclipse.ui.contexts.window,,,system)
-!SUBENTRY 1 org.eclipse.jface 2 0 2019-08-21 23:26:26.321
+!SUBENTRY 1 org.eclipse.jface 2 0 2019-08-22 10:07:46.732
 !MESSAGE A conflict occurred for F9:
 Binding(F9,
 	ParameterizedCommand(Command(org.eclipse.cdt.make.ui.targetBuildLastCommand,Rebuild Last Target,
 		Rebuild the last make target for the selected container or project.,
 		Category(org.eclipse.ui.category.project,Project,null,true),
-		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@be60fad,
+		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@6a039d30,
 		,,true),null),
 	org.eclipse.ui.defaultAcceleratorConfiguration,
 	org.eclipse.ui.contexts.window,,,system)
@@ -94,17 +94,17 @@ Binding(F9,
 	ParameterizedCommand(Command(org.eclipse.jubula.client.ui.rcp.commands.togglePauseOnErrorCommand,Pause on Test Execution Errors,
 		,
 		Category(org.eclipse.jubula.client.ui.rcp.commands,Functional Test,null,true),
-		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@234635cc,
+		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@492bbebe,
 		,,true),null),
 	org.eclipse.ui.defaultAcceleratorConfiguration,
 	org.eclipse.ui.contexts.window,,,system)
-!SUBENTRY 1 org.eclipse.jface 2 0 2019-08-21 23:26:26.321
+!SUBENTRY 1 org.eclipse.jface 2 0 2019-08-22 10:07:46.732
 !MESSAGE A conflict occurred for ALT+SHIFT+X R:
 Binding(ALT+SHIFT+X R,
 	ParameterizedCommand(Command(org.eclipse.rap.tools.launch.RAPLaunchShortcut.run,Run RAP Application,
 		Run RAP Application,
 		Category(org.eclipse.debug.ui.category.run,Run/Debug,Run/Debug command category,true),
-		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@2591343,
+		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@7d4a95d4,
 		,,true),null),
 	org.eclipse.ui.defaultAcceleratorConfiguration,
 	org.eclipse.ui.contexts.window,,,system)
@@ -112,17 +112,17 @@ Binding(ALT+SHIFT+X R,
 	ParameterizedCommand(Command(org.eclipse.wst.server.launchShortcut.run,Run on Server,
 		Run the current selection on a server,
 		Category(org.eclipse.debug.ui.category.run,Run/Debug,Run/Debug command category,true),
-		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@50309820,
+		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@307a0097,
 		,,true),null),
 	org.eclipse.ui.defaultAcceleratorConfiguration,
 	org.eclipse.ui.contexts.window,,,system)
-!SUBENTRY 1 org.eclipse.jface 2 0 2019-08-21 23:26:26.321
+!SUBENTRY 1 org.eclipse.jface 2 0 2019-08-22 10:07:46.732
 !MESSAGE A conflict occurred for ALT+C:
 Binding(ALT+C,
 	ParameterizedCommand(Command(org.eclipse.datatools.enablement.sybase.asa.schemaobjecteditor.examples.tableschemaeditor.copycolumn,Copy,
 		,
 		Category(org.eclipse.datatools.enablement.sybase.asa.schemaobjecteditor.examples.tableschemaedtor.10x,ASA 9.x table schema editor,null,true),
-		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@6b907eec,
+		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@4666f1b5,
 		,,true),null),
 	org.eclipse.ui.defaultAcceleratorConfiguration,
 	org.eclipse.ui.contexts.window,,,system)
@@ -130,17 +130,17 @@ Binding(ALT+C,
 	ParameterizedCommand(Command(org.eclipse.jubula.client.ui.rcp.commands.newComment,New Comment,
 		,
 		Category(org.eclipse.jubula.client.ui.rcp.commands,Functional Test,null,true),
-		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@79eade07,
+		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@52ac7989,
 		,,true),null),
 	org.eclipse.ui.defaultAcceleratorConfiguration,
 	org.eclipse.ui.contexts.window,,,system)
-!SUBENTRY 1 org.eclipse.jface 2 0 2019-08-21 23:26:26.321
+!SUBENTRY 1 org.eclipse.jface 2 0 2019-08-22 10:07:46.732
 !MESSAGE A conflict occurred for CTRL+L:
 Binding(CTRL+L,
 	ParameterizedCommand(Command(org.eclipse.jubula.client.ui.rcp.commands.StopSuiteCommand,Stop Test Execution,
 		,
 		Category(org.eclipse.jubula.client.ui.rcp.commands,Functional Test,null,true),
-		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@33e31972,
+		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@7be1b23d,
 		,,true),null),
 	org.eclipse.ui.defaultAcceleratorConfiguration,
 	org.eclipse.ui.contexts.window,,,system)
@@ -148,17 +148,17 @@ Binding(CTRL+L,
 	ParameterizedCommand(Command(org.eclipse.rcptt.ui.actions.goto.line,Goto Line,
 		,
 		Category(org.eclipse.ui.category.navigate,Navigate,null,true),
-		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@674666b6,
+		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@1b7f7b6e,
 		,,true),null),
 	org.eclipse.ui.defaultAcceleratorConfiguration,
 	org.eclipse.ui.contexts.window,,,system)
-!SUBENTRY 1 org.eclipse.jface 2 0 2019-08-21 23:26:26.321
+!SUBENTRY 1 org.eclipse.jface 2 0 2019-08-22 10:07:46.732
 !MESSAGE A conflict occurred for ALT+CTRL+P:
 Binding(ALT+CTRL+P,
 	ParameterizedCommand(Command(org.eclipse.m2e.profiles.ui.commands.selectMavenProfileCommand,Select Maven Profiles,
 		,
 		Category(org.eclipse.ui.category.window,Window,null,true),
-		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@f4903ac,
+		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@6a65daed,
 		,,true),null),
 	org.eclipse.ui.defaultAcceleratorConfiguration,
 	org.eclipse.ui.contexts.window,,,system)
@@ -166,17 +166,17 @@ Binding(ALT+CTRL+P,
 	ParameterizedCommand(Command(org.eclipse.linuxtools.changelog.core.preparechangelog,Prepare Changelog,
 		Prepares Changelog,
 		Category(org.eclipse.linuxtools.changelog,Changelog,Changelog key bindings,true),
-		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@207ceea4,
+		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@5bb48619,
 		,,true),null),
 	org.eclipse.ui.defaultAcceleratorConfiguration,
 	org.eclipse.ui.contexts.window,,,system)
-!SUBENTRY 1 org.eclipse.jface 2 0 2019-08-21 23:26:26.321
+!SUBENTRY 1 org.eclipse.jface 2 0 2019-08-22 10:07:46.732
 !MESSAGE A conflict occurred for CTRL+G:
 Binding(CTRL+G,
 	ParameterizedCommand(Command(org.eclipse.jdt.ui.edit.text.java.search.declarations.in.workspace,Declaration in Workspace,
 		Search for declarations of the selected element in the workspace,
 		Category(org.eclipse.search.ui.category.search,Search,Search command category,true),
-		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@bff5b50,
+		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@2db2b708,
 		,,true),null),
 	org.eclipse.ui.defaultAcceleratorConfiguration,
 	org.eclipse.ui.contexts.window,,,system)
@@ -184,17 +184,17 @@ Binding(CTRL+G,
 	ParameterizedCommand(Command(org.eclipse.jubula.client.ui.commands.JumpToCTDS,Jump to Central Test Data Set,
 		Jumps to the Central Test Data Set referenced by a ?getCentralTestDataSetValue function.,
 		Category(org.eclipse.jubula.client.ui.rcp.commands,Functional Test,null,true),
-		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@5f58ff4f,
+		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@4d760ddb,
 		,,true),null),
 	org.eclipse.ui.defaultAcceleratorConfiguration,
 	org.eclipse.ui.contexts.window,,,system)
-!SUBENTRY 1 org.eclipse.jface 2 0 2019-08-21 23:26:26.321
+!SUBENTRY 1 org.eclipse.jface 2 0 2019-08-22 10:07:46.732
 !MESSAGE A conflict occurred for ALT+SHIFT+D R:
 Binding(ALT+SHIFT+D R,
 	ParameterizedCommand(Command(org.eclipse.rap.tools.launch.RAPLaunchShortcut.debug,Debug RAP Application,
 		Debug RAP Application,
 		Category(org.eclipse.debug.ui.category.run,Run/Debug,Run/Debug command category,true),
-		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@18cbd36b,
+		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@980142a,
 		,,true),null),
 	org.eclipse.ui.defaultAcceleratorConfiguration,
 	org.eclipse.ui.contexts.window,,,system)
@@ -202,17 +202,17 @@ Binding(ALT+SHIFT+D R,
 	ParameterizedCommand(Command(org.eclipse.wst.server.launchShortcut.debug,Debug on Server,
 		Debug the current selection on a server,
 		Category(org.eclipse.debug.ui.category.run,Run/Debug,Run/Debug command category,true),
-		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@5f851718,
+		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@767bcf4d,
 		,,true),null),
 	org.eclipse.ui.defaultAcceleratorConfiguration,
 	org.eclipse.ui.contexts.window,,,system)
-!SUBENTRY 1 org.eclipse.jface 2 0 2019-08-21 23:26:26.321
+!SUBENTRY 1 org.eclipse.jface 2 0 2019-08-22 10:07:46.732
 !MESSAGE A conflict occurred for CTRL+SHIFT+T:
 Binding(CTRL+SHIFT+T,
 	ParameterizedCommand(Command(org.eclipse.jdt.ui.navigate.open.type,Open Type,
 		Open a type in a Java editor,
 		Category(org.eclipse.ui.category.navigate,Navigate,null,true),
-		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@2e51e263,
+		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@4e492c7d,
 		,,true),null),
 	org.eclipse.ui.defaultAcceleratorConfiguration,
 	org.eclipse.ui.contexts.window,,,system)
@@ -220,17 +220,17 @@ Binding(CTRL+SHIFT+T,
 	ParameterizedCommand(Command(org.eclipse.lsp4e.symbolinworkspace,Go to Symbol in Workspace,
 		,
 		Category(org.eclipse.lsp4e.category,Language Servers,null,true),
-		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@36ebd261,
+		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@332cf8ba,
 		,,true),null),
 	org.eclipse.ui.defaultAcceleratorConfiguration,
 	org.eclipse.ui.contexts.window,,,system)
-!SUBENTRY 1 org.eclipse.jface 2 0 2019-08-21 23:26:26.322
+!SUBENTRY 1 org.eclipse.jface 2 0 2019-08-22 10:07:46.732
 !MESSAGE A conflict occurred for CTRL+7:
 Binding(CTRL+7,
 	ParameterizedCommand(Command(org.eclipse.jubula.client.ui.rcp.commands.ToggleActiveStatus,Set as active / inactive,
 		,
 		Category(org.eclipse.jubula.client.ui.rcp.commands,Functional Test,null,true),
-		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@70fd1f5c,
+		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@3a848bb1,
 		,,true),null),
 	org.eclipse.ui.defaultAcceleratorConfiguration,
 	org.eclipse.ui.contexts.window,,,system)
@@ -238,17 +238,17 @@ Binding(CTRL+7,
 	ParameterizedCommand(Command(org.eclipse.ptp.etfw.feedback.actions.commands.perfsuiteCommand,Display PerfSuite Feedback,
 		,
 		Category(org.eclipse.ptp.etfw.feedback.actions.commands.category,PerfSuite Feedback View,null,true),
-		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@7b7eb8c,
+		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@12ad2a0b,
 		,,true),null),
 	org.eclipse.ui.defaultAcceleratorConfiguration,
 	org.eclipse.ui.contexts.window,,,system)
-!SUBENTRY 1 org.eclipse.jface 2 0 2019-08-21 23:26:26.322
+!SUBENTRY 1 org.eclipse.jface 2 0 2019-08-22 10:07:46.733
 !MESSAGE A conflict occurred for CTRL+SHIFT+C:
 Binding(CTRL+SHIFT+C,
 	ParameterizedCommand(Command(org.eclipse.jubula.client.ui.rcp.commands.ConnectToAUTAgentCommand,&Connect to AUT Agent,
 		,
 		Category(org.eclipse.jubula.client.ui.rcp.commands,Functional Test,null,true),
-		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@26d443e3,
+		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@1500c6e7,
 		[Parameter(org.eclipse.jubula.client.ui.rcp.commands.ConnectToAUTAgentCommand.parameter.name,autagent.name,null,false), Parameter(org.eclipse.jubula.client.ui.rcp.commands.ConnectToAUTAgentCommand.parameter.port,autagent.port,null,false)],,true),null),
 	org.eclipse.ui.defaultAcceleratorConfiguration,
 	org.eclipse.ui.contexts.window,,,system)
@@ -256,17 +256,17 @@ Binding(CTRL+SHIFT+C,
 	ParameterizedCommand(Command(org.eclipse.tcf.te.tcf.ui.toolbar.command.select,Select Default Connection...,
 		Select a default connection,
 		Category(org.eclipse.tcf.te.ui.commands.category,Target Explorer Commands,null,true),
-		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@4e44f582,
+		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@413d15d5,
 		,,true),null),
 	org.eclipse.ui.defaultAcceleratorConfiguration,
 	org.eclipse.ui.contexts.window,,,system)
-!SUBENTRY 1 org.eclipse.jface 2 0 2019-08-21 23:26:26.322
+!SUBENTRY 1 org.eclipse.jface 2 0 2019-08-22 10:07:46.733
 !MESSAGE A conflict occurred for CTRL+SHIFT+F11:
 Binding(CTRL+SHIFT+F11,
 	ParameterizedCommand(Command(org.eclipse.eclemma.ui.commands.CoverageLast,Coverage,
 		Coverage,
 		Category(org.eclipse.debug.ui.category.run,Run/Debug,Run/Debug command category,true),
-		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@565b04e9,
+		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@5ffac740,
 		,,true),null),
 	org.eclipse.ui.defaultAcceleratorConfiguration,
 	org.eclipse.ui.contexts.window,,,system)
@@ -274,21 +274,21 @@ Binding(CTRL+SHIFT+F11,
 	ParameterizedCommand(Command(org.eclipse.tcf.te.tcf.ui.toolbar.command.historyLast,Execute Last Action,
 		,
 		Category(org.eclipse.tcf.te.ui.commands.category,Target Explorer Commands,null,true),
-		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@6e886e25,
+		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@247c43c6,
 		,,true),null),
 	org.eclipse.ui.defaultAcceleratorConfiguration,
 	org.eclipse.ui.contexts.window,,gtk,system)
 
-!ENTRY org.eclipse.launchbar.core 2 0 2019-08-21 23:26:27.104
+!ENTRY org.eclipse.launchbar.core 2 0 2019-08-22 10:07:47.476
 !MESSAGE Enablement expression is missing for descriptor type org.eclipse.cdt.debug.core.coreBuildDescriptorType
 
-!ENTRY org.eclipse.launchbar.core 2 0 2019-08-21 23:26:27.167
+!ENTRY org.eclipse.launchbar.core 2 0 2019-08-22 10:07:47.477
 !MESSAGE Enablement expression is missing for config provider for org.eclipse.cdt.debug.core.coreBuildDescriptorType
 
-!ENTRY org.eclipse.launchbar.core 2 0 2019-08-21 23:26:27.167
+!ENTRY org.eclipse.launchbar.core 2 0 2019-08-22 10:07:47.477
 !MESSAGE Enablement expression is missing for config provider for org.eclipse.cdt.debug.core.coreBuildDescriptorType
 
-!ENTRY org.eclipse.epp.logging.aeri.ide 2 17 2019-08-21 23:26:39.858
+!ENTRY org.eclipse.epp.logging.aeri.ide 2 17 2019-08-22 10:07:59.718
 !MESSAGE Server ‘org.eclipse.epp.logging.aeri.ide.server’ failed with exception: Read timed out. ; version: 2.0.7.v20170906-1327
 !STACK 0
 java.net.SocketTimeoutException: Read timed out
@@ -327,7 +327,7 @@ java.net.SocketTimeoutException: Read timed out
 	at com.google.common.util.concurrent.Callables$4.run(Callables.java:122)
 	at java.lang.Thread.run(Thread.java:748)
 
-!ENTRY org.eclipse.ui 4 0 2019-08-21 23:26:47.429
+!ENTRY org.eclipse.ui 4 0 2019-08-22 10:08:09.134
 !MESSAGE Unhandled event loop exception
 !STACK 0
 org.eclipse.swt.SWTException: Widget is disposed
@@ -365,61 +365,46 @@ org.eclipse.swt.SWTException: Widget is disposed
 	at org.eclipse.equinox.launcher.Main.run(Main.java:1499)
 	at org.eclipse.equinox.launcher.Main.main(Main.java:1472)
 
-!ENTRY org.eclipse.lsp4e 1 0 2019-08-21 23:27:45.912
+!ENTRY org.eclipse.lsp4e 1 0 2019-08-22 10:09:01.012
 !MESSAGE Non IFiles not supported yet
 
-!ENTRY org.eclipse.ltk.ui.refactoring 4 10000 2019-08-21 23:29:24.762
-!MESSAGE Internal Error
-!STACK 1
-Java Model Exception: Core Exception [code 4] Problems encountered while moving resources.
-	at org.eclipse.jdt.internal.core.BatchOperation.executeOperation(BatchOperation.java:50)
-	at org.eclipse.jdt.internal.core.JavaModelOperation.run(JavaModelOperation.java:724)
-	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2240)
-	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2267)
-	at org.eclipse.jdt.core.JavaCore.run(JavaCore.java:5680)
-	at org.eclipse.jdt.internal.corext.refactoring.changes.DynamicValidationStateChange.perform(DynamicValidationStateChange.java:108)
-	at org.eclipse.jdt.internal.corext.refactoring.reorg.JavaMoveProcessor$1.perform(JavaMoveProcessor.java:151)
-	at org.eclipse.ltk.core.refactoring.CompositeChange.perform(CompositeChange.java:280)
-	at org.eclipse.ltk.core.refactoring.PerformChangeOperation$1.run(PerformChangeOperation.java:257)
-	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2240)
-	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2267)
-	at org.eclipse.ltk.core.refactoring.PerformChangeOperation.executeChange(PerformChangeOperation.java:305)
-	at org.eclipse.ltk.internal.ui.refactoring.UIPerformChangeOperation.executeChange(UIPerformChangeOperation.java:96)
-	at org.eclipse.ltk.core.refactoring.PerformChangeOperation.run(PerformChangeOperation.java:216)
-	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2240)
-	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2267)
-	at org.eclipse.ltk.internal.ui.refactoring.WorkbenchRunnableAdapter.run(WorkbenchRunnableAdapter.java:86)
-	at org.eclipse.jface.operation.ModalContext$ModalContextThread.run(ModalContext.java:119)
-Contains: File already exists on disk: /home/blahblah/Downloads/bamarket/restful-web-services/src/main/java/com/sept/rest/basic/auth/CorsFilter.java.
-Caused by: org.eclipse.core.internal.resources.ResourceException: Problems encountered while moving resources.
-	at org.eclipse.core.internal.resources.Resource.move(Resource.java:1514)
-	at org.eclipse.ltk.core.refactoring.resource.MoveResourceChange.perform(MoveResourceChange.java:115)
-	at org.eclipse.ltk.core.refactoring.CompositeChange.perform(CompositeChange.java:280)
-	at org.eclipse.jdt.internal.corext.refactoring.changes.DynamicValidationStateChange.access$0(DynamicValidationStateChange.java:1)
-	at org.eclipse.jdt.internal.corext.refactoring.changes.DynamicValidationStateChange$1.run(DynamicValidationStateChange.java:105)
-	at org.eclipse.jdt.internal.core.BatchOperation.executeOperation(BatchOperation.java:39)
-	at org.eclipse.jdt.internal.core.JavaModelOperation.run(JavaModelOperation.java:724)
-	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2240)
-	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2267)
-	at org.eclipse.jdt.core.JavaCore.run(JavaCore.java:5680)
-	at org.eclipse.jdt.internal.corext.refactoring.changes.DynamicValidationStateChange.perform(DynamicValidationStateChange.java:108)
-	at org.eclipse.jdt.internal.corext.refactoring.reorg.JavaMoveProcessor$1.perform(JavaMoveProcessor.java:151)
-	at org.eclipse.ltk.core.refactoring.CompositeChange.perform(CompositeChange.java:280)
-	at org.eclipse.ltk.core.refactoring.PerformChangeOperation$1.run(PerformChangeOperation.java:257)
-	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2240)
-	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2267)
-	at org.eclipse.ltk.core.refactoring.PerformChangeOperation.executeChange(PerformChangeOperation.java:305)
-	at org.eclipse.ltk.internal.ui.refactoring.UIPerformChangeOperation.executeChange(UIPerformChangeOperation.java:96)
-	at org.eclipse.ltk.core.refactoring.PerformChangeOperation.run(PerformChangeOperation.java:216)
-	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2240)
-	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2267)
-	at org.eclipse.ltk.internal.ui.refactoring.WorkbenchRunnableAdapter.run(WorkbenchRunnableAdapter.java:86)
-	at org.eclipse.jface.operation.ModalContext$ModalContextThread.run(ModalContext.java:119)
-Contains: File already exists on disk: /home/blahblah/Downloads/bamarket/restful-web-services/src/main/java/com/sept/rest/basic/auth/CorsFilter.java.
-!SUBENTRY 1 org.eclipse.core.resources 4 4 2019-08-21 23:29:24.764
-!MESSAGE Problems encountered while moving resources.
-!SUBENTRY 2 org.eclipse.core.filesystem 4 268 2019-08-21 23:29:24.764
-!MESSAGE File already exists on disk: /home/blahblah/Downloads/bamarket/restful-web-services/src/main/java/com/sept/rest/basic/auth/CorsFilter.java.
+!ENTRY org.eclipse.lsp4e 1 0 2019-08-22 10:11:43.569
+!MESSAGE Non IFiles not supported yet
 
-!ENTRY org.eclipse.debug.ui 4 0 2019-08-21 23:31:07.560
+!ENTRY org.eclipse.lsp4e 1 0 2019-08-22 10:11:43.657
+!MESSAGE Non IFiles not supported yet
+
+!ENTRY org.eclipse.debug.ui 4 0 2019-08-22 10:12:00.061
 !MESSAGE Tab group extension: org.eclipse.cdt.launch.applicationProfileLaunchTabGroup for type org.eclipse.cdt.launch.applicationLaunchType for the [profile] mode has been replaced by extension: org.eclipse.cdt.launch.applicationProfileLaunchTabGroup
+
+!ENTRY org.eclipse.jface.text 2 0 2019-08-22 10:17:14.458
+!MESSAGE Duplicate template id: 'org.eclipse.wst.xslt.templates.xpath.number'
+
+!ENTRY org.eclipse.jface.text 2 0 2019-08-22 10:17:14.487
+!MESSAGE Duplicate template id: 'org.eclipse.wst.xslt.templates.xpath.round'
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2019-08-22 10:17:15.305
+!MESSAGE Failed to download org.eclipse.recommenders:index::zip:0.0.0
+!STACK 0
+org.eclipse.aether.resolution.ArtifactResolutionException: Could not find artifact org.eclipse.recommenders:index:zip:0.0.0-SNAPSHOT in models (http://download.eclipse.org/recommenders/models/oxygen/)
+	at org.eclipse.aether.internal.impl.DefaultArtifactResolver.resolve(DefaultArtifactResolver.java:453)
+	at org.eclipse.aether.internal.impl.DefaultArtifactResolver.resolveArtifacts(DefaultArtifactResolver.java:255)
+	at org.eclipse.aether.internal.impl.DefaultArtifactResolver.resolveArtifact(DefaultArtifactResolver.java:232)
+	at org.eclipse.aether.internal.impl.DefaultRepositorySystem.resolveArtifact(DefaultRepositorySystem.java:303)
+	at org.eclipse.recommenders.models.ModelRepository.resolveInternal(ModelRepository.java:193)
+	at org.eclipse.recommenders.models.ModelRepository.resolve(ModelRepository.java:172)
+	at org.eclipse.recommenders.internal.models.rcp.EclipseModelRepository.resolve(EclipseModelRepository.java:168)
+	at org.eclipse.recommenders.internal.models.rcp.DownloadModelArchiveJob.run(DownloadModelArchiveJob.java:76)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:56)
+Caused by: org.eclipse.aether.transfer.ArtifactNotFoundException: Could not find artifact org.eclipse.recommenders:index:zip:0.0.0-SNAPSHOT in models (http://download.eclipse.org/recommenders/models/oxygen/)
+	at org.eclipse.aether.connector.basic.ArtifactTransportListener.transferFailed(ArtifactTransportListener.java:48)
+	at org.eclipse.aether.connector.basic.BasicRepositoryConnector$TaskRunner.run(BasicRepositoryConnector.java:364)
+	at org.eclipse.aether.util.concurrency.RunnableErrorForwarder$1.run(RunnableErrorForwarder.java:76)
+	at org.eclipse.aether.connector.basic.BasicRepositoryConnector$DirectExecutor.execute(BasicRepositoryConnector.java:590)
+	at org.eclipse.aether.connector.basic.BasicRepositoryConnector.get(BasicRepositoryConnector.java:258)
+	at org.eclipse.aether.internal.impl.DefaultArtifactResolver.performDownloads(DefaultArtifactResolver.java:529)
+	at org.eclipse.aether.internal.impl.DefaultArtifactResolver.resolve(DefaultArtifactResolver.java:430)
+	... 8 more
+
+!ENTRY org.eclipse.recommenders.models.rcp 1 0 2019-08-22 10:17:15.320
+!MESSAGE org.eclipse.recommenders:index::zip:0.0.0 could not be resolved from the model repositories. Are you offline?

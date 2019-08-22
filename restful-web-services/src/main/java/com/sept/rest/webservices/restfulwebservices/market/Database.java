@@ -156,9 +156,12 @@ public class Database {
 			int norow=0;
 			rowcount = statement.executeQuery("select count(*) from sale where Status= 'T'");
 			while(rowcount.next()) {
-				norow = rowcount.getInt(1);
+			norow = rowcount.getInt(1);
 			};
-			System.out.println(norow);
+			statement.close();
+			conn.close();
+			
+			
 			//data = statement.executeQuery("select * from sale where Status= 'T'");
 			//int row = 0;
 			//column count
@@ -201,11 +204,7 @@ public class Database {
 		return null;
 	}
   
-	public static String [][] tester(){
-		String[][] cats= Database.check_for_sale();
-		
-		return cats;
-	}
+	
 //	catch (SQLException e) {
 	//	e.printStackTrace();
 	

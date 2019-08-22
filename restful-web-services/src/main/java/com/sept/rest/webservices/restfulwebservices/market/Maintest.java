@@ -54,9 +54,9 @@ public class Maintest {
 	//	Database.sold_item(9);
 	//	Database.search_by_category("Household"); 
 		
-		/*
-		Database.check_for_sale();
-		System.out.println("confirmed");
+		
+		System.out.println(Database.check_for_sale());
+		/*System.out.println("confirmed");
 		System.out.println("confirmed");
 		System.out.println("confirmed");
 		

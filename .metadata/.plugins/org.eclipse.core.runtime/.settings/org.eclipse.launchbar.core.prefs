@@ -1,7 +1,7 @@
 LaunchTargetManager/org.eclipse.launchbar.core.launchTargetType.local,Local/arch=x86_64
 LaunchTargetManager/org.eclipse.launchbar.core.launchTargetType.local,Local/name=Local
 LaunchTargetManager/org.eclipse.launchbar.core.launchTargetType.local,Local/os=linux
-configDescList=org.eclipse.launchbar.core.descriptorType.default\:restful-web-services,org.eclipse.launchbar.core.descriptorType.default\:Maintest,org.eclipse.launchbar.core.descriptorType.default\:RestfulWebServicesApplication
+configDescList=org.eclipse.launchbar.core.descriptorType.default\:restful-web-services,org.eclipse.launchbar.core.descriptorType.default\:RestfulWebServicesApplication,org.eclipse.launchbar.core.descriptorType.default\:Maintest
 eclipse.preferences.version=1
-org.eclipse.launchbar.core.descriptorType.default\:Maintest/activeLaunchMode=run
-org.eclipse.launchbar.core.descriptorType.default\:Maintest/activeLaunchTarget=org.eclipse.launchbar.core.launchTargetType.local\:Local
+org.eclipse.launchbar.core.descriptorType.default\:restful-web-services/activeLaunchMode=run
+org.eclipse.launchbar.core.descriptorType.default\:restful-web-services/activeLaunchTarget=org.eclipse.launchbar.core.launchTargetType.local\:Local
