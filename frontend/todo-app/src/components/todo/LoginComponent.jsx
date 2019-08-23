@@ -44,7 +44,7 @@ class LoginComponent extends Component {
     // }
 
     loginClicked() {
-        //sept,dummy
+        // sept,dummy
         // if(this.state.username==='sept' && this.state.password==='dummy'){
         //     AuthenticationService.registerSuccessfulLogin(this.state.username,this.state.password)
         //     this.props.history.push(`/welcome/${this.state.username}`)
