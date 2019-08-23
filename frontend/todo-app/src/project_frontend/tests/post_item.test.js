@@ -2,32 +2,45 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Post_item from '../pages/Post_item';
 
-it('renders post item page', () => {
+let container = null;
+beforeEach(() => {
+  //creates dom componenet to use
   const div = document.createElement('div');
-  ReactDOM.render(<Post_item />, div);
-  ReactDOM.unmountComponentAtNode(div);
-});
+  container = ReactDOM.render(<Post_item />, div);
 
-it('renders all needed inputs' () => {
+  //to change the states
+  //gl reuben
+  container.state.item_cost = "13";
+  console.log(container.state.item_cost);
+})
 
-});
-
-it('rejects current session user id' () => {
-
-});
-
-it('rejects negative cost' () => {
+afterEach(() => {
 
 });
 
-it('rejects no cost' () => {
+it('calls onSubmit prop function when form is submitted', () => {
+});
+
+it('renders all needed inputs', () => {
 
 });
 
-it('rejects no name' () => {
+it('rejects current session user id', () => {
 
 });
 
-it('disallows text in cost' () => {
+it('rejects negative cost', () => {
+
+});
+
+it('rejects no cost', () => {
+
+});
+
+it('rejects no name', () => {
+
+});
+
+it('disallows text in cost', () => {
 
 });
