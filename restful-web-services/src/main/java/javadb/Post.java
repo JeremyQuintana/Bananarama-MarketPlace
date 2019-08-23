@@ -9,7 +9,7 @@ import javadb.Post.Column;
 
 public class Post {
 	
-	public Post(int id, String owner, String title, String description, double price, Date date, String category)
+	public Post(int id, String owner, String title, String description, int price, Date date, String category)
 	{
 		this.id = id;
 		this.ownerId = owner;
@@ -19,7 +19,6 @@ public class Post {
 		this.category = category;
 		this.status = Status.AVAILABLE;
 		this.datePosted = date;
-		/*DATE posted ???*/
 	}
 	
 	public Post(ResultSet post)
@@ -29,7 +28,7 @@ public class Post {
 			ownerId = post.getString(2);
 			title = post.getString(3);
 			description = post.getString(4);
-			price = post.getDouble(5);
+			price = post.getInt(5);
 			status = Status.getStatus(post.getString(6));
 			datePosted = post.getDate(7);
 			category = post.getString(8);
@@ -40,7 +39,7 @@ public class Post {
 	
 	private String description;
 	private String title;
-	private double price;
+	private int price;
 	private String ownerId;
 	private Status status;
 	private Date datePosted;
@@ -145,4 +144,10 @@ public class Post {
 	public void setId(int id)	{this.id = id;}
 	public Status getStatus()		{return status;}
 	public String getOwnerId()	{return ownerId;}
+
+	public String getTitle() {return title;}
+	public String getDesc() {return description;}
+	public String getCategory() {return category;}
+	public int getPrice() {return price;}
+	
 }
