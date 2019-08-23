@@ -4,7 +4,9 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import HeaderComponent from '../todo/HeaderComponent.jsx'
 import FooterComponent from '../todo/FooterComponent.jsx'
 import MarketComponent from './MarketComponent'
+import ChatComponent from './ChatComponent'
 import PostComponent from './PostComponent.jsx';
+
 
 import AuthenticatedRoute from '../todo/AuthenticatedRoute.jsx'
 import LoginComponent from '../todo/LoginComponent.jsx'
@@ -24,6 +26,8 @@ class MarketPlaceApp extends Component {
                         <HeaderComponent />
                         <Switch>
                             <Route path="/market" exact component={MarketComponent} />
+                            <Route path="/Chat" exact component={ChatComponent} />
+
                             <Route path="/posts/:postID" exact component={PostComponent} />
                             <Route path="/" exact component={LoginComponent} />
                             <Route path="/login" component={LoginComponent} />
@@ -33,7 +37,6 @@ class MarketPlaceApp extends Component {
                             <AuthenticatedRoute path="/todos" component={ListTodosComponent} />
                             <AuthenticatedRoute path="/logout" component={LogoutComponent} />
                         </Switch>
-                        <FooterComponent />
                     </>
                 </Router>
                 {/*<LoginComponent/>

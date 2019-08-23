@@ -1,0 +1,132 @@
+.Body {
+    display: grid;
+    height: 900px;
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr 60px;
+    grid-template-areas: 
+        "r m m m m m"
+        "r m m m m m"
+        "r m m m m m"
+        "r m m m m m"
+        "r m m m m m"
+        "r f f f f f";
+}
+
+.rooms-list {
+    grid-area: r;
+}
+
+.header{
+    grid-area: t;
+}
+
+.message-list {
+    grid-area: m;
+}
+
+.send-message-form {
+    grid-area: f;
+}
+
+.rooms-list {
+    box-sizing: border-box;
+    padding: 10px;
+    border-color: black;
+    background-color: white;
+    overflow: scroll;
+    height: 100%;
+    width: 100%;
+}
+
+.message_sender {
+    margin: 20px 0;
+
+}
+
+.message_receiver {
+    margin: 20px 0;
+
+}
+
+.chats {
+  border:1px solid black;
+  padding: 10px;
+    background: #3399FF;
+
+}
+
+.chats:hover { background-color: #696969; }
+
+.chats .chat_text {
+
+    color: white;
+    display: inline;
+    padding: 4px 8px;
+
+}
+
+.message .message-text {
+    background: #3399FF;
+    color: white;
+    display: inline;
+    padding: 4px 8px;
+    border-radius: 15px;
+}
+
+.message_receiver .receiver_message-text {
+     background: #F7347A;
+    color: white;
+    display: inline;
+    padding: 4px 8px;
+    border-radius: 15px;
+}
+
+
+.message-list {
+    box-sizing: border-box;
+    padding-left: 6px;
+    width: 100%;
+    height: 100%;
+    overflow: scroll;
+    background: #EEEEEE;
+
+    border-radius: 10px;
+
+}
+.InputBox {
+    background: #F5F5F5;
+    display: flex;
+    border-radius: 10px;
+    border-style: solid;
+    border-color: black;
+    border-radius: 10px;
+    box-sizing: border-box;
+    padding-left: 6px;
+    width: 100%;
+    height: 100%;
+    overflow: scroll;
+}
+
+.InputBox input {
+    width: 100%;
+    padding: 15px 10px;
+    margin: 0;
+    border-style: none;
+    background: var(--send-message-form);
+    font-weight: 200;
+
+}
+
+
+.InputBox input:focus {
+    outline-width: 0;
+}
+
+.send-message-form input::placeholder {
+    color: var(--main-text-color);
+}
+
+.help-text {
+    position: absolute;
+    top: 10px;
+}
