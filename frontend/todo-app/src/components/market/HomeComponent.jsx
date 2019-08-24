@@ -19,7 +19,7 @@ class HomeComponent extends Component {
 function App1() {
   return (
     <div className="App1">
-      <img src={require("./BANANA.png")} />{" "}
+      <img src={require("./BANANA.png")} />
     </div>
   );
 }
@@ -27,10 +27,10 @@ function App1() {
 function Grid() {
   return (
     <div class="grid-container">
-      <div class="grid-item">Home</div>
-      <div class="grid-item">MarketPlace</div>
-      <div class="grid-item">Chat</div>
-      <div class="grid-item">Account</div>
+      <div class="grid-item">Post <img src={require("./big-bill.png")} /></div>
+      <div class="grid-item">MarketPlace <img src={require("./market-basket-.png")} /></div>
+      <div class="grid-item">Chat <img src={require("./chat.png")} /></div>
+      <div class="grid-item">Account <img src={require("./avatar.png")} /></div>
     </div>
   );
 }
