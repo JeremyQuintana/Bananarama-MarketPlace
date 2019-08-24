@@ -8,14 +8,14 @@ it('renders post item page', () => {
   ReactDOM.unmountComponentAtNode(div);
 });
 
-it('does not accept empty fields' () => {
+// it('does not accept empty fields' () => {
 
-});
+// });
 
-it('rejects current session user id' () => {
+// it('rejects current session user id' () => {
 
-});
+// });
 
-it('rejects negative cost' () => {
+// it('rejects negative cost' () => {
 
-});
+// });

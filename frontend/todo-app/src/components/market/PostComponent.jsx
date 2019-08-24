@@ -18,7 +18,7 @@ class PostComponent extends Component {
         super(props);
         //this.allPostings = allPostings;
         
-        
+        // State stores the posts from backend
         this.state = {
             backPostings: [[]],
             // backPostings: allPostings,
@@ -31,6 +31,8 @@ class PostComponent extends Component {
 
     render() {
         let retVal;
+        // get the row from the backend array, based on the postID param in props
+        // create a div with all the singular posts information
         if (parseInt(this.props.match.params.postID) - 1 < this.state.backPostings.length && parseInt(this.props.match.params.postID) - 1 >= 0) {
             retVal = (
 
@@ -58,9 +60,10 @@ class PostComponent extends Component {
         return retVal;
     }
 
+    // update the postings array with backend data
     refreshPosts() {
 
-        this.allPostings = MarketDataService.retrieveAllPosts().then(
+        MarketDataService.retrieveAllPosts().then(
             response => {
                 //console.log(response.data);
                 this.setState({ backPostings: response.data })
