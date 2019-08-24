@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
+
 import toBackend from '../toBackend/postBackend.js'
 import './Post_item.css'
+
 
 class Post_item extends Component {
   constructor(props){
@@ -13,12 +15,16 @@ class Post_item extends Component {
     }
 
     this.handleChange = this.handleChange.bind(this)
+
     this.submitPost = this.submitPost.bind(this)
+
+
   }
 
   render() {
     return (
       <div className="Post_item">
+
         <form onSubmit={this.submitPost}>
           <div name="form">
             <div class="formDefinitions">
@@ -33,6 +39,7 @@ class Post_item extends Component {
             </div>
           </div>
           <input type="submit" value="Submit" name="itemSubmit"/>
+
         </form>
       </div>
     );
@@ -46,10 +53,12 @@ class Post_item extends Component {
     )
   }
 
+
   submitPost(event){
     toBackend.postItemBackend(this.state.item_description, this.state.item_name, this.state.item_cost);
     event.preventDefault();
   }
+
 }
 
 export default Post_item

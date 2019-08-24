@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Post_item from '../pages/Post_item';
 
+
 let container = null;
 beforeEach(() => {
   //creates dom componenet to use
@@ -47,3 +48,4 @@ it('rejects no name', () => {
 it('disallows text in cost', () => {
 
 });
+

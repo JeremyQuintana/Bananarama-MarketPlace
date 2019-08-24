@@ -1,9 +1,13 @@
 .footer {
-  position: absolute;
+  position: sticky;
   bottom: 0;
   width: 100%;
   height: 40px;
   background-color: #222222;
+}
+
+.MarketPlaceApp{
+    height: 100%;
 }
 
 .App {
@@ -39,3 +43,51 @@
     transform: rotate(360deg);
   }
 }
+
+.container img {
+  height: 50px;
+  border: 1px solid black;
+  margin: 10px 10px 10px 0px;
+}
+
+.posting{
+  border: 1px solid black;
+}
+
+.posting:hover{
+  cursor:pointer;
+  background: rgba(250, 200, 200, 10);
+}
+
+.postTitle{
+  font-size: 150%;
+}
+
+.postDescription{
+
+}
+
+.postSeller{
+  font-style: italic;
+}
+
+.postPrice{
+  font-weight: bolder;
+  
+}
+
+span.postPrice{
+  float: right;
+}
+.postPrice::after{
+  clear:both;
+}
+
+.marketTitle{
+  text-align:center;
+}
+
+div.postPrice {
+  text-align: right;
+}
+
