@@ -2,8 +2,11 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
+import MarketPlace from './MarketPlace';
+import Post_item from './project_frontend/pages/Post_item.jsx'
 import * as serviceWorker from './serviceWorker';
 
+//ReactDOM.render(<App />, document.getElementById('root'));
 ReactDOM.render(<App />, document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
