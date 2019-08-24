@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import HelloWorldService from '../../api/todo/HelloWorldService.js'
+import Post_item from '../../project_frontend/pages/Post_item.jsx'
 
 class WelcomeComponent extends Component {
 

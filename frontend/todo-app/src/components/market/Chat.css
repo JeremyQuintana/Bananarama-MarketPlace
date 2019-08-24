@@ -1,0 +1,149 @@
+.Body {
+	   background-color: #343a40;
+    display: grid;
+    width: 50%;
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr 60px;
+    grid-template-areas: 
+        "m m m m m m"
+        "m m m m m m"
+        "m m m m m m"
+        "m m m m m m"
+        "m m m m m m"
+        "r f f f f f";
+}
+
+.rooms-list {
+    grid-area: r;
+}
+
+.header{
+    grid-area: t;
+}
+
+.message-list {
+    grid-area: m;
+}
+
+.send-message-form {
+    grid-area: f;
+}
+
+.rooms-list {
+    box-sizing: border-box;
+    padding: 10px;
+    border-color: black;
+    background-color: #343a40;
+    overflow: scroll;
+    height: 100%;
+    width: 100%;
+
+}
+
+.message_sender {
+    margin: 20px 0;
+
+}
+
+.message_receiver {
+    margin: 20px 0;
+
+}
+
+.chats {
+  padding: 10px;
+    background: #34495E;
+    text-align: left;
+
+}
+
+.chats:hover { background-color: #696969; }
+
+.chats .chat_text {
+
+    color: white;
+    display: inline;
+    padding: 5px 5px;
+      font-size: 25px;
+
+
+}
+
+.message .message-text {
+    background: #3399FF;
+    color: white;
+    display: inline;
+    padding: 4px 8px;
+    border-radius: 15px;
+}
+
+.message_receiver .receiver_message-text {
+     background: #F7347A;
+    color: white;
+    display: inline;
+    padding: 4px 8px;
+    border-radius: 15px;
+}
+
+
+.message-list {
+    box-sizing: border-box;
+    padding-left: 6px;
+    width: 100%;
+    height: 500px;
+    overflow: scroll;
+    background: #EEEEEE;
+
+    border-radius: 10px;
+
+}
+.InputBox {
+    background: #EEEEEE;
+    display: flex;
+    border-radius: 10px;
+    border-style: solid;
+    border-color: black;
+
+    padding-left: 6px;
+    width: 500px;
+    height: 100%;
+    overflow: scroll;
+}
+
+.InputBox input {
+    width: 100%;
+    padding: 15px 10px;
+    margin: 0;
+    border-style: none;
+    background: var(--send-message-form);
+    font-weight: 200;
+
+}
+
+
+.InputBox input:focus {
+    outline-width: 0;
+}
+
+.send-message-form input::placeholder {
+    color: var(--main-text-color);
+}
+
+.help-text {
+    position: absolute;
+    top: 10px;
+}
+
+.grid-container {
+	padding-top: 20px;
+	padding-left: 2%;
+  display: grid;
+  grid-template-columns: auto auto;
+     background-color: #343a40;
+     padding-bottom: 400px;
+}
+.grid-item {
+
+  font-size: 30px;
+  text-align: left;
+}
