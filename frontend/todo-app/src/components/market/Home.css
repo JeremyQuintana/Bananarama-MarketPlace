@@ -17,6 +17,14 @@
 .grid-item{
     color:black;
 }
+
+
+.grid-item img{
+    color:black;
+    width: 30px;
+
+   	padding-bottom: 5px;
+}
 .grid-item:hover{
     color:grey;
 }
