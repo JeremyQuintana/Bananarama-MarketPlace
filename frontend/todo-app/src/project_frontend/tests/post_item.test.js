@@ -10,8 +10,10 @@ beforeEach(() => {
 
   //to change the states
   //gl reuben
-  container.state.item_cost = "13";
+  container.state.item_cost = '';
   console.log(container.state.item_cost);
+
+  /* need to get these values from main class*/
 })
 
 afterEach(() => {
@@ -30,11 +32,12 @@ it('rejects current session user id', () => {
 });
 
 it('rejects negative cost', () => {
-
+  /* test will work with jest?*/
+  expect(container.state.item_cost >= 0).toEqual(true);
 });
 
 it('rejects no cost', () => {
-
+  expect(container.state.item_cost == '').toEqual(false);
 });
 
 it('rejects no name', () => {
