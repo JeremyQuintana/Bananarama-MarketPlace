@@ -16,7 +16,7 @@ class HeaderComponent extends Component {
                         {isUserLoggedIn && <li><Link className="nav-link" to="/welcome/SEPT">Home</Link></li>}
                         {isUserLoggedIn && <li><Link className="nav-link" to="/todos">Todos</Link></li>}
 
-                        {isUserLoggedIn && <li><Link className="nav-link" to="/postitem">Post</Link></li>}
+                        {isUserLoggedIn && <li><Link className="nav-link" to="/post">Post</Link></li>}
 
                         {isUserLoggedIn && <li><Link className="nav-link" to="/market">Market</Link></li>}
                         
