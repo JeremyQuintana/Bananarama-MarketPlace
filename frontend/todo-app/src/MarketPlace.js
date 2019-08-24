@@ -9,6 +9,7 @@ import './bootstrap.css';
 
 class MarketPlace extends Component {
   render() {
+    // Render the MarketPlaceApp
     return (
       <div className="MarketPlace">
         {/*<Counter/>*/}

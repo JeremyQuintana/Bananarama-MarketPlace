@@ -17,6 +17,7 @@ import Post_item from '../../project_frontend/pages/Post_item.jsx';
 
 class MarketPlaceApp extends Component {
     render() {
+        // Return the divs with the header, footer and routes for different pages
         return (
             <div className="MarketPlaceApp">
                 <Router>

@@ -22,6 +22,7 @@ import com.sept.rest.webservices.restfulwebservices.todo.Todo;
 @RestController
 public class MarketResourceHardcoded {
 	
+	// Send the posts array from this backend to the frontend via localhost:8080/posts
 	@GetMapping("/posts")
 	public String[][] getAllTodos() {
 		// Thread.sleep(3000);
