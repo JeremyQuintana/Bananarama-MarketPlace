@@ -6,6 +6,10 @@
   background-color: #222222;
 }
 
+.MarketPlaceApp{
+    height: 100%;
+}
+
 .App {
   text-align: center;
 }
