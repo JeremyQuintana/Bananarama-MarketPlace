@@ -24,11 +24,11 @@ class MarketPlaceApp extends Component {
                     <>
                         <HeaderComponent />
                         <Switch>
-                            <Route path="/market" exact component={MarketComponent} />
-                            <Route path="/posts/:postID" exact component={PostComponent} />
+                            <AuthenticatedRoute path="/market" exact component={MarketComponent} />
+                            <AuthenticatedRoute path="/posts/:postID" exact component={PostComponent} />
                             <Route path="/" exact component={LoginComponent} />
                             <Route path="/login" component={LoginComponent} />
-                            <Route path="/post" component={Post_item} />
+                            <AuthenticatedRoute path="/post" component={Post_item} />
                             <AuthenticatedRoute path="/welcome/:name" component={WelcomeComponent} />
                             <AuthenticatedRoute path="/todos/:id" component={TodoComponent} />
                             <AuthenticatedRoute path="/todos" component={ListTodosComponent} />
