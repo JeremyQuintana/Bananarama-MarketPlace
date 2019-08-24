@@ -687,13 +687,13 @@ Authorization
 
 ```
 {
-  "username":"sept",
-  "password":"dummy"
+  "username":"ranga",
+  "password":"password@!23@#!"
 }
 ```
 
 Response
-(You should make your own token)
+
 ```
 {
 "token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJyYW5nYSIsImV4cCI6MTU0MjQ3MjA3NCwiaWF0IjoxNTQxODY3Mjc0fQ.kD6UJQyxjSPMzAhoTJRr-Z5UL-FfgsyxbdseWQvk0fLi7eVXAKhBkWfj06SwH43sY_ZWBEeLuxaE09szTboefw"
