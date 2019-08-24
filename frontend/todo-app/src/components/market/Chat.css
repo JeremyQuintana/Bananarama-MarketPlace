@@ -1,14 +1,15 @@
 .Body {
+	   background-color: #343a40;
     display: grid;
-    height: 900px;
+    width: 50%;
     grid-template-columns: repeat(6, 1fr);
     grid-template-rows: 1fr 1fr 1fr 1fr 1fr 60px;
     grid-template-areas: 
-        "r m m m m m"
-        "r m m m m m"
-        "r m m m m m"
-        "r m m m m m"
-        "r m m m m m"
+        "m m m m m m"
+        "m m m m m m"
+        "m m m m m m"
+        "m m m m m m"
+        "m m m m m m"
         "r f f f f f";
 }
 
@@ -32,10 +33,11 @@
     box-sizing: border-box;
     padding: 10px;
     border-color: black;
-    background-color: white;
+    background-color: #343a40;
     overflow: scroll;
     height: 100%;
     width: 100%;
+
 }
 
 .message_sender {
@@ -49,9 +51,9 @@
 }
 
 .chats {
-  border:1px solid black;
   padding: 10px;
-    background: #3399FF;
+    background: #34495E;
+    text-align: left;
 
 }
 
@@ -61,7 +63,9 @@
 
     color: white;
     display: inline;
-    padding: 4px 8px;
+    padding: 5px 5px;
+      font-size: 25px;
+
 
 }
 
@@ -86,7 +90,7 @@
     box-sizing: border-box;
     padding-left: 6px;
     width: 100%;
-    height: 100%;
+    height: 500px;
     overflow: scroll;
     background: #EEEEEE;
 
@@ -94,15 +98,14 @@
 
 }
 .InputBox {
-    background: #F5F5F5;
+    background: #EEEEEE;
     display: flex;
     border-radius: 10px;
     border-style: solid;
     border-color: black;
-    border-radius: 10px;
-    box-sizing: border-box;
+
     padding-left: 6px;
-    width: 100%;
+    width: 500px;
     height: 100%;
     overflow: scroll;
 }
@@ -129,4 +132,18 @@
 .help-text {
     position: absolute;
     top: 10px;
+}
+
+.grid-container {
+	padding-top: 20px;
+	padding-left: 2%;
+  display: grid;
+  grid-template-columns: auto auto;
+     background-color: #343a40;
+     padding-bottom: 400px;
+}
+.grid-item {
+
+  font-size: 30px;
+  text-align: left;
 }
