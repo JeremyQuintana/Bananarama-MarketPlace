@@ -18,7 +18,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.sept.rest.webservices.restfulwebservices.todo.Todo;
 
-@CrossOrigin(origins="http://localhost:3000")
+@CrossOrigin(origins="http://localhost:4200")
 @RestController
 public class TodoJpaResource {
 	
