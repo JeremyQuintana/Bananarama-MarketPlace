@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
 
+import toBackend from '../toBackend/postBackend.js'
+import './Post_item.css'
+
+
 class Post_item extends Component {
   constructor(props){
     super(props)
@@ -11,17 +15,31 @@ class Post_item extends Component {
     }
 
     this.handleChange = this.handleChange.bind(this)
+
+    this.submitPost = this.submitPost.bind(this)
+
+
   }
 
   render() {
     return (
       <div className="Post_item">
-        <form>
-          <label>Item Description: <textarea name="item_description" placeholder="Item Description" value={this.state.item_description} onChange={this.handleChange} /></label><br />
-          <label>Item Name: <input required type="text" name="item_name" placeholder="Item Name" value={this.state.item_name} onChange={this.handleChange} /></label><br />
-          <label>Item Cost: $<input required type="number" name="item_cost" placeholder="Item Cost" min="0.01" step="0.01" pattern="\d.\d" value={this.state.item_cost} onChange={this.handleChange} /></label><br />
-          <label>Item Image: <input type="file" name="item_img" accept="image/*" /></label><br />
-          <input type="submit" value="Submit" />
+
+        <form onSubmit={this.submitPost}>
+          <div name="form">
+            <div class="formDefinitions">
+              <label for="item_description" class="definitions">Item Description: </label>
+              <label for="item_name" class="definitions">Item Name: </label>
+              <label for="item_cost" class="definitions">Item Cost: </label>
+            </div>
+            <div class="formInputs">
+              <textarea name="item_description" class="input" placeholder="Mushy Explanation" value={this.state.item_description} onChange={this.handleChange} />
+              <input required type="text" name="item_name" class="input" placeholder="Banana Name" value={this.state.item_name} onChange={this.handleChange} />
+              <input required type="number" name="item_cost" class="input" placeholder="$000.00" min="000.01" step="0.01" pattern="\d.\d" value={this.state.item_cost} onChange={this.handleChange} />
+            </div>
+          </div>
+          <input type="submit" value="Submit" name="itemSubmit"/>
+
         </form>
       </div>
     );
@@ -34,6 +52,13 @@ class Post_item extends Component {
       }
     )
   }
+
+
+  submitPost(event){
+    toBackend.postItemBackend(this.state.item_description, this.state.item_name, this.state.item_cost);
+    event.preventDefault();
+  }
+
 }
 
 export default Post_item
