@@ -228,6 +228,11 @@ public class DatabaseRef {
 		}
 	}
 	
+	public static ResultSet query(String str) throws SQLException
+	{
+		return statement.executeQuery(str);
+	}
+	
 	public Map<Integer, Post> getPosts(String str) throws SQLException
 	{
 		Map<Integer, Post> matched = new HashMap<>();

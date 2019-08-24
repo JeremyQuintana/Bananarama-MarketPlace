@@ -37,6 +37,8 @@ public class Post {
 		}
 	}
 	
+	
+	
 	private String description;
 	private String title;
 	private int price;
@@ -45,7 +47,8 @@ public class Post {
 	private Date datePosted;
 	private String category;
 	private int id;
-	
+	// by giving another name, can put daatabase in "test mode"
+	public static String TABLE_NAME = "sale";
 	//edit post column in marketplace
 	public void edit(Column column, String edit) {
 		update(column, edit);
@@ -74,12 +77,14 @@ public class Post {
 			case STATUS :	status = Status.getStatus(edit);break;
 			case CATEGORY : category = edit;				break;
 			case PRICE : price = Integer.parseInt(edit);	break;
+			default: throw new NullPointerException("cannot change this");
 		}
 	}
 	
+	
 	public static void update(Column column, String value, String id)
 	{
-		DatabaseRef.update("Update sale set " + column.key() + "='"+ value +"' where PostID='"+id+"'");
+		DatabaseRef.update("Update "+ TABLE_NAME +" set " + column.key() + "='"+ value +"' where PostID='"+id+"'");
 	}
 	
 	
