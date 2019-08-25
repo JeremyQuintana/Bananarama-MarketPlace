@@ -25,10 +25,6 @@ public class DatabaseRef {
 //		DatabaseRef db = new DatabaseRef();
 //		
 //		DatabaseRef.update("delete from sale where PostID = 26");
-		
-		
-		
-		
 	}
 	private static Statement statement;
 	private static ResultSet data;
@@ -108,7 +104,7 @@ public class DatabaseRef {
 				return true;
 		return false;
 	}
-//end login details
+	//end login details
 
 	
 	
@@ -118,76 +114,36 @@ public class DatabaseRef {
 	
 	
 	//browse marketplace
-		//main place display of for sale items, checks for current for sale items in db
-		public Map<Integer, Post> check_for_sale() throws SQLException
-		{
-			return getPosts("select * from sale where Status= 'a'");
-		}
-	 
-		//Show history of sale items for user
-		public Map<Integer, Post> sale_history(String ownerId) throws SQLException 
-		{
-			return getPosts("select * from sale where ID='" + ownerId + "'");
-		}
+	//main place display of for sale items, checks for current for sale items in db
+	public Map<Integer, Post> check_for_sale() throws SQLException
+	{
+		return getPosts("select * from sale where Status= 'a'");
+	}
+
+	//Show history of sale items for user
+	public Map<Integer, Post> sale_history(String ownerId) throws SQLException 
+	{
+		return getPosts("select * from sale where ID='" + ownerId + "'");
+	}
+
+	//Show history of sale items for user
+	public Map<Integer, Post> searchCategory(String cate_desc) throws SQLException 
+	{
+		return getPosts("select * from sale where Category='"+cate_desc+"'");
+	}
+
+	//Show history of sale items for user
+	public Map<Integer, Post> sale_history(String cate_word, String desc_word) throws SQLException 
+	{
+		return getPosts("select * from sale where Category='"+cate_word+"'AND Item_Description like'%"+ desc_word +"%'");
+	}
 		
-		//Show history of sale items for user
-		public Map<Integer, Post> searchCategory(String cate_desc) throws SQLException 
-		{
-			return getPosts("select * from sale where Category='"+cate_desc+"'");
-		}
-		
-		//Show history of sale items for user
-		public Map<Integer, Post> sale_history(String cate_word, String desc_word) throws SQLException 
-		{
-			return getPosts("select * from sale where Category='"+cate_word+"'AND Item_Description like'%"+ desc_word +"%'");
-		}
-		
-//
-//		
-//		
-//		
-//		
-//		
-//		
-//		
-//		
-//	//Post sell items in marketplace
-//		public void addPost(String id, String itemname, String descpt, int price, String cate) 
-//		{
-//			java.sql.Date curdate = new java.sql.Date(new java.util.Date().getTime());
-//			update("insert into sale(ID, Item_Name, Item_Description, Price, Status, Date, Category) VALUES ('"+ id +"','"+itemname+"','"+descpt+"','"+price+"', 'A', '"+curdate+"','"+cate+"')");
-//		}
-//
-//		//edit price items in marketplace
-//		public void editPost(Column column, String edit) {
-//			update(column, edit, id);
-//		}
-//
-//		//Delete item from Marketplace
-//		public void deletePost() {
-//			update(Column.STATUS, "D", id);
-//		}
-//
-//		//Marked Item as sold on Marketplace
-//		public void postSold() {
-//			update(Column.STATUS, "S", id);
-//		}
-//	public void deletePost(int id)
-//	{
-//		posts.remove(id);
-//		
-//		// change so post id's match arraylist's
-//		for (int i=1; i<posts.size(); i++)
-//			posts.get(i).setId(i);
-//	}
-	
 
 	
 	
 	
 	
-	
-//browse marketplace
+	//browse marketplace
 	public void printPostsRaw() throws SQLException
 	{
 		data = statement.executeQuery("select * from sale");
@@ -197,7 +153,7 @@ public class DatabaseRef {
 		}
 	}
 
-//Post sell items in marketplace
+	//Post sell items in marketplace
 	public void sell_item(String owner, String title, String desc, int price, String cate) throws SQLException {
 		java.sql.Date curdate = new java.sql.Date(new java.util.Date().getTime());
 		update("insert into sale(ID, Item_Name, Item_Description, Price, Status, Date, Category) VALUES ('"+ owner +"','"+title+"','"+desc+"','"+price+"', 'A', '"+curdate+"','"+cate+"')");
@@ -226,6 +182,11 @@ public class DatabaseRef {
 		catch (SQLException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public static ResultSet query(String str) throws SQLException
+	{
+		return statement.executeQuery(str);
 	}
 	
 	public Map<Integer, Post> getPosts(String str) throws SQLException
