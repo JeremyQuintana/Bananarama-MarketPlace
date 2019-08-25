@@ -33,7 +33,7 @@ class Post_item extends Component {
               <label htmlFor="item_description" className="definitions">Item Description: </label>
               <label htmlFor="item_name" className="definitions">Item Name: </label>
               <label htmlFor="item_cost" className="definitions">Item Cost: </label>
-              <label htmlFor="item_catagory" className="definitions">Item Catagory: </label>
+              <label htmlFor="item_catagory" className="definitions">Item Category: </label>
               <label htmlFor="item_photo" className="definitions"> Item Photo: </label>
             </div>
             <div className="formInputs">
