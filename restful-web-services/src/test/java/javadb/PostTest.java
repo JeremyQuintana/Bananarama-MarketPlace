@@ -77,7 +77,6 @@ class PostTest {
 	{
 		ResultSet data = DatabaseRef.query(String.format("select %s from saleTest where PostID =%d", column.key(), id));
 		data.next();
-		String fa = data.getString(1);
 		assertEquals(data.getString(1), edit);
 	}
 }
