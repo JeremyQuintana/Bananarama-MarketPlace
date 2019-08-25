@@ -50,14 +50,14 @@ function addInputText() {
 class ChatComponent extends Component {
   render() {
     let retVal = (
-      <div>
+      <div className = "background">
         <div className="grid-container">
           <div className="grid-item">
             <CuurentChats></CuurentChats>
           </div>
           <div className="grid-item">
             {" "}
-            <div className="Body" id="refresh">
+            <div className="chat_container" id="refresh">
               <Chatwindow />
               <InputBox />
               <div className="title"></div>

@@ -1,5 +1,5 @@
-.Body {
-	   background-color: #343a40;
+.chat_container {
+	background-color: #343a40;
     display: grid;
     width: 50%;
     grid-template-columns: repeat(6, 1fr);
@@ -11,6 +11,11 @@
         "m m m m m m"
         "m m m m m m"
         "r f f f f f";
+}
+
+.background{
+        background-color: #343a40;
+
 }
 
 .rooms-list {
@@ -64,7 +69,8 @@
     color: white;
     display: inline;
     padding: 5px 5px;
-      font-size: 25px;
+    font-size: 25px;
+
 
 
 }
@@ -93,6 +99,8 @@
     height: 500px;
     overflow: scroll;
     background: #EEEEEE;
+      text-align: left;
+
 
     border-radius: 10px;
 
@@ -135,11 +143,12 @@
 }
 
 .grid-container {
+
 	padding-top: 20px;
 	padding-left: 2%;
   display: grid;
   grid-template-columns: auto auto;
-     background-color: #343a40;
+    background-color: #343a40;
      padding-bottom: 400px;
 }
 .grid-item {

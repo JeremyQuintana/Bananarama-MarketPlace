@@ -6,10 +6,9 @@ import "./Home.css";
 class HomeComponent extends Component {
   render() {
     let retVal = (
-      <div className="Body">
+      <div className="homeContainer">
         <App1></App1>
         <Grid></Grid>
-        <div className="container"></div>
       </div>
     );
     return retVal;

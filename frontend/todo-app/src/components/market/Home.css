@@ -2,6 +2,7 @@
   display: grid;
   grid-template-columns: auto auto ;
   padding: 2%;
+    background-color: white;
 }
 .grid-item {
   padding: 35px;
@@ -28,3 +29,4 @@
 .grid-item:hover{
     color:grey;
 }
+
