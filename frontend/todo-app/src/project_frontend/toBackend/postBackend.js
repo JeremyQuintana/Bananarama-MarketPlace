@@ -3,7 +3,7 @@ import { API_URL } from '../../Constants'
 
 class postBackend{
 
-  postItemBackend(description, name, cost){
+  postItemBackend(description, name, cost, catagory, photo){
     return axios.post(`${API_URL}/postitem`, {
       description,
       name,
