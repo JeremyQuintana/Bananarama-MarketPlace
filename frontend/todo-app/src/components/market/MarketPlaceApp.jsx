@@ -48,8 +48,6 @@ class MarketPlaceApp extends Component {
                         <FooterComponent/>
                     </>
                 </Router>
-                {/*<LoginComponent/>
-                <WelcomeComponent/>*/}
             </div>
         )
     }

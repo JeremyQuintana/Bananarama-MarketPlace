@@ -14,13 +14,11 @@ import javadb.Post.Status;
 
 class DatabaseRefTest {
 
-	/*integration test - create a test table with dummy values that can be replaced*/
 	
 	private static DatabaseRef db;
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
 		db = new DatabaseRef();
-		/*maybe add a parameter that can change the table to a "test table" rather than original one*/
 	}
 
 	@Test
@@ -37,6 +35,7 @@ class DatabaseRefTest {
 	
 	@Test
 	void testCheckPassword() throws SQLException {
+		// with correct and wrong password
 		assertTrue(db.checkPassword("s1234567", "123456"));
 		assertFalse(db.checkPassword("s1234567", "4m90348m0v"));
 	}
@@ -45,10 +44,6 @@ class DatabaseRefTest {
 	void testCheck_for_sale() throws SQLException {
 		for (Post post : db.check_for_sale().values())
 			assertEquals(post.getStatus(), Status.AVAILABLE);
-		
-		/*integration test?? delete everything, insert some values
-		 *  and test if those specific values are returned, then replace with old values
-		 *  BUT is this correct test procedure?*/
 	}
 
 	@Test
@@ -86,11 +81,6 @@ class DatabaseRefTest {
 		db.posts.remove(lastId);
 		DatabaseRef.update("delete from sale where PostID = " + lastId);
 		
-		/*for integration test, actually check if the database has inserted post*/
-		/*actually this may be doing too much beyond "unit" testing*/
 	}
-	
-	/*integration test? check if you can insert posts ^^^, 
-	 * delete posts, or get database posts in java post format*/
 
 }
