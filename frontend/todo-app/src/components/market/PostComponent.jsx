@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 
 import MarketDataService from "../../api/market/MarketDataService.js"
 
-
+// This class is for an individual post's page
 class PostComponent extends Component {
 
 

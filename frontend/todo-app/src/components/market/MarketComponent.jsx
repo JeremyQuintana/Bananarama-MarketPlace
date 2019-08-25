@@ -3,9 +3,10 @@ import React, { Component } from 'react'
 import { withRouter } from "react-router-dom";
 import MarketDataService from "../../api/market/MarketDataService.js"
 
+// This is the marketplace browsing component
 class MarketComponent extends Component {
     render() {
-        // Simply return a header, and div that will contain the posts
+        // Simply return a heading, and div that will contain the posts
         let retVal = (
             <div>
                 <h1 className="marketTitle">Browse Marketplace</h1>
@@ -20,7 +21,7 @@ class MarketComponent extends Component {
 
 }
 
-// Inner class to render the post rows
+// Helper class to render the post rows
 class Items extends Component {
 
     constructor(props) {

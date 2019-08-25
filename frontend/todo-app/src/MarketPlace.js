@@ -7,29 +7,17 @@ import MarketPlaceApp from './components/market/MarketPlaceApp'
 import './MarketPlace.css';
 import './bootstrap.css';
 
+// This is called by the index file, which is the startup page
 class MarketPlace extends Component {
   render() {
     // Render the MarketPlaceApp
     return (
       <div className="MarketPlace">
-        {/*<Counter/>*/}
         <MarketPlaceApp />
       </div>
     );
   }
 }
 
-// class LearningComponents extends Component {
-//   render() {
-//     return (
-//       <div className="LearningComponents">
-//          My Hello World
-//          <FirstComponent></FirstComponent>
-//          <SecondComponent></SecondComponent>
-//          <ThirdComponent></ThirdComponent>
-//       </div>
-//     );
-//   }
-// }
 
 export default MarketPlace;
