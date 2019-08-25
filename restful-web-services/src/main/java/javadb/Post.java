@@ -112,7 +112,7 @@ public class Post {
 	
 	public enum Status
 	{
-		AVAILABLE, DELETED, SOLD, TOFFEE;
+		AVAILABLE, DELETED, SOLD;
 		
 		public static Status getStatus(String str)
 		{
@@ -121,7 +121,6 @@ public class Post {
 				case "a" : case "A" : return AVAILABLE; 
 				case "s" : case "S" : return SOLD; 
 				case "d" : case "D" : return DELETED; 
-				case "t" : case "T" : return TOFFEE; 
 			}
 			throw new NullPointerException("post status not defined");
 		}
