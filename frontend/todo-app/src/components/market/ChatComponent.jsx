@@ -65,7 +65,6 @@ class ChatComponent extends Component {
           </div>
         </div>
 
-        <FooterComponent></FooterComponent>
       </div>
     );
     return retVal;

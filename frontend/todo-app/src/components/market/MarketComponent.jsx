@@ -1,15 +1,7 @@
 import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
+
 import { withRouter } from "react-router-dom";
 import MarketDataService from "../../api/market/MarketDataService.js"
-
-// Old hardcoded array for dev
-// var allPostings = [
-//     ["1", "Confetti", "Beautiful multicolored confetti. Used but like new.", "georgemichael99", "$20"],
-//     ["2", "Green Capsicum", "Giant green capsicum. Found it at the beach. Still contains some sand.", "DONNYT1946", "$100"],
-//     ["3", "Small Blue Star", "Blue star, fell from the sky into my backyard. Fits in pocket. Still warm.", "not_an_alien", "$0.50"],
-//     ["4", "Vines - 50ft", "Green climbing vines. Organic, just cut. Perfect for a wedding.", "tree_hater", "$25.47"]
-// ];
 
 class MarketComponent extends Component {
     render() {
@@ -72,7 +64,7 @@ class Items extends Component {
 
         MarketDataService.retrieveAllPosts().then(
             response => {
-                //console.log(response.data);
+                
                 this.setState({ backPostings: response.data })
             }
         ).catch(error => console.log("network error"));
