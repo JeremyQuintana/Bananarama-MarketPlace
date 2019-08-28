@@ -1,0 +1,6 @@
+5,Lamp,Used Lamp blue,s1234567,12
+9,Table,Square, round table,s1234567,12
+10,Table,Square, round table,s1234567,12
+11,Chair,New, white,s1234567,20
+12,Chair,Used blue,s1234567,13
+13,Lamp,Used Lamp blue,s1234567,12
