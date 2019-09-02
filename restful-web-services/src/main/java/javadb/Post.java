@@ -9,6 +9,7 @@ import javadb.Post.Column;
 
 public class Post {
 	
+	// raw post creation
 	public Post(int id, String owner, String title, String description, int price, Date date, String category)
 	{
 		this.id = id;
@@ -21,6 +22,7 @@ public class Post {
 		this.datePosted = date;
 	}
 	
+	// post creation from a database
 	public Post(ResultSet post)
 	{
 		try {
@@ -37,6 +39,8 @@ public class Post {
 		}
 	}
 	
+	
+	
 	private String description;
 	private String title;
 	private int price;
@@ -45,7 +49,8 @@ public class Post {
 	private Date datePosted;
 	private String category;
 	private int id;
-	
+	// by giving another name, can put daatabase in "test mode"
+	public static String TABLE_NAME = "sale";
 	//edit post column in marketplace
 	public void edit(Column column, String edit) {
 		update(column, edit);
@@ -65,6 +70,7 @@ public class Post {
 		update(Column.STATUS, "S", "" + id);
 	}
 	
+	// update THIS CLASS
 	private void update(Column column, String edit)
 	{
 		switch (column)
@@ -74,12 +80,14 @@ public class Post {
 			case STATUS :	status = Status.getStatus(edit);break;
 			case CATEGORY : category = edit;				break;
 			case PRICE : price = Integer.parseInt(edit);	break;
+			default: throw new NullPointerException("cannot change this");
 		}
 	}
 	
+	// update DATABASE
 	public static void update(Column column, String value, String id)
 	{
-		DatabaseRef.update("Update sale set " + column.key() + "='"+ value +"' where PostID='"+id+"'");
+		DatabaseRef.update("Update "+ TABLE_NAME +" set " + column.key() + "='"+ value +"' where PostID='"+id+"'");
 	}
 	
 	
@@ -96,7 +104,7 @@ public class Post {
 	
 	
 	
-	
+	// any way to manipulate a post
 	public enum Action
 	{
 		SELL, SOLD, DELETE, EDIT
@@ -104,7 +112,7 @@ public class Post {
 	
 	public enum Status
 	{
-		AVAILABLE, DELETED, SOLD, TOFFEE;
+		AVAILABLE, DELETED, SOLD;
 		
 		public static Status getStatus(String str)
 		{
@@ -113,7 +121,6 @@ public class Post {
 				case "a" : case "A" : return AVAILABLE; 
 				case "s" : case "S" : return SOLD; 
 				case "d" : case "D" : return DELETED; 
-				case "t" : case "T" : return TOFFEE; 
 			}
 			throw new NullPointerException("post status not defined");
 		}

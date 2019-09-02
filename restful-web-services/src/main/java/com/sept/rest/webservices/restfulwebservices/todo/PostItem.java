@@ -4,9 +4,11 @@ public class PostItem {
 	private String description;
 	private String name;
 	private String cost;
+	private String catagory;	// temporary change to array
+	private String photo; // temporary change type
 	
 	public void print() {
-		System.out.println(this.description + " " + this.name + " " + this.cost);
+		System.out.println(this.description + " " + this.name + " " + this.cost + " " + this.catagory + " " + this.photo);
 	}
 
 	//need getters for use of request body turning json into java object
@@ -20,5 +22,13 @@ public class PostItem {
 
 	public String getCost() {
 		return cost;
+	}
+	
+	public String getCatagory() {
+		return catagory;
+	}
+
+	public String getPhoto() {
+		return photo;
 	}
 }

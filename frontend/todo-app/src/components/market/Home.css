@@ -8,6 +8,7 @@
   padding: 35px;
   font-size: 30px;
   text-align: center;
+  background-color: white;
 }
 
 .App1 img {
@@ -30,3 +31,6 @@
     color:grey;
 }
 
+.homeContainer{
+  background-color: white;
+}

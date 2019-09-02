@@ -7,19 +7,12 @@ import "./Chat.css";
 
 const Sending_Data = [
   {
-    senderId: "Seller",
-    text: "if you want cuzzy"
+    senderId: "Buyer",
+    text: "can i buy something ?"
   },
-  {
-    senderId: "Seller",
-    text: "What did you want to buy ?"
-  }
+ 
 ];
 const Receiving_Data = [
-  {
-    senderId: "Seller",
-    text: "if you want cuzzy"
-  },
   {
     senderId: "Seller",
     text: "What did you want to buy ?"
@@ -64,8 +57,6 @@ class ChatComponent extends Component {
             </div>
           </div>
         </div>
-
-        <FooterComponent></FooterComponent>
       </div>
     );
     return retVal;
@@ -124,7 +115,9 @@ class InputBox extends React.Component {
         />
 
         <button type="button" id="add" onClick={addInputText}>
-          Send{" "}
+        
+        <img src={require("./banana_icon.png")} />
+
         </button>
       </form>
     );
@@ -136,6 +129,15 @@ class Chatwindow extends React.Component {
     return (
       <div className="message-list">
         {Sending_Data.map((message, index) => {
+          return (
+            <div key={index} className="message">
+              <div className="message-username">{message.senderId}</div>
+              <div className="message-text">{message.text}</div>
+            </div>
+          );
+        })}
+
+        {Receiving_Data.map((message, index) => {
           return (
             <div key={index} className="message">
               <div className="message-username">{message.senderId}</div>
