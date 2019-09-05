@@ -44,7 +44,7 @@ public class Database {
 			Class.forName(driver);
 			conn = DriverManager.getConnection(url, username, password);
 			statement = conn.createStatement();
-			System.out.println("Connected");
+			//System.out.println("Connected");
 			} 
 		
 		catch (Exception e) {
@@ -102,6 +102,9 @@ public class Database {
 				writer.println();
 			}
 		writer.close();
+		data.close();
+		conn.close();
+		
 		}
 		
 		catch (Exception e) {

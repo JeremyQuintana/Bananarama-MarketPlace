@@ -28,8 +28,9 @@ public class MarketResourceHardcoded {
 	@GetMapping("/posts")
  public String[][] getAllTodos() throws Exception {
 		// Thread.sleep(3000);
+		Database db= new Database();
 		Database.check_for_salewrite();
-		return Database.check_for_sale();
-			
+		return Database.check_for_sale(); 
+				
 	}
 }

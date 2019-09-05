@@ -1,4 +1,7 @@
 package com.sept.rest.webservices.restfulwebservices.todo;
+import javadb.DatabaseRef;
+
+import java.sql.SQLException;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,7 +14,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class PostItemRestController {
 	@PostMapping(value = "/postitem")
-	public void postItem(@RequestBody PostItem item) {
-		item.print();
-	}
+	public void postItem(@RequestBody PostItem item) throws SQLException {
+		DatabaseRef db= new DatabaseRef();
+	   	int price = item.getCost();	
+	   	DatabaseRef.sell_item("s1234567", item.getName(), item.getDescription(), price, item.getCatagory());
+	    }
+		
 }

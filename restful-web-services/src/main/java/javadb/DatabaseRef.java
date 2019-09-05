@@ -36,7 +36,7 @@ public class DatabaseRef {
 	int new_price;
 	String new_title;
 	String new_despt;
-	public Map<Integer, Post> posts;
+	public static Map<Integer, Post> posts;
 	
 	public DatabaseRef() {
 		try {				
@@ -60,14 +60,14 @@ public class DatabaseRef {
 	{
 		try
 		{
-			String driver = "com.mysql.jdbc.Driver";
+			String driver = "com.mysql.cj.jdbc.Driver";
 			String url = "jdbc:mysql://35.189.1.213:3306/sept";
 			String username = "root";
 			String password = "bananasept";
 			Class.forName(driver);
 			conn = DriverManager.getConnection(url, username, password);
 			statement = conn.createStatement();
-			System.out.println("Connected");
+			
 			return true;
 		}
 		catch (Exception e) {
@@ -154,7 +154,7 @@ public class DatabaseRef {
 	}
 
 	//Post sell items in marketplace
-	public void sell_item(String owner, String title, String desc, int price, String cate) throws SQLException {
+	public static void sell_item(String owner, String title, String desc, int price, String cate) throws SQLException {
 		java.sql.Date curdate = new java.sql.Date(new java.util.Date().getTime());
 		update("insert into sale(ID, Item_Name, Item_Description, Price, Status, Date, Category) VALUES ('"+ owner +"','"+title+"','"+desc+"','"+price+"', 'A', '"+curdate+"','"+cate+"')");
 		
