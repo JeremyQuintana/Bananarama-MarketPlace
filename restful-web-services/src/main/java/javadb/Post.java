@@ -52,20 +52,20 @@ public class Post {
 	// by giving another name, can put daatabase in "test mode"
 	public static String TABLE_NAME = "sale";
 	//edit post column in marketplace
-	public void edit(Column column, String edit) {
+	public void edit(Column column, String edit) throws SQLException {
 		update(column, edit);
 		update(column, edit, "" + id);
 
 	}
 
 	//Delete item from Marketplace
-	public void delete() {
+	public void delete() throws SQLException {
 		update(Column.STATUS, "D");
 		update(Column.STATUS, "D", "" + id);
 	}
 
 	//Marked Item as sold on Marketplace
-	public void sold() {
+	public void sold() throws SQLException {
 		update(Column.STATUS, "S");
 		update(Column.STATUS, "S", "" + id);
 	}
@@ -85,7 +85,7 @@ public class Post {
 	}
 	
 	// update DATABASE
-	public static void update(Column column, String value, String id)
+	public static void update(Column column, String value, String id) throws SQLException
 	{
 		DatabaseRef.update("Update "+ TABLE_NAME +" set " + column.key() + "='"+ value +"' where PostID='"+id+"'");
 	}
@@ -112,7 +112,7 @@ public class Post {
 	
 	public enum Status
 	{
-		AVAILABLE, DELETED, SOLD;
+		AVAILABLE, DELETED, SOLD, TEST;
 		
 		public static Status getStatus(String str)
 		{
@@ -121,6 +121,7 @@ public class Post {
 				case "a" : case "A" : return AVAILABLE; 
 				case "s" : case "S" : return SOLD; 
 				case "d" : case "D" : return DELETED; 
+				case "t" : case "T" : return TEST;
 			}
 			throw new NullPointerException("post status not defined");
 		}
