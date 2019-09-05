@@ -7,7 +7,9 @@ class postBackend{
     return axios.post(`${API_URL}/postitem`, {
       description,
       name,
-      cost
+      cost,
+      catagory,
+      photo
     })
   }
 
