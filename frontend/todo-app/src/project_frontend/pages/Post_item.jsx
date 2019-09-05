@@ -40,12 +40,13 @@ class Post_item extends Component {
               <textarea name="item_description" className="input" placeholder="Mushy Explanation" value={this.state.item_description} onChange={this.handleChange} />
               <input required type="text" name="item_name" className="input" placeholder="Banana Name" value={this.state.item_name} onChange={this.handleChange} />
               <input required type="number" name="item_cost" className="input" placeholder="$000.00" min="000.01" step="0.01" pattern="\d.\d" value={this.state.item_cost} onChange={this.handleChange} />
-              <select name="item_catagory" className="input" onChange={this.handleChange}>
+              <select name="item_catagory" className="input" onChange={this.handleChange} value={this.state.item_catagory}>
+                <option value="" default>No Catagory</option>
                 <option value="Exceptionally Random">Exceptionally Random</option>
                 <option value="Ridiculously Complicated">Ridiculously Complicated</option>
                 <option value="Annoyingly Unnexplained">Annoyingly Unnexplained</option>
-                <option value="Disturbingly Simpl">Disturbingly Simple</option>
-                <option value="Spectularly Failing">Spectularly Failing</option>
+                <option value="Disturbingly Simple">Disturbingly Simple</option>
+                <option value="Spectularly Failing">Spectacularly Failing</option>
               </select>
               <input type="file" name="item_photo" className="input" accept="image/*" value={this.state.item_photo} onChange={this.handleChange}/>
             </div>
@@ -67,9 +68,10 @@ class Post_item extends Component {
 
 
   submitPost(event){
-    alert(this.state.item_catagory);
     toBackend.postItemBackend(this.state.item_description, this.state.item_name, this.state.item_cost, this.state.item_catagory, this.state.item_photo);
     event.preventDefault();
+    alert("Your item has been posted");
+    this.props.history.push('/home/sept');
   }
 
 }
