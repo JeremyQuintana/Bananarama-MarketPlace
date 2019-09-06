@@ -17,6 +17,7 @@ import javadb.Post.Status;
 
 import java.sql.Date;
 
+
 public class DatabaseRef {
 
 	
@@ -25,7 +26,7 @@ public class DatabaseRef {
 		ChatBase db = new ChatBase();
 		
 		System.out.println(db.usersExist("s1234567", "s1111111"));
-		System.out.println(db.usersExist("s1111111", "s1234567"));
+		System.out.println(db.usersExist("s1111111", "s1234567"));		
 		System.out.println(db.usersExist("2", "2"));
 	}
 	private static Statement statement;
@@ -73,10 +74,6 @@ public class DatabaseRef {
 		}
 		return false;
 	}
-	
-	
-	
-	
 	
 	
 	

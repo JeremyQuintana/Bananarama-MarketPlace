@@ -29,23 +29,9 @@ import javadb.Post.Status;
 // an extension of the database SPECIFIC to chat
 public class ChatBase extends DatabaseRef {
 	
-//	private Map<Integer, Overhead> overheads;
-//	private List<Text> texts;
 	public ChatBase() throws SQLException
 	{
 		super();
-//		overheads = new HashMap<>();
-//		texts = new ArrayList<>();
-//		
-//		data = query("select * from OVERHEAD_TABLE");
-//		while (data.next())
-//			overheads.put(data.getInt(1), new Overhead(data.getInt(1), data.getString(2), data.getString(3)));
-//		data = query("select * from chat_text");
-//		while (data.next())
-//		{
-//			int id = data.getInt(1);
-//			texts.add(new Text(data.getInt(1), data.getString(2), data.getString(3)));
-//		}
 		
 		
 	}
@@ -59,12 +45,6 @@ public class ChatBase extends DatabaseRef {
 		if (!usersExist(user1, user2))				throw new NullPointerException("Users do not exist in database.");
 		if (overheadAlreadyExists(user1, user2))	throw new NullPointerException("cannot have multiple chats between same users.");
 		update(String.format("insert into %s(User1, User2) VALUES ('%s', '%s')", OVERHEAD_TABLE, user1, user2));
-		
-//		// add the last (newly inserted) to java map/list
-//		data = query(String.format("SELECT * FROM %s ORDER BY id DESC LIMIT 1", Table.OVERHEAD.key()));
-//		while (data.next())
-//			overheads.put(data.getInt(1), new Overhead(data.getInt(1), data.getString(2), data.getString(3)));
-		
 	}
 	
 	public void addText(String text, int chatID, String sender) throws SQLException
@@ -73,11 +53,6 @@ public class ChatBase extends DatabaseRef {
 		if (!senderANDChatIDCorrect(chatID, sender))	
 			throw new NullPointerException("wrong sender in chat.");
 		update(String.format("insert into %s(ChatID, Text, From) VALUES ('%d','%s','%s')", OVERHEAD_TABLE, chatID, text, sender));
-		
-//		// add the last (newly inserted) to java map/list
-//		data = query(String.format("SELECT * FROM %s ORDER BY id DESC LIMIT 1", Table.TEXT.key()));
-//		while (data.next())
-//			texts.add(new Text(data.getInt(1), data.getString(2), data.getString(3)));
 	}
 	
 	
