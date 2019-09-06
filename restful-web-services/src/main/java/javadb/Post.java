@@ -10,16 +10,15 @@ import javadb.Post.Column;
 public class Post {
 	
 	// raw post creation
-	public Post(int id, String owner, String title, String description, int price, Date date, String category)
+	public Post(String owner, String title, String description, int price, String category)
 	{
-		this.id = id;
 		this.ownerId = owner;
 		this.title = title;
 		this.description = description;
 		this.price = price;
 		this.category = category;
 		this.status = Status.AVAILABLE;
-		this.datePosted = date;
+		this.datePosted = new Date(new java.util.Date().getTime());
 	}
 	
 	// post creation from a database
@@ -112,7 +111,13 @@ public class Post {
 	
 	public enum Status
 	{
-		AVAILABLE, DELETED, SOLD;
+		AVAILABLE("A"), DELETED("D"), SOLD("S");
+		
+		public String key;
+		Status(String key)
+		{
+			this.key = key;
+		}
 		
 		public static Status getStatus(String str)
 		{
@@ -151,7 +156,7 @@ public class Post {
 	public void setId(int id)	{this.id = id;}
 	public Status getStatus()		{return status;}
 	public String getOwnerId()	{return ownerId;}
-
+	public Date getDate() 	{return datePosted;}
 	public String getTitle() {return title;}
 	public String getDesc() {return description;}
 	public String getCategory() {return category;}

@@ -11,12 +11,22 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.sept.rest.webservices.restfulwebservices.todo.PostItem;
+
 import javadb.Post.Action;
 import javadb.Post.Column;
 import javadb.Post.Status;
 
 import java.sql.Date;
 
+
+@CrossOrigin(origins="http://localhost:3000")
+@RestController
 public class DatabaseRef {
 
 	
@@ -153,18 +163,35 @@ public class DatabaseRef {
 		}
 	}
 
-	//Post sell items in marketplace
-	public static void sell_item(String owner, String title, String desc, int price, String cate) throws SQLException {
-		java.sql.Date curdate = new java.sql.Date(new java.util.Date().getTime());
-		update("insert into sale(ID, Item_Name, Item_Description, Price, Status, Date, Category) VALUES ('"+ owner +"','"+title+"','"+desc+"','"+price+"', 'A', '"+curdate+"','"+cate+"')");
+//	Post sell items in marketplace
+//	public static void sell_item(String owner, String title, String desc, int price, String cate) throws SQLException {
+//		java.sql.Date curdate = new java.sql.Date(new java.util.Date().getTime());
+//		update("insert into sale(ID, Item_Name, Item_Description, Price, Status, Date, Category) VALUES ('"+ owner +"','"+title+"','"+desc+"','"+price+"', 'A', '"+curdate+"','"+cate+"')");
+//		
+//		data = statement.executeQuery("select * from sale");
+//		while (data.next())
+//			if (data.isLast())
+//				posts.put(data.getInt(1), new Post(data.getInt(1), owner, title, desc, price, curdate, cate));
+//	}
+	
+	/*note: photo not stored, owner id ASSUMED s1234567*/
+	
+	@PostMapping(value = "/postitem")
+	public void postItem(@RequestBody Post item) throws SQLException 
+	{
+		
+		update(String.format("insert into sale(ID, Item_Name, Item_Description, Price, Status, Date, Category) VALUES ('%s','%s','%s','%s','%s','%s','%s')",
+			"s1234567", item.getTitle(), item.getDesc(), item.getPrice(), item.getStatus(), item.getDate(), item.getCategory()));
 		
 		data = statement.executeQuery("select * from sale");
 		while (data.next())
 			if (data.isLast())
-				posts.put(data.getInt(1), new Post(data.getInt(1), owner, title, desc, price, curdate, cate));
+			{
+				int id = data.getInt(1);
+				item.setId(id);
+				posts.put(id, item);
+			}
 	}
-	
-	
 	
 	
 	
