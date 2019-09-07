@@ -30,7 +30,7 @@ class AuthenticationService {
 
     registerSuccessfulLoginForJwt(username, token) {
         sessionStorage.setItem(USER_NAME_SESSION_ATTRIBUTE_NAME, username)
-        this.setupAxiosInterceptors(this.createJWTToken(token))
+        sessionStorage.setItem("jwtToken", this.createJWTToken(token))
     }
 
     createJWTToken(token) {
@@ -40,6 +40,7 @@ class AuthenticationService {
 
     logout() {
         sessionStorage.removeItem(USER_NAME_SESSION_ATTRIBUTE_NAME);
+        sessionStorage.removeItem("jwtToken");
     }
 
     isUserLoggedIn() {
