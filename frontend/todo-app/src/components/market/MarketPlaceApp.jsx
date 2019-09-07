@@ -42,7 +42,7 @@ class MarketPlaceApp extends Component {
                             <AuthenticatedRoute path="/welcome/:name" component={WelcomeComponent} />
                             <AuthenticatedRoute path="/todos/:id" component={TodoComponent} />
                             <AuthenticatedRoute path="/todos" component={ListTodosComponent} />
-                            <AuthenticatedRoute path="/logout" component={LogoutComponent} />
+                            <Route path="/logout" component={LogoutComponent} />
                             <Route path="*" exact component={LoginComponent} />
 
                         </Switch>
