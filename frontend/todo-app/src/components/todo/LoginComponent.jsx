@@ -5,13 +5,21 @@ class LoginComponent extends Component {
 
     constructor(props) {
         super(props)
-
+        var loginErrorTemp = false;
+        if(props.location.state == null){
+            loginErrorTemp = false
+        } else {
+            loginErrorTemp = props.location.state.loginError
+            this.props.location.state.loginError = false
+        }
         this.state = {
             username: 'sept',
             password: '',
             hasLoginFailed: false,
-            showSuccessMessage: false
+            showSuccessMessage: false,
+            loginError: loginErrorTemp
         }
+        console.log("hello" + loginErrorTemp)
         // this.handleUsernameChange = this.handleUsernameChange.bind(this)
         // this.handlePasswordChange = this.handlePasswordChange.bind(this)
         this.handleChange = this.handleChange.bind(this)
@@ -83,7 +91,8 @@ class LoginComponent extends Component {
                 <h1>Login</h1>
                 <div className="container">
                     {/*<ShowInvalidCredentials hasLoginFailed={this.state.hasLoginFailed}/>*/}
-                    {this.state.hasLoginFailed && <div className="alert alert-warning">Invalid Credentials or something is wrong</div>}
+                    {this.state.hasLoginFailed && <div className="alert alert-warning">Invalid credentials or something is wrong.</div>}
+                    {this.state.loginError && <div className="alert alert-warning">You must be logged in to access that!</div>}
                     {this.state.showSuccessMessage && <div>Login Sucessful</div>}
                     {/*<ShowLoginSuccessMessage showSuccessMessage={this.state.showSuccessMessage}/>*/}
                     User Name: <input type="text" name="username" value={this.state.username} onChange={this.handleChange} />

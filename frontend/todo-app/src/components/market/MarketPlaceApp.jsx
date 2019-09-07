@@ -31,7 +31,7 @@ class MarketPlaceApp extends Component {
                         <HeaderComponent />
                         <Switch>
 
-                            <Route path = "/home/:name" exact component = {HomeComponent}/>
+                            <AuthenticatedRoute path = "/home/:name" exact component = {HomeComponent}/>
                             <AuthenticatedRoute path="/market" exact component={MarketComponent} />
                             <AuthenticatedRoute path="/posts/:postID" exact component={PostComponent} />
                             <AuthenticatedRoute path="/chat" exact component={ChatComponent} />
@@ -43,6 +43,7 @@ class MarketPlaceApp extends Component {
                             <AuthenticatedRoute path="/todos/:id" component={TodoComponent} />
                             <AuthenticatedRoute path="/todos" component={ListTodosComponent} />
                             <AuthenticatedRoute path="/logout" component={LogoutComponent} />
+                            <Route path="*" exact component={LoginComponent} />
 
                         </Switch>
                         <FooterComponent/>
