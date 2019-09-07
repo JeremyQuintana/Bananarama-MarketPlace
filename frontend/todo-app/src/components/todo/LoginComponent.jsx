@@ -19,7 +19,6 @@ class LoginComponent extends Component {
             showSuccessMessage: false,
             loginError: loginErrorTemp
         }
-        console.log("hello" + loginErrorTemp)
         // this.handleUsernameChange = this.handleUsernameChange.bind(this)
         // this.handlePasswordChange = this.handlePasswordChange.bind(this)
         this.handleChange = this.handleChange.bind(this)
