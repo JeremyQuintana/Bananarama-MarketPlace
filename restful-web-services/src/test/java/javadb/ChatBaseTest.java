@@ -59,7 +59,7 @@ class ChatBaseTest {
 	
 	@BeforeEach
 	// remove traces to avoid conflicting with future tests
-	static void clearTables() throws SQLException 
+	void clearTables() throws SQLException 
 	{
 		DatabaseRef.update(String.format("delete from overheadTest"));
 		DatabaseRef.update(String.format("delete from textTest"));
@@ -82,8 +82,8 @@ class ChatBaseTest {
 		
 		// check if database has changed
 		ResultSet data = db.pointToLastValue(ChatBase.OVERHEAD_TABLE);
-		assertEquals(users.get(0), data.getString(1));
-		assertEquals(users.get(1), data.getString(2));
+		assertEquals(users.get(0), data.getString(2));
+		assertEquals(users.get(1), data.getString(3));
 	}
 	
 	@Test
@@ -116,45 +116,35 @@ class ChatBaseTest {
 	@Test
 	void addText() throws SQLException 
 	{
-		Overhead overhead = db.createChat(users.get(0), users.get(2));
-		db.addText("Howdy, pardner", overhead.getChatID(), users.get(2));
-		
-		// check if database has changed
-		ResultSet data = db.pointToLastValue(ChatBase.TEXT_TABLE);
-		assertEquals(data.getInt(1), overhead.getChatID());
-		assertEquals(data.getString(2), users.get(0));
-		assertEquals(data.getString(3), users.get(2));
+			Overhead overhead = db.createChat(users.get(0), users.get(2));
+			db.addText("Howdy, pardner", overhead.getChatID(), users.get(2));
+			// check if database has changed
+			ResultSet data = db.pointToLastValue(ChatBase.TEXT_TABLE);
+			assertEquals(data.getInt(1), overhead.getChatID());
+			assertEquals(data.getString(2), "Howdy, pardner");
+			assertEquals(data.getString(3), users.get(2));
 	}
 	
 	@Test
-	void cannotAddTextWithWrongChatID() throws SQLException
-	{
-		db.createChat(users.get(0), users.get(2));
-		assertThrows(NullPointerException.class, () -> {
-			db.addText("Howdy, pardner", -1, users.get(2));
-	    });
-	}
-	
-	@Test
-	void cannotAddTextWithWrongSender() throws SQLException
+	void cannotAddTextWithWrongDetails() throws SQLException
 	{
 		Overhead overhead = db.createChat(users.get(0), users.get(2));
-		assertThrows(NullPointerException.class, () -> {
-			db.addText("Howdy, pardner", overhead.getChatID(), "notAuserInDatabase");
-	    });
+		assertThrows(NullPointerException.class, () -> {db.addText("Howdy, pardner", -1, users.get(2));});
+		assertThrows(NullPointerException.class, () -> {db.addText("Howdy, pardner", overhead.getChatID(), "notAuserInDatabase");});
 	}
 
 	@Test
-	void testRetrievetexts() {
-		fail("Not yet implemented"); // TODO
-	}
-	
-	
-	private void databaseUnchanged(String table, int lastID)
-	{
+	void testRetrievetexts() throws SQLException {
+		Overhead overhead = db.createChat(users.get(0), users.get(2));
+		db.addText("Howdy, pardner", overhead.getChatID(), users.get(2));
+		db.addText("... seen .....", overhead.getChatID(), users.get(0));
+		db.addText("I want a divorce.", overhead.getChatID(), users.get(0));
+		int chatID = overhead.getChatID();
 		
+		List<Text> texts = db.retrievetexts(chatID);
+		assertEquals(texts.size(), 3);
+		for (Text text : texts)
+			assertEquals(chatID, text.getChatID());
 	}
-	
-	
 
 }

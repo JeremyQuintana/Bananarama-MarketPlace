@@ -11,6 +11,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import javadb.ChatBase.Overhead;
 import javadb.Post.Action;
 import javadb.Post.Column;
 import javadb.Post.Status;
@@ -24,6 +25,12 @@ public class DatabaseRef {
 	public static void main(String[] args) throws SQLException
 	{
 		ChatBase db = new ChatBase();
+		
+		
+		db.addText("What do you call a sad strawberry? a blueberry", 2 , "s1111111");
+		db.addText("Robert, I am changing classes, please do not contact me", 2, "s2222222");
+		db.addText("Howdy Pardneerrr", 1, "s1234567");
+		db.addText("cowboy on discussions mitch", 1, "s1111111");
 		
 		System.out.println(db.usersExist("s1234567", "s1111111"));
 		System.out.println(db.usersExist("s1111111", "s1234567"));		

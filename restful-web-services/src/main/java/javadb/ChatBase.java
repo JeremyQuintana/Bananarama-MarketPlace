@@ -61,13 +61,19 @@ public class ChatBase extends DatabaseRef {
 	
 	public Text addText(String text, int chatID, String sender) throws SQLException
 	{															
-		// both chat id and sender should already exist
-		if (!senderANDChatIDCorrect(chatID, sender))	
-			throw new NullPointerException("wrong sender in chat.");
-		update(String.format("insert into %s(ChatID, Text, From) VALUES ('%d','%s','%s')", OVERHEAD_TABLE, chatID, text, sender));
-		
-		pointToLastValue(TEXT_TABLE);
-		return new Text(data.getInt(1), data.getString(2), data.getString(3));
+			// both chat id and sender should already exist
+			if (!senderANDChatIDCorrect(chatID, sender))	
+				throw new NullPointerException("wrong sender in chat.");
+		try {
+			System.out.printf("insert into %s(ChatID, Text, Sender) VALUES (%d,'%s','%s')", TEXT_TABLE, chatID, text, sender);
+			System.out.println();
+			update(String.format("insert into %s(ChatID, Text, Sender) VALUES (%d,'%s','%s')", TEXT_TABLE, chatID, text, sender));
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+			pointToLastValue(TEXT_TABLE);
+			return new Text(data.getInt(1), data.getString(2), data.getString(3));
 	}
 	
 	
@@ -139,6 +145,8 @@ public class ChatBase extends DatabaseRef {
 		private int chatID;
 		private String text;
 		private String sender;
+		
+		public int getChatID() {return chatID;}
 	}
 	public class Overhead
 	{
