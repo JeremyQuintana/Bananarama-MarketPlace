@@ -11,6 +11,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.PostConstruct;
+
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -48,21 +50,30 @@ public class DatabaseRef {
 	String new_despt;
 	public static Map<Integer, Post> posts;
 	
-	public DatabaseRef() {
-		try {				
-			canConnect();
-			
-			posts = new HashMap<>();
-			data = statement.executeQuery("select * from sale");
-			while (data.next())
-			{
-				int id = data.getInt(1);
-				posts.put(id, new Post(data));
-			}
-		} 
+//	public DatabaseRef() throws SQLException 
+//	{
+//		canConnect();
+//		
+//		posts = new HashMap<>();
+//		data = statement.executeQuery("select * from sale");
+//		while (data.next())
+//		{
+//			int id = data.getInt(1);
+//			posts.put(id, new Post(data));
+//		}
+//	}
+	
+	@PostConstruct
+	public void initialize() throws SQLException 
+	{
+		canConnect();
 		
-		catch (Exception e) {
-			System.out.println(e);
+		posts = new HashMap<>();
+		data = statement.executeQuery("select * from sale");
+		while (data.next())
+		{
+			int id = data.getInt(1);
+			posts.put(id, new Post(data));
 		}
 	}
 	
