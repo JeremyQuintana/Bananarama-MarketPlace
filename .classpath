@@ -24,6 +24,5 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="mysql-connector.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Reuben/Desktop/mysql-connector.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
