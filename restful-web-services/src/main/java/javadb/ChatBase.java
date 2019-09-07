@@ -1,5 +1,6 @@
 package javadb;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -32,45 +33,62 @@ public class ChatBase extends DatabaseRef {
 	public ChatBase() throws SQLException
 	{
 		super();
-		
-		
 	}
 	
 	// to put in test mode eg: OVERHEAD_TABLE += "Test";
 	public static String OVERHEAD_TABLE = "chat_overhead";
 	public static String TEXT_TABLE = "chat_text";
 
-	public void createChat(String user1, String user2) throws SQLException
+	
+	
+	
+	
+	public Overhead createChat(String user1, String user2) throws SQLException
 	{					
 		if (!usersExist(user1, user2))				throw new NullPointerException("Users do not exist in database.");
 		if (overheadAlreadyExists(user1, user2))	throw new NullPointerException("cannot have multiple chats between same users.");
 		update(String.format("insert into %s(User1, User2) VALUES ('%s', '%s')", OVERHEAD_TABLE, user1, user2));
+		
+		pointToLastValue(OVERHEAD_TABLE);
+		return new Overhead(data.getInt(1), data.getString(2), data.getString(3));
 	}
 	
-	public void addText(String text, int chatID, String sender) throws SQLException
+	
+	
+	
+	
+	
+	
+	public Text addText(String text, int chatID, String sender) throws SQLException
 	{															
 		// both chat id and sender should already exist
 		if (!senderANDChatIDCorrect(chatID, sender))	
 			throw new NullPointerException("wrong sender in chat.");
 		update(String.format("insert into %s(ChatID, Text, From) VALUES ('%d','%s','%s')", OVERHEAD_TABLE, chatID, text, sender));
+		
+		pointToLastValue(TEXT_TABLE);
+		return new Text(data.getInt(1), data.getString(2), data.getString(3));
 	}
 	
 	
-	/*incomplete */
-	public void retrievetexts(int chatID) throws SQLException
+	
+	
+	
+	
+	
+	public List<Text> retrievetexts(int chatID) throws SQLException
 	{
+		List<Text> texts = new ArrayList<>();
 		data = DatabaseRef.query(String.format("select * from %s where chatID=%d", TEXT_TABLE, chatID));
 		while (data.next())
-		{
-			/*String a = Gson.toJSON(new Text(data.getInt(1), data.getString(2), data.getString(3) )*/
-		}
+			texts.add(new Text(data.getInt(1), data.getString(2), data.getString(3)));
+		return texts;
 	}
 	
 	
 	
 	
 	
-	/*test above methods by ensuring they throw an exception*/
 	
 	
 	
@@ -94,7 +112,16 @@ public class ChatBase extends DatabaseRef {
 		
 	}
 	
+	/* to be moved to DatabaseRef after merging*/
 	
+	public ResultSet pointToLastValue(String table) throws SQLException
+	{
+		data = DatabaseRef.query(String.format("select * from %s", table));
+		while (data.next())
+			if (data.isLast())
+				return data;
+		return null;
+	}
 	
 	
 	
@@ -124,6 +151,8 @@ public class ChatBase extends DatabaseRef {
 		private int chatID;
 		private String user1;
 		private String user2;
+		
+		public int getChatID() {return chatID;}
 		
 	}
 	

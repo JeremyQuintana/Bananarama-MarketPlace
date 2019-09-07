@@ -35,7 +35,6 @@ class PostTest {
 		// choose ONE post out of list as test subject
 		post = db.getPosts("select * from saleTest").get(4);
 		
-		
 	}
 
 	
