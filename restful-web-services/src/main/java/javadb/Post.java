@@ -10,11 +10,7 @@ import javadb.Post.Column;
 public class Post {
 	
 	// raw post creation
-<<<<<<< HEAD
-	public Post(int id, String owner, String title, String description, int price, Date date, String category)
-=======
 	public Post(int id, String owner, String title, String description, String price, Date date, String category)
->>>>>>> 7d048200088bd06d64836a40a054edf49994ad3d
 	{
 		this.id = id;
 		this.ownerId = owner;
@@ -34,11 +30,7 @@ public class Post {
 			ownerId = post.getString(2);
 			title = post.getString(3);
 			description = post.getString(4);
-<<<<<<< HEAD
-			price = post.getInt(5);
-=======
 			price = post.getString(5);
->>>>>>> 7d048200088bd06d64836a40a054edf49994ad3d
 			status = Status.getStatus(post.getString(6));
 			datePosted = post.getDate(7);
 			category = post.getString(8);
@@ -51,11 +43,7 @@ public class Post {
 	
 	private String description;
 	private String title;
-<<<<<<< HEAD
-	private int price;
-=======
 	private String price;
->>>>>>> 7d048200088bd06d64836a40a054edf49994ad3d
 	private String ownerId;
 	private Status status;
 	private Date datePosted;
@@ -91,11 +79,7 @@ public class Post {
 			case DESC : 	description = edit;				break;
 			case STATUS :	status = Status.getStatus(edit);break;
 			case CATEGORY : category = edit;				break;
-<<<<<<< HEAD
-			case PRICE : price = Integer.parseInt(edit);	break;
-=======
 			case PRICE : price = edit;						break;
->>>>>>> 7d048200088bd06d64836a40a054edf49994ad3d
 			default: throw new NullPointerException("cannot change this");
 		}
 	}
@@ -172,10 +156,6 @@ public class Post {
 	public String getTitle() {return title;}
 	public String getDesc() {return description;}
 	public String getCategory() {return category;}
-<<<<<<< HEAD
-	public int getPrice() {return price;}
-=======
 	public String getPrice() {return price;}
->>>>>>> 7d048200088bd06d64836a40a054edf49994ad3d
 	
 }

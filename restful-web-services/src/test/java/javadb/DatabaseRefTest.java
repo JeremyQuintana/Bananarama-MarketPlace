@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 
 import javadb.Post.Status;
 
+
 class DatabaseRefTest {
 
 	
@@ -61,12 +62,8 @@ class DatabaseRefTest {
 	@Test
 	void testAddPost() throws SQLException {
 		
-		
-<<<<<<< HEAD
-		db.sell_item("s1234567", "Dog", "Used dog", 2, "Dogs");
-=======
+	
 		db.sell_item("s1234567", "Dog", "Used dog", "2", "Dogs");
->>>>>>> 7d048200088bd06d64836a40a054edf49994ad3d
 		
 		// the inserted item is located at the last id
 		LinkedList<Integer> sorted = new LinkedList<>(db.posts.keySet());
@@ -79,7 +76,7 @@ class DatabaseRefTest {
 		assertEquals(insertedPost.getTitle(), "Dog");
 		assertEquals(insertedPost.getDesc(), "Used dog");
 		assertEquals(insertedPost.getCategory(), "Dogs");
-		assertEquals(insertedPost.getPrice(), 2);
+		assertEquals(insertedPost.getPrice(), "2");
 		
 		// remove all traces of post
 		db.posts.remove(lastId);

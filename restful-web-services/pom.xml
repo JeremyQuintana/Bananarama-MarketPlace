@@ -117,30 +117,6 @@
 			<scope>test</scope>
 		</dependency>
 		
-<<<<<<< HEAD
-		<dependency>
-			<groupId>org.junit.jupiter</groupId>
-			<artifactId>junit-jupiter-api</artifactId>
-			<version>5.4.2</version>
-			<scope>test</scope>
-		</dependency>
-		
-		<dependency>
-			<groupId>org.junit.jupiter</groupId>
-			<artifactId>junit-jupiter-engine</artifactId>
-			<version>5.4.2</version>
-			<scope>test</scope>
-		</dependency>
-		
-		<!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
- 		<dependency>
-    		<groupId>mysql</groupId>
-    		<artifactId>mysql-connector-java</artifactId>
-    		<version>8.0.17</version>
-		</dependency>
-=======
-	
->>>>>>> 7d048200088bd06d64836a40a054edf49994ad3d
 	</dependencies>
 
 	<build>
