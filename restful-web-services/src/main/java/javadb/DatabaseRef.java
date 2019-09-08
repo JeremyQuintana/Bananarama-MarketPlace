@@ -24,6 +24,7 @@ public class DatabaseRef {
 	
 	public static void main(String[] args) throws SQLException
 	{
+<<<<<<< HEAD
 		ChatBase db = new ChatBase();
 		
 		
@@ -35,6 +36,19 @@ public class DatabaseRef {
 		System.out.println(db.usersExist("s1234567", "s1111111"));
 		System.out.println(db.usersExist("s1111111", "s1234567"));		
 		System.out.println(db.usersExist("2", "2"));
+=======
+		//ChatBase db = new ChatBase();
+		
+		
+		//db.addText("What do you call a sad strawberry? a blueberry", 2 , "s1111111");
+		//db.addText("Robert, I am changing classes, please do not contact me", 2, "s2222222");
+		//db.addText("Howdy Pardneerrr", 1, "s1234567");
+		//db.addText("cowboy on discussions mitch", 1, "s1111111");
+		
+		//System.out.println(db.usersExist("s1234567", "s1111111"));
+		//System.out.println(db.usersExist("s1111111", "s1234567"));		
+		//System.out.println(db.usersExist("2", "2"));
+>>>>>>> 7d048200088bd06d64836a40a054edf49994ad3d
 	}
 	private static Statement statement;
 	protected static ResultSet data;
@@ -46,7 +60,7 @@ public class DatabaseRef {
 	int new_price;
 	String new_title;
 	String new_despt;
-	public Map<Integer, Post> posts;
+	public static Map<Integer, Post> posts;
 	
 	public DatabaseRef() throws SQLException
 	{			
@@ -62,18 +76,43 @@ public class DatabaseRef {
 		
 	}
 	
+<<<<<<< HEAD
+	public DatabaseRef() throws SQLException
+	{			
+		canConnect();
+		
+		posts = new HashMap<>();
+		data = query("select * from sale");
+		while (data.next())
+		{
+			int id = data.getInt(1);
+			posts.put(id, new Post(data));
+		}
+		
+	}
+	
+=======
+>>>>>>> 7d048200088bd06d64836a40a054edf49994ad3d
 	public boolean canConnect()
 	{
 		try
 		{
+<<<<<<< HEAD
 			String driver = "com.mysql.jdbc.Driver";
+=======
+			String driver = "com.mysql.cj.jdbc.Driver";
+>>>>>>> 7d048200088bd06d64836a40a054edf49994ad3d
 			String url = "jdbc:mysql://35.189.1.213:3306/sept";
 			String username = "root";
 			String password = "bananasept";
 			Class.forName(driver);
 			conn = DriverManager.getConnection(url, username, password);
 			statement = conn.createStatement();
+<<<<<<< HEAD
 			System.out.println("Connected");
+=======
+			//System.out.println("Connected");
+>>>>>>> 7d048200088bd06d64836a40a054edf49994ad3d
 			return true;
 		}
 		catch (Exception e) {
@@ -148,7 +187,11 @@ public class DatabaseRef {
 	}
 
 	//Post sell items in marketplace
+<<<<<<< HEAD
 	public void sell_item(String owner, String title, String desc, int price, String cate) throws SQLException {
+=======
+	public static void sell_item(String owner, String title, String desc, String price, String cate) throws SQLException {
+>>>>>>> 7d048200088bd06d64836a40a054edf49994ad3d
 		java.sql.Date curdate = new java.sql.Date(new java.util.Date().getTime());
 		update("insert into sale(ID, Item_Name, Item_Description, Price, Status, Date, Category) VALUES ('"+ owner +"','"+title+"','"+desc+"','"+price+"', 'A', '"+curdate+"','"+cate+"')");
 		

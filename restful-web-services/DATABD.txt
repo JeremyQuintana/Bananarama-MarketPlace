@@ -1,0 +1,20 @@
+5,Lamp,Used Lamp blue,s1234567,12
+6,Table,Brand new White,s1111111,40
+7,Table,new item description,s1234567,12
+10,Table,new white,s1234567,12
+11,Chair,new white,s1234567,20
+12,Chair,Used blue,s1234567,13
+13,Lamp,Used Lamp blue,s1234567,12
+14,Car,Used blue,s1111111,10000
+15,Car,Used red,s1111111,15000
+19,Car,Used blue 158000,s1234567,15000
+20,Car,Used Green 158000,s1234567,25000
+21,Car,Used Black 158000,s1234567,35000
+35,Laptop,Dell Red,s1234567,502
+36,chair,Brown chair,s1234567,12
+37,banana,mushroom chair,s1234567,1002
+38,banana,orange cat,s1234567,1
+39,banan,gold,s1234567,123
+40,banana tree ,tree,s1234567,10
+41,frog,frog,s1234567,1
+42,dog,dog,s1234567,1
