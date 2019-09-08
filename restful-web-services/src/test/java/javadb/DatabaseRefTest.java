@@ -62,7 +62,7 @@ class DatabaseRefTest {
 	void testAddPost() throws SQLException {
 		
 		
-		db.sell_item("s1234567", "Dog", "Used dog", 2, "Dogs");
+		db.sell_item("s1234567", "Dog", "Used dog", "2", "Dogs");
 		
 		// the inserted item is located at the last id
 		LinkedList<Integer> sorted = new LinkedList<>(db.posts.keySet());

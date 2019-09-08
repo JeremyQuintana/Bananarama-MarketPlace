@@ -3,7 +3,7 @@ package com.sept.rest.webservices.restfulwebservices.todo;
 public class PostItem {
 	private String description;
 	private String name;
-	private int cost;
+	private String cost;
 	private String catagory;	// temporary change to array
 	private String photo; // temporary change type
 	
@@ -20,7 +20,7 @@ public class PostItem {
 		return name;
 	}
 
-	public int getCost() {
+	public String getCost() {
 		return cost;
 	}
 	

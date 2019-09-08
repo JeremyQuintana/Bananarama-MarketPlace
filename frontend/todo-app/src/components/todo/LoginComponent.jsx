@@ -5,12 +5,19 @@ class LoginComponent extends Component {
 
     constructor(props) {
         super(props)
-
+        var loginErrorTemp = false;
+        if(props.location.state == null){
+            loginErrorTemp = false
+        } else {
+            loginErrorTemp = props.location.state.loginError
+            this.props.location.state.loginError = false
+        }
         this.state = {
             username: 'sept',
             password: '',
             hasLoginFailed: false,
-            showSuccessMessage: false
+            showSuccessMessage: false,
+            loginError: loginErrorTemp
         }
         // this.handleUsernameChange = this.handleUsernameChange.bind(this)
         // this.handlePasswordChange = this.handlePasswordChange.bind(this)
@@ -69,7 +76,7 @@ class LoginComponent extends Component {
             .executeJwtAuthenticationService(this.state.username, this.state.password)
             .then((response) => {
                 AuthenticationService.registerSuccessfulLoginForJwt(this.state.username, response.data.token)
-                this.props.history.push(`/welcome/${this.state.username}`)
+                this.props.history.push(`/home/${this.state.username}`)
             }).catch(() => {
                 this.setState({ showSuccessMessage: false })
                 this.setState({ hasLoginFailed: true })
@@ -83,7 +90,8 @@ class LoginComponent extends Component {
                 <h1>Login</h1>
                 <div className="container">
                     {/*<ShowInvalidCredentials hasLoginFailed={this.state.hasLoginFailed}/>*/}
-                    {this.state.hasLoginFailed && <div className="alert alert-warning">Invalid Credentials or something is wrong</div>}
+                    {this.state.hasLoginFailed && <div className="alert alert-warning">Invalid credentials or something is wrong.</div>}
+                    {this.state.loginError && <div className="alert alert-warning">You must be logged in to access that!</div>}
                     {this.state.showSuccessMessage && <div>Login Sucessful</div>}
                     {/*<ShowLoginSuccessMessage showSuccessMessage={this.state.showSuccessMessage}/>*/}
                     User Name: <input type="text" name="username" value={this.state.username} onChange={this.handleChange} />
@@ -94,5 +102,6 @@ class LoginComponent extends Component {
         )
     }
 }
+
 
 export default LoginComponent

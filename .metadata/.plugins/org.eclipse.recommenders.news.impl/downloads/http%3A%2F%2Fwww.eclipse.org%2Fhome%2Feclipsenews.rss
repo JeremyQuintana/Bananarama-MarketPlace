@@ -9,6 +9,22 @@
       <title>eclipse.org</title>
       <link>http://www.eclipse.org</link>
     </image>
+     <item>
+      <title><![CDATA[Welcome Ivar Grimstad!]]></title>
+      <link><![CDATA[https://blogs.eclipse.org/post/paul-buck/welcome-ivar]]></link>
+      <description><![CDATA[We are happy to announce that effective October 1st, Ivar Grimstad will join the Eclipse Foundation in the role of Jakarta EE Developer Advocate.]]></description>
+      <pubDate>Mon, 26 Aug 2019 11:00:00 EST</pubDate>
+      <category>news</category>
+      <pressrelease>0</pressrelease>
+    </item>
+    <item>
+      <title><![CDATA[Jakarta Newsletter August 2019: Jakarta EE 8 Preview]]></title>
+      <link><![CDATA[https://blogs.eclipse.org/post/gabriela-motroc/jakarta-newsletter-august-2019-jakarta-ee-8-preview]]></link>
+      <description><![CDATA[This newsletter puts a spotlight on the present and future of Jakarta EE, the journey to Jakarta EE 8,JakartaOne Livestream and more.]]></description>
+      <pubDate>Mon, 26 Aug 2019 11:00:00 EST</pubDate>
+      <category>news</category>
+      <pressrelease>0</pressrelease>
+    </item>
    <item>
       <title><![CDATA[Community Day and Community Evening at EclipseCon Europe 2019]]></title>
       <link><![CDATA[https://blogs.eclipse.org/post/stephanie-swart/community-day-and-community-evening-eclipsecon-europe-2019]]></link>

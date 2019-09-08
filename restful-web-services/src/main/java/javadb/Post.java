@@ -10,15 +10,16 @@ import javadb.Post.Column;
 public class Post {
 	
 	// raw post creation
-	public Post(String owner, String title, String description, int price, String category)
+	public Post(int id, String owner, String title, String description, String price, Date date, String category)
 	{
+		this.id = id;
 		this.ownerId = owner;
 		this.title = title;
 		this.description = description;
 		this.price = price;
 		this.category = category;
 		this.status = Status.AVAILABLE;
-		this.datePosted = new Date(new java.util.Date().getTime());
+		this.datePosted = date;
 	}
 	
 	// post creation from a database
@@ -29,7 +30,7 @@ public class Post {
 			ownerId = post.getString(2);
 			title = post.getString(3);
 			description = post.getString(4);
-			price = post.getInt(5);
+			price = post.getString(5);
 			status = Status.getStatus(post.getString(6));
 			datePosted = post.getDate(7);
 			category = post.getString(8);
@@ -42,7 +43,7 @@ public class Post {
 	
 	private String description;
 	private String title;
-	private int price;
+	private String price;
 	private String ownerId;
 	private Status status;
 	private Date datePosted;
@@ -51,20 +52,20 @@ public class Post {
 	// by giving another name, can put daatabase in "test mode"
 	public static String TABLE_NAME = "sale";
 	//edit post column in marketplace
-	public void edit(Column column, String edit) {
+	public void edit(Column column, String edit) throws SQLException {
 		update(column, edit);
 		update(column, edit, "" + id);
 
 	}
 
 	//Delete item from Marketplace
-	public void delete() {
+	public void delete() throws SQLException {
 		update(Column.STATUS, "D");
 		update(Column.STATUS, "D", "" + id);
 	}
 
 	//Marked Item as sold on Marketplace
-	public void sold() {
+	public void sold() throws SQLException {
 		update(Column.STATUS, "S");
 		update(Column.STATUS, "S", "" + id);
 	}
@@ -78,13 +79,13 @@ public class Post {
 			case DESC : 	description = edit;				break;
 			case STATUS :	status = Status.getStatus(edit);break;
 			case CATEGORY : category = edit;				break;
-			case PRICE : price = Integer.parseInt(edit);	break;
+			case PRICE : price = edit;						break;
 			default: throw new NullPointerException("cannot change this");
 		}
 	}
 	
 	// update DATABASE
-	public static void update(Column column, String value, String id)
+	public static void update(Column column, String value, String id) throws SQLException
 	{
 		DatabaseRef.update("Update "+ TABLE_NAME +" set " + column.key() + "='"+ value +"' where PostID='"+id+"'");
 	}
@@ -111,13 +112,7 @@ public class Post {
 	
 	public enum Status
 	{
-		AVAILABLE("A"), DELETED("D"), SOLD("S");
-		
-		public String key;
-		Status(String key)
-		{
-			this.key = key;
-		}
+		AVAILABLE, DELETED, SOLD, TEST;
 		
 		public static Status getStatus(String str)
 		{
@@ -126,6 +121,7 @@ public class Post {
 				case "a" : case "A" : return AVAILABLE; 
 				case "s" : case "S" : return SOLD; 
 				case "d" : case "D" : return DELETED; 
+				case "t" : case "T" : return TEST;
 			}
 			throw new NullPointerException("post status not defined");
 		}
@@ -156,10 +152,10 @@ public class Post {
 	public void setId(int id)	{this.id = id;}
 	public Status getStatus()		{return status;}
 	public String getOwnerId()	{return ownerId;}
-	public Date getDate() 	{return datePosted;}
+
 	public String getTitle() {return title;}
 	public String getDesc() {return description;}
 	public String getCategory() {return category;}
-	public int getPrice() {return price;}
+	public String getPrice() {return price;}
 	
 }

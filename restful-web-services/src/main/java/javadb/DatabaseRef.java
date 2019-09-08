@@ -11,15 +11,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import javax.annotation.PostConstruct;
-
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
-
-import com.sept.rest.webservices.restfulwebservices.todo.PostItem;
-
+import javadb.ChatBase.Overhead;
 import javadb.Post.Action;
 import javadb.Post.Column;
 import javadb.Post.Status;
@@ -27,19 +19,25 @@ import javadb.Post.Status;
 import java.sql.Date;
 
 
-@CrossOrigin(origins="http://localhost:3000")
-@RestController
 public class DatabaseRef {
 
 	
 	public static void main(String[] args) throws SQLException
 	{
-//		DatabaseRef db = new DatabaseRef();
-//		
-//		DatabaseRef.update("delete from sale where PostID = 26");
+		//ChatBase db = new ChatBase();
+		
+		
+		//db.addText("What do you call a sad strawberry? a blueberry", 2 , "s1111111");
+		//db.addText("Robert, I am changing classes, please do not contact me", 2, "s2222222");
+		//db.addText("Howdy Pardneerrr", 1, "s1234567");
+		//db.addText("cowboy on discussions mitch", 1, "s1111111");
+		
+		//System.out.println(db.usersExist("s1234567", "s1111111"));
+		//System.out.println(db.usersExist("s1111111", "s1234567"));		
+		//System.out.println(db.usersExist("2", "2"));
 	}
 	private static Statement statement;
-	private static ResultSet data;
+	protected static ResultSet data;
 	private Connection conn;
 	String id;
 	String password;
@@ -50,31 +48,18 @@ public class DatabaseRef {
 	String new_despt;
 	public static Map<Integer, Post> posts;
 	
-//	public DatabaseRef() throws SQLException 
-//	{
-//		canConnect();
-//		
-//		posts = new HashMap<>();
-//		data = statement.executeQuery("select * from sale");
-//		while (data.next())
-//		{
-//			int id = data.getInt(1);
-//			posts.put(id, new Post(data));
-//		}
-//	}
-	
-	@PostConstruct
-	public void initialize() throws SQLException 
-	{
+	public DatabaseRef() throws SQLException
+	{			
 		canConnect();
 		
 		posts = new HashMap<>();
-		data = statement.executeQuery("select * from sale");
+		data = query("select * from sale");
 		while (data.next())
 		{
 			int id = data.getInt(1);
 			posts.put(id, new Post(data));
 		}
+		
 	}
 	
 	public boolean canConnect()
@@ -88,7 +73,7 @@ public class DatabaseRef {
 			Class.forName(driver);
 			conn = DriverManager.getConnection(url, username, password);
 			statement = conn.createStatement();
-			
+			//System.out.println("Connected");
 			return true;
 		}
 		catch (Exception e) {
@@ -99,31 +84,19 @@ public class DatabaseRef {
 	
 	
 	
-	
-	
-	
-	
 
 //login details
 
 	//user ID check
 	public boolean checkId(String id) throws SQLException 
 	{
-		data = statement.executeQuery("select * from login where ID='" + id + "'");
-		while (data.next())
-			if (id.equalsIgnoreCase(data.getString("ID")))
-				return true;
-		return false;
+		return valuesExist(String.format("select count(*) from %s where upper(%s) = '%s'", "login", "ID", id.toUpperCase()));
 	}
 
 	//password check
 	public boolean checkPassword(String id, String password) throws SQLException
 	{
-		data = statement.executeQuery("select * from login where ID='" + id + "' AND password='" + password + "'");
-		while (data.next())
-			if (id.equalsIgnoreCase(data.getString("ID")) && password.equals(data.getString("password")))
-				return true;
-		return false;
+		return valuesExist(String.format("select count(*) from %s where upper(%s) = '%s' AND %s = '%s'", "login", "ID", id.toUpperCase(), "password", password));
 	}
 	//end login details
 
@@ -174,34 +147,15 @@ public class DatabaseRef {
 		}
 	}
 
-//	Post sell items in marketplace
-//	public static void sell_item(String owner, String title, String desc, int price, String cate) throws SQLException {
-//		java.sql.Date curdate = new java.sql.Date(new java.util.Date().getTime());
-//		update("insert into sale(ID, Item_Name, Item_Description, Price, Status, Date, Category) VALUES ('"+ owner +"','"+title+"','"+desc+"','"+price+"', 'A', '"+curdate+"','"+cate+"')");
-//		
-//		data = statement.executeQuery("select * from sale");
-//		while (data.next())
-//			if (data.isLast())
-//				posts.put(data.getInt(1), new Post(data.getInt(1), owner, title, desc, price, curdate, cate));
-//	}
-	
-	/*note: photo not stored, owner id ASSUMED s1234567*/
-	
-	@PostMapping(value = "/postitem")
-	public void postItem(@RequestBody Post item) throws SQLException 
-	{
-		
-		update(String.format("insert into sale(ID, Item_Name, Item_Description, Price, Status, Date, Category) VALUES ('%s','%s','%s','%s','%s','%s','%s')",
-			"s1234567", item.getTitle(), item.getDesc(), item.getPrice(), item.getStatus(), item.getDate(), item.getCategory()));
+	//Post sell items in marketplace
+	public static void sell_item(String owner, String title, String desc, String price, String cate) throws SQLException {
+		java.sql.Date curdate = new java.sql.Date(new java.util.Date().getTime());
+		update("insert into sale(ID, Item_Name, Item_Description, Price, Status, Date, Category) VALUES ('"+ owner +"','"+title+"','"+desc+"','"+price+"', 'A', '"+curdate+"','"+cate+"')");
 		
 		data = statement.executeQuery("select * from sale");
 		while (data.next())
 			if (data.isLast())
-			{
-				int id = data.getInt(1);
-				item.setId(id);
-				posts.put(id, item);
-			}
+				posts.put(data.getInt(1), new Post(data.getInt(1), owner, title, desc, price, curdate, cate));
 	}
 	
 	
@@ -210,16 +164,12 @@ public class DatabaseRef {
 	
 	
 	
+	
+	
 	// actual commands to database
-	public static void update(String str)
+	public static void update(String str) throws SQLException
 	{
-		try 
-		{
-			statement.executeUpdate(str);
-		} 
-		catch (SQLException e) {
-			e.printStackTrace();
-		}
+		statement.executeUpdate(str);
 	}
 	
 	public static ResultSet query(String str) throws SQLException
@@ -240,4 +190,14 @@ public class DatabaseRef {
 		return matched;
 	}
 	
+	// given a query, check if the values searched exist in the database
+	public boolean valuesExist(String str) throws SQLException
+	{
+		data = query(str);
+		while (data.next())
+			if (data.getInt(1) > 0)
+				return true;
+		return false;
+	}
+		
 }
