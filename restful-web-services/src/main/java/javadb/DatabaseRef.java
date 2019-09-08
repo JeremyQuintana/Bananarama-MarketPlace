@@ -32,7 +32,7 @@ public class DatabaseRef {
 	String password;
 	String cate;
 	int p_id;
-	int new_price;
+	String new_price;
 	String new_title;
 	String new_despt;
 	public static Map<Integer, Post> posts;
