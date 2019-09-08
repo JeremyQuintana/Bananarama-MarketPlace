@@ -25,6 +25,7 @@ public class Database {
 	private static ResultSet data;
 	private static ResultSet rowcount;
 	private static Connection conn;
+	private static String DELIMITER = "#$#";
 	String id;
 	String password;
 	String cate;
@@ -94,10 +95,10 @@ public class Database {
 			
 			PrintWriter writer = new PrintWriter(fileWriter);
 				while(data.next()) {
-				writer.print(data.getString(1)+",");
-				writer.print(data.getString(3)+",");
-				writer.print (data.getString(4)+",");
-				writer.print(data.getString(2)+",");
+				writer.print(data.getString(1)+DELIMITER);
+				writer.print(data.getString(3)+DELIMITER);
+				writer.print (data.getString(4)+DELIMITER);
+				writer.print(data.getString(2)+DELIMITER);
 				writer.print(data.getString(5));
 				writer.println();
 			}
@@ -118,7 +119,7 @@ public class Database {
 		BufferedReader br = new BufferedReader(new FileReader("DATABD.txt"));
 		String line= "";
 		while((line=br.readLine()) != null)  {
-			String[] dataarray = line.split(",");
+			String[] dataarray = line.split(DELIMITER);
 			ArrayList<String> arrayList = new ArrayList<String>(Arrays.asList(dataarray));
 			list.add(arrayList);
 		}
@@ -146,10 +147,10 @@ public class Database {
 			
 			PrintWriter writer = new PrintWriter(fileWriter);
 				while(data.next()) {
-					writer.print(data.getString(1)+",");
-					writer.print(data.getString(3)+",");
-					writer.print (data.getString(4)+",");
-					writer.print(data.getString(2)+",");
+					writer.print(data.getString(1)+DELIMITER);
+					writer.print(data.getString(3)+DELIMITER);
+					writer.print (data.getString(4)+DELIMITER);
+					writer.print(data.getString(2)+DELIMITER);
 					writer.print(data.getString(5));
 					writer.println();
 				}
@@ -167,7 +168,7 @@ public class Database {
 		BufferedReader br = new BufferedReader(new FileReader("searchbycate.txt"));
 		String line= "";
 		while((line=br.readLine()) != null)  {
-			String[] dataarray = line.split(",");
+			String[] dataarray = line.split(DELIMITER);
 			ArrayList<String> arrayList = new ArrayList<String>(Arrays.asList(dataarray));
 			list.add(arrayList);
 		}
@@ -196,10 +197,10 @@ public class Database {
 			
 			PrintWriter writer = new PrintWriter(fileWriter);
 				while(data.next()) {
-					writer.print(data.getString(1)+",");
-					writer.print(data.getString(3)+",");
-					writer.print (data.getString(4)+",");
-					writer.print(data.getString(2)+",");
+					writer.print(data.getString(1)+DELIMITER);
+					writer.print(data.getString(3)+DELIMITER);
+					writer.print (data.getString(4)+DELIMITER);
+					writer.print(data.getString(2)+DELIMITER);
 					writer.print(data.getString(5));
 					writer.println();
 				}
@@ -218,7 +219,7 @@ public class Database {
 		BufferedReader br = new BufferedReader(new FileReader("searchbycatedescpt.txt"));
 		String line= "";
 		while((line=br.readLine()) != null)  {
-			String[] dataarray = line.split(",");
+			String[] dataarray = line.split(DELIMITER);
 			ArrayList<String> arrayList = new ArrayList<String>(Arrays.asList(dataarray));
 			list.add(arrayList);
 		}
@@ -248,12 +249,13 @@ public class Database {
 			data = statement.executeQuery("select * from sale where ID='" + id + "'");
 			FileWriter fileWriter = new FileWriter("salehistory.txt");
 			
+			
 			PrintWriter writer = new PrintWriter(fileWriter);
 				while(data.next()) {
-					writer.print(data.getString(1)+",");
-					writer.print(data.getString(3)+",");
-					writer.print (data.getString(4)+",");
-					writer.print(data.getString(2)+",");
+					writer.print(data.getString(1)+DELIMITER);
+					writer.print(data.getString(3)+DELIMITER);
+					writer.print (data.getString(4)+DELIMITER);
+					writer.print(data.getString(2)+DELIMITER);
 					writer.print(data.getString(5));
 					writer.println();
 				}
@@ -272,7 +274,7 @@ public class Database {
 		BufferedReader br = new BufferedReader(new FileReader("salehistory.txt"));
 		String line= "";
 		while((line=br.readLine()) != null)  {
-			String[] dataarray = line.split(",");
+			String[] dataarray = line.split(DELIMITER);
 			ArrayList<String> arrayList = new ArrayList<String>(Arrays.asList(dataarray));
 			list.add(arrayList);
 		}
@@ -289,6 +291,213 @@ public class Database {
 		System.out.println(Arrays.deepToString(array2D));
 		return array2D;
 	}	
+	
+	
+	
+//	//main place display of for sale items, checks for current for sale items in db
+//		public static void check_for_salewrite() throws Exception{
+//			try {
+//				
+//				data = statement.executeQuery("select * from sale where Status= 'A'");
+//				FileWriter fileWriter = new FileWriter("DATABD.txt");
+//				
+//				PrintWriter writer = new PrintWriter(fileWriter);
+//					while(data.next()) {
+//					writer.print(data.getString(1)+",");
+//					writer.print(data.getString(3)+",");
+//					writer.print (data.getString(4)+",");
+//					writer.print(data.getString(2)+",");
+//					writer.print(data.getString(5));
+//					writer.println();
+//				}
+//			writer.close();
+//			data.close();
+//			conn.close();
+//			
+//			}
+//			
+//			catch (Exception e) {
+//				e.printStackTrace();
+//				
+//			}
+//		}
+//
+//		public static String[][] check_for_sale() throws Exception{
+//			List<List<String>> list = new ArrayList<List<String>>();
+//			BufferedReader br = new BufferedReader(new FileReader("DATABD.txt"));
+//			String line= "";
+//			while((line=br.readLine()) != null)  {
+//				String[] dataarray = line.split(",");
+//				ArrayList<String> arrayList = new ArrayList<String>(Arrays.asList(dataarray));
+//				list.add(arrayList);
+//			}
+//			//System.out.println(Arrays.deepToString(list.toArray()));
+//			br.close();
+//			int rows = list.size();
+//			int cols = list.get(0).size();
+//			String[][] array2D = new String[rows][cols];
+//			for(int row = 0; row < rows; row++) {
+//				for(int col = 0; col < cols; col++) {
+//					array2D[row][col] = list.get(row).get(col);
+//				}
+//			}
+//			//System.out.println(Arrays.deepToString(array2D));
+//			return array2D;
+//		}
+//		
+//		
+//	//Search category only
+//		public static void search_by_categorywrite(String cate_descpt) throws Exception{
+//			try {
+//				
+//				data = statement.executeQuery("select * from sale where Category='"+cate_descpt+"'");
+//				FileWriter fileWriter = new FileWriter("searchbycate.txt");
+//				
+//				PrintWriter writer = new PrintWriter(fileWriter);
+//					while(data.next()) {
+//						writer.print(data.getString(1)+",");
+//						writer.print(data.getString(3)+",");
+//						writer.print (data.getString(4)+",");
+//						writer.print(data.getString(2)+",");
+//						writer.print(data.getString(5));
+//						writer.println();
+//					}
+//				writer.close();
+//			}
+//			
+//			catch (Exception e) {
+//				e.printStackTrace();
+//				
+//			}
+//		}
+//		
+//		public static String[][] search_by_category() throws Exception{
+//			List<List<String>> list = new ArrayList<List<String>>();
+//			BufferedReader br = new BufferedReader(new FileReader("searchbycate.txt"));
+//			String line= "";
+//			while((line=br.readLine()) != null)  {
+//				String[] dataarray = line.split(",");
+//				ArrayList<String> arrayList = new ArrayList<String>(Arrays.asList(dataarray));
+//				list.add(arrayList);
+//			}
+//			//System.out.println(Arrays.deepToString(list.toArray()));
+//			br.close();
+//			int rows = list.size();
+//			int cols = list.get(0).size();
+//			String[][] array2D = new String[rows][cols];
+//			for(int row = 0; row < rows; row++) {
+//				for(int col = 0; col < cols; col++) {
+//					array2D[row][col] = list.get(row).get(col);
+//				}
+//			}
+//			System.out.println(Arrays.deepToString(array2D));
+//			return array2D;
+//		}
+//		
+//		
+//		
+//	//Search category & description
+//		public static void search_by_category_descptwrite(String cate_descpt, String search_word) throws Exception{
+//			try {
+//				
+//				data = statement.executeQuery("select * from sale where Category='"+cate_descpt+"'AND Status= 'A' AND Item_Description like'%"+ search_word +"%'");
+//				FileWriter fileWriter = new FileWriter("searchbycatedescpt.txt");
+//				
+//				PrintWriter writer = new PrintWriter(fileWriter);
+//					while(data.next()) {
+//						writer.print(data.getString(1)+",");
+//						writer.print(data.getString(3)+",");
+//						writer.print (data.getString(4)+",");
+//						writer.print(data.getString(2)+",");
+//						writer.print(data.getString(5));
+//						writer.println();
+//					}
+//				writer.close();
+//			}
+//			
+//			catch (Exception e) {
+//				e.printStackTrace();
+//				
+//			}
+//		}
+//		
+//		
+//		public static String[][] search_by_category_descpt() throws Exception{
+//			List<List<String>> list = new ArrayList<List<String>>();
+//			BufferedReader br = new BufferedReader(new FileReader("searchbycatedescpt.txt"));
+//			String line= "";
+//			while((line=br.readLine()) != null)  {
+//				String[] dataarray = line.split(",");
+//				ArrayList<String> arrayList = new ArrayList<String>(Arrays.asList(dataarray));
+//				list.add(arrayList);
+//			}
+//			//System.out.println(Arrays.deepToString(list.toArray()));
+//			br.close();
+//			int rows = list.size();
+//			int cols = list.get(0).size();
+//			String[][] array2D = new String[rows][cols];
+//			for(int row = 0; row < rows; row++) {
+//				for(int col = 0; col < cols; col++) {
+//					array2D[row][col] = list.get(row).get(col);
+//				}
+//			}
+//			System.out.println(Arrays.deepToString(array2D));
+//			return array2D;
+//		}	
+//		
+//		
+//		
+//		
+//		
+//
+//	//Show history of sale items for user
+//		public static void sale_historywrite(String id) throws Exception{
+//			try {
+//				
+//				data = statement.executeQuery("select * from sale where ID='" + id + "'");
+//				FileWriter fileWriter = new FileWriter("salehistory.txt");
+//				
+//				PrintWriter writer = new PrintWriter(fileWriter);
+//					while(data.next()) {
+//						writer.print(data.getString(1)+",");
+//						writer.print(data.getString(3)+",");
+//						writer.print (data.getString(4)+",");
+//						writer.print(data.getString(2)+",");
+//						writer.print(data.getString(5));
+//						writer.println();
+//					}
+//				writer.close();
+//			}
+//			
+//			catch (Exception e) {
+//				e.printStackTrace();
+//				
+//			}
+//		}
+//		
+//		
+//		public static String[][] sale_history() throws Exception{
+//			List<List<String>> list = new ArrayList<List<String>>();
+//			BufferedReader br = new BufferedReader(new FileReader("salehistory.txt"));
+//			String line= "";
+//			while((line=br.readLine()) != null)  {
+//				String[] dataarray = line.split(",");
+//				ArrayList<String> arrayList = new ArrayList<String>(Arrays.asList(dataarray));
+//				list.add(arrayList);
+//			}
+//			//System.out.println(Arrays.deepToString(list.toArray()));
+//			br.close();
+//			int rows = list.size();
+//			int cols = list.get(0).size();
+//			String[][] array2D = new String[rows][cols];
+//			for(int row = 0; row < rows; row++) {
+//				for(int col = 0; col < cols; col++) {
+//					array2D[row][col] = list.get(row).get(col);
+//				}
+//			}
+//			System.out.println(Arrays.deepToString(array2D));
+//			return array2D;
+//		}	
 	
 	
 	
@@ -357,6 +566,8 @@ public class Database {
 			e.printStackTrace();
 		}
 	}
+	
+	
 	
 
 }
