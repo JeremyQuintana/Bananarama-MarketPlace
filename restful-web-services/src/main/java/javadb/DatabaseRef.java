@@ -24,7 +24,7 @@ public class DatabaseRef {
 	
 	public static void main(String[] args) throws SQLException
 	{
-		ChatBase db = new ChatBase();
+	/*ChatBase db = new ChatBase();
 		
 		
 		db.addText("What do you call a sad strawberry? a blueberry", 2 , "s1111111");
@@ -34,7 +34,7 @@ public class DatabaseRef {
 		
 		System.out.println(db.usersExist("s1234567", "s1111111"));
 		System.out.println(db.usersExist("s1111111", "s1234567"));		
-		System.out.println(db.usersExist("2", "2"));
+		System.out.println(db.usersExist("2", "2"));*/
 	}
 	private static Statement statement;
 	protected static ResultSet data;
@@ -43,10 +43,10 @@ public class DatabaseRef {
 	String password;
 	String cate;
 	int p_id;
-	int new_price;
+	String new_price;
 	String new_title;
 	String new_despt;
-	public Map<Integer, Post> posts;
+	public static Map<Integer, Post> posts;
 	
 	public DatabaseRef() throws SQLException
 	{			
@@ -66,7 +66,7 @@ public class DatabaseRef {
 	{
 		try
 		{
-			String driver = "com.mysql.jdbc.Driver";
+			String driver = "com.mysql.cj.jdbc.Driver";
 			String url = "jdbc:mysql://35.189.1.213:3306/sept";
 			String username = "root";
 			String password = "bananasept";
@@ -148,7 +148,7 @@ public class DatabaseRef {
 	}
 
 	//Post sell items in marketplace
-	public void sell_item(String owner, String title, String desc, int price, String cate) throws SQLException {
+	public static void sell_item(String owner, String title, String desc, String price, String cate) throws SQLException {
 		java.sql.Date curdate = new java.sql.Date(new java.util.Date().getTime());
 		update("insert into sale(ID, Item_Name, Item_Description, Price, Status, Date, Category) VALUES ('"+ owner +"','"+title+"','"+desc+"','"+price+"', 'A', '"+curdate+"','"+cate+"')");
 		

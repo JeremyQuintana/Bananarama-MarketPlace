@@ -1,5 +1,5 @@
 package com.sept.rest.webservices.restfulwebservices.market;
-
+import javadb.Database;
 import java.net.URI;
 import java.util.List;
 
@@ -24,11 +24,11 @@ public class MarketResourceHardcoded {
 	
 	// Send the posts array from this backend to the frontend via localhost:8080/posts
 	@GetMapping("/posts")
-	public String[][] getAllTodos() {
+	public String[][] getAllTodos() throws Exception {
 		// Thread.sleep(3000);
-		return new String[][]{{"1", "Confetti", "Beautiful multicolored confetti. Used but like new.", "georgemichael99", "$20"},
-		    {"2", "Green Capsicum", "Giant green capsicum. Found it at the beach. Still contains some sand.", "DONNYT1946", "$100"},
-		    {"3", "Small Blue Star", "Blue star, fell from the sky into my backyard. Fits in pocket. Still warm.", "not_an_alien", "$0.50"},
-		    {"4", "Vines - 50ft", "Green climbing vines. Organic, just cut. Perfect for a wedding.", "tree_hater", "$25.47"}};
-	}
+		Database db = new Database();
+		Database.check_for_salewrite();
+		
+		return Database.check_for_sale();
+}
 }
