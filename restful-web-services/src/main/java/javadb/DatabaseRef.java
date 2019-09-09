@@ -24,6 +24,7 @@ public class DatabaseRef {
 	
 	public static void main(String[] args) throws SQLException
 	{
+		ChatBase db = new ChatBase();
 	}
 	private static Statement statement;
 	protected static ResultSet data;
@@ -32,10 +33,10 @@ public class DatabaseRef {
 	String password;
 	String cate;
 	int p_id;
-	String new_price;
+	int new_price;
 	String new_title;
 	String new_despt;
-	public static Map<Integer, Post> posts;
+	public Map<Integer, Post> posts;
 	
 	public DatabaseRef() throws SQLException
 	{			
@@ -50,19 +51,19 @@ public class DatabaseRef {
 		}
 		
 	}
-
+	
 	public boolean canConnect()
 	{
 		try
 		{
-			String driver = "com.mysql.cj.jdbc.Driver";
+			String driver = "com.mysql.jdbc.Driver";
 			String url = "jdbc:mysql://35.189.1.213:3306/sept";
 			String username = "root";
 			String password = "bananasept";
 			Class.forName(driver);
 			conn = DriverManager.getConnection(url, username, password);
 			statement = conn.createStatement();
-			System.out.println("connected");
+			System.out.println("Connected");
 			return true;
 		}
 		catch (Exception e) {
@@ -85,7 +86,7 @@ public class DatabaseRef {
 	//password check
 	public boolean checkPassword(String id, String password) throws SQLException
 	{
-		return checkId(id) && valuesExist(String.format("select count(*) from %s where %s = '%s'", "login", "password", password));
+		return valuesExist(String.format("select count(*) from %s where upper(%s) = '%s' AND %s = '%s'", "login", "ID", id.toUpperCase(), "password", password));
 	}
 	//end login details
 
@@ -100,7 +101,7 @@ public class DatabaseRef {
 	//main place display of for sale items, checks for current for sale items in db
 	public Map<Integer, Post> check_for_sale() throws SQLException
 	{
-		return getPosts("select * from sale where upper(Status)= 'A'");
+		return getPosts("select * from sale where Status= 'a'");
 	}
 
 	//Show history of sale items for user
@@ -112,7 +113,7 @@ public class DatabaseRef {
 	//Show history of sale items for user
 	public Map<Integer, Post> searchCategory(String cate_desc) throws SQLException 
 	{
-		return getPosts("select * from sale where Category='"+cate_desc+"' and upper(Status)= 'A'");
+		return getPosts("select * from sale where Category='"+cate_desc+"'");
 	}
 
 	//Show history of sale items for user
@@ -144,7 +145,7 @@ public class DatabaseRef {
 		data = statement.executeQuery("select * from sale");
 		while (data.next())
 			if (data.isLast())
-				posts.put(data.getInt(1), new Post(data.getInt(1), owner, title, desc, price, curdate, cate));
+				posts.put(data.getInt(1), new Post(data.getInt(1), owner, title, desc, price + "", curdate, cate));
 	}
 	
 	
