@@ -34,7 +34,7 @@ script:
 
 # [START deploy]
 # Deploy the app
-- gcloud -q app deploy app.yaml --promote
+- gcloud -q app deploy appengine-web.xml --promote
 # Run and end to end test
 
 # [END deploy]
