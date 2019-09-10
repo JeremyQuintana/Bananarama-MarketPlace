@@ -25,7 +25,7 @@ public class Database {
 	private static ResultSet data;
 	private static ResultSet rowcount;
 	private static Connection conn;
-	private static String DELIMITER = "#$#";
+	private static String DELIMITER = "#,#";
 	String id;
 	String password;
 	String cate;
