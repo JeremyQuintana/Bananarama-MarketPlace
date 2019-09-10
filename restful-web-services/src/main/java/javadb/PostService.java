@@ -6,70 +6,50 @@ import java.util.List;
 import java.util.Map;
 
 import org.assertj.core.util.Arrays;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class PostService {
 
-	private Map<Integer, Post> posts = new HashMap<>();
-	private int id = 0;
-	
+	@Autowired
+	private PostRepository db;
+//	private Map<Integer, Post> posts = new HashMap<>();
+//	private int id = 0;
+// collecting values from database so these don't matter
 
 	public Post get(int id) 	
 	{
-		return posts.get(id);
+		return db.findById(id).get();
 	}
 	
+	// old: posts.values()
 	public List<Post> getAll() 	
 	{
-		return new ArrayList<>(posts.values());
+		// convert iterator -> list of posts and return
+		List<Post> posts = new ArrayList<>();
+		db.findAll().forEach(posts::add);
+		return posts;
+		
 	}
 	
+//	post.setId(id);
+//	posts.put(id++, post);
 	public void add(Post post) 	
 	{
-		post.setId(id);
-		posts.put(id++, post);
+		db.save(post);
 	}
-	
+	// old: posts.put(post.getId(), post);
 	public void update(int id, Post post) 
 	{
-		posts.put(post.getId(), post);
-	}
+			/*MAY WORK, cuz using id to check existence*/
+		db.save(post);
+	}	
 
-	public Post delete(int id)
+	public void delete(int id)
 	{
-		return posts.remove(id);
+		db.deleteById(id);
 	}
-	
-//private Map<Post> posts = new HashMap<>();
-//	
-//
-//	public Post get(int id) 	
-//	{
-//		return posts.stream().filter(post -> post.getId() == id).findFirst().get();
-//	}
-//	
-//	public List<Post> getAll() 	
-//	{
-//		return posts;
-//	}
-//	
-//	public void add(Post post) 	
-//	{
-//		posts.add(post);
-//	}
-//	
-//	public void update(int id, Post post) 
-//	{
-//		for (int i=0; i<posts.size(); i++)
-//			if (post.getId() == id)
-//				posts.set(i, post);
-//	}
-//
-//	public Post delete(int id)
-//	{
-//		posts
-//	}
 		
 	
 }
