@@ -157,10 +157,8 @@ public class DatabaseRef {
 	
 	
 	// actual commands to database
-	public static void update(String str) throws SQLException
-	{
-		statement.executeUpdate(str);
-	}
+	public static void update(String str) throws SQLException 
+	{}
 	
 	public static ResultSet query(String str) throws SQLException
 	{

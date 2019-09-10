@@ -5,11 +5,14 @@ import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
 import javadb.Post.Column;
 
+@Entity
 public class Post {
 	
-	// raw post creation
 	public Post(int id, String owner, String title, String description, String price, Date date, String category)
 	{
 		this.id = id;
@@ -48,6 +51,7 @@ public class Post {
 	private Status status;
 	private Date datePosted;
 	private String category;
+	@Id
 	private int id;
 	// by giving another name, can put daatabase in "test mode"
 	public static String TABLE_NAME = "sale";
