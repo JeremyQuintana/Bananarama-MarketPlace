@@ -26,7 +26,9 @@ before_install:
 - gcloud auth activate-service-account --key-file client-secret.json
 # [END auth]
 before_install:
+- cd frontend/todo-app
 - npm i
+- cd ../..
 install:
 # Set the correct project to deploy to
 - gcloud config set project sept-248413
