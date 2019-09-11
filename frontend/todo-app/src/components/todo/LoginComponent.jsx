@@ -4,8 +4,8 @@ import React, { Component } from 'react'
 import AuthenticationService from './AuthenticationService.js'
 import GoogleLogin from 'react-google-login';
 import config from './config.json';
-import MarketDataService from '../../api/market/MarketDataService';
-
+//import MarketDataService from '../../api/market/MarketDataService.js';
+//import {googleauth} from '../../api/market/MarketDataService.js';
 class LoginComponent extends Component {
 
     constructor(props) {
@@ -23,18 +23,15 @@ class LoginComponent extends Component {
         this.loginClicked = this.loginClicked.bind(this)
         
         this.responseGoogle = this.responseGoogle.bind(this);
-
+        
     }
     //bunch of crap
-
+    
     async responseGoogle(res) {
 
-          console.log('google token', res);
-          await this.props.authogoogle(res.accessToken)  
-          //await this.props.oauthGoogle(res.accessToken);
-        //if (!this.props.errorMessage) {
-         // this.props.history.push('/dashboard');
-        //}
+        console.log('THIS IS THE GOOGLE INFO', res);
+  //      await this.props.googleauth(res.accessToken);
+        
     }
 
     handleChange(event) {
@@ -95,7 +92,9 @@ class LoginComponent extends Component {
             })
 
     }
-
+//MITCH, if you're using this make sure you stay on localhost:3000 (if for any reason u aren't on 3000 the googly credentials 
+//thing won't work on another other port). If you have to use another port you'll need to set up a new Client ID in the gcloud console, under API& Services
+//Credentials (OAuth 2.0 client IDs) with the port u need to use, then put the Client ID generated into the config.json file located in src/components/todo
     
     render() {
         return (
