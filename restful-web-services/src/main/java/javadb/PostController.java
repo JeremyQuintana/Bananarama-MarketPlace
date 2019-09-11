@@ -3,7 +3,7 @@ import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 
-import org.assertj.core.util.Arrays;
+import com.sept.rest.webservices.restfulwebservices.todo.Todo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.sept.rest.webservices.restfulwebservices.todo.Todo;
 
 @CrossOrigin(origins="http://localhost:3000")
 @RestController
@@ -66,8 +65,8 @@ public class PostController {
 	}
 	
 	@DeleteMapping("/market/{id}")
-	public Post deletePost(@PathVariable int id) {
+	public void deletePost(@PathVariable int id) {
 
-		return postService.delete(id);
+		postService.delete(id);
 	}
 }
