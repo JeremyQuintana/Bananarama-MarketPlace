@@ -4,8 +4,8 @@ import React, { Component } from 'react'
 import AuthenticationService from './AuthenticationService.js'
 import GoogleLogin from 'react-google-login';
 import config from './config.json';
+import MarketDataService from '../../api/market/MarketDataService';
 
-//const responseGoogle = (response) => {console.log(response);}
 class LoginComponent extends Component {
 
     constructor(props) {
@@ -21,14 +21,17 @@ class LoginComponent extends Component {
         // this.handlePasswordChange = this.handlePasswordChange.bind(this)
         this.handleChange = this.handleChange.bind(this)
         this.loginClicked = this.loginClicked.bind(this)
+        
         this.responseGoogle = this.responseGoogle.bind(this);
 
     }
     //bunch of crap
 
     async responseGoogle(res) {
+
           console.log('google token', res);
-        //await this.props.oauthGoogle(res.accessToken);
+          await this.props.authogoogle(res.accessToken)  
+          //await this.props.oauthGoogle(res.accessToken);
         //if (!this.props.errorMessage) {
          // this.props.history.push('/dashboard');
         //}
