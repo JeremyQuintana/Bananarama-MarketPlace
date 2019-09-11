@@ -33,10 +33,11 @@ install:
 # Install the dependencies
 script:
 # Run the unit tests
+- cd frontend/todo-app
 - npm test
 # [START deploy]
 # Deploy the app
-- gcloud -q app deploy app.yaml --promote
+#- gcloud -q app deploy app.yaml --promote
 # Run and end to end test
 
 # [END deploy]
