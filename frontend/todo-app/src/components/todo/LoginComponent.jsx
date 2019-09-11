@@ -6,7 +6,7 @@ class LoginComponent extends Component {
     constructor(props) {
         super(props)
         var loginErrorTemp = false;
-        if(props.location.state == null){
+        if(props.location == null || props.location.state == null){
             loginErrorTemp = false
         } else {
             loginErrorTemp = props.location.state.loginError
