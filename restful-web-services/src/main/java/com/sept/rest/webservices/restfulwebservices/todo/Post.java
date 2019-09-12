@@ -1,4 +1,4 @@
-package javadb;
+package com.sept.rest.webservices.restfulwebservices.todo;
 
 import java.awt.image.BufferedImage;
 import java.sql.Date;
@@ -8,7 +8,9 @@ import java.sql.SQLException;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
-import javadb.Post.Column;
+import com.sept.rest.webservices.restfulwebservices.todo.Post.Column;
+
+import javadb.DatabaseRef;
 
 @Entity
 public class Post {

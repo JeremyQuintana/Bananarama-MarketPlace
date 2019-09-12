@@ -13,9 +13,10 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import com.sept.rest.webservices.restfulwebservices.todo.Post.Column;
+
 import javadb.ChatBase.Overhead;
 import javadb.ChatBase.Text;
-import javadb.Post.Column;
 
 class ChatBaseTest {
 

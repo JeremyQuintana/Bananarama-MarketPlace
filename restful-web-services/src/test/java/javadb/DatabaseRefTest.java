@@ -10,7 +10,8 @@ import org.junit.AfterClass;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import javadb.Post.Status;
+import com.sept.rest.webservices.restfulwebservices.todo.Post;
+import com.sept.rest.webservices.restfulwebservices.todo.Post.Status;
 
 
 class DatabaseRefTest {

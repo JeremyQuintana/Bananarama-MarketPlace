@@ -11,10 +11,12 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import com.sept.rest.webservices.restfulwebservices.todo.Post;
+import com.sept.rest.webservices.restfulwebservices.todo.Post.Action;
+import com.sept.rest.webservices.restfulwebservices.todo.Post.Column;
+import com.sept.rest.webservices.restfulwebservices.todo.Post.Status;
+
 import javadb.ChatBase.Overhead;
-import javadb.Post.Action;
-import javadb.Post.Column;
-import javadb.Post.Status;
 
 import java.sql.Date;
 

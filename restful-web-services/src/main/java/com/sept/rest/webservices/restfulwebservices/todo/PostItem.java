@@ -1,4 +1,4 @@
-package javadb;
+package com.sept.rest.webservices.restfulwebservices.todo;
 
 public class PostItem {
 	private String description;
