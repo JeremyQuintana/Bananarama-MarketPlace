@@ -8,13 +8,48 @@ import java.sql.SQLException;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
-import com.sept.rest.webservices.restfulwebservices.todo.Post.Column;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+//import com.sept.rest.webservices.restfulwebservices.todo.Post.Column;
 
 import javadb.DatabaseRef;
 
 @Entity
 public class Post {
 	
+	// variables need to be above constructor for json
+	/*to change*/
+	private String description;
+	private String title;
+	private String price;
+	private String category;
+	private String photo;
+	private String ownerId;
+	private Status status;
+	private Date datePosted;
+	@Id
+	private int id;
+	// by giving another name, can put daatabase in "test mode"
+	public static String TABLE_NAME = "sale";
+	
+	public Post(String description, String title, String price, String category, String photo)
+	{
+		this.description = description;
+		this.title = title;
+		this.price = price;
+		this.category = category;
+		this.photo = photo;
+		this.status = Status.AVAILABLE;
+		this.datePosted = new Date(new java.util.Date().getTime());
+		/*hardcoded*/
+		this.ownerId = "s1819819131203109";
+		// id needs to be set externally
+	}
+	
+
+// cannot create multiple constructors
+	
+	@JsonIgnore
 	public Post(int id, String owner, String title, String description, String price, Date date, String category)
 	{
 		this.id = id;
@@ -27,19 +62,8 @@ public class Post {
 		this.datePosted = date;
 	}
 	
-	public Post(String title, String description, String price,  String category)
-	{
-		/*hardcoded*/
-		this.ownerId = "s1819819131203109";
-		this.title = title;
-		this.description = description;
-		this.price = price;
-		this.category = category;
-		this.status = Status.AVAILABLE;
-		this.datePosted = new Date(new java.util.Date().getTime());
-	}
-	
-	// post creation from a database
+	// post creation from a (raw) database
+	@JsonIgnore
 	public Post(ResultSet post)
 	{
 		try {
@@ -56,19 +80,7 @@ public class Post {
 		}
 	}
 	
-	
-	
-	private String description;
-	private String title;
-	private String price;
-	private String ownerId;
-	private Status status;
-	private Date datePosted;
-	private String category;
-	@Id
-	private int id;
-	// by giving another name, can put daatabase in "test mode"
-	public static String TABLE_NAME = "sale";
+
 	//edit post column in marketplace
 	public void edit(Column column, String edit) throws SQLException {
 		update(column, edit);
@@ -163,7 +175,7 @@ public class Post {
 	
 	public String toString()
 	{
-		return id + " " + ownerId + " " + title + " " + description + " " + price + " " + status + " " + datePosted + " " + category;
+		return id + " " + ownerId + " " + title + " " + description + " " + price + " " + status + " " + datePosted + " " + category + photo;
 	}
 	
 	public int getId()			{return id;}
@@ -172,8 +184,9 @@ public class Post {
 	public String getOwnerId()	{return ownerId;}
 
 	public String getTitle() {return title;}
-	public String getDesc() {return description;}
+	public String getDescription() {return description;}
 	public String getCategory() {return category;}
 	public String getPrice() {return price;}
+	public String getPhoto() {return photo;}
 	
 }

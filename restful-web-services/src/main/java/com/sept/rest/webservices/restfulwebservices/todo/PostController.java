@@ -22,14 +22,15 @@ import javadb.DatabaseRef;
 @RestController
 public class PostController {
 	
-	@Autowired
-	private PostService postService;
+//	@Autowired
+//	private PostService postService;
 	
 	@PostMapping(value = "/postitem")
-	public void postItem(@RequestBody PostItem item) throws SQLException {
-		System.out.println("sent item to backend.");
-		new DatabaseRef().sell_item("s1234567", item.getName(), item.getDescription(), item.getCost(), item.getCatagory());
+	public void postItem(@RequestBody Post item) throws SQLException {
+		System.out.println("sent item to backend. " + item.toString());
+//		new DatabaseRef().sell_item("s1234567", item.getName(), item.getDescription(), item.getPrice(), item.getCategory());
 	}
+	
 	
 	
 	

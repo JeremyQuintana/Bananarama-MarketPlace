@@ -1,34 +1,28 @@
 package com.sept.rest.webservices.restfulwebservices.todo;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+@Entity
 public class PostItem {
 	private String description;
-	private String name;
-	private String cost;
-	private String catagory;	// temporary change to array
+	private String title;
+	private String price;
+	private String category;	// temporary change to array
 	private String photo; // temporary change type
+	@Id
+	int id;
 	
-	public void print() {
-		System.out.println(this.description + " " + this.name + " " + this.cost + " " + this.catagory + " " + this.photo);
+	public PostItem(String description, String title, String price, String category, String photo)
+	{
+		this.description = description;
+		this.title = title;
+		this.price = price;
+		this.category = category;
+		this.photo = photo;
+	}
+	public String toString() {
+		return description + " " + title + " " + price + " " + category + " " + photo;
 	}
 
-	//need getters for use of request body turning json into java object
-	public String getDescription() {
-		return description;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public String getCost() {
-		return cost;
-	}
-	
-	public String getCatagory() {
-		return catagory;
-	}
-
-	public String getPhoto() {
-		return photo;
-	}
 }
