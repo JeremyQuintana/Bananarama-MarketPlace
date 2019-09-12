@@ -25,6 +25,18 @@ public class Post {
 		this.datePosted = date;
 	}
 	
+	public Post(String title, String description, String price,  String category)
+	{
+		/*hardcoded*/
+		this.ownerId = "s1819819131203109";
+		this.title = title;
+		this.description = description;
+		this.price = price;
+		this.category = category;
+		this.status = Status.AVAILABLE;
+		this.datePosted = new Date(new java.util.Date().getTime());
+	}
+	
 	// post creation from a database
 	public Post(ResultSet post)
 	{

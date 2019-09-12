@@ -40,6 +40,7 @@ public class DatabaseRef {
 	
 	public DatabaseRef() throws SQLException
 	{			
+		System.out.println("test");
 		canConnect();
 		
 		posts = new HashMap<>();
@@ -56,7 +57,8 @@ public class DatabaseRef {
 	{
 		try
 		{
-			String driver = "com.mysql.jdbc.Driver";
+			
+			String driver = "com.mysql.cj.jdbc.Driver";
 			String url = "jdbc:mysql://35.189.1.213:3306/sept";
 			String username = "root";
 			String password = "bananasept";
@@ -158,7 +160,9 @@ public class DatabaseRef {
 	
 	// actual commands to database
 	public static void update(String str) throws SQLException 
-	{}
+	{
+		statement.executeUpdate(str);
+	}
 	
 	public static ResultSet query(String str) throws SQLException
 	{

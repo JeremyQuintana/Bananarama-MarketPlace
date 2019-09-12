@@ -26,6 +26,7 @@ public class PostController {
 	
 	@PostMapping(value = "/postitem")
 	public void postItem(@RequestBody PostItem item) throws SQLException {
+		System.out.println("sent item to backend.");
 		new DatabaseRef().sell_item("s1234567", item.getName(), item.getDescription(), item.getCost(), item.getCatagory());
 	}
 	
