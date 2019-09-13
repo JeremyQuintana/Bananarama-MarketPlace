@@ -10,8 +10,8 @@ import org.junit.AfterClass;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import com.sept.rest.webservices.restfulwebservices.todo.Post;
-import com.sept.rest.webservices.restfulwebservices.todo.Post.Status;
+import com.sept.rest.webservices.restfulwebservices.post.Post;
+import com.sept.rest.webservices.restfulwebservices.post.Post.Status;
 
 
 class DatabaseRefTest {
@@ -75,7 +75,7 @@ class DatabaseRefTest {
 		Post insertedPost = db.posts.get(lastId);
 		assertEquals(insertedPost.getOwnerId(), "s1234567");
 		assertEquals(insertedPost.getTitle(), "Dog");
-		assertEquals(insertedPost.getDesc(), "Used dog");
+		assertEquals(insertedPost.getDescription(), "Used dog");
 		assertEquals(insertedPost.getCategory(), "Dogs");
 		assertEquals(insertedPost.getPrice(), "2");
 		

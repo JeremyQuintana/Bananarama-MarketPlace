@@ -11,10 +11,10 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import com.sept.rest.webservices.restfulwebservices.todo.Post;
-import com.sept.rest.webservices.restfulwebservices.todo.Post.Action;
-import com.sept.rest.webservices.restfulwebservices.todo.Post.Column;
-import com.sept.rest.webservices.restfulwebservices.todo.Post.Status;
+import com.sept.rest.webservices.restfulwebservices.post.Post;
+import com.sept.rest.webservices.restfulwebservices.post.Post.Action;
+import com.sept.rest.webservices.restfulwebservices.post.Post.Column2;
+import com.sept.rest.webservices.restfulwebservices.post.Post.Status;
 
 import javadb.ChatBase.Overhead;
 
@@ -149,7 +149,7 @@ public class DatabaseRef {
 		data = statement.executeQuery("select * from sale");
 		while (data.next())
 			if (data.isLast())
-				posts.put(data.getInt(1), new Post(data.getInt(1), owner, title, desc, price + "", curdate, cate));
+				posts.put(data.getInt(1), new Post(data.getLong(1), owner, title, desc, price + "", curdate, cate));
 	}
 	
 	

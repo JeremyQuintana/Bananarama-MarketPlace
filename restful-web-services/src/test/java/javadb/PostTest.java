@@ -9,9 +9,9 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import com.sept.rest.webservices.restfulwebservices.todo.Post;
-import com.sept.rest.webservices.restfulwebservices.todo.Post.Column;
-import com.sept.rest.webservices.restfulwebservices.todo.Post.Status;
+import com.sept.rest.webservices.restfulwebservices.post.Post;
+import com.sept.rest.webservices.restfulwebservices.post.Post.Column;
+import com.sept.rest.webservices.restfulwebservices.post.Post.Status;
 
 class PostTest {
 

@@ -1,4 +1,4 @@
-package com.sept.rest.webservices.restfulwebservices.todo;
+package com.sept.rest.webservices.restfulwebservices.post;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;

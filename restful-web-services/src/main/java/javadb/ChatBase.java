@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.sept.rest.webservices.restfulwebservices.todo.Post.Status;
+import com.sept.rest.webservices.restfulwebservices.post.Post.Status;
 
 
 // to download GSON jar for this

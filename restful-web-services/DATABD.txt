@@ -19,14 +19,3 @@
 41#$#frog#$#frog#$#s1234567#$#1
 42#$#dog#$#dog#$#s1234567#$#1
 48#$#elephants #$#pink elephants#$#s1234567#$#212.94
-49#$#Dog#$#Used dog#$#s1234567#$#2
-50#$#Dog#$#Used dog#$#s1234567#$#2
-51#$#Dog#$#Used dog#$#s1234567#$#2
-52#$#Dog#$#Used dog#$#s1234567#$#2
-53#$#Dog#$#Used dog#$#s1234567#$#2
-54#$#Dog#$#Used dog#$#s1234567#$#2
-55#$#Dog#$#Used dog#$#s1234567#$#2
-56#$#Dog#$#Used dog#$#s1234567#$#2
-58#$#alien#$#alien green#$#s1234567#$#12.93
-59#$#ASD#$##$#s1234567#$#123
-60#$#wf09889af#$#gaugap#$#s1234567#$#2317

@@ -1,4 +1,4 @@
-package com.sept.rest.webservices.restfulwebservices.todo;
+package com.sept.rest.webservices.restfulwebservices.post;
 
 import java.awt.image.BufferedImage;
 import java.sql.Date;
@@ -6,7 +6,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Column;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -28,7 +32,8 @@ public class Post {
 	private Status status;
 	private Date datePosted;
 	@Id
-	private int id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 	// by giving another name, can put daatabase in "test mode"
 	public static String TABLE_NAME = "sale";
 	
@@ -50,7 +55,7 @@ public class Post {
 // cannot create multiple constructors
 	
 	@JsonIgnore
-	public Post(int id, String owner, String title, String description, String price, Date date, String category)
+	public Post(Long id, String owner, String title, String description, String price, Date date, String category)
 	{
 		this.id = id;
 		this.ownerId = owner;
@@ -67,7 +72,7 @@ public class Post {
 	public Post(ResultSet post)
 	{
 		try {
-			id = post.getInt(1);
+			id = post.getLong(1);
 			ownerId = post.getString(2);
 			title = post.getString(3);
 			description = post.getString(4);
@@ -82,7 +87,7 @@ public class Post {
 	
 
 	//edit post column in marketplace
-	public void edit(Column column, String edit) throws SQLException {
+	public void edit(Column2 column, String edit) throws SQLException {
 		update(column, edit);
 		update(column, edit, "" + id);
 
@@ -90,18 +95,18 @@ public class Post {
 
 	//Delete item from Marketplace
 	public void delete() throws SQLException {
-		update(Column.STATUS, "D");
-		update(Column.STATUS, "D", "" + id);
+		update(Column2.STATUS, "D");
+		update(Column2.STATUS, "D", "" + id);
 	}
 
 	//Marked Item as sold on Marketplace
 	public void sold() throws SQLException {
-		update(Column.STATUS, "S");
-		update(Column.STATUS, "S", "" + id);
+		update(Column2.STATUS, "S");
+		update(Column2.STATUS, "S", "" + id);
 	}
 	
 	// update THIS CLASS
-	private void update(Column column, String edit)
+	private void update(Column2 column, String edit)
 	{
 		switch (column)
 		{
@@ -115,7 +120,7 @@ public class Post {
 	}
 	
 	// update DATABASE
-	public static void update(Column column, String value, String id) throws SQLException
+	public static void update(Column2 column, String value, String id) throws SQLException
 	{
 		DatabaseRef.update("Update "+ TABLE_NAME +" set " + column.key() + "='"+ value +"' where PostID='"+id+"'");
 	}
@@ -157,12 +162,12 @@ public class Post {
 		}
 	}
 	
-	public enum Column
+	public enum Column2
 	{
 		DESC("Item_Description"), NAME("Item_Name"), PRICE("Price"), STATUS("Status"), CATEGORY("Category");
 		
 		private String key;
-		private Column(String key)
+		private Column2(String key)
 		{
 			this.key = key;
 		}
@@ -178,8 +183,8 @@ public class Post {
 		return id + " " + ownerId + " " + title + " " + description + " " + price + " " + status + " " + datePosted + " " + category + photo;
 	}
 	
-	public int getId()			{return id;}
-	public void setId(int id)	{this.id = id;}
+	public Long getId()			{return id;}
+	public void setId(Long id)	{this.id = id;}
 	public Status getStatus()		{return status;}
 	public String getOwnerId()	{return ownerId;}
 
