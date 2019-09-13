@@ -1,5 +1,6 @@
 package com.sept.rest.webservices.restfulwebservices.post;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -23,8 +24,11 @@ import javadb.DatabaseRef;
 @RestController
 public class PostController {
 	
+	// relegated
 	@Autowired
 	private PostService postService;
+	@Autowired
+	private PostRepository db;
 	
 //	@PostMapping(value = "/postitem")
 //	public void postItem(@RequestBody Post item) throws SQLException {
@@ -34,16 +38,21 @@ public class PostController {
 	
 	
 	
-	
-	
+	private List<Post> getPosts()
+	{
+		// convert iterator -> list of posts and return
+		List<Post> posts = new ArrayList<>();
+		db.findAll().forEach(posts::add);
+		return posts;
+	}
 	
 	// show all posts when viewing marketplace
 	@GetMapping("/posts")				
 	public String[][] getAllPosts()
 	{
-		String[][] posts = new String[postService.getAll().size()][5];
+		String[][] posts = new String[getPosts().size()][5];
 		int i=0;
-		for (Post post : postService.getAll())
+		for (Post post : getPosts())
 		{
 			String[] postStr = {Long.toString(post.getId()), post.getTitle(), post.getDescription(), post.getOwnerId(), post.getPrice()};
 			posts[i++] = postStr;
@@ -64,8 +73,7 @@ public class PostController {
 	@PostMapping("/postitem")
 	public void addPost(@RequestBody Post post)
 	{
-		System.out.println(post);
-		postService.add(post);
+		db.save(post);
 	}
 	
 	
@@ -73,19 +81,19 @@ public class PostController {
 	@RequestMapping("/market/{id}")
 	public Post getPost(@PathVariable Long id)
 	{
-		return postService.get(id);
+		return db.findById(id).get();
 	}
 	
 	// when need to open a post in marketplace
 	@PutMapping("/market/{id}")
 	public void updatePost(@PathVariable Long id, @RequestBody Post post)
 	{
-		postService.update(id, post);
+		db.save(post);
 	}
 	
 	@DeleteMapping("/market/{id}")
-	public void deletePost(@PathVariable Long id) {
-
-		postService.delete(id);
+	public void deletePost(@PathVariable Long id) 
+	{
+		db.deleteById(id);
 	}
 }
