@@ -52,6 +52,19 @@ public class JwtAuthenticationRestController {
 
     return ResponseEntity.ok(new JwtTokenResponse(token));
   }
+  
+  @RequestMapping(value = "${jwt.get.googletoken.uri}", method = RequestMethod.POST)
+  public ResponseEntity<?> createGoogleToken(@RequestBody JwtTokenRequest authenticationRequest)
+      throws AuthenticationException {
+
+    authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
+
+    final UserDetails userDetails = jwtInMemoryUserDetailsService.loadUserByUsername(authenticationRequest.getUsername());
+
+    final String token = jwtTokenUtil.generateToken(userDetails);
+
+    return ResponseEntity.ok(new JwtTokenResponse(token));
+  }
 
   @RequestMapping(value = "${jwt.refresh.token.uri}", method = RequestMethod.GET)
   public ResponseEntity<?> refreshAndGetAuthenticationToken(HttpServletRequest request) {

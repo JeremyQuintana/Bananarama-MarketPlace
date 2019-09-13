@@ -2,6 +2,7 @@
 
 import React, { Component } from 'react'
 import AuthenticationService from './AuthenticationService.js'
+import GoogleAuthenticationService from '../../api/market/GoogleAuthenticationService'
 import GoogleLogin from 'react-google-login';
 import config from './config.json';
 //import MarketDataService from '../../api/market/MarketDataService.js';
@@ -31,7 +32,29 @@ class LoginComponent extends Component {
 
         console.log('THIS IS THE GOOGLE INFO', res);
   //      await this.props.googleauth(res.accessToken);
-        
+        console.log('')
+        GoogleAuthenticationService
+            .executeGoogleAuthenticationService(res)
+            .then((response) => {
+                console.log(response)
+                GoogleAuthenticationService.registerSuccessfulLoginForGoogle(this.state.username, response.data.token)
+                
+                //this.props.history.push(`/home/${response.profileObj.googleId}`)
+                this.props.history.push(`/home/sept`)
+            }).catch((e) => {
+                console.log(e)
+                this.setState({ showSuccessMessage: false })
+                this.setState({ hasLoginFailed: true })
+            })
+        // AuthenticationService
+        // .executeJwtAuthenticationService(this.state.username, this.state.password)
+        // .then((response) => {
+        //     AuthenticationService.registerSuccessfulLoginForJwt(this.state.username, response.data.token)
+        //     this.props.history.push(`/home/${this.state.username}`)
+        // }).catch(() => {
+        //     this.setState({ showSuccessMessage: false })
+        //     this.setState({ hasLoginFailed: true })
+        // })
     }
 
     handleChange(event) {

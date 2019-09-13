@@ -34,6 +34,9 @@ public class JWTWebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Value("${jwt.get.token.uri}")
     private String authenticationPath;
+    
+    @Value("${jwt.get.googletoken.uri}")
+    private String googleAuthenticationPath;
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
@@ -77,7 +80,8 @@ public class JWTWebSecurityConfig extends WebSecurityConfigurerAdapter {
             .ignoring()
             .antMatchers(
                 HttpMethod.POST,
-                authenticationPath
+                authenticationPath,
+                googleAuthenticationPath
             )
             .antMatchers(HttpMethod.OPTIONS, "/**")
             .and()
