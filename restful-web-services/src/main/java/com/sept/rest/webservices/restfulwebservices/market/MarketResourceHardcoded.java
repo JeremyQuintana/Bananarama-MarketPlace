@@ -24,13 +24,13 @@ import javadb.Database;
 @RestController
 public class MarketResourceHardcoded {
 	
-	// Send the posts array from this backend to the frontend via localhost:8080/posts
-	@GetMapping("/posts")
-	public String[][] getAllTodos() throws Exception {
-		// Thread.sleep(3000);
-		Database db = new Database();
-		Database.check_for_salewrite();
-		
-		return Database.check_for_sale();
-}
+//	// Send the posts array from this backend to the frontend via localhost:8080/posts
+//	@GetMapping("/posts")
+//	public String[][] getAllTodos() throws Exception {
+//		// Thread.sleep(3000);
+//		Database db = new Database();
+//		Database.check_for_salewrite();
+//		
+//		return Database.check_for_sale();
+//}
 }

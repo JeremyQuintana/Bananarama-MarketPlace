@@ -37,6 +37,9 @@ public class Post {
 	// by giving another name, can put daatabase in "test mode"
 	public static String TABLE_NAME = "sale";
 	
+	// annoyingly jpa 2.0 needs this
+	public Post(){}
+	
 	public Post(String description, String title, String price, String category, String photo)
 	{
 		this.description = description;

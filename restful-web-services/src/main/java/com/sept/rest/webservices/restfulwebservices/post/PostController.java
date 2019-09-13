@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -36,25 +37,28 @@ public class PostController {
 	
 	
 	
+	// show all posts when viewing marketplace
+	@GetMapping("/posts")				
+	public String[][] getAllPosts()
+	{
+		String[][] posts = new String[postService.getAll().size()][5];
+		int i=0;
+		for (Post post : postService.getAll())
+		{
+			String[] postStr = {Long.toString(post.getId()), post.getTitle(), post.getDescription(), post.getOwnerId(), post.getPrice()};
+			posts[i++] = postStr;
+		}
+		return posts;
+	}
+	
 //	// show all posts when viewing marketplace
-//	@RequestMapping("/posts")				
-//	public String[][] getAllPosts()
+//	@GetMapping("/posts")				/*WRONG URLS>>>???*/    /*some methods seem simpler than requireed*/
+//	public List<Post> getAllPosts()
 //	{
-//		List<Post> postList = postService.getAll();
-//		String[][] posts = new String[postList.size()][postList.get(0)];
 //		for (Post post : postService.getAll())
-//		{
-//			
-//		}
+//			System.out.println(post);
 //		return postService.getAll();
 //	}
-//	
-	// show all posts when viewing marketplace
-	@RequestMapping("/posts")				/*WRONG URLS>>>???*/    /*some methods seem simpler than requireed*/
-	public List<Post> getAllPosts()
-	{
-		return postService.getAll();
-	}
 	
 	// adds a post to marketplace
 	@PostMapping("/postitem")
