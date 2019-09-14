@@ -32,18 +32,18 @@ before_install:
 before_install:
 - cd frontend/todo-app
 - npm ci
-#- cd ../..
-#- mvn install
+- cd ../..
+- mvn install
 install:
 # Set the correct project to deploy to
 - gcloud config set project sept-248413
 # Install the dependencies
 script:
 # Run the unit tests
-#- cd frontend/todo-app
+- cd frontend/todo-app
 - npm test
-#- cd ../..
-#- mvn test
+- cd ../..
+- mvn test
 # [START deploy]
 # Deploy the app
 #- gcloud -q app deploy app.yaml --promote
