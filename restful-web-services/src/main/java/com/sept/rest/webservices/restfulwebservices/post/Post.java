@@ -42,6 +42,7 @@ public class Post {
 	
 	public Post(String description, String title, String price, String category, String photo)
 	{
+		System.out.println("called constructor");
 		this.description = description;
 		this.title = title;
 		this.price = price;

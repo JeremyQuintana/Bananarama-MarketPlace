@@ -12,7 +12,7 @@ public class Overhead
 {
 	@Id
 	@GeneratedValue
-	private Long chatID;
+	private Long id;
 	private String user1;
 	private String user2;
 	
@@ -25,5 +25,5 @@ public class Overhead
 		this.user2 = user2;
 	}
 	
-	public Long getChatID() {return chatID;}
+	public Long getChatID() {return id;}
 }

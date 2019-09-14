@@ -9,6 +9,7 @@ public interface OverheadRepository extends JpaRepository<Overhead, Long> {
 	// and with this, the method is already implemented
 	// jpa MAGICALLY uses the method name to know what to look for
 	public Overhead findFirstByUser1AndUser2(String user1, String user2);
-
-	public List<Overhead> findByChatIdAndSender(Long id, String sender);
+	
+	/*wrong name sender??*/
+//	public List<Overhead> findByIdAndSender(Long id, String sender);
 }

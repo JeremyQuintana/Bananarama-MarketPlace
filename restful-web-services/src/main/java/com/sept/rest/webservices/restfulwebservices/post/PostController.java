@@ -26,68 +26,71 @@ import javadb.DatabaseRef;
 @RestController
 public class PostController {
 	
-	// relegated  postService
 	@Autowired
-	private PostRepository db;
+	private PostService service;
 	
-//	@PostMapping(value = "/postitem")
-//	public void postItem(@RequestBody Post item) throws SQLException {
-//		System.out.println("sent item to backend. " + item.toString());
-////		new DatabaseRef().sell_item("s1234567", item.getName(), item.getDescription(), item.getPrice(), item.getCategory());
-//	}
-	
-	
-	
-	// show all posts when viewing marketplace
-	@GetMapping("/posts")				
-	public String[][] getAllPosts()
-	{
-		String[][] posts = new String[db.findAll().size()][5];
-		int i=0;
-		for (Post post : db.findAll())
-		{
-			String[] postStr = {Long.toString(post.getId()), post.getTitle(), post.getDescription(), post.getOwnerId(), post.getPrice()};
-			posts[i++] = postStr;
-		}
-		return posts;
-	}
-	
-//	// show all posts when viewing marketplace
-//	@GetMapping("/posts")				/*WRONG URLS>>>???*/    /*some methods seem simpler than requireed*/
-//	public List<Post> getAllPosts()
-//	{
-//		for (Post post : postService.getAll())
-//			System.out.println(post);
-//		return postService.getAll();
-//	}
 	
 	// adds a post to marketplace
 	@PostMapping("/postitem")
 	public void addPost(@RequestBody Post post)
 	{
-		db.save(post);
+		System.out.println(post);
+		service.add(post);
 	}
 	
 	
-	// when need to open a post in marketplace
-	@RequestMapping("/market/{id}")
-	public Post getPost(@PathVariable Long id)
-	{
-		return db.findById(id).get();
-	}
 	
-	// when need to open a post in marketplace
-	@PutMapping("/market/{id}")
-	public void updatePost(@PathVariable Long id, @RequestBody Post post)
-	{
-		db.save(post);
-	}
 	
-	@DeleteMapping("/market/{id}")
-	public void deletePost(@PathVariable Long id) 
-	{
-		db.deleteById(id);
-	}
+//	// show all posts when viewing marketplace
+//	@GetMapping("/posts")				
+//	public String[][] getAllPosts()
+//	{
+//		
+//		String[][] posts = new String[db.findAll().size()][5];
+//		int i=0;
+//		for (Post post : db.findAll())
+//		{
+//			String[] postStr = {Long.toString(post.getId()), post.getTitle(), post.getDescription(), post.getOwnerId(), post.getPrice()};
+//			posts[i++] = postStr;
+//		}
+//		return posts;
+//	}
+//	
+////	// show all posts when viewing marketplace
+////	@GetMapping("/posts")				/*WRONG URLS>>>???*/    /*some methods seem simpler than requireed*/
+////	public List<Post> getAllPosts()
+////	{
+////		return postService.getAll();
+////	}
+//	
+//	// adds a post to marketplace
+//	@PostMapping("/postitem")
+//	public void addPost(@RequestBody Post post)
+//	{
+//		System.out.println(post);
+//		db.save(post);
+//	}
+//	
+//	
+//	// when need to open a post in marketplace
+//	@RequestMapping("/market/{id}")
+//	public Post getPost(@PathVariable Long id)
+//	{
+//		return db.findById(id).get();
+//	}
+//	
+//	// when need to open a post in marketplace
+//	@PutMapping("/market/{id}")
+//	public void updatePost(@PathVariable Long id, @RequestBody Post post)
+//	{
+//		db.save(post);
+//	}
+//	
+//	@DeleteMapping("/market/{id}")
+//	public void deletePost(@PathVariable Long id) 
+//	{
+//		db.deleteById(id);
+//	}
 }
 
 

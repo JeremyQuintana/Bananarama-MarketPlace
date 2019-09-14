@@ -11,7 +11,7 @@ public class Text
 {
 	@Id
 	@GeneratedValue
-	private Long chatID;
+	private Long id;
 	private String text;
 	private String sender;
 	
@@ -24,6 +24,6 @@ public class Text
 		this.sender = sender;
 	}
 	
-	public Long getChatID() {return chatID;}
+	public Long getId() {return id;}
 	public String getSender() {return sender;}
 }
