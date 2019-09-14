@@ -33,7 +33,7 @@ class MarketComponent extends Component {
                 
                 
                 
-                <select name="item_category" className="input" onChange={this.handleChange} value={this.state.item_category}>
+                <select name="item_category" className="inputnot" onChange={this.handleChange} value={this.state.item_category}>
                   <option value="all" default>Choose Category</option>
                   <option value="Exceptionally Random">Exceptionally Random</option>
                   <option value="Ridiculously Complicated">Ridiculously Complicated</option>

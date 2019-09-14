@@ -19,9 +19,11 @@ import org.springframework.web.bind.annotation.RestController;
 import javadb.DatabaseRef;
 
 
+
 @CrossOrigin(origins="http://localhost:3000")
 @RestController
 public class PostController {
+	
 	
 	@Autowired
 	private PostService postService;
@@ -52,9 +54,26 @@ public class PostController {
 	}
 	
 	//HERE IS WHERE THE CONTENTS ON SEARCH COME THROUGH
-	//@PostMapping("/searchitem")
+	@PostMapping("/searchitem")
+	public void Search_Post(@RequestBody SearchPost search) {
+
+	search.print();
+	}
+	
 	//HERE IS WHERE TO "SEND THE RESULTS"
-	//@GetMapping("/posts/searchBy")			
+	//@GetMapping("/posts/searchBy")	
+	//public String[][] getAllPosts(@PathVariable String title, @PathVariable String category)
+	//{
+		//String[][] posts = new String[postService.getAll().size()][5];
+		//int i=0;
+		//for (Post post : postService.getAll())
+		//{
+			//String[] postStr = {Long.toString(post.getId()), post.getTitle(), post.getDescription(), post.getOwnerId(), post.getPrice()};
+			//posts[i++] = postStr;
+		//}
+	//	return posts;
+	//}
+
 	
 	
 	
