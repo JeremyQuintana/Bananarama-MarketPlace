@@ -9,6 +9,11 @@ cache:
   directories:
   - "$HOME/google-cloud-sdk/"
   - "$HOME/.npm/"
+
+branches:
+  only:
+    - master
+    - travis_impl
 #env:
 # Make sure gcloud command is on our PATH and the App Engine SDK is in the Python path
 #- GAE_PYTHONPATH=${HOME}/.cache/google_appengine PATH=$PATH:${HOME}/google-cloud-sdk/bin PYTHONPATH=${PYTHONPATH}:${GAE_PYTHONPATH} CLOUDSDK_CORE_DISABLE_PROMPTS=1
@@ -33,7 +38,7 @@ before_install:
 - cd frontend/todo-app
 - npm ci
 - cd ../../restful-web-services
-- mvn install
+- mvn compile
 install:
 # Set the correct project to deploy to
 - gcloud config set project sept-248413
