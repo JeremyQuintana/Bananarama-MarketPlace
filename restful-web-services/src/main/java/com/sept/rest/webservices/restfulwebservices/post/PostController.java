@@ -51,6 +51,13 @@ public class PostController {
 		return posts;
 	}
 	
+	//HERE IS WHERE THE CONTENTS ON SEARCH COME THROUGH
+	//@PostMapping("/searchitem")
+	//HERE IS WHERE TO "SEND THE RESULTS"
+	//@GetMapping("/posts/searchBy")			
+	
+	
+	
 //	// show all posts when viewing marketplace
 //	@GetMapping("/posts")				/*WRONG URLS>>>???*/    /*some methods seem simpler than requireed*/
 //	public List<Post> getAllPosts()
