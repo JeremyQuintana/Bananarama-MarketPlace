@@ -3,12 +3,55 @@ import React, { Component } from 'react'
 import { withRouter } from "react-router-dom";
 import MarketDataService from "../../api/market/MarketDataService.js"
 
+import './Market.css';
+import toBackend from '../../project_frontend/toBackend/postBackend.js'
+
 // This is the marketplace browsing component
 class MarketComponent extends Component {
-    render() {
+
+  constructor(props){
+    super(props)
+
+    this.state = {
+      search_words: '',
+      item_category: ''
+    }
+  
+
+  this.handleChange = this.handleChange.bind(this)
+  this.submitPost = this.submitPost.bind(this)
+  }
+  render() {
         // Simply return a heading, and div that will contain the posts
         let retVal = (
-            <div>
+          <div>
+          <div className="Search_item">
+    
+          <form onSubmit={this.submitPost} refs="form">
+          
+                
+                
+                
+                
+                <select name="item_category" className="input" onChange={this.handleChange} value={this.state.item_category}>
+                  <option value="all" default>Choose Category</option>
+                  <option value="Exceptionally Random">Exceptionally Random</option>
+                  <option value="Ridiculously Complicated">Ridiculously Complicated</option>
+                  <option value="Annoyingly Unnexplained">Annoyingly Unnexplained</option>
+                  <option value="Disturbingly Simple">Disturbingly Simple</option>
+                  <option value="Spectularly Failing">Spectacularly Failing</option>
+                </select>
+               
+                <div class="input-icons"> 
+                <textarea name="Search_words" className="inputfield" placeholder="Search"  value={this.state.item_description} onChange={this.handleChange} />
+            
+                 <i class="icon">< input type="image" src={require("./search.png")} border="0" alt="Submit" /></i>
+            </div>
+            
+          </form>
+        </div>
+        
+
                 <h1 className="marketTitle">Browse Marketplace</h1>
                 <div className="container">
                     <Items history={this.props.history}></Items>
@@ -18,6 +61,20 @@ class MarketComponent extends Component {
         return retVal;
     }
 
+     handleChange(event){
+      this.setState(
+        {
+          [event.target.name] : event.target.value
+        }
+      )
+    }
+  
+  
+    submitPost(event){
+      toBackend.searchItemBackend(this.state.item_description, this.state.item_category);
+      event.preventDefault();
+      this.props.history.push('/market/searchBy');
+    }
 
 }
 

@@ -9,6 +9,10 @@ class MarketDataService {
         return axios.get(`${API_URL}/posts`);
     }
 
+    retrievesearchByPosts() {
+        
+        return axios.get(`${API_URL}/posts/searchBy`);
+    }
 
 
 }
