@@ -16,6 +16,7 @@ public class PostItemRestController {
 	@PostMapping(value = "/postitem")
 	public void postItem(@RequestBody PostItem item) throws SQLException 
 	{
+		item.print();
 		new DatabaseRef().sell_item("s1234567", item.getName(), item.getDescription(), item.getCost(), item.getCatagory());
 	}
 		
