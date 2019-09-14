@@ -1,4 +1,4 @@
-/* .Search_item {
+ .Search_item {
   margin-top: 20px;
   }
 
@@ -7,7 +7,7 @@
   } 
 
  .inputnot{
-  margin-left: 19%;
+  margin-left: -32%;
   height:35px;  
   }
  
@@ -17,7 +17,7 @@
   text-align: center; 
   } 
 
-.inputfield, .Search_words { 
+.inputfield, .search_words { 
   width: 40%; 
   height:35px;
   padding: 4px; 
@@ -28,4 +28,4 @@
 .marketTitle{
   margin-top: -60px;
   margin-bottom: 15px;
-  } */
+  } 

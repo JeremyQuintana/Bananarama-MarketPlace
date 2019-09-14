@@ -13,8 +13,8 @@ class MarketComponent extends Component {
     super(props)
 
     this.state = {
-      search_words: '',
-      item_category: ''
+      item_category: '',
+      search_words: ''
     }
   
 
@@ -23,18 +23,15 @@ class MarketComponent extends Component {
   }
   render() {
         // Simply return a heading, and div that will contain the posts
-        let retVal = (
-          <div>
+       let retVal = (
+        
+         
+      <div>
           <div className="Search_item">
-    
           <form onSubmit={this.submitPost} refs="form">
-          
-                
-                
-                
-                
-                <select name="item_category" className="inputnot" onChange={this.handleChange} value={this.state.item_category}>
-                  <option value="all" default>Choose Category</option>
+                <select required name="item_category" className="inputnot" onChange={this.handleChange} value={this.state.item_category}>
+                  <option value="">Choose Category</option>
+                  <option value="All">All</option>
                   <option value="Exceptionally Random">Exceptionally Random</option>
                   <option value="Ridiculously Complicated">Ridiculously Complicated</option>
                   <option value="Annoyingly Unnexplained">Annoyingly Unnexplained</option>
@@ -43,12 +40,13 @@ class MarketComponent extends Component {
                 </select>
                
                 <div class="input-icons"> 
-                <textarea name="Search_words" className="inputfield" placeholder="Search"  value={this.state.item_description} onChange={this.handleChange} />
-            
-                 <i class="icon">< input type="image" src={require("./search.png")} border="0" alt="Submit" /></i>
-            </div>
-            
+                <input type="text" name="search_words" className="inputfield"  value={this.state.search_words} onChange={this.handleChange} />
+               
+                <i class="icon">< input type="image" src={require("./search.png")} value="Submit" border="0" alt="Submit" /></i>
+                
+          </div>
           </form>
+          
         </div>
         
 
@@ -58,10 +56,11 @@ class MarketComponent extends Component {
                 </div>
             </div>
         );
-        return retVal;
+       return retVal;
     }
 
      handleChange(event){
+      event.preventDefault();
       this.setState(
         {
           [event.target.name] : event.target.value
@@ -71,8 +70,8 @@ class MarketComponent extends Component {
   
   
     submitPost(event){
-      toBackend.searchItemBackend(this.state.item_description, this.state.item_category);
-      event.preventDefault();
+      toBackend.searchItemBackend(this.state.search_words, this.state.item_category);
+      
       this.props.history.push('/market/searchBy');
     }
 

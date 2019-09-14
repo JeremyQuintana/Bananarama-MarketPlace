@@ -6,20 +6,20 @@ public class SearchPost {
 	
 	// variables need to be above constructor for json
 	/*to change*/
-	private String SearchWord;
-	private String Category;
+	private String search_words;
+	private String category;
 	
 	
 	public void print() {
-		System.out.println(this.SearchWord + " " + this.Category+ " ");
+		System.out.println(this.search_words + " " + this.category+ " " + "Fuck this");
 	}
 	
 
 	public String getSearchWord(){
-		return SearchWord;
+		return search_words;
 	}
 
 	public String getCategory() {
-		return Category;
+		return category;
 	}
 }
