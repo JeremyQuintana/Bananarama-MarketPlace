@@ -32,7 +32,7 @@ before_install:
 before_install:
 - cd frontend/todo-app
 - npm ci
-- cd ../..
+- cd ../../restful-web-services
 - mvn install
 install:
 # Set the correct project to deploy to
@@ -40,9 +40,9 @@ install:
 # Install the dependencies
 script:
 # Run the unit tests
-- cd frontend/todo-app
+- cd ../frontend/todo-app
 - npm test
-- cd ../..
+- cd ../../restful-web-services
 - mvn test
 # [START deploy]
 # Deploy the app
