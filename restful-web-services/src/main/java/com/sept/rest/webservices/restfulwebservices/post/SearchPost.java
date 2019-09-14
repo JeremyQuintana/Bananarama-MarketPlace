@@ -11,7 +11,7 @@ public class SearchPost {
 	
 	
 	public void print() {
-		System.out.println(this.search_words + " " + this.category+ " " + "Fuck this");
+		System.out.println(this.search_words + " " + this.category+ " ");
 	}
 	
 

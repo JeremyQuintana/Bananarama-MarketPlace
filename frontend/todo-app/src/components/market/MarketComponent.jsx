@@ -40,7 +40,7 @@ class MarketComponent extends Component {
                 </select>
                
                 <div class="input-icons"> 
-                <input type="text" name="search_words" className="inputfield"  value={this.state.search_words} onChange={this.handleChange} />
+                <input type="text" name="search_words" className="inputfield" placeholder="Search"  value={this.state.search_words} onInput={this.handleChange} />
                
                 <i class="icon">< input type="image" src={require("./search.png")} value="Submit" border="0" alt="Submit" /></i>
                 
@@ -60,8 +60,7 @@ class MarketComponent extends Component {
     }
 
      handleChange(event){
-      event.preventDefault();
-      this.setState(
+        this.setState(
         {
           [event.target.name] : event.target.value
         }
@@ -71,7 +70,7 @@ class MarketComponent extends Component {
   
     submitPost(event){
       toBackend.searchItemBackend(this.state.search_words, this.state.item_category);
-      
+      event.preventDefault();
       this.props.history.push('/market/searchBy');
     }
 
