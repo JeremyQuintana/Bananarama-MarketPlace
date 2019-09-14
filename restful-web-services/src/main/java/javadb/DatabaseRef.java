@@ -13,7 +13,6 @@ import java.util.Map;
 
 import com.sept.rest.webservices.restfulwebservices.post.Post;
 import com.sept.rest.webservices.restfulwebservices.post.Post.Action;
-import com.sept.rest.webservices.restfulwebservices.post.Post.Column2;
 import com.sept.rest.webservices.restfulwebservices.post.Post.Status;
 
 import javadb.ChatBase.Overhead;

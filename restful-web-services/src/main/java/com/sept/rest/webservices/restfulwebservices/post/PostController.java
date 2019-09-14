@@ -5,7 +5,9 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,9 +26,7 @@ import javadb.DatabaseRef;
 @RestController
 public class PostController {
 	
-	// relegated
-	@Autowired
-	private PostService postService;
+	// relegated  postService
 	@Autowired
 	private PostRepository db;
 	
@@ -38,21 +38,13 @@ public class PostController {
 	
 	
 	
-	private List<Post> getPosts()
-	{
-		// convert iterator -> list of posts and return
-		List<Post> posts = new ArrayList<>();
-		db.findAll().forEach(posts::add);
-		return posts;
-	}
-	
 	// show all posts when viewing marketplace
 	@GetMapping("/posts")				
 	public String[][] getAllPosts()
 	{
-		String[][] posts = new String[getPosts().size()][5];
+		String[][] posts = new String[db.findAll().size()][5];
 		int i=0;
-		for (Post post : getPosts())
+		for (Post post : db.findAll())
 		{
 			String[] postStr = {Long.toString(post.getId()), post.getTitle(), post.getDescription(), post.getOwnerId(), post.getPrice()};
 			posts[i++] = postStr;
@@ -97,3 +89,5 @@ public class PostController {
 		db.deleteById(id);
 	}
 }
+
+
