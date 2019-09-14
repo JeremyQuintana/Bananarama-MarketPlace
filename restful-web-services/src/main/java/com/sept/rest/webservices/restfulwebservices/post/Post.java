@@ -6,6 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -28,9 +30,15 @@ public class Post {
 	private String price;
 	private String category;
 	private String photo;
-	private String ownerId;
-	private Status status;
-	private Date datePosted;
+	private String ownerId = "s1234567";
+	private Date datePosted = new Date(new java.util.Date().getTime());
+	
+	@Enumerated(EnumType.STRING)
+	private Status status = Status.AVAILABLE;
+	
+	// a bug prevents the above values being stored in a constructor, 
+	// used to work before but now doesn't
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -40,22 +48,6 @@ public class Post {
 	// annoyingly jpa 2.0 needs this
 	public Post(){}
 	
-	public Post(String description, String title, String price, String category, String photo)
-	{
-		System.out.println("called constructor");
-		this.description = description;
-		this.title = title;
-		this.price = price;
-		this.category = category;
-		this.photo = photo;
-		this.status = Status.AVAILABLE;
-		this.datePosted = new Date(new java.util.Date().getTime());
-		/*hardcoded*/
-		this.ownerId = "s1819819131203109";
-		// id needs to be set externally
-	}
-	
-
 // cannot create multiple constructors
 	
 	@JsonIgnore
