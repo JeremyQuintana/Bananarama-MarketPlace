@@ -32,26 +32,26 @@ public class PostController {
 	
 	
 	// show all posts when viewing marketplace
-	@GetMapping("/posts")				
-	public String[][] getAllPosts()
-	{
-		
-		String[][] posts = new String[db.findAll().size()][5];
-		int i=0;
-		for (Post post : db.findAll())
-		{
-			String[] postStr = {Long.toString(post.getId()), post.getTitle(), post.getDescription(), post.getOwnerId(), post.getPrice()};
-			posts[i++] = postStr;
-		}
-		return posts;
-	}
-	
-//	// show all posts when viewing marketplace
-//	@GetMapping("/posts")				/*WRONG URLS>>>???*/    /*some methods seem simpler than requireed*/
-//	public List<Post> getAllPosts()
+//	@GetMapping("/posts")				
+//	public String[][] getAllPosts()
 //	{
-//		return postService.getAll();
+//		
+//		String[][] posts = new String[db.findAll().size()][5];
+//		int i=0;
+//		for (Post post : db.findAll())
+//		{
+//			String[] postStr = {Long.toString(post.getId()), post.getTitle(), post.getDescription(), post.getOwnerId(), post.getPrice()};
+//			posts[i++] = postStr;
+//		}
+//		return posts;
 //	}
+	
+	// show all posts when viewing marketplace
+	@GetMapping("/posts")				/*WRONG URLS>>>???*/    /*some methods seem simpler than requireed*/
+	public List<Post> getAllPosts()
+	{
+		return db.findAll();
+	}
 	
 	// adds a post to marketplace
 	@PostMapping("/postitem")
