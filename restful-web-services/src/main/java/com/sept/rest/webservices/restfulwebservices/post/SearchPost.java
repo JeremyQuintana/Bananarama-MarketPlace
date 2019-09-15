@@ -15,11 +15,11 @@ public class SearchPost {
 	}
 	
 
-	public String getSearchWord(){
+	public String getsearch_words(){
 		return search_words;
 	}
 
-	public String getCategory() {
+	public String getcategory() {
 		return category;
 	}
 }
