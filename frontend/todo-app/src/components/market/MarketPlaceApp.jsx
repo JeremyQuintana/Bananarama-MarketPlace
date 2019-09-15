@@ -25,6 +25,7 @@ class MarketPlaceApp extends Component {
     render() {
         // Return the divs with the header, footer and routes for different pages
         return (
+            
             <div className="MarketPlaceApp">
                 <Router>
                     <>
