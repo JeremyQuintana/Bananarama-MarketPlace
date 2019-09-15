@@ -16,6 +16,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+//if doing eg: public List<String> stuff()
+//rest controller will AUTO CONVERT to json, and send to frontend
+
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
 public class TodoResource {
@@ -23,7 +26,7 @@ public class TodoResource {
 	@Autowired
 	private TodoHardcodedService todoService;
 
-	@GetMapping("/users/{username}/todos")
+	@GetMapping("/users/{username}/todos") // <--same name as v so passes that as parameter
 	public List<Todo> getAllTodos(@PathVariable String username) {
 		// Thread.sleep(3000);
 		return todoService.findAll();

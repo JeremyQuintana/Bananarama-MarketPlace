@@ -9,9 +9,9 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-
-import javadb.Post.Column;
-import javadb.Post.Status;
+import com.sept.rest.webservices.restfulwebservices.post.Post;
+import com.sept.rest.webservices.restfulwebservices.post.Post.Column;
+import com.sept.rest.webservices.restfulwebservices.post.Post.Status;
 
 class PostTest {
 
@@ -34,7 +34,6 @@ class PostTest {
 		
 		// choose ONE post out of list as test subject
 		post = db.getPosts("select * from saleTest").get(4);
-		
 		
 	}
 
@@ -73,7 +72,7 @@ class PostTest {
 	}
 	
 	// actually check if database changed
-	private void testDatabaseCellChange(Column column, int id, String edit) throws SQLException
+	private void testDatabaseCellChange(Column column, Long id, String edit) throws SQLException
 	{
 		ResultSet data = DatabaseRef.query(String.format("select %s from saleTest where PostID =%d", column.key(), id));
 		data.next();

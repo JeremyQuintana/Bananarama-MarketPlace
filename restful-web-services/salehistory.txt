@@ -1,0 +1,5 @@
+6,Table,Brand new White,s1111111,40
+14,Car,Used blue,s1111111,10000
+15,Car,Used red,s1111111,15000
+16,Car,Used red,s1111111,15000
+17,Car,Used red 158000,s1111111,15000
