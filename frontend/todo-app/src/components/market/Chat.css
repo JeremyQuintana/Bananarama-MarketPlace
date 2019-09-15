@@ -1,46 +1,16 @@
-.chat_container {
-    background: #34495E;
-    display: grid;
-    width: 50%;
-    grid-template-columns: repeat(6, 1fr);
-    grid-template-rows: 1fr 1fr 1fr 1fr 1fr 60px;
-    grid-template-areas: 
-        "m m m m m m"
-        "m m m m m m"
-        "m m m m m m"
-        "m m m m m m"
-        "m m m m m m"
-        "r f f f f f";
-}
-.background{
-        background: #34495E;
-}
 
 button{
      background:#F1C40F;
     border-radius: 5px;
     border-width: thick;
-border-color: black;
+    border-color: black;
     border-color:#F1C40F;
     width: 20%;
 
 }
-
-
-.rooms-list {
-    grid-area: r;
-}
-
-.header{
-    grid-area: t;
-}
-
 .message-list {
-    grid-area: m;
-}
 
-.send-message-form {
-    grid-area: f;
+    width: 50%;
 }
 
 .rooms-list {
@@ -66,8 +36,9 @@ border-color: black;
 
 .chats {
   padding: 10px;
-    background: #34495E;
-    text-align: left;
+text-align: left;
+border-color: black;
+border-style: solid;
 
 }
 
@@ -75,7 +46,7 @@ border-color: black;
 
 .chats .chat_text {
 
-    color: white;
+    color: black;
     display: inline;
     padding: 5px 5px;
     font-size: 25px;
@@ -152,16 +123,16 @@ border-color: black;
 }
 
 .grid-container {
-    background: #34495E;
+        background: #34495E;
+
 	padding-top: 20px;
 	padding-left: 2%;
   display: grid;
   grid-template-columns: auto auto;
-
      padding-bottom: 400px;
 }
 .grid-item {
-    background: #34495E;
+        background: #34495E;
   font-size: 30px;
   text-align: left;
 }
