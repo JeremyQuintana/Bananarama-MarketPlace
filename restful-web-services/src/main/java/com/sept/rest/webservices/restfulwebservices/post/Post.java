@@ -6,6 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -28,9 +30,15 @@ public class Post {
 	private String price;
 	private String category;
 	private String photo;
-	private String ownerId;
-	private Status status;
-	private Date datePosted;
+	private String ownerId = "s1234567";
+	private Date datePosted = new Date(new java.util.Date().getTime());
+	
+	@Enumerated(EnumType.STRING)
+	private Status status = Status.AVAILABLE;
+	
+	// a bug prevents the above values being stored in a constructor, 
+	// used to work before but now doesn't
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -40,21 +48,6 @@ public class Post {
 	// annoyingly jpa 2.0 needs this
 	public Post(){}
 	
-	public Post(String description, String title, String price, String category, String photo)
-	{
-		this.description = description;
-		this.title = title;
-		this.price = price;
-		this.category = category;
-		this.photo = photo;
-		this.status = Status.AVAILABLE;
-		this.datePosted = new Date(new java.util.Date().getTime());
-		/*hardcoded*/
-		this.ownerId = "s1819819131203109";
-		// id needs to be set externally
-	}
-	
-
 // cannot create multiple constructors
 	
 	@JsonIgnore
@@ -90,7 +83,7 @@ public class Post {
 	
 
 	//edit post column in marketplace
-	public void edit(Column2 column, String edit) throws SQLException {
+	public void edit(Column column, String edit) throws SQLException {
 		update(column, edit);
 		update(column, edit, "" + id);
 
@@ -98,18 +91,18 @@ public class Post {
 
 	//Delete item from Marketplace
 	public void delete() throws SQLException {
-		update(Column2.STATUS, "D");
-		update(Column2.STATUS, "D", "" + id);
+		update(Column.STATUS, "D");
+		update(Column.STATUS, "D", "" + id);
 	}
 
 	//Marked Item as sold on Marketplace
 	public void sold() throws SQLException {
-		update(Column2.STATUS, "S");
-		update(Column2.STATUS, "S", "" + id);
+		update(Column.STATUS, "S");
+		update(Column.STATUS, "S", "" + id);
 	}
 	
 	// update THIS CLASS
-	private void update(Column2 column, String edit)
+	private void update(Column column, String edit)
 	{
 		switch (column)
 		{
@@ -123,7 +116,7 @@ public class Post {
 	}
 	
 	// update DATABASE
-	public static void update(Column2 column, String value, String id) throws SQLException
+	public static void update(Column column, String value, String id) throws SQLException
 	{
 		DatabaseRef.update("Update "+ TABLE_NAME +" set " + column.key() + "='"+ value +"' where PostID='"+id+"'");
 	}
@@ -165,12 +158,12 @@ public class Post {
 		}
 	}
 	
-	public enum Column2
+	public enum Column
 	{
 		DESC("Item_Description"), NAME("Item_Name"), PRICE("Price"), STATUS("Status"), CATEGORY("Category");
 		
 		private String key;
-		private Column2(String key)
+		private Column(String key)
 		{
 			this.key = key;
 		}

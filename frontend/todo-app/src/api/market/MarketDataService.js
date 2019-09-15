@@ -15,6 +15,7 @@ class MarketDataService {
     }
 
 
+
 }
 
 export default new MarketDataService()

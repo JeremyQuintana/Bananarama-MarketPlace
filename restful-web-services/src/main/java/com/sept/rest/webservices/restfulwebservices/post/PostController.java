@@ -1,10 +1,13 @@
 package com.sept.rest.webservices.restfulwebservices.post;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,33 +22,23 @@ import org.springframework.web.bind.annotation.RestController;
 import javadb.DatabaseRef;
 
 
-
 @CrossOrigin(origins="http://localhost:3000")
 @RestController
 public class PostController {
 	
+	@Autowired 
+	private PostRepository db;
 	
-	@Autowired
-	private PostService postService;
-	
-//	@PostMapping(value = "/postitem")
-//	public void postItem(@RequestBody Post item) throws SQLException {
-//		System.out.println("sent item to backend. " + item.toString());
-////		new DatabaseRef().sell_item("s1234567", item.getName(), item.getDescription(), item.getPrice(), item.getCategory());
-//	}
-	
-	
-	
-	
-	
+	//random stuff to save
 	
 	// show all posts when viewing marketplace
 	@GetMapping("/posts")				
 	public String[][] getAllPosts()
 	{
-		String[][] posts = new String[postService.getAll().size()][5];
+		
+		String[][] posts = new String[db.findAll().size()][5];
 		int i=0;
-		for (Post post : postService.getAll())
+		for (Post post : db.findAll())
 		{
 			String[] postStr = {Long.toString(post.getId()), post.getTitle(), post.getDescription(), post.getOwnerId(), post.getPrice()};
 			posts[i++] = postStr;
@@ -54,35 +47,30 @@ public class PostController {
 	}
 	
 	//HERE IS WHERE THE CONTENTS ON SEARCH COME THROUGH
-	@PostMapping("/searchitem")
-	public void Search_Post(@RequestBody SearchPost search) {
-
-	search.print();
-	}
-	
-	//HERE IS WHERE TO "SEND THE RESULTS"
-	//@GetMapping("/posts/searchBy")	
-	//public String[][] getAllPosts(@PathVariable String title, @PathVariable String category)
-	//{
-		//String[][] posts = new String[postService.getAll().size()][5];
-		//int i=0;
-		//for (Post post : postService.getAll())
+		@PostMapping("/searchitem")
+		public void Search_Post(@RequestBody SearchPost search) {
+//random shit to save
+		search.print();
+		}
+		
+		//HERE IS WHERE TO "SEND THE RESULTS"
+		//@GetMapping("/posts/searchBy")	
+		//public String[][] getAllPosts(@PathVariable String title, @PathVariable String category)
 		//{
-			//String[] postStr = {Long.toString(post.getId()), post.getTitle(), post.getDescription(), post.getOwnerId(), post.getPrice()};
-			//posts[i++] = postStr;
+			//String[][] posts = new String[postService.getAll().size()][5];
+			//int i=0;
+			//for (Post post : postService.getAll())
+			//{
+				//String[] postStr = {Long.toString(post.getId()), post.getTitle(), post.getDescription(), post.getOwnerId(), post.getPrice()};
+				//posts[i++] = postStr;
+			//}
+		//	return posts;
 		//}
-	//	return posts;
-	//}
 
-	
-	
-	
 //	// show all posts when viewing marketplace
 //	@GetMapping("/posts")				/*WRONG URLS>>>???*/    /*some methods seem simpler than requireed*/
 //	public List<Post> getAllPosts()
 //	{
-//		for (Post post : postService.getAll())
-//			System.out.println(post);
 //		return postService.getAll();
 //	}
 	
@@ -91,7 +79,7 @@ public class PostController {
 	public void addPost(@RequestBody Post post)
 	{
 		System.out.println(post);
-		postService.add(post);
+		db.save(post);
 	}
 	
 	
@@ -99,19 +87,21 @@ public class PostController {
 	@RequestMapping("/market/{id}")
 	public Post getPost(@PathVariable Long id)
 	{
-		return postService.get(id);
+		return db.findById(id).get();
 	}
 	
 	// when need to open a post in marketplace
 	@PutMapping("/market/{id}")
 	public void updatePost(@PathVariable Long id, @RequestBody Post post)
 	{
-		postService.update(id, post);
+		db.save(post);
 	}
 	
 	@DeleteMapping("/market/{id}")
-	public void deletePost(@PathVariable Long id) {
-
-		postService.delete(id);
+	public void deletePost(@PathVariable Long id) 
+	{
+		db.deleteById(id);
 	}
 }
+
+

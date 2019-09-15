@@ -6,6 +6,10 @@ import MarketDataService from "../../api/market/MarketDataService.js"
 import './Market.css';
 import toBackend from '../../project_frontend/toBackend/postBackend.js'
 
+
+
+
+
 // This is the marketplace browsing component
 class MarketComponent extends Component {
 
@@ -13,8 +17,9 @@ class MarketComponent extends Component {
     super(props)
 
     this.state = {
-      item_category: '',
-      search_words: ''
+      
+      search_words: '',
+      item_category: ''
     }
   
 
@@ -40,7 +45,7 @@ class MarketComponent extends Component {
                 </select>
                
                 <div class="input-icons"> 
-                <input type="text" name="search_words" className="inputfield" placeholder="Search"  value={this.state.search_words} onInput={this.handleChange} />
+                <input type="text" name="search_words" className="inputfield" placeholder="Search" onChange={this.handleChange} value={this.state.search_words} />
                
                 <i class="icon">< input type="image" src={require("./search.png")} value="Submit" border="0" alt="Submit" /></i>
                 
@@ -60,6 +65,7 @@ class MarketComponent extends Component {
     }
 
      handleChange(event){
+        
         this.setState(
         {
           [event.target.name] : event.target.value
@@ -69,7 +75,8 @@ class MarketComponent extends Component {
   
   
     submitPost(event){
-      toBackend.searchItemBackend(this.state.search_words, this.state.item_category);
+      
+      toBackend.searchItemBackend(this.state.search_words, this.state.item_category );
       event.preventDefault();
       this.props.history.push('/market/searchBy');
     }

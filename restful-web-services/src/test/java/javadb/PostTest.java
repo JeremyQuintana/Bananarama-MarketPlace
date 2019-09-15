@@ -72,7 +72,7 @@ class PostTest {
 	}
 	
 	// actually check if database changed
-	private void testDatabaseCellChange(Column column, int id, String edit) throws SQLException
+	private void testDatabaseCellChange(Column column, Long id, String edit) throws SQLException
 	{
 		ResultSet data = DatabaseRef.query(String.format("select %s from saleTest where PostID =%d", column.key(), id));
 		data.next();
