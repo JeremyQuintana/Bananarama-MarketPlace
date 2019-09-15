@@ -26,6 +26,9 @@ import javadb.DatabaseRef;
 @RestController
 public class PostController {
 	
+	String description;
+	String category;
+	
 	@Autowired 
 	private PostRepository db;
 	
@@ -49,31 +52,24 @@ public class PostController {
 	//HERE IS WHERE THE CONTENTS ON SEARCH COME THROUGH
 		@PostMapping("/searchitem")
 		public void Search_Post(@RequestBody SearchPost search) {
-//random shit to save
-		search.print();
+			description = search.getsearch_words();
+			category = search.getcategory();
 		}
 		
 		//HERE IS WHERE TO "SEND THE RESULTS"
-		//@GetMapping("/posts/searchBy")	
-		//public String[][] getAllPosts(@PathVariable String title, @PathVariable String category)
-		//{
-			//String[][] posts = new String[postService.getAll().size()][5];
-			//int i=0;
-			//for (Post post : postService.getAll())
-			//{
-				//String[] postStr = {Long.toString(post.getId()), post.getTitle(), post.getDescription(), post.getOwnerId(), post.getPrice()};
-				//posts[i++] = postStr;
-			//}
-		//	return posts;
-		//}
-
-//	// show all posts when viewing marketplace
-//	@GetMapping("/posts")				/*WRONG URLS>>>???*/    /*some methods seem simpler than requireed*/
-//	public List<Post> getAllPosts()
-//	{
-//		return postService.getAll();
-//	}
+		@GetMapping("/posts/searchBy")	
 	
+		public String[][] searchbyPosts(@PathVariable String description, @PathVariable String category)
+		{	String[][] posts = new String[db.findAll().size()][5];
+			int i=0;
+			for (Post post : db.findAll())
+			{
+				String[] postStr = {Long.toString(post.getId()), post.getTitle(), post.getDescription(), post.getOwnerId(), post.getPrice()};
+				posts[i++] = postStr;
+			}
+			return posts;
+		}	
+		
 	// adds a post to marketplace
 	@PostMapping("/postitem")
 	public void addPost(@RequestBody Post post)
