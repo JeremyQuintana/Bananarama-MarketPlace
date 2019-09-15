@@ -10,7 +10,7 @@ import ChatComponent from './ChatComponent'
 import HomeComponent from './HomeComponent'
 
 import PostComponent from './PostComponent.jsx';
-
+import AccountComponent from './AccountComponent.jsx'
 
 import AuthenticatedRoute from '../todo/AuthenticatedRoute.jsx'
 import LoginComponent from '../todo/LoginComponent.jsx'
@@ -40,6 +40,7 @@ class MarketPlaceApp extends Component {
                             <Route path="/login" component={LoginComponent} />
                             <AuthenticatedRoute path="/post" component={Post_item} />
                             <AuthenticatedRoute path="/welcome/:name" component={WelcomeComponent} />
+                            <AuthenticatedRoute path="/account" component={AccountComponent} />
                             <AuthenticatedRoute path="/todos/:id" component={TodoComponent} />
                             <AuthenticatedRoute path="/todos" component={ListTodosComponent} />
                             <Route path="/logout" component={LogoutComponent} />
