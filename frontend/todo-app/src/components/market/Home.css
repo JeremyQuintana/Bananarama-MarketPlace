@@ -2,11 +2,13 @@
   display: grid;
   grid-template-columns: auto auto ;
   padding: 2%;
+    background-color: white;
 }
 .grid-item {
   padding: 35px;
   font-size: 30px;
   text-align: center;
+  background-color: white;
 }
 
 .App1 img {
@@ -27,4 +29,8 @@
 }
 .grid-item:hover{
     color:grey;
+}
+
+.homeContainer{
+  background-color: white;
 }
