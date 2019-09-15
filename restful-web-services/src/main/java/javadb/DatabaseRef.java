@@ -11,10 +11,11 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import com.sept.rest.webservices.restfulwebservices.post.Post;
+import com.sept.rest.webservices.restfulwebservices.post.Post.Action;
+import com.sept.rest.webservices.restfulwebservices.post.Post.Status;
+
 import javadb.ChatBase.Overhead;
-import javadb.Post.Action;
-import javadb.Post.Column;
-import javadb.Post.Status;
 
 import java.sql.Date;
 
@@ -25,16 +26,6 @@ public class DatabaseRef {
 	public static void main(String[] args) throws SQLException
 	{
 		ChatBase db = new ChatBase();
-		
-		
-		db.addText("What do you call a sad strawberry? a blueberry", 2 , "s1111111");
-		db.addText("Robert, I am changing classes, please do not contact me", 2, "s2222222");
-		db.addText("Howdy Pardneerrr", 1, "s1234567");
-		db.addText("cowboy on discussions mitch", 1, "s1111111");
-		
-		System.out.println(db.usersExist("s1234567", "s1111111"));
-		System.out.println(db.usersExist("s1111111", "s1234567"));		
-		System.out.println(db.usersExist("2", "2"));
 	}
 	private static Statement statement;
 	protected static ResultSet data;
@@ -50,6 +41,7 @@ public class DatabaseRef {
 	
 	public DatabaseRef() throws SQLException
 	{			
+		System.out.println("test");
 		canConnect();
 		
 		posts = new HashMap<>();
@@ -66,7 +58,8 @@ public class DatabaseRef {
 	{
 		try
 		{
-			String driver = "com.mysql.jdbc.Driver";
+			
+			String driver = "com.mysql.cj.jdbc.Driver";
 			String url = "jdbc:mysql://35.189.1.213:3306/sept";
 			String username = "root";
 			String password = "bananasept";
@@ -148,14 +141,14 @@ public class DatabaseRef {
 	}
 
 	//Post sell items in marketplace
-	public void sell_item(String owner, String title, String desc, int price, String cate) throws SQLException {
+	public void sell_item(String owner, String title, String desc, String price, String cate) throws SQLException {
 		java.sql.Date curdate = new java.sql.Date(new java.util.Date().getTime());
 		update("insert into sale(ID, Item_Name, Item_Description, Price, Status, Date, Category) VALUES ('"+ owner +"','"+title+"','"+desc+"','"+price+"', 'A', '"+curdate+"','"+cate+"')");
 		
 		data = statement.executeQuery("select * from sale");
 		while (data.next())
 			if (data.isLast())
-				posts.put(data.getInt(1), new Post(data.getInt(1), owner, title, desc, price, curdate, cate));
+				posts.put(data.getInt(1), new Post(data.getLong(1), owner, title, desc, price + "", curdate, cate));
 	}
 	
 	
@@ -167,7 +160,7 @@ public class DatabaseRef {
 	
 	
 	// actual commands to database
-	public static void update(String str) throws SQLException
+	public static void update(String str) throws SQLException 
 	{
 		statement.executeUpdate(str);
 	}

@@ -6,6 +6,9 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+
+// singleton that can be injected into other classes
+// basically like a list with extra functionality
 @Service
 public class TodoHardcodedService {
 
