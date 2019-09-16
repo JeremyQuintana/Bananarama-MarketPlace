@@ -1,13 +1,26 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App';
-
-
 import MarketPlace from './MarketPlace';
+import { shallow, configure } from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
 
+beforeAll(() => {
+  configure({ adapter: new Adapter() })
+})
 
-it('renders without crashing', () => {
-  const div = document.createElement('div');
-  ReactDOM.render(<MarketPlace />, div);
-  ReactDOM.unmountComponentAtNode(div);
+describe('<MarketPlace />', () => {
+  it('renders without crashing', () => {
+    const div = document.createElement('div');
+    ReactDOM.render(<MarketPlace />, div);
+    ReactDOM.unmountComponentAtNode(div);
+  });
+});
+
+describe('<MarketPlace />', () => {
+  it('renders basic structure', () => {
+    const market = shallow(<MarketPlace />);
+    expect(market.find('div').length).toEqual(1);
+    expect(market.find('MarketPlaceApp').length).toEqual(1);
+    expect(market.find('div').hasClass('MarketPlace')).toBeTruthy();
+  });
 });
