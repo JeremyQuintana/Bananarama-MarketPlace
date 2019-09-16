@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { withRouter } from "react-router-dom";
+import axios from 'axios'
+import { API_URL } from '../../Constants'
 
 import "./Chat.css";
 const Chats = [
@@ -14,6 +16,16 @@ const Chats = [
     Chat: "Mitch"
   }
 ];
+
+class postBackend{
+
+  postItemBackend(chatid, text){
+    return axios.post(`${API_URL}/postitem`, {
+      chatid,
+      text,
+    })
+  }
+}
 
 function CuurentChats() {
   return (
@@ -69,12 +81,14 @@ class ChatComponent extends Component {
 
         <div className="grid-container">
           <div className="grid-item">
-           <a1>Chats</a1>
+                     <h1>Chats     </h1>
+
             <CuurentChats></CuurentChats>
           </div>
           <div className="grid-item">
             <div className="chat">
               <div className="message-list">
+
                 <MessageObjects
                   allMeassages={this.state.messages}
                   deleteItem={this.deleteItem}
