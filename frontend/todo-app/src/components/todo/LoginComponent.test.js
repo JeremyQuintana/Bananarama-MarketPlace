@@ -1,30 +1,35 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import LoginComponent from './LoginComponent';
-import ShallowRenderer from 'react-test-renderer/shallow'
-//import TestRenderer from 'react-rest-renderer/'
+import { shallow, configure } from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
 
-it('renders without error messages', () => {
-  //const div = document.createElement('div');
-  //ReactDOM.render(<LoginComponent />, div);
-    // const renderer = new ShallowRenderer();
-    // renderer.render(<LoginComponent />)
-    // const output = renderer.getRenderOutput
-    // //expect(output.text()(<div className="alert alert-warning">Invalid credentials or something is wrong.</div>)).toBeFalse();
-    // expect(output.contains("hello")).toBe(false);
-  //expect(document.getElementsByClassName("btn").length).toBe(0);
-//   const renderer = new ShallowRenderer();
-//    renderer.render(<LoginComponent />)
-//    const output = renderer.getRenderOutput
-//    //const output = mount(<LoginComponent />);
-//     //expect(output.text()(<div className="alert alert-warning">Invalid credentials or something is wrong.</div>)).toBeFalse();
-//     expect(output.find("hello").exists()).toBe(false);
-    // const testRenderer = TestRenderer.create(<LoginComponent />);
-    // const testInstance = restRenderer.root;
+beforeAll(() => {
+  configure({ adapter: new Adapter() })
+})
 
-    // expect(testInstance.findByProps({className: "alert"})).toEqual(null);
-    //const renderer = new ShallowRenderer();
-    // renderer.render(<LoginComponent />)
-    // const container = renderer.getRenderOutput
-    expect(true).toBeTruthy();
+describe('<LoginComponent />', () => {
+  it('renders without crashing', () => {
+    const div = document.createElement('div');
+    ReactDOM.render(<LoginComponent />, div);
+    ReactDOM.unmountComponentAtNode(div);
+  });
+});
+
+
+describe('<LoginComponent />', () => {
+  it('renders basic structure', () => {
+    // will need to change with google login
+    const market = shallow(<LoginComponent />);
+    expect(market.find('div').length).toEqual(2);
+    expect(market.find('h1').length).toEqual(1);
+    expect(market.find('input').length).toEqual(2);
+  });
+});
+
+describe('<LoginComponent />', () => {
+  it('renders no login errors', () => {
+    const market = shallow(<LoginComponent />);
+    expect(market.find('div.alert').length).toEqual(0);
+  });
 });
