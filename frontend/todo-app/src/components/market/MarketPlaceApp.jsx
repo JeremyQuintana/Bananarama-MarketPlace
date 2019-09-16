@@ -9,6 +9,7 @@ import ChatComponent from './ChatComponent'
 
 import HomeComponent from './HomeComponent'
 
+
 import PostComponent from './PostComponent.jsx';
 import AccountComponent from './AccountComponent.jsx'
 
@@ -19,6 +20,7 @@ import LogoutComponent from '../todo/LogoutComponent.jsx'
 import WelcomeComponent from '../todo/WelcomeComponent.jsx'
 import TodoComponent from '../todo/TodoComponent.jsx'
 import Post_item from '../../project_frontend/pages/Post_item.jsx';
+import SearchComponent from './SearchComponent.jsx';
 
 // This component organises all the other components together
 class MarketPlaceApp extends Component {
@@ -34,6 +36,7 @@ class MarketPlaceApp extends Component {
 
                             <AuthenticatedRoute path = "/home/:name" exact component = {HomeComponent}/>
                             <AuthenticatedRoute path="/market" exact component={MarketComponent} />
+                            <AuthenticatedRoute path="/market/searchBy" exact component={SearchComponent} />
                             <AuthenticatedRoute path="/posts/:postID" exact component={PostComponent} />
                             <AuthenticatedRoute path="/chat" exact component={ChatComponent} />
       

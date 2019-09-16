@@ -25,34 +25,50 @@ import javadb.DatabaseRef;
 @CrossOrigin(origins="http://localhost:3000")
 @RestController
 public class PostController {
-	
+
+
 	@Autowired 
 	private PostRepository db;
 	
-	
-	
-	// show all posts when viewing marketplace
-//	@GetMapping("/posts")				
-//	public String[][] getAllPosts()
-//	{
-//		
-//		String[][] posts = new String[db.findAll().size()][5];
-//		int i=0;
-//		for (Post post : db.findAll())
-//		{
-//			String[] postStr = {Long.toString(post.getId()), post.getTitle(), post.getDescription(), post.getOwnerId(), post.getPrice()};
-//			posts[i++] = postStr;
-//		}
-//		return posts;
-//	}
+	//random stuff to save
 	
 	// show all posts when viewing marketplace
-	@GetMapping("/posts")				/*WRONG URLS>>>???*/    /*some methods seem simpler than requireed*/
+	/*@GetMapping("/posts")				
+	public String[][] getAllPosts()
+	{
+		
+		String[][] posts = new String[db.findAll().size()][5];
+		int i=0;
+		for (Post post : db.findAll())
+		{
+			String[] postStr = {Long.toString(post.getId()), post.getTitle(), post.getDescription(), post.getOwnerId(), post.getPrice()};
+			posts[i++] = postStr;
+		}
+		return posts;
+	}*/
+	@GetMapping("/posts")			
 	public List<Post> getAllPosts()
 	{
+		for (Post post : db.findByDescriptionAndCategory("fandangled mess", "Annoyingly Unnexplained"))
+			System.out.println(post);
 		return db.findAll();
 	}
 	
+	//HERE IS WHERE THE CONTENTS ON SEARCH COME THROUGH
+	@PostMapping("/searchitem")
+	public void Search_Post(@RequestBody SearchPost search) {
+		
+		search.print();
+	}
+	
+	//HERE IS WHERE TO "SEND THE RESULTS"
+	@GetMapping("/posts/searchBy{description}and{category}")	
+	public List<Post> getfindByDescriptionAndCategory(@PathVariable String description, @PathVariable String category)
+	{
+		return db.findByDescriptionAndCategory(description, category);
+	}		
+	
+
 	// adds a post to marketplace
 	@PostMapping("/postitem")
 	public void addPost(@RequestBody Post post)
