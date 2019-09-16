@@ -1,24 +1,10 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { withRouter } from "react-router-dom";
-import FooterComponent from "../todo/FooterComponent.jsx";
+import axios from 'axios'
+import { API_URL } from '../../Constants'
 
 import "./Chat.css";
-
-const Sending_Data = [
-  {
-    senderId: "Buyer",
-    text: "can i buy something ?"
-  },
- 
-];
-const Receiving_Data = [
-  {
-    senderId: "Seller",
-    text: "What did you want to buy ?"
-  }
-];
-
 const Chats = [
   {
     Chat: "Reuben"
@@ -31,41 +17,19 @@ const Chats = [
   }
 ];
 
-function addInputText() {
-  var input = document.getElementById("inputtext");
-  // Seller will need to be some sort of id to determine whether they are a buyer or seller
-  Sending_Data.push({ id: "Seller" });
-  Sending_Data.push({ text: input.value });
-  input.value = "";
-  console.log(Sending_Data);
-}
+class postBackend{
 
-class ChatComponent extends Component {
-  render() {
-    let retVal = (
-      <div className = "background">
-        <div className="grid-container">
-          <div className="grid-item">
-            <CuurentChats></CuurentChats>
-          </div>
-          <div className="grid-item">
-            {" "}
-            <div className="chat_container" id="refresh">
-              <Chatwindow />
-              <InputBox />
-              <div className="title"></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-    return retVal;
+  postItemBackend(chatid, text){
+    return axios.post(`${API_URL}/postitem`, {
+      chatid,
+      text,
+    })
   }
 }
 
 function CuurentChats() {
   return (
-    <div className="rooms-list">
+    <div>
       {" "}
       {Chats.map((message, index) => {
         return (
@@ -78,85 +42,110 @@ function CuurentChats() {
   );
 }
 
-class InputBox extends React.Component {
+class ChatComponent extends Component {
+  inputElement = React.createRef();
   constructor() {
     super();
     this.state = {
-      message: ""
+      messages: [],
+      message: {
+        text: "",
+        key: ""
+      }
     };
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
   }
-
-  handleChange(e) {
+  handleInput = e => {
+    const itemText = e.target.value;
+    const message = { text: itemText, key: Date.now() };
     this.setState({
-      message: e.target.value
+      message
     });
-  }
-
-  handleSubmit(e) {
+  };
+  addMessage = e => {
     e.preventDefault();
-    console.log(this.state.message);
-  }
 
-  handleSubmit(e) {
-    e.preventDefault();
-    this.props.sendMessage(this.state.message);
-  }
+    const newMessageToOutPut = this.state.message;
+    if (newMessageToOutPut.text !== "") {
+      const messages = [...this.state.messages, newMessageToOutPut];
+      console.log(newMessageToOutPut);
 
+      this.setState({
+        messages: messages,
+        message: { text: "", key: "" }
+      });
+    }
+  };
   render() {
     return (
-      <form onSubmit={this.handleSubmit} className="InputBox">
-        <input
-          onChange={this.handleChange}
-          value={this.state.message}
-          type="text"
-          id="inputtext"
-        />
+     
 
-        <button type="button" id="add" onClick={addInputText}>
-        
-        <img src={require("./banana_icon.png")} />
+        <div className="grid-container">
+          <div className="grid-item">
+                     <h1>Chats     </h1>
 
-        </button>
-      </form>
+            <CuurentChats></CuurentChats>
+          </div>
+          <div className="grid-item">
+            <div className="chat">
+              <div className="message-list">
+
+                <MessageObjects
+                  allMeassages={this.state.messages}
+                  deleteItem={this.deleteItem}
+                />
+              </div>
+
+              <MessageList
+                addMessage={this.addMessage}
+                inputElement={this.inputElement}
+                handleInput={this.handleInput}
+                message={this.state.message}
+              />
+            </div>
+          </div>
+        </div>
+      
     );
   }
 }
 
-class Chatwindow extends React.Component {
+class MessageList extends Component {
   render() {
     return (
-      <div className="message-list">
-        {Sending_Data.map((message, index) => {
-          return (
-            <div key={index} className="message">
-              <div className="message-username">{message.senderId}</div>
-              <div className="message-text">{message.text}</div>
-            </div>
-          );
-        })}
+        <form onSubmit={this.props.addMessage} className="InputBox">
+          <input
+            placeholder="Enter Message"
+            ref={this.props.inputElement}
+            value={this.props.message.text}
+            onChange={this.props.handleInput}
+          />
+          <button type="submit">
+            {" "}
+            <img alt="bananaLogo" src={require("./banana_icon.png")} />{" "}
+          </button>
+        </form>
+    );
+  }
+}
 
-        {Receiving_Data.map((message, index) => {
-          return (
-            <div key={index} className="message">
-              <div className="message-username">{message.senderId}</div>
-              <div className="message-text">{message.text}</div>
-            </div>
-          );
-        })}
+class MessageObjects extends Component {
+  create_new_message = message => {
+    return (
+      <div className="message">
+        <div className="username_id">username</div>
+        <div className="message-text" key={message.key}>
+          {message.text}
+        </div>
       </div>
     );
-  }
-}
+  };
+  render() {
+    const messages = this.props.allMeassages;
+    const listMessages = messages.map(this.create_new_message);
 
-function Message() {
-  return (
-    <div>
-      <div className="message_sender"></div>
-      <div className="message_receiver"></div>
-    </div>
-  );
+
+    return <ul className="messages">{listMessages}</ul>;
+  }
 }
 
 export default withRouter(ChatComponent);
