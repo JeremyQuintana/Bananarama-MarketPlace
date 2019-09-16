@@ -17,6 +17,12 @@ class AuthenticationService {
         })
     }
 
+    executeGoogleJwtAuthenticationService(googleUserToken) {
+    return axios.post(`${API_URL}/authenticate`, {
+        googleUserToken
+      })
+    }
+
     createBasicAuthToken(username, password) {
         return 'Basic ' + window.btoa(username + ":" + password)
     }
