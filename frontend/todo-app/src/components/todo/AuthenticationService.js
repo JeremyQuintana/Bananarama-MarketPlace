@@ -41,6 +41,7 @@ class AuthenticationService {
     logout() {
         sessionStorage.removeItem(USER_NAME_SESSION_ATTRIBUTE_NAME);
         sessionStorage.removeItem("jwtToken");
+        this.props.history.push('/');
     }
 
     isUserLoggedIn() {
