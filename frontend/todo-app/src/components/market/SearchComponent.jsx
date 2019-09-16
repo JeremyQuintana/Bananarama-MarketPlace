@@ -35,26 +35,35 @@ class Items extends Component {
         this.refreshPosts()
     }
     
-    render() {
-        var retVal = [];
-        // loop through the postings from backend
-        for (var r = 0; r < this.state.backSearchPostings.length; r++) {
-            let postId = this.state.backSearchPostings[r][0];
-            // Append the row of post information
-            retVal.push(
-                <div className="posting container" onClick={() => this.routeChange(postId)}>
-                    <span className="postTitle"><img src={'post_images/' + this.state.backSearchPostings[r][0] + '.jpg'}></img>{this.state.backSearchPostings[r][1]}</span> <br></br>
-                    <span className="postDescription">{this.state.backSearchPostings[r][2]}</span> <br></br>
-                    <span className="postPrice">{this.state.backSearchPostings[r][4]}</span> <br></br>
-                    <span className="postSeller">{this.state.backSearchPostings[r][3]}</span> <br></br>
-
-                    <br></br>
-                </div>
-               
-
-            );
-        }
-
+  
+        render() {
+            var retVal = [];
+            
+            //if(Object.keys(this.state.backSearchPostings.length == 0))
+            //(this.state.backSearchPostings[0] OR this.state.errors)
+            if(this.state.backSearchPostings[0])
+            {
+                <h3 className="NoresultsTitle">Sorry no items matching the description could be found</h3>
+            }
+            else {
+            // loop through the postings from backend
+            for (var r = 0; r < this.state.backSearchPostings.length; r++) {
+                let postId = this.state.backSearchPostings[r].id;
+                // Append the row of post information
+                retVal.push(
+                    <div className="posting container" onClick={() => this.routeChange(postId)}>
+                        <span className="postTitle"><img src={'post_images/' + this.state.backSearchPostings[r].photo + '.jpg'}></img>{this.state.backSearchPostings[r].title}</span> <br></br>
+                        <span className="postDescription">{this.state.backSearchPostings[r].description}</span> <br></br>
+                        <span className="postPrice">{this.state.backSearchPostings[r].price}</span> <br></br>
+                        <span className="postSeller">{this.state.backSearchPostings[r].ownerId}</span> <br></br>
+    
+                        <br></br>
+                    </div>
+                   
+    
+                );
+                }
+            }
 
         return retVal;
     }

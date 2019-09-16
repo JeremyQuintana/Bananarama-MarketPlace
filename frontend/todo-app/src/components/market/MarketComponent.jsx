@@ -18,7 +18,7 @@ class MarketComponent extends Component {
 
     this.state = {
       
-      search_words: '',
+      description: '',
       item_category: ''
     }
   
@@ -45,7 +45,7 @@ class MarketComponent extends Component {
                 </select>
                
                 <div class="input-icons"> 
-                <input type="text" name="search_words" className="inputfield" placeholder="Search" onChange={this.handleChange} value={this.state.search_words} />
+                <input type="text" name="description" className="inputfield" placeholder="Search" onChange={this.handleChange} value={this.state.description} />
                
                 <i class="icon">< input type="image" src={require("./search.png")} value="Submit" border="0" alt="Submit" /></i>
                 
@@ -76,7 +76,7 @@ class MarketComponent extends Component {
   
     submitPost(event){
       
-      toBackend.searchItemBackend(this.state.search_words, this.state.item_category );
+      toBackend.searchItemBackend(this.state.description, this.state.item_category);
       event.preventDefault();
       this.props.history.push('/market/searchBy');
     }
@@ -96,23 +96,23 @@ class Items extends Component {
     }
     
     render() {
-        var retVal = [];
-        // loop through the postings from backend
-        for (var r = 0; r < this.state.backPostings.length; r++) {
-            let postId = this.state.backPostings[r][0];
-            // Append the row of post information
-            retVal.push(
-                <div className="posting container" onClick={() => this.routeChange(postId)}>
-                    <span className="postTitle"><img src={'post_images/' + this.state.backPostings[r][0] + '.jpg'}></img>{this.state.backPostings[r][1]}</span> <br></br>
-                    <span className="postDescription">{this.state.backPostings[r][2]}</span> <br></br>
-                    <span className="postPrice">{this.state.backPostings[r][4]}</span> <br></br>
-                    <span className="postSeller">{this.state.backPostings[r][3]}</span> <br></br>
+      var retVal = [];
+      // loop through the postings from backend
+      for (var r = 0; r < this.state.backPostings.length; r++) {
+          let postId = this.state.backPostings[r].id;
+          // Append the row of post information
+          retVal.push(
+              <div className="posting container" onClick={() => this.routeChange(postId)}>
+                  <span className="postTitle"><img src={'post_images/' + this.state.backPostings[r].photo + '.jpg'}></img>{this.state.backPostings[r].title}</span> <br></br>
+                  <span className="postDescription">{this.state.backPostings[r].description}</span> <br></br>
+                  <span className="postPrice">{this.state.backPostings[r].price}</span> <br></br>
+                  <span className="postSeller">{this.state.backPostings[r].ownerId}</span> <br></br>
 
-                    <br></br>
-                </div>
-               
+                  <br></br>
+              </div>
+             
 
-            );
+          );
         }
 
 

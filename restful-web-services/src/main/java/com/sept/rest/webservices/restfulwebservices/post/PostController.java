@@ -26,16 +26,14 @@ import javadb.DatabaseRef;
 @RestController
 public class PostController {
 	
-	String description;
-	String category;
-	
+
 	@Autowired 
 	private PostRepository db;
 	
 	//random stuff to save
 	
 	// show all posts when viewing marketplace
-	@GetMapping("/posts")				
+	/*@GetMapping("/posts")				
 	public String[][] getAllPosts()
 	{
 		
@@ -47,28 +45,27 @@ public class PostController {
 			posts[i++] = postStr;
 		}
 		return posts;
+	}*/
+	@GetMapping("/posts")			
+	public List<Post> getAllPosts()
+	{
+		return db.findAll();
 	}
 	
 	//HERE IS WHERE THE CONTENTS ON SEARCH COME THROUGH
 		@PostMapping("/searchitem")
 		public void Search_Post(@RequestBody SearchPost search) {
-			description = search.getsearch_words();
-			category = search.getcategory();
+			search.print();
 		}
 		
 		//HERE IS WHERE TO "SEND THE RESULTS"
 		@GetMapping("/posts/searchBy")	
 	
-		public String[][] searchbyPosts(@PathVariable String description, @PathVariable String category)
-		{	String[][] posts = new String[db.findAll().size()][5];
-			int i=0;
-			for (Post post : db.findAll())
-			{
-				String[] postStr = {Long.toString(post.getId()), post.getTitle(), post.getDescription(), post.getOwnerId(), post.getPrice()};
-				posts[i++] = postStr;
-			}
-			return posts;
+		public List<Post> getfindByDescriptionAndCategory(@PathVariable String description, @PathVariable String category){
+			return db.findByDescriptionAndCategory(description, category);
 		}	
+	
+		
 		
 	// adds a post to marketplace
 	@PostMapping("/postitem")

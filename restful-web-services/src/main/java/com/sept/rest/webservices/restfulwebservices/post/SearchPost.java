@@ -6,17 +6,17 @@ public class SearchPost {
 	
 	// variables need to be above constructor for json
 	/*to change*/
-	private String search_words;
+	private String description;
 	private String category;
 	
 	
 	public void print() {
-		System.out.println(this.search_words + " " + this.category+ " ");
+		System.out.println(this.description + " " + this.category+ " ");
 	}
 	
 
-	public String getsearch_words(){
-		return search_words;
+	public String getdescription(){
+		return description;
 	}
 
 	public String getcategory() {

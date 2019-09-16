@@ -14,10 +14,10 @@ class postBackend{
   }
 
    
-  searchItemBackend(search_words, category){
+  searchItemBackend(description, category){
     return axios.post(`${API_URL}/searchitem`, {
       
-      search_words,
+      description,
       category
     })
   }
