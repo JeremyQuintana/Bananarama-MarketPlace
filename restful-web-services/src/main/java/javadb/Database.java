@@ -1,10 +1,22 @@
 package javadb;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import java.util.Scanner;
 import java.sql.Date;
 
 public class Database {
@@ -12,7 +24,8 @@ public class Database {
 	private static Statement statement;
 	private static ResultSet data;
 	private static ResultSet rowcount;
-	private Connection conn;
+	private static Connection conn;
+	private static String DELIMITER = "#$#";
 	String id;
 	String password;
 	String cate;
@@ -25,14 +38,14 @@ public class Database {
 	
 	public Database() {
 		try {				
-			String driver = "com.mysql.jdbc.Driver";
+			String driver = "com.mysql.cj.jdbc.Driver";
 			String url = "jdbc:mysql://35.189.1.213:3306/sept";
 			String username = "root";
 			String password = "bananasept";
 			Class.forName(driver);
 			conn = DriverManager.getConnection(url, username, password);
 			statement = conn.createStatement();
-			System.out.println("Connected");
+			//System.out.println("Connected");
 			} 
 		
 		catch (Exception e) {
@@ -72,210 +85,422 @@ public class Database {
 		return false;
 	}
 //end login details
-/*
-//browse marketplace
-	//main place display of for sale items, checks for current for sale items in db
-	public static void check_for_sale() {
+	
+//main place display of for sale items, checks for current for sale items in db
+	public static void check_for_salewrite() throws Exception{
 		try {
-			data = statement.executeQuery("select * from sale where Status= 'a'");
-			while (data.next()) {
-				System.out.println(data.getString(2) + " " + data.getString(3) + " " + data.getString(4) + " " + data.getString(5)+" " + data.getString(7) + " " + data.getString(8));
+			
+			data = statement.executeQuery("select * from sale where Status= 'A'");
+			FileWriter fileWriter = new FileWriter("DATABD.txt");
+			
+			PrintWriter writer = new PrintWriter(fileWriter);
+				while(data.next()) {
+				writer.print(data.getString(1)+DELIMITER);
+				writer.print(data.getString(3)+DELIMITER);
+				writer.print (data.getString(4)+DELIMITER);
+				writer.print(data.getString(2)+DELIMITER);
+				writer.print(data.getString(5));
+				writer.println();
 			}
-		} 
-		catch (SQLException e) {
-			e.printStackTrace();
+		writer.close();
+		data.close();
+		conn.close();
+		
 		}
-	}
-*/
-	/*	
-//browse marketplace
-	//main place display of for sale items, checks for current for sale items in db
-	public static ArrayList<String> check_for_sale() {
-		try {
-
-			ArrayList<String> salelist= new ArrayList<String>();
-			data = statement.executeQuery("select * from sale where Status= 'a'");
-			while (data.next()) {
-				salelist.add(data.getString(2));
-				salelist.add(data.getString(3));
-				salelist.add(data.getString(4));
-				salelist.add(data.getString(5));
-				salelist.add(data.getString(7));
-				salelist.add(data.getString(8));
-			}
-			String[] arraysalelist = salelist.toArray(new String[0]); 
-			return salelist;
-		} 
-		catch (SQLException e) {
+		
+		catch (Exception e) {
 			e.printStackTrace();
 			
 		}
-		return null;
-	}*/
-	
-	
-	//main place display of for sale items, checks for current for sale items in db
-		public static String[][] check_for_sale() {
-			try {
-				//rowcount
-				int norow=0;
-				rowcount = statement.executeQuery("select count(*) from sale where Status= 'A'");
-				while(rowcount.next()) {
-					norow = rowcount.getInt(1);
-				}
-				
-				data = statement.executeQuery("select * from sale where Status= 'A'");
-				int row = 0;
-				//column count
-				int columns = data.getMetaData().getColumnCount();
-				System.out.println(columns);
-				
-				//array of array
-				String[][] arrayofsale = new String[norow][columns];
-				while (data.next()) {
-					for (int i = 0; i < columns; i++) {
-			            arrayofsale[row][i] = data.getString(i+1);
-			        }
-			        row++;
-			    
-				}
-				for(int i = 0; i<norow; i++)
-				{
-				    for(int j = 0; j<columns; j++)
-				    {
-				        System.out.print(arrayofsale[i][j]);
-				    }
-				    System.out.println();
-				}
-				return arrayofsale;
-			} 
-			catch (SQLException e) {
-				e.printStackTrace();
-				
-			}
-			return null;
-		}
-	  
-	
-	
-/*	
-//Search category only
-	public static void search_by_category(String cate_descpt) {
-		try {
-			data = statement.executeQuery("select * from sale where Category='"+cate_descpt+"'");
-			while (data.next()) {
-				System.out.println(data.getString(2) + " " + data.getString(3) + " " + data.getString(4) + " " + data.getString(5)+" " + data.getString(7) + " " + data.getString(8));
-			}
-		} 
-		catch (SQLException e) {
-			e.printStackTrace();
-		}
 	}
-*/
-	
-//Search category only
-	public static ArrayList<String> search_by_category(String cate_descpt) {
-		try {
-			ArrayList<String> searchcatelist= new ArrayList<String>();
-			data = statement.executeQuery("select * from sale where Category='"+cate_descpt+"'");
-			while (data.next()) {
-				searchcatelist.add(data.getString(2));
-				searchcatelist.add(data.getString(3));
-				searchcatelist.add(data.getString(4));
-				searchcatelist.add(data.getString(5));
-				searchcatelist.add(data.getString(7));
-				searchcatelist.add(data.getString(8));
-			}
-			return searchcatelist;
-		} 
-		catch (SQLException e) {
-			e.printStackTrace();
+
+	public static String[][] check_for_sale() throws Exception{
+		List<List<String>> list = new ArrayList<List<String>>();
+		BufferedReader br = new BufferedReader(new FileReader("DATABD.txt"));
+		String line= "";
+		while((line=br.readLine()) != null)  {
+			String[] dataarray = line.split(DELIMITER);
+			ArrayList<String> arrayList = new ArrayList<String>(Arrays.asList(dataarray));
+			list.add(arrayList);
 		}
-		return null;
+		//System.out.println(Arrays.deepToString(list.toArray()));
+		br.close();
+		int rows = list.size();
+		int cols = list.get(0).size();
+		String[][] array2D = new String[rows][cols];
+		for(int row = 0; row < rows; row++) {
+			for(int col = 0; col < cols; col++) {
+				array2D[row][col] = list.get(row).get(col);
+			}
+		}
+		//System.out.println(Arrays.deepToString(array2D));
+		return array2D;
 	}
 	
-/*	
+	
+//Search category only
+	public static void search_by_categorywrite(String cate_descpt) throws Exception{
+		try {
+			
+			data = statement.executeQuery("select * from sale where Category='"+cate_descpt+"'");
+			FileWriter fileWriter = new FileWriter("searchbycate.txt");
+			
+			PrintWriter writer = new PrintWriter(fileWriter);
+				while(data.next()) {
+					writer.print(data.getString(1)+DELIMITER);
+					writer.print(data.getString(3)+DELIMITER);
+					writer.print (data.getString(4)+DELIMITER);
+					writer.print(data.getString(2)+DELIMITER);
+					writer.print(data.getString(5));
+					writer.println();
+				}
+			writer.close();
+		}
+		
+		catch (Exception e) {
+			e.printStackTrace();
+			
+		}
+	}
+	
+	public static String[][] search_by_category() throws Exception{
+		List<List<String>> list = new ArrayList<List<String>>();
+		BufferedReader br = new BufferedReader(new FileReader("searchbycate.txt"));
+		String line= "";
+		while((line=br.readLine()) != null)  {
+			String[] dataarray = line.split(DELIMITER);
+			ArrayList<String> arrayList = new ArrayList<String>(Arrays.asList(dataarray));
+			list.add(arrayList);
+		}
+		//System.out.println(Arrays.deepToString(list.toArray()));
+		br.close();
+		int rows = list.size();
+		int cols = list.get(0).size();
+		String[][] array2D = new String[rows][cols];
+		for(int row = 0; row < rows; row++) {
+			for(int col = 0; col < cols; col++) {
+				array2D[row][col] = list.get(row).get(col);
+			}
+		}
+		System.out.println(Arrays.deepToString(array2D));
+		return array2D;
+	}
+	
+	
+	
 //Search category & description
-	public static void search_by_category_descpt(String cate_descpt, String search_word) {
+	public static void search_by_category_descptwrite(String cate_descpt, String search_word) throws Exception{
 		try {
-			data = statement.executeQuery("select * from sale where Category='"+cate_descpt+"'AND Item_Description like'%"+ search_word +"%'");
-			while (data.next()) {
-				System.out.println(data.getString(2) + " " + data.getString(3) + " " + data.getString(4) + " " + data.getString(5)+" " + data.getString(7) + " " + data.getString(8));
-			}
-		} 
-		catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}*/
-	
-	//Search category & description
-		public static ArrayList<String> search_by_category_descpt(String cate_descpt, String search_word) {
-			try {
-				ArrayList<String> searchcatedescptlist= new ArrayList<String>();
-				data = statement.executeQuery("select * from sale where Category='"+cate_descpt+"'AND Item_Description like'%"+ search_word +"%'");
-				while (data.next()) {
-					searchcatedescptlist.add(data.getString(2));
-					searchcatedescptlist.add(data.getString(3));
-					searchcatedescptlist.add(data.getString(4));
-					searchcatedescptlist.add(data.getString(5));
-					searchcatedescptlist.add(data.getString(7));
-					searchcatedescptlist.add(data.getString(8));
-				
+			
+			data = statement.executeQuery("select * from sale where Category='"+cate_descpt+"'AND Status= 'A' AND Item_Description like'%"+ search_word +"%'");
+			FileWriter fileWriter = new FileWriter("searchbycatedescpt.txt");
+			
+			PrintWriter writer = new PrintWriter(fileWriter);
+				while(data.next()) {
+					writer.print(data.getString(1)+DELIMITER);
+					writer.print(data.getString(3)+DELIMITER);
+					writer.print (data.getString(4)+DELIMITER);
+					writer.print(data.getString(2)+DELIMITER);
+					writer.print(data.getString(5));
+					writer.println();
 				}
-			} 
-			catch (SQLException e) {
-				e.printStackTrace();
-			}
-			return null;
+			writer.close();
 		}
-	
-	
-	
-	
-/*	
-//Show history of sale items for user
-	public static void sale_history(String id) {
-		try {
-			data = statement.executeQuery("select * from sale where ID='" + id + "'");
-			
-			while (data.next()) {
-				System.out.println(data.getString(2) + " " + data.getString(3) + " " + data.getString(4) + " " + data.getString(5)+" " + data.getString(7) + " " + data.getString(8));
-			}
-		} 
-		catch (SQLException e) {
+		
+		catch (Exception e) {
 			e.printStackTrace();
+			
 		}
 	}
-	*/
+	
+	
+	public static String[][] search_by_category_descpt() throws Exception{
+		List<List<String>> list = new ArrayList<List<String>>();
+		BufferedReader br = new BufferedReader(new FileReader("searchbycatedescpt.txt"));
+		String line= "";
+		while((line=br.readLine()) != null)  {
+			String[] dataarray = line.split(DELIMITER);
+			ArrayList<String> arrayList = new ArrayList<String>(Arrays.asList(dataarray));
+			list.add(arrayList);
+		}
+		//System.out.println(Arrays.deepToString(list.toArray()));
+		br.close();
+		int rows = list.size();
+		int cols = list.get(0).size();
+		String[][] array2D = new String[rows][cols];
+		for(int row = 0; row < rows; row++) {
+			for(int col = 0; col < cols; col++) {
+				array2D[row][col] = list.get(row).get(col);
+			}
+		}
+		System.out.println(Arrays.deepToString(array2D));
+		return array2D;
+	}	
+	
 	
 	
 	
 	
 
 //Show history of sale items for user
-	public static ArrayList<String> sale_history(String id) {
+	public static void sale_historywrite(String id) throws Exception{
 		try {
-
-			ArrayList<String> salehist= new ArrayList<String>();
 			
 			data = statement.executeQuery("select * from sale where ID='" + id + "'");
+			FileWriter fileWriter = new FileWriter("salehistory.txt");
 			
-			while (data.next()) {
-				salehist.add(data.getString(2));
-				salehist.add(data.getString(3));
-				salehist.add(data.getString(4));
-				salehist.add(data.getString(5));
-				salehist.add(data.getString(7));
-				salehist.add(data.getString(8));
 			
-			}
-			return salehist;
-		} 
-		catch (SQLException e) {
-			e.printStackTrace();
+			PrintWriter writer = new PrintWriter(fileWriter);
+				while(data.next()) {
+					writer.print(data.getString(1)+DELIMITER);
+					writer.print(data.getString(3)+DELIMITER);
+					writer.print (data.getString(4)+DELIMITER);
+					writer.print(data.getString(2)+DELIMITER);
+					writer.print(data.getString(5));
+					writer.println();
+				}
+			writer.close();
 		}
-		return null;
+		
+		catch (Exception e) {
+			e.printStackTrace();
+			
+		}
 	}
+	
+	
+	public static String[][] sale_history() throws Exception{
+		List<List<String>> list = new ArrayList<List<String>>();
+		BufferedReader br = new BufferedReader(new FileReader("salehistory.txt"));
+		String line= "";
+		while((line=br.readLine()) != null)  {
+			String[] dataarray = line.split(DELIMITER);
+			ArrayList<String> arrayList = new ArrayList<String>(Arrays.asList(dataarray));
+			list.add(arrayList);
+		}
+		//System.out.println(Arrays.deepToString(list.toArray()));
+		br.close();
+		int rows = list.size();
+		int cols = list.get(0).size();
+		String[][] array2D = new String[rows][cols];
+		for(int row = 0; row < rows; row++) {
+			for(int col = 0; col < cols; col++) {
+				array2D[row][col] = list.get(row).get(col);
+			}
+		}
+		System.out.println(Arrays.deepToString(array2D));
+		return array2D;
+	}	
+	
+	
+	
+//	//main place display of for sale items, checks for current for sale items in db
+//		public static void check_for_salewrite() throws Exception{
+//			try {
+//				
+//				data = statement.executeQuery("select * from sale where Status= 'A'");
+//				FileWriter fileWriter = new FileWriter("DATABD.txt");
+//				
+//				PrintWriter writer = new PrintWriter(fileWriter);
+//					while(data.next()) {
+//					writer.print(data.getString(1)+",");
+//					writer.print(data.getString(3)+",");
+//					writer.print (data.getString(4)+",");
+//					writer.print(data.getString(2)+",");
+//					writer.print(data.getString(5));
+//					writer.println();
+//				}
+//			writer.close();
+//			data.close();
+//			conn.close();
+//			
+//			}
+//			
+//			catch (Exception e) {
+//				e.printStackTrace();
+//				
+//			}
+//		}
+//
+//		public static String[][] check_for_sale() throws Exception{
+//			List<List<String>> list = new ArrayList<List<String>>();
+//			BufferedReader br = new BufferedReader(new FileReader("DATABD.txt"));
+//			String line= "";
+//			while((line=br.readLine()) != null)  {
+//				String[] dataarray = line.split(",");
+//				ArrayList<String> arrayList = new ArrayList<String>(Arrays.asList(dataarray));
+//				list.add(arrayList);
+//			}
+//			//System.out.println(Arrays.deepToString(list.toArray()));
+//			br.close();
+//			int rows = list.size();
+//			int cols = list.get(0).size();
+//			String[][] array2D = new String[rows][cols];
+//			for(int row = 0; row < rows; row++) {
+//				for(int col = 0; col < cols; col++) {
+//					array2D[row][col] = list.get(row).get(col);
+//				}
+//			}
+//			//System.out.println(Arrays.deepToString(array2D));
+//			return array2D;
+//		}
+//		
+//		
+//	//Search category only
+//		public static void search_by_categorywrite(String cate_descpt) throws Exception{
+//			try {
+//				
+//				data = statement.executeQuery("select * from sale where Category='"+cate_descpt+"'");
+//				FileWriter fileWriter = new FileWriter("searchbycate.txt");
+//				
+//				PrintWriter writer = new PrintWriter(fileWriter);
+//					while(data.next()) {
+//						writer.print(data.getString(1)+",");
+//						writer.print(data.getString(3)+",");
+//						writer.print (data.getString(4)+",");
+//						writer.print(data.getString(2)+",");
+//						writer.print(data.getString(5));
+//						writer.println();
+//					}
+//				writer.close();
+//			}
+//			
+//			catch (Exception e) {
+//				e.printStackTrace();
+//				
+//			}
+//		}
+//		
+//		public static String[][] search_by_category() throws Exception{
+//			List<List<String>> list = new ArrayList<List<String>>();
+//			BufferedReader br = new BufferedReader(new FileReader("searchbycate.txt"));
+//			String line= "";
+//			while((line=br.readLine()) != null)  {
+//				String[] dataarray = line.split(",");
+//				ArrayList<String> arrayList = new ArrayList<String>(Arrays.asList(dataarray));
+//				list.add(arrayList);
+//			}
+//			//System.out.println(Arrays.deepToString(list.toArray()));
+//			br.close();
+//			int rows = list.size();
+//			int cols = list.get(0).size();
+//			String[][] array2D = new String[rows][cols];
+//			for(int row = 0; row < rows; row++) {
+//				for(int col = 0; col < cols; col++) {
+//					array2D[row][col] = list.get(row).get(col);
+//				}
+//			}
+//			System.out.println(Arrays.deepToString(array2D));
+//			return array2D;
+//		}
+//		
+//		
+//		
+//	//Search category & description
+//		public static void search_by_category_descptwrite(String cate_descpt, String search_word) throws Exception{
+//			try {
+//				
+//				data = statement.executeQuery("select * from sale where Category='"+cate_descpt+"'AND Status= 'A' AND Item_Description like'%"+ search_word +"%'");
+//				FileWriter fileWriter = new FileWriter("searchbycatedescpt.txt");
+//				
+//				PrintWriter writer = new PrintWriter(fileWriter);
+//					while(data.next()) {
+//						writer.print(data.getString(1)+",");
+//						writer.print(data.getString(3)+",");
+//						writer.print (data.getString(4)+",");
+//						writer.print(data.getString(2)+",");
+//						writer.print(data.getString(5));
+//						writer.println();
+//					}
+//				writer.close();
+//			}
+//			
+//			catch (Exception e) {
+//				e.printStackTrace();
+//				
+//			}
+//		}
+//		
+//		
+//		public static String[][] search_by_category_descpt() throws Exception{
+//			List<List<String>> list = new ArrayList<List<String>>();
+//			BufferedReader br = new BufferedReader(new FileReader("searchbycatedescpt.txt"));
+//			String line= "";
+//			while((line=br.readLine()) != null)  {
+//				String[] dataarray = line.split(",");
+//				ArrayList<String> arrayList = new ArrayList<String>(Arrays.asList(dataarray));
+//				list.add(arrayList);
+//			}
+//			//System.out.println(Arrays.deepToString(list.toArray()));
+//			br.close();
+//			int rows = list.size();
+//			int cols = list.get(0).size();
+//			String[][] array2D = new String[rows][cols];
+//			for(int row = 0; row < rows; row++) {
+//				for(int col = 0; col < cols; col++) {
+//					array2D[row][col] = list.get(row).get(col);
+//				}
+//			}
+//			System.out.println(Arrays.deepToString(array2D));
+//			return array2D;
+//		}	
+//		
+//		
+//		
+//		
+//		
+//
+//	//Show history of sale items for user
+//		public static void sale_historywrite(String id) throws Exception{
+//			try {
+//				
+//				data = statement.executeQuery("select * from sale where ID='" + id + "'");
+//				FileWriter fileWriter = new FileWriter("salehistory.txt");
+//				
+//				PrintWriter writer = new PrintWriter(fileWriter);
+//					while(data.next()) {
+//						writer.print(data.getString(1)+",");
+//						writer.print(data.getString(3)+",");
+//						writer.print (data.getString(4)+",");
+//						writer.print(data.getString(2)+",");
+//						writer.print(data.getString(5));
+//						writer.println();
+//					}
+//				writer.close();
+//			}
+//			
+//			catch (Exception e) {
+//				e.printStackTrace();
+//				
+//			}
+//		}
+//		
+//		
+//		public static String[][] sale_history() throws Exception{
+//			List<List<String>> list = new ArrayList<List<String>>();
+//			BufferedReader br = new BufferedReader(new FileReader("salehistory.txt"));
+//			String line= "";
+//			while((line=br.readLine()) != null)  {
+//				String[] dataarray = line.split(",");
+//				ArrayList<String> arrayList = new ArrayList<String>(Arrays.asList(dataarray));
+//				list.add(arrayList);
+//			}
+//			//System.out.println(Arrays.deepToString(list.toArray()));
+//			br.close();
+//			int rows = list.size();
+//			int cols = list.get(0).size();
+//			String[][] array2D = new String[rows][cols];
+//			for(int row = 0; row < rows; row++) {
+//				for(int col = 0; col < cols; col++) {
+//					array2D[row][col] = list.get(row).get(col);
+//				}
+//			}
+//			System.out.println(Arrays.deepToString(array2D));
+//			return array2D;
+//		}	
+	
+	
+	
 	
 //Post sell items in marketplace
 	public static void sell_item(String id, String itemname, String descpt, int price, String cate) {
@@ -341,6 +566,8 @@ public class Database {
 			e.printStackTrace();
 		}
 	}
+	
+	
 	
 
 }

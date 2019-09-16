@@ -11,23 +11,24 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import javadb.Post.Action;
-import javadb.Post.Column;
-import javadb.Post.Status;
+import com.sept.rest.webservices.restfulwebservices.post.Post;
+import com.sept.rest.webservices.restfulwebservices.post.Post.Action;
+import com.sept.rest.webservices.restfulwebservices.post.Post.Status;
+
+import javadb.ChatBase.Overhead;
 
 import java.sql.Date;
+
 
 public class DatabaseRef {
 
 	
 	public static void main(String[] args) throws SQLException
 	{
-//		DatabaseRef db = new DatabaseRef();
-//		
-//		DatabaseRef.update("delete from sale where PostID = 26");
+		ChatBase db = new ChatBase();
 	}
 	private static Statement statement;
-	private static ResultSet data;
+	protected static ResultSet data;
 	private Connection conn;
 	String id;
 	String password;
@@ -38,29 +39,27 @@ public class DatabaseRef {
 	String new_despt;
 	public Map<Integer, Post> posts;
 	
-	public DatabaseRef() {
-		try {				
-			canConnect();
-			
-			posts = new HashMap<>();
-			data = statement.executeQuery("select * from sale");
-			while (data.next())
-			{
-				int id = data.getInt(1);
-				posts.put(id, new Post(data));
-			}
-		} 
+	public DatabaseRef() throws SQLException
+	{			
+		System.out.println("test");
+		canConnect();
 		
-		catch (Exception e) {
-			System.out.println(e);
+		posts = new HashMap<>();
+		data = query("select * from sale");
+		while (data.next())
+		{
+			int id = data.getInt(1);
+			posts.put(id, new Post(data));
 		}
+		
 	}
 	
 	public boolean canConnect()
 	{
 		try
 		{
-			String driver = "com.mysql.jdbc.Driver";
+			
+			String driver = "com.mysql.cj.jdbc.Driver";
 			String url = "jdbc:mysql://35.189.1.213:3306/sept";
 			String username = "root";
 			String password = "bananasept";
@@ -78,31 +77,19 @@ public class DatabaseRef {
 	
 	
 	
-	
-	
-	
-	
 
 //login details
 
 	//user ID check
 	public boolean checkId(String id) throws SQLException 
 	{
-		data = statement.executeQuery("select * from login where ID='" + id + "'");
-		while (data.next())
-			if (id.equalsIgnoreCase(data.getString("ID")))
-				return true;
-		return false;
+		return valuesExist(String.format("select count(*) from %s where upper(%s) = '%s'", "login", "ID", id.toUpperCase()));
 	}
 
 	//password check
 	public boolean checkPassword(String id, String password) throws SQLException
 	{
-		data = statement.executeQuery("select * from login where ID='" + id + "' AND password='" + password + "'");
-		while (data.next())
-			if (id.equalsIgnoreCase(data.getString("ID")) && password.equals(data.getString("password")))
-				return true;
-		return false;
+		return valuesExist(String.format("select count(*) from %s where upper(%s) = '%s' AND %s = '%s'", "login", "ID", id.toUpperCase(), "password", password));
 	}
 	//end login details
 
@@ -154,14 +141,14 @@ public class DatabaseRef {
 	}
 
 	//Post sell items in marketplace
-	public void sell_item(String owner, String title, String desc, int price, String cate) throws SQLException {
+	public void sell_item(String owner, String title, String desc, String price, String cate) throws SQLException {
 		java.sql.Date curdate = new java.sql.Date(new java.util.Date().getTime());
 		update("insert into sale(ID, Item_Name, Item_Description, Price, Status, Date, Category) VALUES ('"+ owner +"','"+title+"','"+desc+"','"+price+"', 'A', '"+curdate+"','"+cate+"')");
 		
 		data = statement.executeQuery("select * from sale");
 		while (data.next())
 			if (data.isLast())
-				posts.put(data.getInt(1), new Post(data.getInt(1), owner, title, desc, price, curdate, cate));
+				posts.put(data.getInt(1), new Post(data.getLong(1), owner, title, desc, price + "", curdate, cate));
 	}
 	
 	
@@ -173,15 +160,9 @@ public class DatabaseRef {
 	
 	
 	// actual commands to database
-	public static void update(String str)
+	public static void update(String str) throws SQLException 
 	{
-		try 
-		{
-			statement.executeUpdate(str);
-		} 
-		catch (SQLException e) {
-			e.printStackTrace();
-		}
+		statement.executeUpdate(str);
 	}
 	
 	public static ResultSet query(String str) throws SQLException
@@ -202,4 +183,14 @@ public class DatabaseRef {
 		return matched;
 	}
 	
+	// given a query, check if the values searched exist in the database
+	public boolean valuesExist(String str) throws SQLException
+	{
+		data = query(str);
+		while (data.next())
+			if (data.getInt(1) > 0)
+				return true;
+		return false;
+	}
+		
 }

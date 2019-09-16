@@ -3,6 +3,8 @@ package javadb;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.sept.rest.webservices.restfulwebservices.post.Post;
+
 
 public class MarketPlace {
 
