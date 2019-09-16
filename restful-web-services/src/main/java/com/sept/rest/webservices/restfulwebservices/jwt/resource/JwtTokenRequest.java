@@ -2,7 +2,6 @@ package com.sept.rest.webservices.restfulwebservices.jwt.resource;
 
 import java.io.Serializable;
 
-//dont need this class
 public class  JwtTokenRequest implements Serializable {
   
   private static final long serialVersionUID = -5616176897013108345L;

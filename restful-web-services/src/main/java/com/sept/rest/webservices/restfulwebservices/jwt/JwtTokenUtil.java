@@ -31,8 +31,7 @@ public class JwtTokenUtil implements Serializable {
   private Long expiration;
 
   public String getUsernameFromToken(String token) {
-	  String thing = getClaimFromToken(token, Claims::getSubject);
-    return thing;
+    return getClaimFromToken(token, Claims::getSubject);
   }
 
   public Date getIssuedAtDateFromToken(String token) {
@@ -62,9 +61,9 @@ public class JwtTokenUtil implements Serializable {
     return false;
   }
 
-  public String generateToken(String userDetails) {
+  public String generateToken(UserDetails userDetails) {
     Map<String, Object> claims = new HashMap<>();
-    return doGenerateToken(claims, userDetails);
+    return doGenerateToken(claims, userDetails.getUsername());
   }
 
   private String doGenerateToken(Map<String, Object> claims, String subject) {
@@ -90,8 +89,6 @@ public class JwtTokenUtil implements Serializable {
     return Jwts.builder().setClaims(claims).signWith(SignatureAlgorithm.HS512, secret).compact();
   }
 
-  //not needed due to secret key ensuring tokens recieved are all from this
-  //need to verify that it can recieve a username from token
   public Boolean validateToken(String token, UserDetails userDetails) {
     JwtUserDetails user = (JwtUserDetails) userDetails;
     final String username = getUsernameFromToken(token);

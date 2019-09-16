@@ -17,12 +17,6 @@ class AuthenticationService {
         })
     }
 
-    executeGoogleJwtAuthenticationService(googleUserToken) {
-        return axios.post(`${API_URL}/authenticate`, {
-          googleUserToken
-        })
-    }
-
     createBasicAuthToken(username, password) {
         return 'Basic ' + window.btoa(username + ":" + password)
     }
@@ -42,6 +36,7 @@ class AuthenticationService {
     createJWTToken(token) {
         return 'Bearer ' + token
     }
+
 
     logout() {
         sessionStorage.removeItem(USER_NAME_SESSION_ATTRIBUTE_NAME);
