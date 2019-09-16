@@ -17,7 +17,7 @@ const Chats = [
 
 function CuurentChats() {
   return (
-    <div className="rooms-list">
+    <div>
       {" "}
       {Chats.map((message, index) => {
         return (
@@ -69,7 +69,7 @@ class ChatComponent extends Component {
 
         <div className="grid-container">
           <div className="grid-item">
-                <a1>Chats</a1>
+           <a1>Chats</a1>
             <CuurentChats></CuurentChats>
           </div>
           <div className="grid-item">
@@ -118,7 +118,7 @@ class MessageObjects extends Component {
   create_new_message = message => {
     return (
       <div className="message">
-        <div className="username_id">USERPLACEHOLDER</div>
+        <div className="username_id">username</div>
         <div className="message-text" key={message.key}>
           {message.text}
         </div>
@@ -128,6 +128,7 @@ class MessageObjects extends Component {
   render() {
     const messages = this.props.allMeassages;
     const listMessages = messages.map(this.create_new_message);
+
 
     return <ul className="messages">{listMessages}</ul>;
   }
