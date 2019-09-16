@@ -49,24 +49,25 @@ public class PostController {
 	@GetMapping("/posts")			
 	public List<Post> getAllPosts()
 	{
+		for (Post post : db.findByDescriptionAndCategory("fandangled mess", "Annoyingly Unnexplained"))
+			System.out.println(post);
 		return db.findAll();
 	}
 	
 	//HERE IS WHERE THE CONTENTS ON SEARCH COME THROUGH
-		@PostMapping("/searchitem")
-		public void Search_Post(@RequestBody SearchPost search) {
-			search.print();
-		}
+	@PostMapping("/searchitem")
+	public void Search_Post(@RequestBody SearchPost search) {
 		
-		//HERE IS WHERE TO "SEND THE RESULTS"
-		@GetMapping("/posts/searchBy")	
+		search.print();
+	}
 	
-		public List<Post> getfindByDescriptionAndCategory(@PathVariable String description, @PathVariable String category){
-			return db.findByDescriptionAndCategory(description, category);
-		}	
+	//HERE IS WHERE TO "SEND THE RESULTS"
+	@GetMapping("/posts/searchBy{description}and{category}")	
+	public List<Post> getfindByDescriptionAndCategory(@PathVariable String description, @PathVariable String category)
+	{
+		return db.findByDescriptionAndCategory(description, category);
+	}		
 	
-		
-		
 	// adds a post to marketplace
 	@PostMapping("/postitem")
 	public void addPost(@RequestBody Post post)
