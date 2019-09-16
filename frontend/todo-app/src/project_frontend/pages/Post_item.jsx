@@ -71,7 +71,7 @@ class Post_item extends Component {
     toBackend.postItemBackend(this.state.item_description, this.state.item_name, this.state.item_cost, this.state.item_catagory, this.state.item_photo);
     event.preventDefault();
     alert("Your item has been posted");
-    this.props.history.push('/home/sept');
+    this.props.history.push(`/home/${sessionStorage.getItem("authenticatedUser")}`)
   }
 
 }

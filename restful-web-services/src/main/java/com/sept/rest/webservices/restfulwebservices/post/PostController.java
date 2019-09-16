@@ -25,7 +25,7 @@ import javadb.DatabaseRef;
 @CrossOrigin(origins="http://localhost:3000")
 @RestController
 public class PostController {
-	
+
 
 	@Autowired 
 	private PostRepository db;
@@ -68,6 +68,7 @@ public class PostController {
 		return db.findByDescriptionAndCategory(description, category);
 	}		
 	
+
 	// adds a post to marketplace
 	@PostMapping("/postitem")
 	public void addPost(@RequestBody Post post)

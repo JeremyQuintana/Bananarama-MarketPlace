@@ -90,28 +90,27 @@ class Items extends Component {
         super(props);
         // State stores the posts from backend
         this.state = {
-            backPostings: [[]],
+            backPostings: [],
         }
         this.refreshPosts()
     }
     
     render() {
-      var retVal = [];
-      // loop through the postings from backend
-      for (var r = 0; r < this.state.backPostings.length; r++) {
-          let postId = this.state.backPostings[r].id;
-          // Append the row of post information
-          retVal.push(
-              <div className="posting container" onClick={() => this.routeChange(postId)}>
-                  <span className="postTitle"><img src={'post_images/' + this.state.backPostings[r].photo + '.jpg'}></img>{this.state.backPostings[r].title}</span> <br></br>
-                  <span className="postDescription">{this.state.backPostings[r].description}</span> <br></br>
-                  <span className="postPrice">{this.state.backPostings[r].price}</span> <br></br>
-                  <span className="postSeller">{this.state.backPostings[r].ownerId}</span> <br></br>
+        var retVal = [];
+        // loop through the postings from backend
+        for (var r = 0; r < this.state.backPostings.length; r++) {
+            let postId = this.state.backPostings[r].id;
+            // Append the row of post information
+            retVal.push(
+                <div className="posting container" onClick={() => this.routeChange(postId)}>
+                    <span className="postTitle"><img src={'post_images/' + this.state.backPostings[r].photo + '.jpg'}></img>{this.state.backPostings[r].title}</span> <br></br>
+                    <span className="postDescription">{this.state.backPostings[r].description}</span> <br></br>
+                    <span className="postPrice">{this.state.backPostings[r].price}</span> <br></br>
+                    <span className="postSeller">{this.state.backPostings[r].ownerId}</span> <br></br>
 
-                  <br></br>
-              </div>
-             
-
+                    <br></br>
+                </div>
+               
           );
         }
 
@@ -124,10 +123,10 @@ class Items extends Component {
     }
     // update the postings array with backend data
     refreshPosts() {
-
+    
         MarketDataService.retrieveAllPosts().then(
             response => {
-                
+                console.log(response)
                 this.setState({ backPostings: response.data })
             }
         ).catch(error => console.log("network error"));

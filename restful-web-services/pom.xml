@@ -69,6 +69,12 @@
 </dependency>
 
 <dependency>
+  <groupId>com.google.api-client</groupId>
+  <artifactId>google-api-client</artifactId>
+  <version>1.30.2</version>
+</dependency>
+
+<dependency>
             <groupId>org.junit.platform</groupId>
             <artifactId>junit-platform-commons</artifactId>
             <version>1.4.1</version>
@@ -122,6 +128,27 @@
 			<scope>test</scope>
 		</dependency>
 		
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter-api</artifactId>
+			<version>5.4.2</version>
+			<scope>test</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter-engine</artifactId>
+			<version>5.4.2</version>
+			<scope>test</scope>
+		</dependency>
+		
+		<dependency>
+            <groupId>org.junit.platform</groupId>
+            <artifactId>junit-platform-commons</artifactId>
+            <version>1.4.1</version>
+            <scope>test</scope>
+        </dependency>
+        
 	</dependencies>
 
 	<build>
