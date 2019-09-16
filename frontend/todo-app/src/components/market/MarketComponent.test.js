@@ -11,7 +11,7 @@ beforeAll(() => {
 describe('<MarketComponent />', () => {
     it('renders without crashing', () => {
         const div = document.createElement('div');
-        ReactDOM.render(MarketComponent.WrappedComponent, div);
+        ReactDOM.render(<MarketComponent.WrappedComponent />, div);
         ReactDOM.unmountComponentAtNode(div);
     });
 });
