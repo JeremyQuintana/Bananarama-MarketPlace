@@ -43,7 +43,7 @@ class Items extends Component {
             //(this.state.backSearchPostings[0] OR this.state.errors)
             if(this.state.backSearchPostings[0])
             {
-                <h3 className="NoresultsTitle">Sorry no items matching the description could be found</h3>
+                return (<h3 className="NoresultsTitle">Sorry no items matching the description could be found</h3>)
             }
             else {
             // loop through the postings from backend
