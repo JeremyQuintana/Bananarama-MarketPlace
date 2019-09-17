@@ -9,8 +9,9 @@ import ChatComponent from './ChatComponent'
 
 import HomeComponent from './HomeComponent'
 
-import PostComponent from './PostComponent.jsx';
 
+import PostComponent from './PostComponent.jsx';
+import AccountComponent from './AccountComponent.jsx'
 
 import AuthenticatedRoute from '../todo/AuthenticatedRoute.jsx'
 import LoginComponent from '../todo/LoginComponent.jsx'
@@ -19,20 +20,23 @@ import LogoutComponent from '../todo/LogoutComponent.jsx'
 import WelcomeComponent from '../todo/WelcomeComponent.jsx'
 import TodoComponent from '../todo/TodoComponent.jsx'
 import Post_item from '../../project_frontend/pages/Post_item.jsx';
+import SearchComponent from './SearchComponent.jsx';
 
 // This component organises all the other components together
 class MarketPlaceApp extends Component {
     render() {
         // Return the divs with the header, footer and routes for different pages
         return (
+            
             <div className="MarketPlaceApp">
                 <Router>
                     <>
                         <HeaderComponent />
                         <Switch>
 
-                            <Route path = "/home/:name" exact component = {HomeComponent}/>
+                            <AuthenticatedRoute path = "/home/:name" exact component = {HomeComponent}/>
                             <AuthenticatedRoute path="/market" exact component={MarketComponent} />
+                            <AuthenticatedRoute path="/market/searchBy" exact component={SearchComponent} />
                             <AuthenticatedRoute path="/posts/:postID" exact component={PostComponent} />
                             <AuthenticatedRoute path="/chat" exact component={ChatComponent} />
       
@@ -40,9 +44,11 @@ class MarketPlaceApp extends Component {
                             <Route path="/login" component={LoginComponent} />
                             <AuthenticatedRoute path="/post" component={Post_item} />
                             <AuthenticatedRoute path="/welcome/:name" component={WelcomeComponent} />
+                            <AuthenticatedRoute path="/account" component={AccountComponent} />
                             <AuthenticatedRoute path="/todos/:id" component={TodoComponent} />
                             <AuthenticatedRoute path="/todos" component={ListTodosComponent} />
-                            <AuthenticatedRoute path="/logout" component={LogoutComponent} />
+                            <Route path="/logout" component={LogoutComponent} />
+                            <Route path="*" exact component={LoginComponent} />
 
                         </Switch>
                         <FooterComponent/>

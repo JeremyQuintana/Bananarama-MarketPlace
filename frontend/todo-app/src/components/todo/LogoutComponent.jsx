@@ -1,3 +1,5 @@
+//Reference: https://www.npmjs.com/package/react-google-login
+
 import React, { Component } from 'react'
 
 class LogoutComponent extends Component {

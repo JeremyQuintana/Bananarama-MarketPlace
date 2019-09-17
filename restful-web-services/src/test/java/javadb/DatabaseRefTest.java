@@ -10,7 +10,9 @@ import org.junit.AfterClass;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import javadb.Post.Status;
+import com.sept.rest.webservices.restfulwebservices.post.Post;
+import com.sept.rest.webservices.restfulwebservices.post.Post.Status;
+
 
 class DatabaseRefTest {
 
@@ -61,8 +63,8 @@ class DatabaseRefTest {
 	@Test
 	void testAddPost() throws SQLException {
 		
-		
-		db.sell_item("s1234567", "Dog", "Used dog", 2, "Dogs");
+	
+		db.sell_item("s1234567", "Dog", "Used dog", "2", "Dogs");
 		
 		// the inserted item is located at the last id
 		LinkedList<Integer> sorted = new LinkedList<>(db.posts.keySet());
@@ -73,9 +75,9 @@ class DatabaseRefTest {
 		Post insertedPost = db.posts.get(lastId);
 		assertEquals(insertedPost.getOwnerId(), "s1234567");
 		assertEquals(insertedPost.getTitle(), "Dog");
-		assertEquals(insertedPost.getDesc(), "Used dog");
+		assertEquals(insertedPost.getDescription(), "Used dog");
 		assertEquals(insertedPost.getCategory(), "Dogs");
-		assertEquals(insertedPost.getPrice(), 2);
+		assertEquals(insertedPost.getPrice(), "2");
 		
 		// remove all traces of post
 		db.posts.remove(lastId);

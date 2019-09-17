@@ -1,0 +1,31 @@
+.Search_item {
+  margin-top: 20px;
+  }
+
+.input-icons i, .inputnot { 
+  position: absolute; 
+  } 
+
+ .inputnot{
+  margin-left: -32%;
+  height:35px;  
+  }
+ 
+
+.icon { 
+  padding: 2px; 
+  text-align: center; 
+  } 
+
+.inputfield, .search_words { 
+  width: 40%; 
+  height:35px;
+  padding: 4px; 
+  text-align: center; 
+  font-size: 15px;
+  }
+
+.marketTitle{
+  margin-top: -60px;
+  margin-bottom: 15px;
+  } 
