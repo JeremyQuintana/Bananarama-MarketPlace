@@ -20,16 +20,16 @@ describe('<LoginComponent />', () => {
 describe('<LoginComponent />', () => {
   it('renders basic structure', () => {
     // will need to change with google login
-    const market = shallow(<LoginComponent />);
-    expect(market.find('div').length).toEqual(2);
-    expect(market.find('h1').length).toEqual(1);
-    expect(market.find('input').length).toEqual(2);
+    const login = shallow(<LoginComponent />);
+    expect(login.find('div').length).toEqual(2);
+    expect(login.find('h1').length).toEqual(1);
+    
   });
 });
 
 describe('<LoginComponent />', () => {
   it('renders no login errors', () => {
-    const market = shallow(<LoginComponent />);
-    expect(market.find('div.alert').length).toEqual(0);
+    const login = shallow(<LoginComponent />);
+    expect(login.find('div.alert').length).toEqual(0);
   });
 });
