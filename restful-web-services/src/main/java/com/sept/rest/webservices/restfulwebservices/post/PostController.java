@@ -71,10 +71,9 @@ public class PostController {
 
 	// adds a post to marketplace
 	@PostMapping("/postitem")
-	public void addPost(@RequestBody Post post)
+	public Post addPost(@RequestBody Post post)
 	{
-		System.out.println(post);
-		db.save(post);
+		return db.save(post);
 	}
 	
 	
@@ -87,9 +86,9 @@ public class PostController {
 	
 	// when need to open a post in marketplace
 	@PutMapping("/market/{id}")
-	public void updatePost(@PathVariable Long id, @RequestBody Post post)
+	public Post updatePost(@PathVariable Long id, @RequestBody Post post)
 	{
-		db.save(post);
+		return db.save(post);
 	}
 	
 	@DeleteMapping("/market/{id}")
