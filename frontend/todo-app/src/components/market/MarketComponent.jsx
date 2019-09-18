@@ -72,14 +72,16 @@ class MarketComponent extends Component {
         }
       )
     }
-  
+   
   
     submitPost(event){
       
       toBackend.searchItemBackend(this.state.description, this.state.item_category);
       event.preventDefault();
-      this.props.history.push('/market/searchBy');
+      this.props.history.push(`/posts/searchBy/${this.state.description}${this.state.item_category}`);
     }
+
+    
 
 }
 
@@ -117,6 +119,7 @@ class Items extends Component {
 
         return retVal;
     }
+   
     // Method for when a user clicks on a post, route them to post page
     routeChange(x) {
         this.props.history.push("/posts/" + x);

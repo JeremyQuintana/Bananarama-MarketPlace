@@ -105,15 +105,13 @@ class LoginComponent extends Component {
             })
 
     }
-//MITCH, if you're using this make sure you stay on localhost:3000 (if for any reason u aren't on 3000 the googly credentials
-//thing won't work on another other port). If you have to use another port you'll need to set up a new Client ID in the gcloud console, under API& Services
-//Credentials (OAuth 2.0 client IDs) with the port u need to use, then put the Client ID generated into the config.json file located in src/components/todo
 
     render() {
         return (
             <div>
                 <h1>Bananarama Marketplace</h1>
                 <div className="container">
+                
                     {/*<ShowInvalidCredentials hasLoginFailed={this.state.hasLoginFailed}/>*/}
                     {this.state.hasLoginFailed && <div className="alert alert-warning">Invalid Credentials or something is wrong</div>}
                     {this.state.showSuccessMessage && <div>Login Sucessful</div>}
