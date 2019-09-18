@@ -10,11 +10,13 @@ class MarketDataService {
     }
 
     retrievesearchByPosts() {
-        
+
         return axios.get(`${API_URL}/posts/searchBy`);
     }
 
-
+    retrieveSpecificPost(postId){
+      return axios.get(`${API_URL}/posts/${postId}`);
+    }
 
 }
 export const googleauth = data => { return async dispatch => {

@@ -44,6 +44,7 @@ public class PostController {
 	@DeleteMapping("/posts/{id}")
 	public void deletePost(@PathVariable Long id) 
 	{
+		System.out.println("HI");
 		db.deleteById(id);
 	}
 }
