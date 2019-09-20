@@ -12,4 +12,5 @@ public interface PostRepository extends JpaRepository<Post, Long> {
 	// jpa MAGICALLY uses the method name to know what to look for
 	public List<Post> findByCategory(String category);
 	public List<Post> findByDescriptionAndCategory(String description, String category);
+	public List<Post> findByOwnerId(String ownerId);
 }

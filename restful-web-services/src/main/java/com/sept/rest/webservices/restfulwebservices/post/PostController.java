@@ -67,7 +67,6 @@ public class PostController {
 	@GetMapping("/posts/searchBy/{description}{category}")	
 	public List<Post> getfindByDescriptionAndCategory(@RequestBody SearchPost search, @PathVariable String description, @PathVariable String category)
 	{
-	
 		return db.findByDescriptionAndCategory(description, category);
 	}		
 	/*@GetMapping("/posts/searchBy/{category}")	
