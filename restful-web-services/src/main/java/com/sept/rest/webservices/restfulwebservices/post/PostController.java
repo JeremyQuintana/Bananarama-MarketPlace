@@ -8,6 +8,7 @@ import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,32 +47,22 @@ public class PostController {
 
 	//this is where the search results get sent to 
 	@GetMapping("/posts/searchBy/{description}/{category}")	
-	public List<Post> getfindByDescriptionAndCategory(@PathVariable String description, @PathVariable String category) {
-
-		if (!category.equals("all") && !description.equals("undefined")) {
-			return db.findByDescriptionContainingAndCategory(description, category);
-		}
-		else if (description.equals("undefined")) {
-			return db.findByCategory(category);
-		}
-		else if (category.equals("all") && !description.equals("undefined")) {
-			return db.findByDescriptionContaining(description);
-			
-		}
+	public List<Post> getByDescriptionAndCategory(@PathVariable String description, @PathVariable String category) 
+	{
+		ArrayList<Post> posts = new ArrayList<>(db.findAll());
+		if (!description.equals("undefined"))	posts.retainAll(db.findByDescriptionLike(description));
+		if (!category.equalsIgnoreCase("all"))	posts.retainAll(db.findByCategory(category));
 		
-		else {
-			return db.findAll();
-		}
-
+		return posts;
 	}
 	
 
 	// adds a post to marketplace
-		@PostMapping("/postitem")
-		public Post addPost(@RequestBody Post post)
-		{
-			return db.save(post);
-		}
+	@PostMapping("/postitem")
+	public Post addPost(@RequestBody Post post)
+	{
+		return db.save(post);
+	}
 
 	// when need to open a post in marketplace
 	@PutMapping("/posts/{id}")

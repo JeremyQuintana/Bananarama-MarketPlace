@@ -15,8 +15,5 @@ public interface PostRepository extends JpaRepository<Post, Long>
 	
 
 	public List<Post> findByCategory(String category);
-	public List<Post> findByDescriptionContaining(String description);
-	public List<Post> findByDescriptionContainingAndCategory(String description, String category);
-	public List<Post> findByDescriptionAndCategory(String description, String category);
-	public List<Post> findByDescription(String description);
+	public List<Post> findByDescriptionLike(String description);
 }

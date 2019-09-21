@@ -179,6 +179,28 @@ public class Post {
 		return id + " " + ownerId + " " + title + " " + description + " " + price + " " + status + " " + datePosted + " " + category + photo;
 	}
 	
+	
+	
+	@Override
+	public int hashCode() 
+	{
+		return 31 + ((id == null) ? 0 : id.hashCode());
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) 					return true;
+		if (obj == null) 					return false;
+		if (getClass() != obj.getClass())	return false;
+		Post other = (Post) obj;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		return true;
+	}
+
 	public Long getId()			{return id;}
 	public void setId(Long id)	{this.id = id;}
 	public Status getStatus()		{return status;}
