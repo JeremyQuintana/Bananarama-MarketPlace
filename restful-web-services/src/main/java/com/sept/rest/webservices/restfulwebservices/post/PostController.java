@@ -64,7 +64,7 @@ public class PostController {
 //	HERE IS WHERE THE CONTENTS ON SEARCH COME THROUGH
 	@PostMapping("/searchitem")
 	public void Search_Post(@RequestBody SearchPost search) {
-		/*String description= search.getdescription();
+		String description= search.getdescription();
 		String category= search.getcategory();
 		FileWriter fileWriter;
 		try {
@@ -82,10 +82,10 @@ public class PostController {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}*/
+		}
 	
 	}
-	
+	/*
 //this is where the search results get sent to (if you hardcode the description and category shit works great! if not then it's undefinded
 	@GetMapping("/posts/searchBy/{description}/{category}")	
 	public List<Post> getfindByDescriptionAndCategory(@PathVariable("description") String description, @PathVariable("category") String category)
@@ -100,12 +100,15 @@ public class PostController {
 		return db.findByDescriptionAndCategory(description, category);
 	}	
 	
-	/*
+	*/
 	 //this works but it's the hacky write into text file and read text file
-	@GetMapping("/posts/searchBy/{description}/{category}")	
-	public List<Post> getfindByDescriptionAndCategory(@PathVariable("description") String description, @PathVariable("category") String category) throws IOException
+	//@GetMapping("/posts/searchBy/{description}/{category}")
+	//public List<Post> getfindByDescriptionAndCategory(@PathVariable("description") String description, @PathVariable("category") String category) throws IOException
 	
-	{String [] data = new String[1];
+	@GetMapping("/posts/searchBy")
+	public List<Post> getbyfindByDescriptionAndCategory() throws IOException
+	
+	{String [] data = new String[2];
 	String descriptions;
 	String categorys;
 		BufferedReader br;
@@ -122,10 +125,27 @@ public class PostController {
 	System.out.println("variables are what");
 	System.out.println(descriptions);
 	System.out.println(categorys);
-	for (Post list : db.findByDescriptionAndCategory(descriptions, categorys))
-		System.out.println(list);
-		System.out.println("Aworking?");
-	return db.findByDescriptionAndCategory(descriptions, categorys);
+	//for (Post list : db.findByDescriptionAndCategory(descriptions, categorys))
+		//System.out.println(list);
+		//System.out.println("Aworking?");
+	if (descriptions.equals("")  && categorys.equals("") ) {
+		System.out.println("returning NULL");
+		return null;
+		
+	}
+	else if (descriptions.equals("")) {
+		System.out.println("no desceriptions");
+		return db.findByCategory(categorys);
+	}
+	else if (categorys.equals("all")) {
+		System.out.println("no category");
+		return db.findByDescriptionContaining(descriptions);
+	}
+	else 
+	{System.out.println("bothworking");
+		return db.findByDescriptionContainingAndCategory(descriptions, categorys);
+	}
+	
 	}
 	
 	 catch (FileNotFoundException e) {
@@ -138,7 +158,6 @@ public class PostController {
 		
 	}	
 
-	*/
 	
 	// adds a post to marketplace
 		@PostMapping("/postitem")

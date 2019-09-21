@@ -48,7 +48,7 @@ class NewItems extends Component {
                
                 
                 retVal.push(
-                    <div className="posting container" onClick={() => this.routeChange(this.state.description, this.state.category, postId)}>
+                    <div className="posting container" onClick={() => this.routeChange(postId)}>
                         <span className="postTitle"><img src={'post_images/' + this.state.backSearchPostings[r].photo + '.jpg'}></img>{this.state.backSearchPostings[r].title}</span> <br></br>
                         <span className="postDescription">{this.state.backSearchPostings[r].description}</span> <br></br>
                         <span className="postPrice">{this.state.backSearchPostings[r].price}</span> <br></br>
@@ -71,18 +71,24 @@ class NewItems extends Component {
         return retVal;
     }
    
+   // <div className="posting container" onClick={() => this.routeChange(this.state.description, this.state.category, postId)}>
    
-   
-  routeChange(description, category, x) {
-      this.props.history.push(`/posts/searchBy/${description}/${category}/` + x);
-  }
+  //routeChange(description, category, x) {
+   //   this.props.history.push(`/posts/searchBy/${description}/${category}/` + x);
+ // }
+
+  routeChange(x) {
+    this.props.history.push(`/posts/searchBy/` + x);
+}
   
 
     refreshsearchPosts(description, category) {
         console.log("working?");
         console.log(this.state.category);
-        MarketDataService.retrievesearchByPosts(description, category).then(
-            response => {
+       // MarketDataService.retrievesearchByPosts(description, category).then(
+        MarketDataService.retrievesearchByPosts().then(
+           
+       response => {
                 
                 this.setState({ backSearchPostings: response.data })
             }

@@ -37,8 +37,8 @@ class MarketComponent extends Component {
           <form onSubmit={this.submitPost} refs="form">
                 <select required name="category" className="inputnot" onChange={this.handleChange} value={this.state.category}>
                   <option value="">Choose Category</option>
-                  <option value="All">All</option>
-                  <option value="Exceptionally Random">Exceptionally Random</option>
+ <option value="all">All</option>
+                               <option value="Exceptionally Random">Exceptionally Random</option>
                   <option value="Ridiculously Complicated">Ridiculously Complicated</option>
                   <option value="Annoyingly Unnexplained">Annoyingly Unnexplained</option>
                   <option value="Disturbingly Simple">Disturbingly Simple</option>
@@ -80,8 +80,8 @@ class MarketComponent extends Component {
   
       toBackend.searchItemBackend(this.state.description, this.state.category);
       event.preventDefault();                                                     
-      this.props.history.push(`/posts/searchBy/${this.state.description}/${this.state.category}`);
-   //  this.props.history.push(`/posts/searchBy`);
+     // this.props.history.push(`/posts/searchBy/${this.state.description}/${this.state.category}`);
+     this.props.history.push(`/posts/searchBy`);
     }
 
     

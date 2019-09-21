@@ -22,6 +22,7 @@ import TodoComponent from '../todo/TodoComponent.jsx'
 import Post_item from '../../project_frontend/pages/Post_item.jsx';
 import SearchComponent from './SearchComponent.jsx';
 //   <AuthenticatedRoute path="/posts/searchBy" exact component={SearchComponent} />
+//<AuthenticatedRoute path="/posts/searchBy/:description/:item_category" exact component={SearchComponent} />
 // This component organises all the other components together
 class MarketPlaceApp extends Component {
     render() {
@@ -36,7 +37,7 @@ class MarketPlaceApp extends Component {
 
                             <AuthenticatedRoute path = "/home/:name" exact component = {HomeComponent}/>
                             <AuthenticatedRoute path="/market" exact component={MarketComponent} />
-                            <AuthenticatedRoute path="/posts/searchBy/:description/:item_category" exact component={SearchComponent} />
+                            <AuthenticatedRoute path="/posts/searchBy" exact component={SearchComponent} />
                             <AuthenticatedRoute path="/posts/:postID" exact component={PostComponent} />
                             <AuthenticatedRoute path="/chat" exact component={ChatComponent} />
       
