@@ -36,128 +36,36 @@ public class PostController {
 	@Autowired 
 	private PostRepository db;
 	
-	//random stuff to save
 	
-	// show all posts when viewing marketplace
-	/*@GetMapping("/posts")				
-	public String[][] getAllPosts()
-	{
-		
-		String[][] posts = new String[db.findAll().size()][5];
-		int i=0;
-		for (Post post : db.findAll())
-		{
-			String[] postStr = {Long.toString(post.getId()), post.getTitle(), post.getDescription(), post.getOwnerId(), post.getPrice()};
-			posts[i++] = postStr;
-		}
-		return posts;
-	}*/
 	@GetMapping("/posts")			
 	public List<Post> getAllPosts()
 	{
-		//System.out.println("working WTF posts");
-	//	for (Post post : db.findAll())
-	//	System.out.println(post);
 		return db.findAll();
 	}
 
-//	HERE IS WHERE THE CONTENTS ON SEARCH COME THROUGH
-	@PostMapping("/searchitem")
-	public void Search_Post(@RequestBody SearchPost search) {
-		String description= search.getdescription();
-		String category= search.getcategory();
-		FileWriter fileWriter;
-		try {
-			fileWriter = new FileWriter("SEARCH.txt");
-		
-		
-		PrintWriter writer = new PrintWriter(fileWriter);
-			
-			writer.print(description +",");
-			writer.print(category);
-		
-			
-			writer.close();
-			
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	
-	}
-	/*
-//this is where the search results get sent to (if you hardcode the description and category shit works great! if not then it's undefinded
+
+	//this is where the search results get sent to 
 	@GetMapping("/posts/searchBy/{description}/{category}")	
 	public List<Post> getfindByDescriptionAndCategory(@PathVariable String description, @PathVariable String category) {
-	
-		System.out.println("This is description: " + description);
-		System.out.println("This is category: " + category);
-		for (Post list : db.findByDescriptionAndCategory(description, category))
-			System.out.println(list);
+
+		if (!category.equals("all") && !description.equals("undefined")) {
+			return db.findByDescriptionContainingAndCategory(description, category);
+		}
+		else if (description.equals("undefined")) {
+			return db.findByCategory(category);
+		}
+		else if (category.equals("all") && !description.equals("undefined")) {
+			return db.findByDescriptionContaining(description);
 			
-			return db.findByDescriptionAndCategory(description, category);
-			
-	}	
-	
-	*/
-	 //this works but it's the hacky write into text file and read text file
-	//@GetMapping("/posts/searchBy/{description}/{category}")
-	//public List<Post> getfindByDescriptionAndCategory(@PathVariable("description") String description, @PathVariable("category") String category) throws IOException
-	
-	@GetMapping("/posts/searchBy")
-	public List<Post> getbyfindByDescriptionAndCategory() throws IOException
-	
-	{String [] data = new String[2];
-	String descriptions;
-	String categorys;
-		BufferedReader br;
-	try {
-		br = new BufferedReader(new FileReader("SEARCH.txt"));
-	
-	String line= "";
-	while((line=br.readLine()) != null)  {
-		data = line.split(",");
-	}
-	descriptions = data[0];
-	categorys = data[1];
-	br.close();
-	System.out.println("variables are what");
-	System.out.println(descriptions);
-	System.out.println(categorys);
-	//for (Post list : db.findByDescriptionAndCategory(descriptions, categorys))
-		//System.out.println(list);
-		//System.out.println("Aworking?");
-	if (descriptions.equals("")  && categorys.equals("") ) {
-		System.out.println("returning NULL");
-		return null;
-		
-	}
-	else if (descriptions.equals("")) {
-		System.out.println("no desceriptions");
-		return db.findByCategory(categorys);
-	}
-	else if (categorys.equals("all")) {
-		System.out.println("no category");
-		return db.findByDescriptionContaining(descriptions);
-	}
-	else 
-	{System.out.println("bothworking");
-		return db.findByDescriptionContainingAndCategory(descriptions, categorys);
-	}
-	
-	}
-	
-	 catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return null;
 		}
 		
-		
-		
-	}	
+		else {
+			return db.findAll();
+		}
 
+	}
 	
+
 	// adds a post to marketplace
 		@PostMapping("/postitem")
 		public Post addPost(@RequestBody Post post)
@@ -185,4 +93,6 @@ public class PostController {
 			System.out.println("HI");
 			db.deleteById(id);
 		}
+		
+
 	}
