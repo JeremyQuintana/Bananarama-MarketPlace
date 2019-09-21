@@ -1,4 +1,10 @@
 package com.sept.rest.webservices.restfulwebservices.post;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -17,6 +23,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javadb.DatabaseRef;
@@ -25,7 +32,6 @@ import javadb.DatabaseRef;
 @CrossOrigin(origins="http://localhost:3000")
 @RestController
 public class PostController {
-
 
 	@Autowired 
 	private PostRepository db;
@@ -49,65 +55,116 @@ public class PostController {
 	@GetMapping("/posts")			
 	public List<Post> getAllPosts()
 	{
-	//	for (Post post : db.findByDescriptionAndCategory("fandangled mess", "Annoyingly Unnexplained"))
-	//		System.out.println(post);
+		//System.out.println("working WTF posts");
+	//	for (Post post : db.findAll())
+	//	System.out.println(post);
 		return db.findAll();
 	}
-	
-	//HERE IS WHERE THE CONTENTS ON SEARCH COME THROUGH
+
+//	HERE IS WHERE THE CONTENTS ON SEARCH COME THROUGH
 	@PostMapping("/searchitem")
 	public void Search_Post(@RequestBody SearchPost search) {
-		//String description= search.getdescription();
-	//	String category= search.getcategory();
-	//	for (Post post : db.findByCategory(category))
-		//	System.out.println(post);
+		/*String description= search.getdescription();
+		String category= search.getcategory();
+		FileWriter fileWriter;
+		try {
+			fileWriter = new FileWriter("SEARCH.txt");
+		
+		
+		PrintWriter writer = new PrintWriter(fileWriter);
+			
+			writer.print(description +",");
+			writer.print(category);
+		
+			
+			writer.close();
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}*/
+	
 	}
 	
-	//HERE IS WHERE TO "SEND THE RESULTS"
-	@GetMapping("/posts/searchBy/{description}{category}")	
-	public List<Post> getfindByDescriptionAndCategory(@RequestBody SearchPost search, @PathVariable String description, @PathVariable String category)
-	{
+//this is where the search results get sent to (if you hardcode the description and category shit works great! if not then it's undefinded
+	@GetMapping("/posts/searchBy/{description}/{category}")	
+	public List<Post> getfindByDescriptionAndCategory(@PathVariable("description") String description, @PathVariable("category") String category)
 	
+	{System.out.println("variables are what");
+	System.out.println(description);
+	System.out.println(category);
+	for (Post list : db.findByDescriptionAndCategory(description, category))
+		System.out.println(list);
+		System.out.println("Aworking?");
+		
 		return db.findByDescriptionAndCategory(description, category);
-	}		
-	/*@GetMapping("/posts/searchBy/{category}")	
-	public List<Post> getfindByCategory(@PathVariable String category)
-	{
+	}	
 	
-	 return db.findByCategory(category);
-	}		
+	/*
+	 //this works but it's the hacky write into text file and read text file
+	@GetMapping("/posts/searchBy/{description}/{category}")	
+	public List<Post> getfindByDescriptionAndCategory(@PathVariable("description") String description, @PathVariable("category") String category) throws IOException
+	
+	{String [] data = new String[1];
+	String descriptions;
+	String categorys;
+		BufferedReader br;
+	try {
+		br = new BufferedReader(new FileReader("SEARCH.txt"));
+	
+	String line= "";
+	while((line=br.readLine()) != null)  {
+		data = line.split(",");
+	}
+	descriptions = data[0];
+	categorys = data[1];
+	br.close();
+	System.out.println("variables are what");
+	System.out.println(descriptions);
+	System.out.println(categorys);
+	for (Post list : db.findByDescriptionAndCategory(descriptions, categorys))
+		System.out.println(list);
+		System.out.println("Aworking?");
+	return db.findByDescriptionAndCategory(descriptions, categorys);
+	}
+	
+	 catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+		
+		
+		
+	}	
+
 	*/
 	
-	
-
 	// adds a post to marketplace
-	@PostMapping("/postitem")
-	public void addPost(@RequestBody Post post)
-	{
-		System.out.println(post);
-		db.save(post);
-	}
-	
-	
-	// when need to open a post in marketplace
-	@RequestMapping("/market/{id}")
-	public Post getPost(@PathVariable Long id)
-	{
-		return db.findById(id).get();
-	}
-	
-	// when need to open a post in marketplace
-	@PutMapping("/market/{id}")
-	public void updatePost(@PathVariable Long id, @RequestBody Post post)
-	{
-		db.save(post);
-	}
-	
-	@DeleteMapping("/market/{id}")
-	public void deletePost(@PathVariable Long id) 
-	{
-		db.deleteById(id);
-	}
-}
+		@PostMapping("/postitem")
+		public Post addPost(@RequestBody Post post)
+		{
+			return db.save(post);
+		}
 
-
+	// when need to open a post in marketplace
+		@RequestMapping("/posts/{id}")
+		public Post getPost(@PathVariable Long id)
+		{
+			return db.findById(id).get();
+		}
+		
+		// when need to open a post in marketplace
+		@PutMapping("/posts/{id}")
+		public Post updatePost(@PathVariable Long id, @RequestBody Post post)
+		{
+			return db.save(post);
+		}
+		
+		@DeleteMapping("/posts/{id}")
+		public void deletePost(@PathVariable Long id) 
+		{
+			System.out.println("HI");
+			db.deleteById(id);
+		}
+	}

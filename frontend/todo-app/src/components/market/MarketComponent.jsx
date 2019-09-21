@@ -19,7 +19,7 @@ class MarketComponent extends Component {
     this.state = {
       
       description: '',
-      item_category: ''
+      category: ''
     }
   
 
@@ -28,13 +28,14 @@ class MarketComponent extends Component {
   }
   render() {
         // Simply return a heading, and div that will contain the posts
-       let retVal = (
+       
+        let retVal = (
         
          
       <div>
           <div className="Search_item">
           <form onSubmit={this.submitPost} refs="form">
-                <select required name="item_category" className="inputnot" onChange={this.handleChange} value={this.state.item_category}>
+                <select required name="category" className="inputnot" onChange={this.handleChange} value={this.state.category}>
                   <option value="">Choose Category</option>
                   <option value="All">All</option>
                   <option value="Exceptionally Random">Exceptionally Random</option>
@@ -72,20 +73,22 @@ class MarketComponent extends Component {
         }
       )
     }
-   
+  
+
   
     submitPost(event){
-      
-      toBackend.searchItemBackend(this.state.description, this.state.item_category);
-      event.preventDefault();
-      this.props.history.push(`/posts/searchBy/${this.state.description}${this.state.item_category}`);
+  
+      toBackend.searchItemBackend(this.state.description, this.state.category);
+      event.preventDefault();                                                     
+      this.props.history.push(`/posts/searchBy/${this.state.description}/${this.state.category}`);
+   //  this.props.history.push(`/posts/searchBy`);
     }
 
     
 
 }
 
-// Helper class to render the post rows
+// Helper class to render  the post rows
 class Items extends Component {
 
     constructor(props) {
