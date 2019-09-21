@@ -37,117 +37,42 @@ public class PostController {
 	private PostRepository db;
 	
 	
-	
 	@GetMapping("/posts")			
 	public List<Post> getAllPosts()
 	{
 		return db.findAll();
 	}
 
-//	HERE IS WHERE THE CONTENTS ON SEARCH COME THROUGH
-	@PostMapping("/searchitem")
-	public void Search_Post(@RequestBody SearchPost search) {
-		String description= search.getdescription();
-		String category= search.getcategory();
-		FileWriter fileWriter;
-		try {
-			fileWriter = new FileWriter("SEARCH.txt");
-		
-		
-		PrintWriter writer = new PrintWriter(fileWriter);
-			
-			writer.print(description +",");
-			writer.print(category);
-		
-			
-			writer.close();
-			
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	
+
 	//this is where the search results get sent to 
 	@GetMapping("/posts/searchBy/{description}/{category}")	
-	public List<Post> getfindByDescriptionAndCategory(@PathVariable String description, @PathVariable String category) 
-	{
-		if (category.equals("All"))
-			return db.findByDescription(description);
-		return db.findByDescriptionAndCategory(description, category);
-	}	
-	
-	
-	// adds a post to marketplace
-	@PostMapping("/postitem")
-	public Post addPost(@RequestBody Post post)
-	{
-		return db.save(post);
-	@GetMapping("/posts/searchBy")
-	public List<Post> getbyfindByDescriptionAndCategory() throws IOException
-	
-	{String [] data = new String[2];
-	String descriptions;
-	String categorys;
-		BufferedReader br;
-	try {
-		br = new BufferedReader(new FileReader("SEARCH.txt"));
-	
-	String line= "";
-	while((line=br.readLine()) != null)  {
-		data = line.split(",");
-	// adds a post to marketplace
-	@PostMapping("/postitem")
-	public Post addPost(@RequestBody Post post)
-	{
-		return db.save(post);
-	}
-	descriptions = data[0];
-	categorys = data[1];
-	br.close();
-	System.out.println("variables are what");
-	System.out.println(descriptions);
-	System.out.println(categorys);
-	//for (Post list : db.findByDescriptionAndCategory(descriptions, categorys))
-		//System.out.println(list);
-		//System.out.println("Aworking?");
-	if (descriptions.equals("")  && categorys.equals("") ) {
-		System.out.println("returning NULL");
-		return null;
-		
+	public List<Post> getfindByDescriptionAndCategory(@PathVariable String description, @PathVariable String category) {
 
-	// when need to open a post in marketplace
-	@RequestMapping("/posts/{id}")
-	public Post getPost(@PathVariable Long id)
-	{
-		return db.findById(id).get();
-
-	// when need to open a post in marketplace
-	@RequestMapping("/posts/{id}")
-	public Post getPost(@PathVariable Long id)
-	{
-		return db.findById(id).get();
-	}
-	else if (descriptions.equals("")) {
-		System.out.println("no desceriptions");
-		return db.findByCategory(categorys);
-	}
-	else if (categorys.equals("all")) {
-		System.out.println("no category");
-		return db.findByDescriptionContaining(descriptions);
-	}
-	else 
-	{System.out.println("bothworking");
-		return db.findByDescriptionContainingAndCategory(descriptions, categorys);
-	}
-	
-	}
-	
-	 catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return null;
+		if (!category.equals("all") && !description.equals("undefined")) {
+			return db.findByDescriptionContainingAndCategory(description, category);
+		}
+		else if (description.equals("undefined")) {
+			return db.findByCategory(category);
+		}
+		else if (category.equals("all") && !description.equals("undefined")) {
+			return db.findByDescriptionContaining(description);
+			
 		}
 		
+		else {
+			return db.findAll();
+		}
+
+	}
+	
+
+	// adds a post to marketplace
+		@PostMapping("/postitem")
+		public Post addPost(@RequestBody Post post)
+		{
+			return db.save(post);
+		}
+
 	// when need to open a post in marketplace
 	@PutMapping("/posts/{id}")
 	public Post updatePost(@PathVariable Long id, @RequestBody Post post)
@@ -155,9 +80,20 @@ public class PostController {
 		return db.save(post);
 	}
 		
-	@DeleteMapping("/posts/{id}")
-	public void deletePost(@PathVariable Long id) 
-	{
-		db.deleteById(id);
+		// when need to open a post in marketplace
+		@PutMapping("/posts/{id}")
+		public Post updatePost(@PathVariable Long id, @RequestBody Post post)
+		{
+			return db.save(post);
+		}
+		
+		@DeleteMapping("/posts/{id}")
+		public void deletePost(@PathVariable Long id) 
+		{
+			System.out.println("HI");
+			db.deleteById(id);
+		}
+		
+
 	}
 	}
