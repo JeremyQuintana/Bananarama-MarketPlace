@@ -80,20 +80,13 @@ public class PostController {
 		return db.save(post);
 	}
 		
-		// when need to open a post in marketplace
-		@PutMapping("/posts/{id}")
-		public Post updatePost(@PathVariable Long id, @RequestBody Post post)
-		{
-			return db.save(post);
-		}
 		
-		@DeleteMapping("/posts/{id}")
-		public void deletePost(@PathVariable Long id) 
-		{
-			System.out.println("HI");
-			db.deleteById(id);
-		}
+	@DeleteMapping("/posts/{id}")
+	public void deletePost(@PathVariable Long id) 
+	{
+		System.out.println("HI");
+		db.deleteById(id);
+	}
 		
 
-	}
-	}
+}
