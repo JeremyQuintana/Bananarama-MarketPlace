@@ -36,28 +36,11 @@ public class PostController {
 	@Autowired 
 	private PostRepository db;
 	
-	//random stuff to save
 	
-	// show all posts when viewing marketplace
-	/*@GetMapping("/posts")				
-	public String[][] getAllPosts()
-	{
-		
-		String[][] posts = new String[db.findAll().size()][5];
-		int i=0;
-		for (Post post : db.findAll())
-		{
-			String[] postStr = {Long.toString(post.getId()), post.getTitle(), post.getDescription(), post.getOwnerId(), post.getPrice()};
-			posts[i++] = postStr;
-		}
-		return posts;
-	}*/
+	
 	@GetMapping("/posts")			
 	public List<Post> getAllPosts()
 	{
-		//System.out.println("working WTF posts");
-	//	for (Post post : db.findAll())
-	//	System.out.println(post);
 		return db.findAll();
 	}
 
@@ -84,26 +67,21 @@ public class PostController {
 			e.printStackTrace();
 		}
 	
-	}
-	/*
-//this is where the search results get sent to (if you hardcode the description and category shit works great! if not then it's undefinded
+	//this is where the search results get sent to 
 	@GetMapping("/posts/searchBy/{description}/{category}")	
-	public List<Post> getfindByDescriptionAndCategory(@PathVariable String description, @PathVariable String category) {
-	
-		System.out.println("This is description: " + description);
-		System.out.println("This is category: " + category);
-		for (Post list : db.findByDescriptionAndCategory(description, category))
-			System.out.println(list);
-			
-			return db.findByDescriptionAndCategory(description, category);
-			
+	public List<Post> getfindByDescriptionAndCategory(@PathVariable String description, @PathVariable String category) 
+	{
+		if (category.equals("All"))
+			return db.findByDescription(description);
+		return db.findByDescriptionAndCategory(description, category);
 	}	
 	
-	*/
-	 //this works but it's the hacky write into text file and read text file
-	//@GetMapping("/posts/searchBy/{description}/{category}")
-	//public List<Post> getfindByDescriptionAndCategory(@PathVariable("description") String description, @PathVariable("category") String category) throws IOException
 	
+	// adds a post to marketplace
+	@PostMapping("/postitem")
+	public Post addPost(@RequestBody Post post)
+	{
+		return db.save(post);
 	@GetMapping("/posts/searchBy")
 	public List<Post> getbyfindByDescriptionAndCategory() throws IOException
 	
@@ -131,6 +109,12 @@ public class PostController {
 		System.out.println("returning NULL");
 		return null;
 		
+
+	// when need to open a post in marketplace
+	@RequestMapping("/posts/{id}")
+	public Post getPost(@PathVariable Long id)
+	{
+		return db.findById(id).get();
 	}
 	else if (descriptions.equals("")) {
 		System.out.println("no desceriptions");
@@ -153,36 +137,16 @@ public class PostController {
 			return null;
 		}
 		
-		
-		
-	}	
-
-	
-	// adds a post to marketplace
-		@PostMapping("/postitem")
-		public Post addPost(@RequestBody Post post)
-		{
-			return db.save(post);
-		}
-
 	// when need to open a post in marketplace
-		@RequestMapping("/posts/{id}")
-		public Post getPost(@PathVariable Long id)
-		{
-			return db.findById(id).get();
-		}
+	@PutMapping("/posts/{id}")
+	public Post updatePost(@PathVariable Long id, @RequestBody Post post)
+	{
+		return db.save(post);
+	}
 		
-		// when need to open a post in marketplace
-		@PutMapping("/posts/{id}")
-		public Post updatePost(@PathVariable Long id, @RequestBody Post post)
-		{
-			return db.save(post);
-		}
-		
-		@DeleteMapping("/posts/{id}")
-		public void deletePost(@PathVariable Long id) 
-		{
-			System.out.println("HI");
-			db.deleteById(id);
-		}
+	@DeleteMapping("/posts/{id}")
+	public void deletePost(@PathVariable Long id) 
+	{
+		db.deleteById(id);
+	}
 	}
