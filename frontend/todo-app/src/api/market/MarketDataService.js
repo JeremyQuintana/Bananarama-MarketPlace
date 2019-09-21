@@ -12,7 +12,13 @@ class MarketDataService {
     retrievesearchByPosts(description, category) {
 
         return axios.get(`${API_URL}/posts/searchBy/${description}/${category}`);
-        //return axios.get(`${API_URL}/posts/searchBy`);
+      
+    }
+
+    retrievesearchByPostsSort(description, category, sort) {
+
+        return axios.get(`${API_URL}/posts/searchBy/${description}/${category}/${sort}`);
+      
     }
 
     retrieveSpecificPost(postId){

@@ -21,6 +21,7 @@ import WelcomeComponent from '../todo/WelcomeComponent.jsx'
 import TodoComponent from '../todo/TodoComponent.jsx'
 import Post_item from '../../project_frontend/pages/Post_item.jsx';
 import SearchComponent from './SearchComponent.jsx';
+import SearchComponentSort from './SearchComponentSort.jsx';
 //   <AuthenticatedRoute path="/posts/searchBy" exact component={SearchComponent} />
 //<AuthenticatedRoute path="/posts/searchBy/:description/:item_category" exact component={SearchComponent} />
 // This component organises all the other components together
@@ -38,6 +39,7 @@ class MarketPlaceApp extends Component {
                             <AuthenticatedRoute path = "/home/:name" exact component = {HomeComponent}/>
                             <AuthenticatedRoute path="/market" exact component={MarketComponent} />
                             <AuthenticatedRoute path="/market/searchBy/:searchDescription/:searchCategory" exact component={SearchComponent} />
+                            <AuthenticatedRoute path="/market/searchBy/:searchDescription/:searchCategory/:searchSort" exact component={SearchComponentSort} />
                             <AuthenticatedRoute path="/market/searchBy//:searchCategory" exact component={SearchComponent} />
                             <AuthenticatedRoute path="/market/:postID" exact component={PostComponent} />
                             <AuthenticatedRoute path="/chat" exact component={ChatComponent} />

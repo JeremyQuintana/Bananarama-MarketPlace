@@ -8,12 +8,20 @@ public class SearchPost {
 	/*to change*/
 	private String description;
 	private String category;
+	private String sort;
+	
 	
 	
 	public void print() {
 		System.out.println(this.description + " " + this.category+ " ");
 	}
+	public void printsort() {
+		System.out.println(this.sort);
+	}
 	
+	public String getsort() {
+		return sort;
+	}
 
 	public String getdescription(){
 		return description;

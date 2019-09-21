@@ -40,16 +40,18 @@ public class PostController {
 	@GetMapping("/posts")			
 	public List<Post> getAllPosts()
 	{
-		return db.findAll();
+		//return db.findAll();WTF
+		return db.findAllByOrderByPriceDesc();
 	}
 
-
+	
 	//this is where the search results get sent to 
 	@GetMapping("/posts/searchBy/{description}/{category}")	
 	public List<Post> getfindByDescriptionAndCategory(@PathVariable String description, @PathVariable String category) {
 
 		if (!category.equals("all") && !description.equals("undefined")) {
 			return db.findByDescriptionContainingAndCategory(description, category);
+		
 		}
 		else if (description.equals("undefined")) {
 			return db.findByCategory(category);
@@ -65,7 +67,65 @@ public class PostController {
 
 	}
 	
+	
+	//this is where the search results get sent to 
+		@GetMapping("/posts/searchBy/{description}/{category}/{sort}")	
+		public List<Post> Sort(@PathVariable String description, @PathVariable String category, @PathVariable String sort) {
+			System.out.print(sort);
+				
+			if(sort.equals("High")) {	
+				if (!category.equals("all") && !description.equals("undefined")) {
+					System.out.println("1");
+					return db.findByDescriptionContainingAndCategoryOrderByPriceDesc(description, category);
+				}
+				else if (!category.equals("undefined") && description.equals("undefined")) {
+					System.out.println("High no description");
+					return db.findByCategoryOrderByPriceDesc(category);
+				}
+				else if (category.equals("all") && !description.equals("undefined")) {
+					System.out.println("3");
+					return db.findByDescriptionContainingOrderByPriceDesc(description);
+					
+				}
+				
+				else {
+					return db.findAllByOrderByPriceDesc();
+				}
+			}
+			
+			else if (sort.equals("low")) {
+				if (!category.equals("all") && !description.equals("undefined")) {
+					System.out.println("1");
+					return db.findByDescriptionContainingAndCategoryOrderByPriceAsc(description, category);
+				}
+				else if (!category.equals("undefined") && description.equals("undefined")) {
+					System.out.println("2");
+					return db.findByCategoryOrderByPriceAsc(category);
+				}
+				else if (category.equals("all") && !description.equals("undefined")) {
+					System.out.println("3");
+					return db.findByDescriptionContainingOrderByPriceAsc(description);
+					
+				}
+				
+				else {
+					System.out.println("4");
+					return db.findAllByOrderByPriceAsc();
+				}
+				
+			}
+			else {return null;}
+	
+			
+		}
 
+	
+	@PostMapping("/searchitemsort")
+	public Post sortSort(@RequestBody SearchPost search) {
+		search.print();
+		search.printsort();
+		return null;
+	}
 	// adds a post to marketplace
 		@PostMapping("/postitem")
 		public Post addPost(@RequestBody Post post)
