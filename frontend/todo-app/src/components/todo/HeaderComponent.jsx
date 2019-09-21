@@ -5,6 +5,14 @@ import axios from 'axios'
 
 class HeaderComponent extends Component {
     render() {
+        axios.interceptors.request.use(
+            (config) => {
+                if (!(sessionStorage.getItem("authenticatedUser") === null)) {
+                    config.headers.authorization = sessionStorage.getItem("jwtToken")
+                }
+                return config
+            }
+        )
         const isUserLoggedIn = AuthenticationService.isUserLoggedIn();
         //console.log(isUserLoggedIn);
 
@@ -29,17 +37,6 @@ class HeaderComponent extends Component {
                 </nav>
             </header>
         )
-    }
-
-    componentDidMount(){
-      axios.interceptors.request.use(
-          (config) => {
-              if (!(sessionStorage.getItem("authenticatedUser") === null)) {
-                  config.headers.authorization = sessionStorage.getItem("jwtToken")
-              }
-              return config
-          }
-      )
     }
 }
 
