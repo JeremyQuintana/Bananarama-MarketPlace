@@ -27,7 +27,7 @@ class MarketPlaceApp extends Component {
     render() {
         // Return the divs with the header, footer and routes for different pages
         return (
-            
+
             <div className="MarketPlaceApp">
                 <Router>
                     <>
@@ -36,10 +36,10 @@ class MarketPlaceApp extends Component {
 
                             <AuthenticatedRoute path = "/home/:name" exact component = {HomeComponent}/>
                             <AuthenticatedRoute path="/market" exact component={MarketComponent} />
-                            <AuthenticatedRoute path="/posts/searchBy/:description/:item_category" exact component={SearchComponent} />
-                            <AuthenticatedRoute path="/posts/:postID" exact component={PostComponent} />
+                            <AuthenticatedRoute path="/market/searchBy/:searchDescription/:searchCategory" exact component={SearchComponent} />
+                            <AuthenticatedRoute path="/market/:postID" exact component={PostComponent} />
                             <AuthenticatedRoute path="/chat" exact component={ChatComponent} />
-      
+
                             <Route path="/" exact component={LoginComponent} />
                             <Route path="/login" component={LoginComponent} />
                             <AuthenticatedRoute path="/post" component={Post_item} />

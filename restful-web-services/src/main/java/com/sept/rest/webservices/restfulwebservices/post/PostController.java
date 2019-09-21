@@ -88,16 +88,15 @@ public class PostController {
 	
 //this is where the search results get sent to (if you hardcode the description and category shit works great! if not then it's undefinded
 	@GetMapping("/posts/searchBy/{description}/{category}")	
-	public List<Post> getfindByDescriptionAndCategory(@PathVariable("description") String description, @PathVariable("category") String category)
+	public List<Post> getfindByDescriptionAndCategory(@PathVariable String description, @PathVariable String category) {
 	
-	{System.out.println("variables are what");
-	System.out.println(description);
-	System.out.println(category);
-	for (Post list : db.findByDescriptionAndCategory(description, category))
-		System.out.println(list);
-		System.out.println("Aworking?");
-		
-		return db.findByDescriptionAndCategory(description, category);
+		System.out.println("This is description: " + description);
+		System.out.println("This is category: " + category);
+		for (Post list : db.findByDescriptionAndCategory(description, category))
+			System.out.println(list);
+			
+			return db.findByDescriptionAndCategory(description, category);
+			
 	}	
 	
 	/*
