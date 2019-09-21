@@ -95,6 +95,11 @@ public class PostController {
 	String line= "";
 	while((line=br.readLine()) != null)  {
 		data = line.split(",");
+	// adds a post to marketplace
+	@PostMapping("/postitem")
+	public Post addPost(@RequestBody Post post)
+	{
+		return db.save(post);
 	}
 	descriptions = data[0];
 	categorys = data[1];
@@ -109,6 +114,12 @@ public class PostController {
 		System.out.println("returning NULL");
 		return null;
 		
+
+	// when need to open a post in marketplace
+	@RequestMapping("/posts/{id}")
+	public Post getPost(@PathVariable Long id)
+	{
+		return db.findById(id).get();
 
 	// when need to open a post in marketplace
 	@RequestMapping("/posts/{id}")
