@@ -21,7 +21,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import javadb.DatabaseRef;
 
 @Entity
-public class Post {
+public class Post implements Comparable<Post> {
 	
 	// variables need to be above constructor for json
 	/*to change*/
@@ -179,6 +179,14 @@ public class Post {
 		return id + " " + ownerId + " " + title + " " + description + " " + price + " " + status + " " + datePosted + " " + category + photo;
 	}
 	
+	@Override
+	public int compareTo(Post o) 
+	{
+		double price1 = price != null ? Double.valueOf(price) : -1;
+		double price2 = o.price != null ? Double.valueOf(o.price) : -1;
+		
+		return (int) (price1 - price2);
+	}
 	
 	
 	@Override

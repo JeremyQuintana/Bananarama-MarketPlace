@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -45,13 +46,15 @@ public class PostController {
 	}
 
 
-	//this is where the search results get sent to 
 	@GetMapping("/posts/searchBy/{description}/{category}")	
-	public List<Post> getByDescriptionAndCategory(@PathVariable String description, @PathVariable String category) 
+	public List<Post> searchResults(@PathVariable String description, @PathVariable String category) 
 	{
-		ArrayList<Post> posts = new ArrayList<>(db.findAll());
-		if (!description.equals("undefined"))	posts.retainAll(db.findByDescriptionLike(description));
-		if (!category.equalsIgnoreCase("all"))	posts.retainAll(db.findByCategory(category));
+		
+		List<Post> posts = db.findAll();
+		Collections.sort(posts);
+		
+		if (!description.equals("undefined"))	{posts.retainAll(db.findByDescriptionContaining(description));}
+		if (!category.equalsIgnoreCase("all"))	{posts.retainAll(db.findByCategory(category));}
 		
 		return posts;
 	}
