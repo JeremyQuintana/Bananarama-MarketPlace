@@ -7,9 +7,11 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
-
+import org.springframework.data.domain.Sort;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.ResponseEntity;
@@ -37,11 +39,17 @@ public class PostController {
 	private PostRepository db;
 	
 	
+	
 	@GetMapping("/posts")			
 	public List<Post> getAllPosts()
 	{
-		
+		//ArrayList<Post> posts = new ArrayList<>(db.findAll());
 		return db.findAll();
+		//posts.retainAll(db.findByStatus("AVAILABLE"));
+	//	for (int i = 0; i < posts.size(); i++) {
+		//	System.out.println(posts.get(i));}
+		//return posts;
+		
 	}
 
 	
@@ -59,15 +67,12 @@ public class PostController {
 		return posts;
 	}
 	
-	
-
 	@GetMapping("/posts/searchBy/{description}/{category}/{sort}")	
 	public List<Post> Sort(@PathVariable String description, @PathVariable String category, @PathVariable String sort) {
-		System.out.print(sort);
+		
 		
 		if(sort.equals("High")){
-			ArrayList<Post> sortsPost = new ArrayList<>(db.findAllByOrderByPriceDesc());
-			System.out.println("hight");
+			ArrayList<Post> sortsPost = new ArrayList<>(db.findAll());
 			if (!description.equals("undefined")) {
 				sortsPost.retainAll(db.findByDescriptionContaining(description));
 			}
@@ -75,31 +80,37 @@ public class PostController {
 			if (!category.equals("all")) {
 				sortsPost.retainAll(db.findByCategory(category));
 			}
+			
+			Collections.sort(sortsPost, new SortPost());
+			Collections.reverse(sortsPost);
 			return sortsPost;
 		}
 		
+		
 		if(sort.equals("Low")){
-			ArrayList<Post> sortsPost = new ArrayList<>(db.findAllByOrderByPriceAsc());
-			System.out.println("low");
+			ArrayList<Post> sortsPost = new ArrayList<>(db.findAll());
 			if (!description.equals("undefined")) {
 				sortsPost.retainAll(db.findByDescriptionContaining(description));
-				}
+			}
 			
 			if (!category.equals("all")) {
-				sortsPost.retainAll(db.findByCategory(category));
+				sortsPost .retainAll(db.findByCategory(category));
 			}
+		
+			Collections.sort(sortsPost, new SortPost());
 			return sortsPost;
 		}
+
 		
 		if(sort.equals("Old")){
 			ArrayList<Post> sortsPost = new ArrayList<>(db.findAllByOrderByDatePostedAsc());
 			System.out.println("Date");
 			if (!description.equals("undefined")) {
-				sortsPost.retainAll(db.findByDescriptionContaining(description));
+				sortsPost .retainAll(db.findByDescriptionContaining(description));
 			}
 			
 			if (!category.equals("all")) {
-				sortsPost.retainAll(db.findByCategory(category));
+				sortsPost .retainAll(db.findByCategory(category));
 			}
 			return sortsPost;
 		}
@@ -110,86 +121,20 @@ public class PostController {
 		if (!description.equals("undefined")) {
 			System.out.print("1");
 			
-			sortsPost.retainAll(db.findByDescriptionContaining(description));
+			sortsPost .retainAll(db.findByDescriptionContaining(description));
 		}
 		
 		if (!category.equals("all")) {
 			System.out.print("2");
 			
-			sortsPost.retainAll(db.findByCategory(category));
+			sortsPost .retainAll(db.findByCategory(category));
 		}
 		
 		System.out.println("returning New Date sorted");
 		return sortsPost;
 	}
 		
-		
 
-	
-		
-		
-		
-
-	/*
-	
-	//this is where the search results get sent to 
-		@GetMapping("/posts/searchBy/{description}/{category}/{sort}")	
-		public List<Post> Sort(@PathVariable String description, @PathVariable String category, @PathVariable String sort) {
-			System.out.print(sort);
-			ArrayList<Post> posts = new ArrayList<>(db.findAll());
-			if(sort.equals("High")) {	
-				if (!category.equals("all") && !description.equals("undefined")) {
-					System.out.println("1");
-					return db.findByDescriptionContainingAndCategoryOrderByPriceDesc(description, category);
-				}
-				else if (!category.equals("undefined") && description.equals("undefined")) {
-					System.out.println("High no description");
-					return db.findByCategoryOrderByPriceDesc(category);
-				}
-				else if (category.equals("all") && !description.equals("undefined")) {
-					System.out.println("3");
-					return db.findByDescriptionContainingOrderByPriceDesc(description);
-					
-				}
-				
-				else {
-					return db.findAllByOrderByPriceDesc();
-				}
-			}
-			
-			else if (sort.equals("low")) {
-				if (!category.equals("all") && !description.equals("undefined")) {
-					System.out.println("1");
-					return db.findByDescriptionContainingAndCategoryOrderByPriceAsc(description, category);
-				}
-				else if (!category.equals("undefined") && description.equals("undefined")) {
-					System.out.println("2");
-					return db.findByCategoryOrderByPriceAsc(category);
-				}
-				else if (category.equals("all") && !description.equals("undefined")) {
-					System.out.println("3");
-					return db.findByDescriptionContainingOrderByPriceAsc(description);
-					
-				}
-				
-				else {
-					System.out.println("4");
-					return db.findAllByOrderByPriceAsc();
-				}
-				
-			}
-			else {return null;}
-	
-			
-		}
-*/
-	
-//	@PostMapping("/searchitemsort")
-	//public Post sortSort(@RequestBody SearchPost search) {
-		//search.print();
-		//search.printsort();
-		//return null;
-	//}
 	// adds a post to marketplace
 		@PostMapping("/postitem")
 		public Post addPost(@RequestBody Post post)
