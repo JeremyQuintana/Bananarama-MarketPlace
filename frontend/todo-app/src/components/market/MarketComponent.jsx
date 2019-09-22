@@ -105,7 +105,7 @@ class Items extends Component {
                 <div className="posting container" onClick={() => this.routeChange(postId)}>
                     <span className="postTitle"><img src={'post_images/' + this.state.backPostings[r].photo + '.jpg'}></img>{this.state.backPostings[r].title}</span> <br></br>
                     <span className="postDescription">{this.state.backPostings[r].description}</span> <br></br>
-                    <span className="postPrice">{this.state.backPostings[r].price}</span> <br></br>
+                    <span className="postPrice">${this.state.backPostings[r].price}</span> <br></br>
                     <span className="postSeller">{this.state.backPostings[r].ownerId}</span> <br></br>
 
                     <br></br>

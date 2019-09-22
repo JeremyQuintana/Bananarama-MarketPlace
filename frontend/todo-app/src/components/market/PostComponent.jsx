@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
+import Post_item from '../../project_frontend/pages/Post_item.jsx'
 
 import MarketDataService from "../../api/market/MarketDataService.js"
 
@@ -9,13 +10,16 @@ class PostComponent extends Component {
 
     constructor(props) {
         super(props);
-        
+
         // State stores the posts from backend
         this.state = {
             postInfo: null,
+            editMode: false,
         }
         this.refreshPostInfo()
 
+        this.setEdit = this.setEdit.bind(this);
+        this.clearEdit = this.clearEdit.bind(this);
     }
 
     render() {
@@ -23,30 +27,63 @@ class PostComponent extends Component {
         // get the row from the backend array, based on the postID param in props
         // create a div with all the singular posts information
         if (this.state.postInfo != null) {
-            retVal = (
+            if (!this.state.editMode) {
+                retVal = (
 
-                <div>
-                    <h1 className="marketTitle">{this.state.postInfo.title}</h1>
-                    <div className="container postDescription">
-                        <img src={'../post_images/' + this.state.postInfo.photo + '.jpg'}></img>
-                        {this.state.postInfo.description}
-                    </div>
-                    <div className="container postPrice">
-                        {this.state.postInfo.price}
-                    </div>
-                    <div className="container postSeller">
-                        {this.state.postInfo.ownerId}
-                    </div>
-                    <div className="container postSeller"><Link to="/chat/" action="replace">Contact Seller</Link></div>
+                    <div>
+                        <h1 id = "mainTitle" className="marketTitle">{this.state.postInfo.title}</h1>
+                        <div className="container postDescription">
+                            <img src={'../post_images/' + this.state.postInfo.photo + '.jpg'}></img>
+                            {this.state.postInfo.description}
+                        </div>
+                        <div className="container postPrice">
+                            ${this.state.postInfo.price}
+                        </div>
+                        <div className="container postSeller">
+                            {this.state.postInfo.ownerId}
+                        </div>
+                        <div className="container postSeller"><Link to="/chat/" action="replace">Contact Seller</Link></div>
+                        <div className="container"> <button onClick={this.setEdit}>Edit Post</button></div>
 
+                    </div>
+                );
+            } else {
+                retVal = (
+                    <div>
+                        <form>
+                        <textarea className="marketTitle">{this.state.postInfo.title}</textarea>
+                        <div className="container postDescription">
+                            <img src={'../post_images/' + this.state.postInfo.photo + '.jpg'}></img>
+                            <textarea value = {this.state.postInfo.description}></textarea>
+                        </div>
+                        <textarea className="container postPrice" value = {"$" + this.state.postInfo.price}>
+                            
+                        </textarea>
+                        <div className="container postSeller">
+                            {this.state.postInfo.ownerId}
+                        </div>
+                        <div className="container postSeller"><Link to="/chat/" action="replace">Contact Seller</Link></div>
+                        </form>
+                        <div className = "container center-block"><button onClick={this.clearEdit}>Cancel</button></div>
+                    </div>
+                )
 
-                </div>
-            );
+            }
+
         } else {
             retVal = null;
         }
 
         return retVal;
+    }
+
+    setEdit() {
+
+        this.setState({ editMode: true });
+        console.log(this.state.editMode);
+    }
+    clearEdit() {
+        this.setState({ editMode: false });
     }
 
     // update the postings array with backend data
@@ -56,14 +93,14 @@ class PostComponent extends Component {
             response => {
                 var i;
                 var found = false;
-                console.log(this.props.match.params.postID) 
-                for(i = 0; i < response.data.length && !found; i++){
-                    if(response.data[i].id == this.props.match.params.postID){
+                console.log(this.props.match.params.postID)
+                for (i = 0; i < response.data.length && !found; i++) {
+                    if (response.data[i].id == this.props.match.params.postID) {
                         found = true;
                     }
                 }
-                if(found == true){
-                    this.setState({ postInfo: response.data[i-1] })
+                if (found == true) {
+                    this.setState({ postInfo: response.data[i - 1] })
                 }
             }
         ).catch(error => console.log("network error"));
