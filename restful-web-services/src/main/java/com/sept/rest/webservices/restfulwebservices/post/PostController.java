@@ -44,28 +44,7 @@ public class PostController {
 		return db.findAll();
 	}
 
-	@GetMapping("/posts/searchBy/{description}/{category}")	
-	public List<Post> getfindByDescriptionAndCategory(@PathVariable String description, @PathVariable String category) {
-
-		if (!category.equals("all") && !description.equals("undefined")) {
-			return db.findByDescriptionContainingAndCategory(description, category);
-		
-		}
-		else if (description.equals("undefined")) {
-			return db.findByCategory(category);
-		}
-		else if (category.equals("all") && !description.equals("undefined")) {
-			return db.findByDescriptionContaining(description);
-			
-		}
-		
-		else {
-			return db.findAll();
-		}
-
-	}
-
-	/*
+	
 	@GetMapping("/posts/searchBy/{description}/{category}")	
 	public List<Post> getByDescriptionAndCategory(@PathVariable String description, @PathVariable String category) 
 	{
@@ -73,74 +52,91 @@ public class PostController {
 		if (!description.equals("undefined")) {
 			posts.retainAll(db.findByDescriptionContaining(description));
 		}
-		
-		if (!category.equalsIgnoreCase("all")) {
+		if (!category.equals("all")) {
 			posts.retainAll(db.findByCategory(category));
 		}
 		
 		return posts;
 	}
+	
+	
 
 	@GetMapping("/posts/searchBy/{description}/{category}/{sort}")	
 	public List<Post> Sort(@PathVariable String description, @PathVariable String category, @PathVariable String sort) {
 		System.out.print(sort);
-		ArrayList<Post> sortsPost = new ArrayList<>(db.findAll());
+		
 		if(sort.equals("High")){
+			ArrayList<Post> sortsPost = new ArrayList<>(db.findAllByOrderByPriceDesc());
+			System.out.println("hight");
 			if (!description.equals("undefined")) {
-				System.out.print("1");
-				sortsPost .retainAll(db.findByDescriptionContainingOrderByPriceDesc(description));
+				sortsPost.retainAll(db.findByDescriptionContaining(description));
 			}
 			
 			if (!category.equals("all")) {
-				System.out.print("2");
-				sortsPost .retainAll(db.findByCategoryOrderByPriceDesc(category));
+				sortsPost.retainAll(db.findByCategory(category));
 			}
-			
-			if (category.equals("all")) {
-				System.out.print("3");
-				sortsPost .retainAll(db.findAllByOrderByPriceDesc());
-			}
-			
-			
 			return sortsPost;
-		
 		}
 		
-		if(sort.equals("low")) {
+		if(sort.equals("Low")){
+			ArrayList<Post> sortsPost = new ArrayList<>(db.findAllByOrderByPriceAsc());
+			System.out.println("low");
 			if (!description.equals("undefined")) {
-				sortsPost .retainAll(db.findByDescriptionContaining(description));
+				sortsPost.retainAll(db.findByDescriptionContaining(description));
+				}
+			
+			if (!category.equals("all")) {
+				sortsPost.retainAll(db.findByCategory(category));
+			}
+			return sortsPost;
+		}
+		
+		if(sort.equals("Old")){
+			ArrayList<Post> sortsPost = new ArrayList<>(db.findAllByOrderByDatePostedAsc());
+			System.out.println("Date");
+			if (!description.equals("undefined")) {
+				sortsPost.retainAll(db.findByDescriptionContaining(description));
 			}
 			
 			if (!category.equals("all")) {
-				sortsPost .retainAll(db.findByCategory(category));
+				sortsPost.retainAll(db.findByCategory(category));
 			}
-			
 			return sortsPost;
 		}
 		
-		else {
-			if (!description.equals("undefined")) {
-				sortsPost .retainAll(db.findByDescriptionContaining(description));
-			}
+		
+		ArrayList<Post> sortsPost = new ArrayList<>(db.findAllByOrderByDatePostedDesc());
+		System.out.println("Date");
+		if (!description.equals("undefined")) {
+			System.out.print("1");
 			
-			if (!category.equals("all")) {
-				sortsPost .retainAll(db.findByCategory(category));
-			}
-			
-			return sortsPost;
+			sortsPost.retainAll(db.findByDescriptionContaining(description));
 		}
+		
+		if (!category.equals("all")) {
+			System.out.print("2");
+			
+			sortsPost.retainAll(db.findByCategory(category));
+		}
+		
+		System.out.println("returning New Date sorted");
+		return sortsPost;
 	}
 		
 		
-		*/
 
 	
+		
+		
+		
+
+	/*
 	
 	//this is where the search results get sent to 
 		@GetMapping("/posts/searchBy/{description}/{category}/{sort}")	
 		public List<Post> Sort(@PathVariable String description, @PathVariable String category, @PathVariable String sort) {
 			System.out.print(sort);
-				
+			ArrayList<Post> posts = new ArrayList<>(db.findAll());
 			if(sort.equals("High")) {	
 				if (!category.equals("all") && !description.equals("undefined")) {
 					System.out.println("1");
@@ -186,7 +182,7 @@ public class PostController {
 	
 			
 		}
-
+*/
 	
 //	@PostMapping("/searchitemsort")
 	//public Post sortSort(@RequestBody SearchPost search) {

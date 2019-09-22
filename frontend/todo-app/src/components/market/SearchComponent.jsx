@@ -31,9 +31,10 @@ class SearchComponent extends Component {
           <form onSubmit={this.submitPost} refs="form">
                 <select required name="sort" className="inputsort" onChange={this.handleChange} value={this.state.sort}>
                   <option value="">Sort</option>
-                  <option value="low">Price Low-High</option>
+                  <option value="Low">Price Low-High</option>
                   <option value="High">Price High-Low</option>
-                  <option value="New">Newest</option>
+                  <option value="New">By Date New</option>
+                  <option value="Old">By Date Old</option>
                  
                 </select>
 

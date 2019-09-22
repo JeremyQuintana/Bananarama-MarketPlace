@@ -11,12 +11,14 @@ class SearchComponentSort extends Component {
    
   render() {
         let retVal = (
-        
+            <div>
+            <h1 className="searchTitle">Results</h1>
+         
 
                 <div className="container">
                     <NewItemsSort match={this.props.match} history={this.props.history}></NewItemsSort>
                 </div>
-          
+                </div> 
         );
         return retVal;
     }
