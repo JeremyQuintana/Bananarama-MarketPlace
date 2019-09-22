@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import Post_item from '../../project_frontend/pages/Post_item.jsx'
-
+import './PostComponent.css'
 import MarketDataService from "../../api/market/MarketDataService.js"
 
 // This class is for an individual post's page
@@ -20,6 +20,7 @@ class PostComponent extends Component {
 
         this.setEdit = this.setEdit.bind(this);
         this.clearEdit = this.clearEdit.bind(this);
+        this.saveInfo = this.saveInfo.bind(this);
     }
 
     render() {
@@ -30,10 +31,12 @@ class PostComponent extends Component {
             if (!this.state.editMode) {
                 retVal = (
 
-                    <div>
-                        <h1 id = "mainTitle" className="marketTitle">{this.state.postInfo.title}</h1>
+                    <div className="topFix">
+                        <h1 className="marketTitle">{this.state.postInfo.title}</h1>
                         <div className="container postDescription">
                             <img src={'../post_images/' + this.state.postInfo.photo + '.jpg'}></img>
+                            {/*PLACEHOLDER IMAGE*/}
+                            {/*<img src={'../post_images/1.jpg'}></img>*/}
                             {this.state.postInfo.description}
                         </div>
                         <div className="container postPrice">
@@ -49,22 +52,23 @@ class PostComponent extends Component {
                 );
             } else {
                 retVal = (
-                    <div>
-                        <form>
-                        <textarea className="marketTitle">{this.state.postInfo.title}</textarea>
-                        <div className="container postDescription">
-                            <img src={'../post_images/' + this.state.postInfo.photo + '.jpg'}></img>
-                            <textarea value = {this.state.postInfo.description}></textarea>
-                        </div>
-                        <textarea className="container postPrice" value = {"$" + this.state.postInfo.price}>
-                            
-                        </textarea>
-                        <div className="container postSeller">
-                            {this.state.postInfo.ownerId}
-                        </div>
-                        <div className="container postSeller"><Link to="/chat/" action="replace">Contact Seller</Link></div>
+                    <div className="topFix">
+                        <form className="editForm">
+                            <textarea className="marketTitle">{this.state.postInfo.title}</textarea>
+                            <div className="container postDescription">
+                                <img src={'../post_images/' + this.state.postInfo.photo + '.jpg'}></img>
+                                <textarea value={this.state.postInfo.description}></textarea>
+                            </div>
+                            <textarea className="container postPrice" value={"$" + this.state.postInfo.price}>
+
+                            </textarea>
+                            <div className="container postSeller">
+                                {this.state.postInfo.ownerId}
+                            </div>
+                            <div className="container postSeller"><Link to="/chat/" action="replace">Contact Seller</Link></div>
                         </form>
-                        <div className = "container center-block"><button onClick={this.clearEdit}>Cancel</button></div>
+                        <div className="container centerFix"><button onClick={this.clearEdit}>Cancel</button><span>   </span><button onClick={this.saveInfo}>Save</button></div>
+
                     </div>
                 )
 
@@ -84,6 +88,10 @@ class PostComponent extends Component {
     }
     clearEdit() {
         this.setState({ editMode: false });
+    }
+
+    saveInfo() {
+        // send to backend and redir/show success message
     }
 
     // update the postings array with backend data
