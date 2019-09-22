@@ -70,11 +70,13 @@ class SearchComponent extends Component {
 
  
       event.preventDefault();
-      
+      var searchSort = this.state.sort;
       var searchCategorys  = this.props.match.params.searchCategory
       var searchDescriptions  = this.props.match.params.searchDescription
+    
+
       toBackend.sortItemBackend(searchDescriptions, searchCategorys, this.state.sort);
-      var searchSort = this.state.sort;
+      
       this.props.history.push(`/market/searchBy/` + searchDescriptions + `/` + searchCategorys + `/` + searchSort);
       }
 
