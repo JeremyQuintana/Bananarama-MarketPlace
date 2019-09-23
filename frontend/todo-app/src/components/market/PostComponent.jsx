@@ -53,21 +53,8 @@ class PostComponent extends Component {
             } else {
                 retVal = (
                     <div className="topFix">
-                        <form className="editForm">
-                            <textarea className="marketTitle">{this.state.postInfo.title}</textarea>
-                            <div className="container postDescription">
-                                <img src={'../post_images/' + this.state.postInfo.photo + '.jpg'}></img>
-                                <textarea value={this.state.postInfo.description}></textarea>
-                            </div>
-                            <textarea className="container postPrice" value={"$" + this.state.postInfo.price}>
-
-                            </textarea>
-                            <div className="container postSeller">
-                                {this.state.postInfo.ownerId}
-                            </div>
-                            <div className="container postSeller"><Link to="/chat/" action="replace">Contact Seller</Link></div>
-                        </form>
-                        <div className="container centerFix"><button onClick={this.clearEdit}>Cancel</button><span>   </span><button onClick={this.saveInfo}>Save</button></div>
+                        <Post_item existingId = {this.props.match.params.postID} history={this.props.history}></Post_item>
+                        <div className="container centerFix"><button onClick={this.clearEdit}>Cancel</button> </div>
 
                     </div>
                 )
@@ -84,7 +71,7 @@ class PostComponent extends Component {
     setEdit() {
 
         this.setState({ editMode: true });
-        console.log(this.state.editMode);
+        //console.log(this.state.editMode);
     }
     clearEdit() {
         this.setState({ editMode: false });
@@ -96,7 +83,7 @@ class PostComponent extends Component {
 
     // update the postings array with backend data
     refreshPostInfo() {
-
+        // TODO : update this to get a single post from backend
         MarketDataService.retrieveAllPosts().then(
             response => {
                 var i;

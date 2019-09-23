@@ -2,10 +2,11 @@ import React, { Component } from 'react';
 
 import toBackend from '../toBackend/postBackend.js'
 import './Post_item.css'
+import MarketDataService from '../../api/market/MarketDataService.js';
 
 
 class Post_item extends Component {
-  constructor(props){
+  constructor(props) {
     super(props)
 
     this.state = {
@@ -13,12 +14,15 @@ class Post_item extends Component {
       item_name: '',
       item_cost: '',
       item_photo: '',
-      item_catagory: ''
+      item_catagory: '',
     }
-
+    console.log(this.props.existingId);
+    this.updateStateWithPost();
     this.handleChange = this.handleChange.bind(this)
 
     this.submitPost = this.submitPost.bind(this)
+
+    this.updateExistingPost = this.updateExistingPost.bind(this)
 
 
   }
@@ -27,7 +31,7 @@ class Post_item extends Component {
     return (
       <div className="Post_item">
 
-        <form onSubmit={this.submitPost} refs="form">
+        <form onSubmit={(this.props.existingId == null) ? this.submitPost : this.updateExistingPost} refs="form">
           <div className="form">
             <div className="formDefinitions">
               <label htmlFor="item_description" className="definitions">Item Description: </label>
@@ -48,8 +52,11 @@ class Post_item extends Component {
                 <option value="Disturbingly Simple">Disturbingly Simple</option>
                 <option value="Spectularly Failing">Spectacularly Failing</option>
               </select>
-              <input type="file" name="item_photo" className="input" accept="image/*" value={this.state.item_photo} onChange={this.handleChange}/>
+
+              <input type="file" name="item_photo" className="input" accept="image/*" value={this.state.item_photo} onChange={this.handleChange} />
+
             </div>
+            {this.props.existingId != null && <div className="container alert alert-warning">If no new photo is uploaded, the existing photo will be kept</div>}
           </div>
           <input type="submit" value="Submit" name="itemSubmit" />
 
@@ -58,20 +65,53 @@ class Post_item extends Component {
     );
   }
 
-  handleChange(event){
+  handleChange(event) {
     this.setState(
       {
-        [event.target.name] : event.target.value
+        [event.target.name]: event.target.value
       }
     )
   }
 
 
-  submitPost(event){
+  submitPost(event) {
     toBackend.postItemBackend(this.state.item_description, this.state.item_name, this.state.item_cost, this.state.item_catagory, this.state.item_photo);
     event.preventDefault();
     alert("Your item has been posted");
     this.props.history.push(`/home/${sessionStorage.getItem("authenticatedUser")}`)
+  }
+
+  updateExistingPost(event) {
+    console.log("SUCCESS");
+    event.preventDefault();
+    MarketDataService.updateExistingPost(this.props.existingId, this.state.item_description, this.state.item_name, this.state.item_cost, this.state.item_catagory, this.state.item_photo).then(
+      response => {
+        
+        alert("Your item has been updated");
+        this.props.history.push(`/home/${sessionStorage.getItem("authenticatedUser")}`);
+      }
+    );
+    // event.preventDefault();
+    // alert("Your item has been updated");
+    //this.props.history.push(`/home/${sessionStorage.getItem("authenticatedUser")}`)
+  }
+
+  updateStateWithPost() {
+    if (this.props.existingId != null) {
+      MarketDataService.retrievePostById(this.props.existingId).then(
+        response => {
+          console.log(response)
+          this.setState({
+            item_description: response.data.description,
+            item_name: response.data.title,
+            item_cost: response.data.price,
+            item_photo: response.data.photo,
+            item_catagory: response.data.category,
+          })
+        }
+      )
+
+    }
   }
 
 }

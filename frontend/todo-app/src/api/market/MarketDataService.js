@@ -10,14 +10,38 @@ class MarketDataService {
     }
 
     retrievesearchByPosts() {
-        
+
         return axios.get(`${API_URL}/posts/searchBy`);
     }
 
+    retrievePostById(id) {
+        return axios.get(`${API_URL}/posts/${id}`);
+    }
 
+    updateExistingPost(id, description, title, price, category, photo) {
+        console.log("UPDATING")
+        console.log({
+            id,
+            description,
+            title,
+            price,
+            category,
+            photo
+        })
+        return axios.post(`${API_URL}/posts/${id}`, {
+            id,
+            description,
+            title,
+            price,
+            category,
+            photo
+        })
+    }
 
 }
-export const googleauth = data => { return async dispatch => {
-console.log('NO MORE CORS?', data)
-}}
+export const googleauth = data => {
+    return async dispatch => {
+        console.log('NO MORE CORS?', data)
+    }
+}
 export default new MarketDataService()
