@@ -19,16 +19,7 @@ class MarketDataService {
     }
 
     updateExistingPost(id, description, title, price, category, photo) {
-        console.log("UPDATING")
-        console.log({
-            id,
-            description,
-            title,
-            price,
-            category,
-            photo
-        })
-        return axios.post(`${API_URL}/posts/${id}`, {
+        return axios.put(`${API_URL}/posts/${id}`, {
             id,
             description,
             title,

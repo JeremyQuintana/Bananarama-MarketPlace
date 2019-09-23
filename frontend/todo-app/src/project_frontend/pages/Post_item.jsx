@@ -86,14 +86,11 @@ class Post_item extends Component {
     event.preventDefault();
     MarketDataService.updateExistingPost(this.props.existingId, this.state.item_description, this.state.item_name, this.state.item_cost, this.state.item_catagory, this.state.item_photo).then(
       response => {
-        
+
         alert("Your item has been updated");
         this.props.history.push(`/home/${sessionStorage.getItem("authenticatedUser")}`);
       }
     );
-    // event.preventDefault();
-    // alert("Your item has been updated");
-    //this.props.history.push(`/home/${sessionStorage.getItem("authenticatedUser")}`)
   }
 
   updateStateWithPost() {

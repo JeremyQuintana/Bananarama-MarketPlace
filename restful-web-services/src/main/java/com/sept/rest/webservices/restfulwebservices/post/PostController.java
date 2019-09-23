@@ -38,7 +38,6 @@ public class PostController {
 	@PutMapping("/posts/{id}")
 	public Post updatePost(@PathVariable Long id, @RequestBody Post post)
 	{
-		System.out.println(post);
 		return db.save(post);
 	}
 	
