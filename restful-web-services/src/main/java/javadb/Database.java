@@ -18,9 +18,7 @@ import java.util.List;
 
 import java.util.Scanner;
 import java.sql.Date;
-//
-//spring.datasource.url=jdbc:mysql://35.189.1.213:3306/sept?useUnicode=true&characterEncoding=UTF-8&characterSetResults=UTF-8&verifyServerCertificate=true&useSSL=true&requireSSL=true&clientCertificateKeyStoreUrl=file:/opt/clientkeystore.jks&clientCertificateKeyStorePassword=mypass&trustCertificateKeyStoreUrl=file:/opt/truststore.jks&trustCertificateKeyStorePassword=mypass
-
+																									
 public class Database {
 
 	private static Statement statement;
