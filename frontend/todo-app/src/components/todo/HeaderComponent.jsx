@@ -4,6 +4,7 @@ import AuthenticationService from './AuthenticationService.js'
 import axios from 'axios'
 
 class HeaderComponent extends Component {
+  
     render() {
         axios.interceptors.request.use(
             (config) => {

@@ -1,54 +1,21 @@
-.Search_item {
+.Search_item{
   margin-top: 20px;
-  }
-
-.input-icons i, .inputnot { 
-  position: absolute; 
-  
-  } 
-
-  .sort_item, .sort_item i  {
-  
-  float: right;
-  margin-right: 80px;
+  margin-bottom: 20px;
+  height: 30px;
 }
 
- .inputnot{
-  margin-left: -32%;
-  height:35px;  
-  }
- 
-  .inputsort{
-   
-    height:40px;  
-    }
-
-.icon { 
-  padding: 2px; 
-  text-align: center; 
-  } 
-  .iconsort{
-  padding: 8px;
-  text-align: center; 
-  
-  }
-
-.inputfield, .search_words { 
-  width: 40%; 
-  height:35px;
-  padding: 4px; 
-  text-align: center; 
-  font-size: 15px;
-  }
-.searchTitle{
-  text-align: center; 
-  padding-bottom: 50px;
- 
+.refineItem{
+  height: 30px;
+  margin-left: 5px;
+  margin-right: 5px;
+  display: inline-block;
+  vertical-align: middle;
 }
 
-.marketTitle{
-  margin-top: -60px;
-  margin-bottom: 15px;
+#description{
+  width: 500px;
+}
 
-
-  } 
+.posting{
+  margin-bottom: 10px;
+}

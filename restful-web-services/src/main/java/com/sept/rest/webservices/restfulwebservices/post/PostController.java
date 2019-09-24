@@ -69,7 +69,7 @@ public class PostController {
 	
 	@GetMapping("/posts/searchBy/{description}/{category}/{sort}")	
 	public List<Post> Sort(@PathVariable String description, @PathVariable String category, @PathVariable String sort) {
-		
+
 		
 		if(sort.equals("High")){
 			ArrayList<Post> sortsPost = new ArrayList<>(db.findAll());

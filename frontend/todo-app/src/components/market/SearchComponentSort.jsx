@@ -8,17 +8,17 @@ import toBackend from '../../project_frontend/toBackend/postBackend.js'
 
 // This is the marketplace browsing component
 class SearchComponentSort extends Component {
-   
+
   render() {
         let retVal = (
             <div>
             <h1 className="searchTitle">Results</h1>
-         
+
 
                 <div className="container">
                     <NewItemsSort match={this.props.match} history={this.props.history}></NewItemsSort>
                 </div>
-                </div> 
+                </div>
         );
         return retVal;
     }
@@ -33,7 +33,7 @@ class NewItemsSort extends Component {
 
         this.state = {
             backSearchPostingsSort: [[]],
-         
+
         }
         this.refreshsearchPostsSort()
     }
