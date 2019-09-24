@@ -102,7 +102,7 @@ class Post_item extends Component {
             item_description: response.data.description,
             item_name: response.data.title,
             item_cost: response.data.price,
-            item_photo: response.data.photo,
+            //item_photo: response.data.photo,
             item_catagory: response.data.category,
           })
         }
