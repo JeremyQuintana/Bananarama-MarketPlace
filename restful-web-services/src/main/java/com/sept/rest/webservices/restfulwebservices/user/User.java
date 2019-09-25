@@ -38,6 +38,14 @@ public class User {
 	// annoyingly jpa 2.0 needs this
 	public User(){}
 	
+	@JsonIgnore
+	public User(String name, String age, String email)
+	{
+		this.name = name;
+		this.age = age;
+		this.email = email;
+	}
+	
 	
 	
 	
