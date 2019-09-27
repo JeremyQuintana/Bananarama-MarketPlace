@@ -12,22 +12,20 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Table(name = "chat_text")
 public class Chat
 {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
 	private String text;
 	private String sender;
+	private String receiver;
 	
 	// annoyingly jpa 2.0 needs this
 	public Chat(){}
 	
 	@JsonIgnore
-	public Chat(String text, String sender)
+	public Chat(String text, String sender, String receiver)
 	{
 		this.text = text;
 		this.sender = sender;
+		this.receiver = receiver;
 	}
 	
-	public Long getId() {return id;}
 	public String getSender() {return sender;}
 }

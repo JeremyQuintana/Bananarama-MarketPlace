@@ -18,18 +18,19 @@ import com.sept.rest.webservices.restfulwebservices.post.PostRepository;
 public class ChatService {
 
 	@Autowired
-	private TextRepository textDB;
-	@Autowired
-	private OverheadRepository overheadDB;
+	private ChatRepository db;
 
 	
-	public Long getId(String user1, String user2)
+	
+	public List<Chat> allChats(String user1, String user2) throws SQLException
 	{
-		return overheadDB.findFirstByUser1AndUser2(user1,  user2).getChatID();
+		List<Chat> allChats = db.findBySenderAndReceiver(user1, user2);
+		allChats.addAll(db.findBySenderAndReceiver(user2, user1));
+		return allChats;
 	}
 	
-	public List<Text> allTexts(String user1, String user2) throws SQLException
+	public void addChat(Chat chat)
 	{
-		return textDB.findByChatId(getId(user1, user2));
+		db.save(chat);
 	}
 }
