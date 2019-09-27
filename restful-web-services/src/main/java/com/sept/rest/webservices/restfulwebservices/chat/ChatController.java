@@ -78,8 +78,7 @@ public class ChatController {
 //			throw new NullPointerException("wrong sender in chat.");
 //		
 //		textDB.save(text);
-		
-		
+		System.out.println(chat);
 		System.out.println("chat technically stored (database doesn't actually work however)");
 		
 		
@@ -88,7 +87,7 @@ public class ChatController {
 		
 		
 		
-		service.addChat(chat);
+//		service.addChat(chat);
 	}
 
 	

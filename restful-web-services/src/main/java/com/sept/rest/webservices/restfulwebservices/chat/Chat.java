@@ -31,5 +31,12 @@ public class Chat
 		this.receiver = receiver;
 	}
 	
+	public String toString()
+	{
+		return String.format("Text: %s, Sender: %s, Receiver: %s", text, sender, receiver);
+	}
+	
 	public String getSender() {return sender;}
+	public String getReceiver() {return receiver;}
+	public String getText() {return text;}
 }
