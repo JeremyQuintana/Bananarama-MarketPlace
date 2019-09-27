@@ -1,5 +1,6 @@
 package com.sept.rest.webservices.restfulwebservices.chat;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -17,41 +18,18 @@ import com.sept.rest.webservices.restfulwebservices.post.PostRepository;
 public class ChatService {
 
 	@Autowired
-	private PostRepository db;
-//	private Map<Integer, Post> posts = new HashMap<>();
-//	private int id = 0;
-// collecting values from database so these don't matter
+	private TextRepository textDB;
+	@Autowired
+	private OverheadRepository overheadDB;
 
-	public Post get(Long id) 	
+	
+	public Long getId(String user1, String user2)
 	{
-		return db.findById(id).get();
+		return overheadDB.findFirstByUser1AndUser2(user1,  user2).getChatID();
 	}
 	
-	// old: posts.values()
-	public List<Post> getAll() 	
+	public List<Text> allTexts(String user1, String user2) throws SQLException
 	{
-		// convert iterator -> list of posts and return
-		List<Post> posts = new ArrayList<>();
-		db.findAll().forEach(posts::add);
-		return posts;
-		
-	}
-	
-//	post.setId(id);
-//	posts.put(id++, post);
-	public void add(Post post) 	
-	{
-		db.save(post);
-	}
-	// old: posts.put(post.getId(), post);
-	public void update(Long id, Post post) 
-	{
-			/*MAY WORK, cuz using id to check existence*/
-		db.save(post);
-	}	
-
-	public void delete(Long id)
-	{
-		db.deleteById(id);
+		return textDB.findByChatId(getId(user1, user2));
 	}
 }
