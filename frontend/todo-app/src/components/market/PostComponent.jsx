@@ -12,9 +12,9 @@ class PostComponent extends Component {
         
         // State stores the posts from backend
         this.state = {
-            backPostings: [[]],
+            postInfo: null,
         }
-        this.refreshPosts()
+        this.refreshPostInfo()
 
     }
 
@@ -22,20 +22,20 @@ class PostComponent extends Component {
         let retVal;
         // get the row from the backend array, based on the postID param in props
         // create a div with all the singular posts information
-        if (parseInt(this.props.match.params.postID) - 1 < this.state.backPostings.length && parseInt(this.props.match.params.postID) - 1 >= 0) {
+        if (this.state.postInfo != null) {
             retVal = (
 
                 <div>
-                    <h1 className="marketTitle">{this.state.backPostings[parseInt(this.props.match.params.postID) - 1][1]}</h1>
+                    <h1 className="marketTitle">{this.state.postInfo.title}</h1>
                     <div className="container postDescription">
-                        <img src={'../post_images/' + this.state.backPostings[parseInt(this.props.match.params.postID) - 1][0] + '.jpg'}></img>
-                        {this.state.backPostings[parseInt(this.props.match.params.postID) - 1][2]}
+                        <img src={'../post_images/' + this.state.postInfo.photo + '.jpg'}></img>
+                        {this.state.postInfo.description}
                     </div>
                     <div className="container postPrice">
-                        {this.state.backPostings[parseInt(this.props.match.params.postID) - 1][4]}
+                        {this.state.postInfo.price}
                     </div>
                     <div className="container postSeller">
-                        {this.state.backPostings[parseInt(this.props.match.params.postID) - 1][3]}
+                        {this.state.postInfo.ownerId}
                     </div>
                     <div className="container postSeller"><Link to="/chat/" action="replace">Contact Seller</Link></div>
 
@@ -50,12 +50,21 @@ class PostComponent extends Component {
     }
 
     // update the postings array with backend data
-    refreshPosts() {
+    refreshPostInfo() {
 
         MarketDataService.retrieveAllPosts().then(
             response => {
-                
-                this.setState({ backPostings: response.data })
+                var i;
+                var found = false;
+                console.log(this.props.match.params.postID) 
+                for(i = 0; i < response.data.length && !found; i++){
+                    if(response.data[i].id == this.props.match.params.postID){
+                        found = true;
+                    }
+                }
+                if(found == true){
+                    this.setState({ postInfo: response.data[i-1] })
+                }
             }
         ).catch(error => console.log("network error"));
     }

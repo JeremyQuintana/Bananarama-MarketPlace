@@ -22,7 +22,7 @@ class postBackend{
   postItemBackend(chatid, text){
     return axios.post(`${API_URL}/postitem`, {
       chatid,
-      text,
+      text
     })
   }
 }
