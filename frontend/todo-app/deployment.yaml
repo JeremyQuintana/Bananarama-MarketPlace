@@ -1,0 +1,31 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: frontend
+  namespace: market
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: master
+    spec:
+      containers:
+      - name: master
+        image: gcr.io/sept-248413/market-front:v1
+        ports:
+        - containerPort: 3000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend
+  namespace: market
+spec:
+  externalTrafficPolicy: Cluster
+  ports:
+  - port: 3000
+    targetPort: 3000
+  selector:
+    app: master
+  type: LoadBalancer
