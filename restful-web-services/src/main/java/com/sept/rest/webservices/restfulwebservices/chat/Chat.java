@@ -15,6 +15,10 @@ public class Chat
 	private String text;
 	private String sender;
 	private String receiver;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+	
 	
 	// annoyingly jpa 2.0 needs this
 	public Chat(){}

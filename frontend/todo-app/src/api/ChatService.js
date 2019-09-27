@@ -21,6 +21,5 @@ class ChatService {
             text
         });
     }
-
 }
 export default new ChatService()
