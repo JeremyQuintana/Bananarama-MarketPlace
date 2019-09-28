@@ -11,6 +11,11 @@ class ChatService {
 
     // when you load a chat, you can call this
     getAllTexts(user1, user2) {
+
+        // var params = new URLSearchParams();
+        // params.append('user1', user1);
+        // params.append('user2', user2);
+        // return axios.get(`${API_URL}/chat`, params);
         return axios.get(`${API_URL}/chat/${user1}and${user2}`);
     }
 
