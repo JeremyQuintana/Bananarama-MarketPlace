@@ -125,6 +125,7 @@ class LoginComponent extends Component {
                       onSuccess={this.responseGoogle}
                       onFailure={this.responseGoogle}
                     />
+                    
                 </div>
             </div>
         )

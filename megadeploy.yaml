@@ -31,10 +31,10 @@ spec:
   ports:
   - port: 8080
     targetPort: 8080
-    name: front
-  - port: 3000
-    targetPort: 3000
     name: back
+  - port: 80
+    targetPort: 3000
+    name: front
   selector:
     app: master
   type: LoadBalancer
