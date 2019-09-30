@@ -30,7 +30,7 @@ public class Post {
 	private String price;
 	private String category;
 	private String photo;
-	private String ownerId = "s1234567";
+	private String ownerId;
 	private Date datePosted = new Date(new java.util.Date().getTime());
 	
 	@Enumerated(EnumType.STRING)
@@ -74,6 +74,10 @@ public class Post {
 		this.category = category;
 		this.status = Status.AVAILABLE;
 		this.datePosted = new Date(new java.util.Date().getTime()); ;
+	}
+	
+	public void setOwner(String ownerId) {
+		this.ownerId = ownerId;
 	}
 	
 	// post creation from a (raw) database
