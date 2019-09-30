@@ -37,7 +37,7 @@ before_install:
 #- gcloud components install docker-credential-gcloud
 - gcloud auth activate-service-account --key-file client-secret.json
 - gcloud auth configure-docker
-- expect "Do you want to continue (Y/n)?"
+#- expect "Do you want to continue (Y/n)?"
 - send "Y\r"
 
 # [END auth]
