@@ -21,6 +21,14 @@ class postBackend{
       category
     })
   }
+  sortItemBackend(description, category, sort){
+    return axios.post(`${API_URL}/searchitemsort`, {
+
+      description,
+      category,
+      sort
+    })
+  }
 }
 
 export default new postBackend()

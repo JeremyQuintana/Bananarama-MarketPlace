@@ -41,10 +41,10 @@ class Post_item extends Component {
               <label htmlFor="item_photo" className="definitions"> Item Photo: </label>
             </div>
             <div className="formInputs">
-              <textarea name="item_description" className="input" placeholder="Mushy Explanation" value={this.state.item_description} onChange={this.handleChange} />
+              <textarea required name="item_description" className="input" placeholder="Mushy Explanation" value={this.state.item_description} onChange={this.handleChange} />
               <input required type="text" name="item_name" className="input" placeholder="Banana Name" value={this.state.item_name} onChange={this.handleChange} />
               <input required type="number" name="item_cost" className="input" placeholder="$000.00" min="000.01" step="0.01" pattern="\d.\d" value={this.state.item_cost} onChange={this.handleChange} />
-              <select name="item_catagory" className="input" onChange={this.handleChange} value={this.state.item_catagory}>
+              <select required name="item_catagory" className="input" onChange={this.handleChange} value={this.state.item_catagory}>
                 <option value="" default>No Catagory</option>
                 <option value="Exceptionally Random">Exceptionally Random</option>
                 <option value="Ridiculously Complicated">Ridiculously Complicated</option>

@@ -150,8 +150,6 @@ public class Post implements Comparable<Post> {
 	
 	
 	
-	
-	
 	// any way to manipulate a post
 	public enum Action
 	{
@@ -238,3 +236,5 @@ public class Post implements Comparable<Post> {
 	public String getPhoto() {return photo;}
 	
 }
+
+

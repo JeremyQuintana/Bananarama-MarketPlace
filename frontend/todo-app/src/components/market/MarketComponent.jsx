@@ -17,15 +17,33 @@ class MarketComponent extends Component {
     super(props)
 
     this.state = {
-
+      backPostings: [],
       description: '',
-      category: ''
+      category: '',
+      sort: ''
     }
 
+    var searchDescription = this.props.match.params.searchDescription;
+    var searchCategory = this.props.match.params.searchCategory;
+    var searchSort = this.props.match.params.searchSort;
 
-  this.handleChange = this.handleChange.bind(this)
-  this.submitPost = this.submitPost.bind(this)
+    if (searchDescription == null && searchCategory == null && searchSort == null){
+      this.refreshPosts();
+    } else if (searchCategory != null && searchSort == null){
+      this.refreshsearchPosts(searchDescription, searchCategory);
+    } else if (searchSort != null){
+      this.refreshsearchPostsSort(searchDescription, searchCategory, searchSort);
+    }
+
+    this.handleChange = this.handleChange.bind(this)
+    this.submitPost = this.submitPost.bind(this)
+
+    this.unlisten = this.props.history.listen((location, action) => {
+      window.location.reload();
+    });
   }
+
+
   render() {
         // Simply return a heading, and div that will contain the posts
 
@@ -33,9 +51,8 @@ class MarketComponent extends Component {
 
 
       <div>
-          <div className="Search_item">
-          <form onSubmit={this.submitPost} refs="form">
-                <select required name="category" className="inputnot" onChange={this.handleChange} value={this.state.category}>
+          <form onSubmit={this.submitPost} refs="form" className="Search_item">
+                <select required name="category" className="refineItem" onChange={this.handleChange} value={this.state.category}>
                   <option value="">Choose Category</option>
                   <option value="all">All</option>
                   <option value="Exceptionally Random">Exceptionally Random</option>
@@ -44,21 +61,22 @@ class MarketComponent extends Component {
                   <option value="Disturbingly Simple">Disturbingly Simple</option>
                   <option value="Spectularly Failing">Spectacularly Failing</option>
                 </select>
+                <input type="text" name="description" id="description" className="refineItem" placeholder="Search" onChange={this.handleChange} value={this.state.description} />
+                <select name="sort" className="refineItem" onChange={this.handleChange} value={this.state.sort}>
+                  <option value="">Sort</option>
+                  <option value="Low">Price Low-High</option>
+                  <option value="High">Price High-Low</option>
+                  <option value="New">By Date New</option>
+                  <option value="Old">By Date Old</option>
 
-                <div class="input-icons">
-                <input type="text" name="description" className="inputfield" placeholder="Search" onChange={this.handleChange} value={this.state.description} />
-
-                <i class="icon">< input type="image" src={require("./search.png")} value="Submit" border="0" alt="Submit" /></i>
-
-          </div>
+                </select>
+                < input type="image" src={require("./search.png")} value="Submit" border="0" alt="Submit" className="refineItem"/>
           </form>
-
-        </div>
 
 
                 <h1 className="marketTitle">Browse Marketplace</h1>
                 <div className="container">
-                    <Items history={this.props.history}></Items>
+                    <Items history={this.props.history} backPostings={this.state.backPostings}></Items>
                 </div>
             </div>
         );
@@ -77,31 +95,73 @@ class MarketComponent extends Component {
 
 
     submitPost(event){
-
- 
       event.preventDefault();
 
+      if (this.state.sort == ""){
+        this.submitSearch();
+      } else{
+        this.submitSort();
+      }
+    }
+
+    submitSearch(){
       var searchDescription = this.state.description;
       var searchCategory = this.state.category;
       this.props.history.push(`/market/searchBy/` + searchDescription + `/` + searchCategory);
-      }
+    }
 
-    
+    submitSort(){
+      var searchSort = this.state.sort;
+      var searchDescription = this.state.description;
+      var searchCategory = this.state.category;
+      this.props.history.push(`/market/searchBy/` + searchDescription + `/` + searchCategory + `/` + searchSort);
+    }
 
+    // update the postings array with backend data
+    refreshPosts() {
 
+        MarketDataService.retrieveAllPosts().then(
+            response => {
+                this.setState({ backPostings: response.data })
+            }
+        ).catch(error => console.log("network error"));
+    }
+
+    refreshsearchPosts(description, category) {
+        MarketDataService.retrievesearchByPosts(description, category).then(
+            response => {
+                this.setState({ backPostings: response.data })
+            }
+        ).catch(error => console.log("network error WTF!"));
+    }
+
+    refreshsearchPostsSort(description, category, sort) {
+          MarketDataService. retrievesearchByPostsSort(description, category, sort).then(
+              response => {
+                  this.setState({ backPostings: response.data })
+              }
+          ).catch(error => console.log("network error WTF!"));
+    }
 
 }
 
 // Helper class to render  the post rows
 class Items extends Component {
+  //solution to making itmes component rerender on state change from parent Component
+  //found at https://medium.com/p/387720c3cff8/responses/show
+    static getDerivedStateFromProps(props, state){
+      if (props.backPostings !== state.backPostings) {
+        return {backPostings: props.backPostings};
+      }
+      return null;
+    }
 
     constructor(props) {
         super(props);
         // State stores the posts from backend
         this.state = {
-            backPostings: [],
+            backPostings: this.props.backPostings,
         }
-        this.refreshPosts()
     }
 
     render() {
@@ -130,16 +190,6 @@ class Items extends Component {
     // Method for when a user clicks on a post, route them to post page
     routeChange(x) {
         this.props.history.push("/market/" + x);
-    }
-    // update the postings array with backend data
-    refreshPosts() {
-
-        MarketDataService.retrieveAllPosts().then(
-            response => {
-                console.log(response)
-                this.setState({ backPostings: response.data })
-            }
-        ).catch(error => console.log("network error"));
     }
 
 }
