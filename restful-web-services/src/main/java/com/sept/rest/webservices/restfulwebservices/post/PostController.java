@@ -137,38 +137,53 @@ public class PostController {
 	@PostMapping("/postitem")
 	public Post addPost(@RequestBody Post post, HttpServletRequest request)
 	{
-		final String ownerId = jwtTokenUtil.getUsernameFromToken(request.getHeader("Authorization").substring(7));
-		System.out.println("Request Post From ID: " + ownerId);
-
-		post.setOwner(ownerId);
+		System.out.println("Request Post From ID: " + getOwnerId(request));
+		
+		post.setOwner(getOwnerId(request));
 		return db.save(post);
 	}
 
 	// when need to open a post in marketplace
 	@PutMapping("/posts/{id}")
-	public Post updatePost(@PathVariable Long id, @RequestBody Post post, HttpServletRequest request)
+	public Post updatePost(@PathVariable Long id, @RequestBody Post edit, HttpServletRequest request)
 	{
-		final String ownerId = jwtTokenUtil.getUsernameFromToken(request.getHeader("Authorization").substring(7));
-		System.out.println("Request Edit Post From ID: " + ownerId);
-
-		final String itemOwnerId = db.findById(id).map(Post::getOwnerId).get();
-		if (itemOwnerId.equals(ownerId)) {
-			System.out.println("Successful Edit Post");
-			post.setOwner(itemOwnerId);
-			return db.save(post);
-		} else {
-			System.out.println("Error Update: Edit User ID " + ownerId + " does not match Item Owner ID " + itemOwnerId);
+		if (!correctOwner(id, request)) {
 			return null;
 		}
+		edit.setOwner(getOwnerId(request));
+		edit.setId(id);
+		return db.save(edit);
 	}
 
 
 	@DeleteMapping("/posts/{id}")
-	public void deletePost(@PathVariable Long id)
+	public void deletePost(@PathVariable Long id,  HttpServletRequest request) 
 	{
-		System.out.println("HI");
-		db.deleteById(id);
+		if (correctOwner(id, request))
+			db.deleteById(id);
 	}
+	
+	
+	
+	
+	
+	
+	
+	private String getOwnerId(HttpServletRequest request)
+	{
+		return jwtTokenUtil.getUsernameFromToken(request.getHeader("Authorization").substring(7));
+	}
+	
+	private boolean correctOwner(Long id, HttpServletRequest request)
+	{
+		Post realPost = db.findById(id).get();
+		String loggedOwner =getOwnerId(request);
+		
+		if (!realPost.getOwnerId().equals(loggedOwner))
+			throw new NullPointerException("Error Update: Edit User ID " + loggedOwner + " does not match Item Owner ID " + realPost.getOwnerId());
+		return true;
+	}
+}
 
 	@GetMapping("/posts/{id}")
 	public Post getPost(@PathVariable Long id)
