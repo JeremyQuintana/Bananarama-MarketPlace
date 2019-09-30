@@ -12,20 +12,25 @@ public class PostController {
 	@Autowired 
 	private PostRepository db;
 	
-	// show all posts when viewing marketplace
-	@GetMapping("/posts")				/*WRONG URLS>>>???*/    /*some methods seem simpler than requireed*/
+	
+	@GetMapping("/posts")			
 	public List<Post> getAllPosts()
 	{
 		return db.findAll();
 	}
-	
-	//HERE IS WHERE THE CONTENTS ON SEARCH COME THROUGH
-	@PostMapping("/searchitem")
-	public void Search_Post(@RequestBody SearchPost search) {
-		//String description= search.getdescription();
-	//	String category= search.getcategory();
-	//	for (Post post : db.findByCategory(category))
-		//	System.out.println(post);
+
+
+	@GetMapping("/posts/searchBy/{description}/{category}")	
+	public List<Post> searchResults(@PathVariable String description, @PathVariable String category) 
+	{
+		
+		List<Post> posts = db.findAll();
+		Collections.sort(posts);
+		
+		if (!description.equals("undefined"))	{posts.retainAll(db.findByDescriptionContaining(description));}
+		if (!category.equalsIgnoreCase("all"))	{posts.retainAll(db.findByCategory(category));}
+		
+		return posts;
 	}
 	
 	//HERE IS WHERE TO "SEND THE RESULTS"
@@ -50,27 +55,21 @@ public class PostController {
 	{
 		return db.save(post);
 	}
-	
-	
-	// when need to open a post in marketplace
-	@RequestMapping("/posts/{id}")
-	public Post getPost(@PathVariable Long id)
-	{
-		return db.findById(id).get();
-	}
-	
+
 	// when need to open a post in marketplace
 	@PutMapping("/posts/{id}")
 	public Post updatePost(@PathVariable Long id, @RequestBody Post post)
 	{
 		return db.save(post);
 	}
-	
+		
+		
 	@DeleteMapping("/posts/{id}")
 	public void deletePost(@PathVariable Long id) 
 	{
+		System.out.println("HI");
 		db.deleteById(id);
 	}
+		
+
 }
-
-

@@ -21,7 +21,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import javadb.DatabaseRef;
 
 @Entity
-public class Post {
+public class Post implements Comparable<Post> {
 	
 	// variables need to be above constructor for json
 	/*to change*/
@@ -192,6 +192,36 @@ public class Post {
 		return id + " " + ownerId + " " + title + " " + description + " " + price + " " + status + " " + datePosted + " " + category + photo;
 	}
 	
+	@Override
+	public int compareTo(Post o) 
+	{
+		double price1 = price != null ? Double.valueOf(price) : -1;
+		double price2 = o.price != null ? Double.valueOf(o.price) : -1;
+		
+		return (int) (price1 - price2);
+	}
+	
+	
+	@Override
+	public int hashCode() 
+	{
+		return 31 + ((id == null) ? 0 : id.hashCode());
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) 					return true;
+		if (obj == null) 					return false;
+		if (getClass() != obj.getClass())	return false;
+		Post other = (Post) obj;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		return true;
+	}
+
 	public Long getId()			{return id;}
 	public void setId(Long id)	{this.id = id;}
 	public Status getStatus()		{return status;}

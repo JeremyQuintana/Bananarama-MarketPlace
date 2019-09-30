@@ -17,43 +17,44 @@ class MarketComponent extends Component {
     super(props)
 
     this.state = {
-      
+
       description: '',
-      item_category: ''
+      category: ''
     }
-  
+
 
   this.handleChange = this.handleChange.bind(this)
   this.submitPost = this.submitPost.bind(this)
   }
   render() {
         // Simply return a heading, and div that will contain the posts
-       let retVal = (
-        
-         
+
+        let retVal = (
+
+
       <div>
           <div className="Search_item">
           <form onSubmit={this.submitPost} refs="form">
-                <select required name="item_category" className="inputnot" onChange={this.handleChange} value={this.state.item_category}>
+                <select required name="category" className="inputnot" onChange={this.handleChange} value={this.state.category}>
                   <option value="">Choose Category</option>
-                  <option value="All">All</option>
+                  <option value="all">All</option>
                   <option value="Exceptionally Random">Exceptionally Random</option>
                   <option value="Ridiculously Complicated">Ridiculously Complicated</option>
                   <option value="Annoyingly Unnexplained">Annoyingly Unnexplained</option>
                   <option value="Disturbingly Simple">Disturbingly Simple</option>
                   <option value="Spectularly Failing">Spectacularly Failing</option>
                 </select>
-               
-                <div class="input-icons"> 
+
+                <div class="input-icons">
                 <input type="text" name="description" className="inputfield" placeholder="Search" onChange={this.handleChange} value={this.state.description} />
-               
+
                 <i class="icon">< input type="image" src={require("./search.png")} value="Submit" border="0" alt="Submit" /></i>
-                
+
           </div>
           </form>
-          
+
         </div>
-        
+
 
                 <h1 className="marketTitle">Browse Marketplace</h1>
                 <div className="container">
@@ -65,27 +66,33 @@ class MarketComponent extends Component {
     }
 
      handleChange(event){
-        
+
         this.setState(
         {
           [event.target.name] : event.target.value
         }
       )
     }
-   
-  
+
+
+
     submitPost(event){
-      
-      toBackend.searchItemBackend(this.state.description, this.state.item_category);
+
+ 
       event.preventDefault();
-      this.props.history.push(`/posts/searchBy/${this.state.description}${this.state.item_category}`);
-    }
+
+      var searchDescription = this.state.description;
+      var searchCategory = this.state.category;
+      this.props.history.push(`/market/searchBy/` + searchDescription + `/` + searchCategory);
+      }
 
     
 
+
+
 }
 
-// Helper class to render the post rows
+// Helper class to render  the post rows
 class Items extends Component {
 
     constructor(props) {
@@ -96,7 +103,7 @@ class Items extends Component {
         }
         this.refreshPosts()
     }
-    
+
     render() {
         var retVal = [];
         // loop through the postings from backend
@@ -112,21 +119,21 @@ class Items extends Component {
 
                     <br></br>
                 </div>
-               
+
           );
         }
 
 
         return retVal;
     }
-   
+
     // Method for when a user clicks on a post, route them to post page
     routeChange(x) {
-        this.props.history.push("/posts/" + x);
+        this.props.history.push("/market/" + x);
     }
     // update the postings array with backend data
     refreshPosts() {
-    
+
         MarketDataService.retrieveAllPosts().then(
             response => {
                 console.log(response)
