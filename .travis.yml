@@ -34,6 +34,7 @@ before_install:
 - tar -xzf credentials.tar.gz
 - mkdir -p lib
 # Here we use the decrypted service account credentials to authenticate the command line tool
+- gcloud components install docker-credential-gcloud
 - gcloud auth activate-service-account --key-file client-secret.json
 - gcloud auth configure-docker
 # [END auth]
