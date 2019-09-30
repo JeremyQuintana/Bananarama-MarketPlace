@@ -40,6 +40,12 @@ before_install:
 - bash docker_cred_fix
 #- gcloud auth configure-docker
 - docker-credential-gcr configure-docker
+
+- gcloud components update kubectl
+- gcloud container clusters get-credentials bananarama-gke-1 --zone australia-southeast1-a --project sept-248413
+- kubectl set image pod/frontendpod frontendcon=gcr.io/sept-248413/market-front:latest
+- kubectl set image pod/backendpod backendcon=gcr.io/sept-248413/market-app:latest
+
 #- docker 
 #- ./docker_auth.sh
 #- spawn "gcloud auth configure-docker"
