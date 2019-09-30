@@ -36,7 +36,7 @@ class MarketPlaceApp extends Component {
 
                             <AuthenticatedRoute path = "/home/:name" exact component = {HomeComponent}/>
                             <AuthenticatedRoute path="/market" exact component={MarketComponent} />
-                            <AuthenticatedRoute path="/market/searchBy" exact component={SearchComponent} />
+                            <AuthenticatedRoute path="/posts/searchBy/:description:item_category" exact component={SearchComponent} />
                             <AuthenticatedRoute path="/posts/:postID" exact component={PostComponent} />
                             <Route path="/chat" exact component={ChatComponent} />
       

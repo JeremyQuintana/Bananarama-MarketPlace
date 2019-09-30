@@ -9,11 +9,12 @@ class MarketDataService {
         return axios.get(`${API_URL}/posts`);
     }
 
-    retrievesearchByPosts() {
+    retrievesearchByPosts(description, item_category) {
         
-        return axios.get(`${API_URL}/posts/searchBy`);
+        return axios.get(`${API_URL}/posts/searchBy/${description}${item_category}`);
+    
     }
-
+   
 
 
 }
