@@ -41,10 +41,7 @@ before_install:
 #- gcloud auth configure-docker
 - docker-credential-gcr configure-docker
 - gcloud config set project sept-248413
-- bash install_kubectl
-- gcloud container clusters get-credentials bananarama-gke-1 --zone australia-southeast1-a --project sept-248413
-- kubectl set image pod/frontendpod frontendcon=gcr.io/sept-248413/market-front:latest
-- kubectl set image pod/backendpod backendcon=gcr.io/sept-248413/market-app:latest
+
 
 #- docker 
 #- ./docker_auth.sh
@@ -78,5 +75,8 @@ script:
 - docker push gcr.io/sept-248413/market-front:latest
 #- gcloud -q app deploy app.yaml --promote
 # Run and end to end test
-
+- bash install_kubectl
+- gcloud container clusters get-credentials bananarama-gke-1 --zone australia-southeast1-a --project sept-248413
+- kubectl set image pod/frontendpod frontendcon=gcr.io/sept-248413/market-front:latest
+- kubectl set image pod/backendpod backendcon=gcr.io/sept-248413/market-app:latest
 # [END deploy]
