@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface TextRepository  extends JpaRepository<Text, Long> 
+public interface ChatRepository  extends JpaRepository<Chat, Long> 
 {
-//	public List<Text> findById(Long id);
+	public List<Chat> findBySenderAndReceiver(String sender, String receiver);
 }

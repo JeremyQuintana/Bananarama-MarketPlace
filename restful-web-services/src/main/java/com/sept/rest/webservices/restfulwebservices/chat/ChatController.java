@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,37 +24,26 @@ import org.springframework.web.bind.annotation.RestController;
 //
 //
 //chat_text
-//ChatID		Text				Time (not impl.)	Sender
+//ChatID		Text			Sender
 //-----------------------------------------------------------
-//3			Howdy				23/8 4:30 pm		s281929
-//1			Hey its duncan...						s123456
-//2			Straight fire ...						s128719
-//1			Dont talk to m...						s238197
+//3			Howdy				s281929
+//1			Hey its duncan...	s123456
+//2			Straight fire ...	s128719
+//1			Dont talk to m...	s238197
 
 @CrossOrigin(origins="http://localhost:3000")
 @RestController
 public class ChatController {
 	
 	@Autowired
-	private TextRepository textDB;
-	@Autowired
-	private OverheadRepository overheadDB;
+	private ChatService service;
 	
-//	public Long getId(String user1, String user2)
-//	{
-//		return overheadDB.findFirstByUser1AndUser2(user1,  user2).getChatID();
-//	}
-//	
-//	public List<Text> allTexts(String user1, String user2) throws SQLException
-//	{
-//		return textDB.findByChatId(getId(user1, user2));
-//	}
-//	
-//	
-//	
-//	@GetMapping("/chat/user1={user1},user2={user2}")
-//	public List<Text> createOrLoadChat(String user1, String user2) throws SQLException
-//	{					
+	
+	
+	
+	@GetMapping("/chat/{user1}and{user2}")
+	public List<Chat> loadChat(@PathVariable String user1, @PathVariable String user2) throws SQLException
+	{					
 //		if (!usersExist(user1, user2))				
 //			throw new NullPointerException("Users do not exist in database.");
 //		
@@ -65,28 +55,49 @@ public class ChatController {
 //		overheadDB.save(new Overhead(user1, user2));
 //		// new chat so no messages
 //		return new ArrayList<>();
-//	}
-//	
-//	
-//	
-//	@PostMapping("/chat/user1={user1},user2={user2}")
-//	public void addText(@RequestBody Text text) throws SQLException
-//	{															
+		
+		
+		List<Chat> hardcoded = new ArrayList<>();
+		hardcoded.add(new Chat("The database doesn't work.", user1, user2));
+		hardcoded.add(new Chat("Wait what?", user2, user1));
+		hardcoded.add(new Chat("Ye, something with ssl configuration.", user1, user2));
+		hardcoded.add(new Chat("Not to worry, I've hardcoded some texts, so we can still work on the other stuffs.", user1, user2));
+		hardcoded.add(new Chat("Oh THANK goodness!.", user2, user1));
+		hardcoded.add(new Chat("First lets check if we can add texts without refreshing.", user1, user2));
+		return hardcoded;
+//		return service.allChats(user1, user2);
+	}
+	
+	
+	
+	@PostMapping("/chat")
+	public void addChat(@RequestBody Chat chat) throws SQLException
+	{															
 //		// both chat id and sender should already exist
 //		if (!senderANDChatIDCorrect(text.getChatID(), text.getSender()))	
 //			throw new NullPointerException("wrong sender in chat.");
 //		
 //		textDB.save(text);
-//	}
-//
-//	
-//	
-//	
-//	
-//	
-//	
-//	
-//	
+		System.out.println(chat);
+		System.out.println("chat technically stored (database doesn't actually work however)");
+		
+		
+		
+		
+		
+		
+		
+//		service.addChat(chat);
+	}
+
+	
+	
+	
+	
+	
+	
+	
+	
 //	// sender matches a user from one of the overheads
 //	private boolean senderANDChatIDCorrect(Long id, String sender) throws SQLException
 //	{
@@ -104,7 +115,7 @@ public class ChatController {
 //	// can't create multiple chats between same users
 //	public boolean overheadAlreadyExists(String user1, String user2) throws SQLException
 //	{
-//		
+//		return service.getId(user1, user2);
 //		return valuesExist(String.format("SELECT count(*) FROM %s WHERE (%s = '%s' AND %s = '%s') OR (%s = '%s' AND %s = '%s')", 
 //		OVERHEAD_TABLE, "User1", user1, "User2", user2, "User2", user1, "User1", user2));
 //	

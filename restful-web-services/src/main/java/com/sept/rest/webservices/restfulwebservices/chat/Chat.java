@@ -10,24 +10,33 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "chat_text")
-public class Text
+public class Chat
 {
+	private String text;
+	private String sender;
+	private String receiver;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	private String text;
-	private String sender;
+	
 	
 	// annoyingly jpa 2.0 needs this
-	public Text(){}
+	public Chat(){}
 	
 	@JsonIgnore
-	public Text(String text, String sender)
+	public Chat(String text, String sender, String receiver)
 	{
 		this.text = text;
 		this.sender = sender;
+		this.receiver = receiver;
 	}
 	
-	public Long getId() {return id;}
+	public String toString()
+	{
+		return String.format("Text: %s, Sender: %s, Receiver: %s", text, sender, receiver);
+	}
+	
 	public String getSender() {return sender;}
+	public String getReceiver() {return receiver;}
+	public String getText() {return text;}
 }
