@@ -34,9 +34,12 @@ before_install:
 - tar -xzf credentials.tar.gz
 - mkdir -p lib
 # Here we use the decrypted service account credentials to authenticate the command line tool
-- gcloud components install docker-credential-gcloud
+#- gcloud components install docker-credential-gcloud
 - gcloud auth activate-service-account --key-file client-secret.json
 - gcloud auth configure-docker
+- expect "Do you want to continue (Y/n)?"
+- send "Y\r"
+
 # [END auth]
 #before_install:
 - cd frontend/todo-app
