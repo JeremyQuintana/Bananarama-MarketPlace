@@ -36,7 +36,7 @@ class LoginComponent extends Component {
         AuthenticationService
             .executeGoogleJwtAuthenticationService(idToken)
             .then((response) => {
-                AuthenticationService.registerSuccessfulLoginForJwt(res.getBasicProfile().getId(), response.data.token)
+                AuthenticationService.registerSuccessfulLoginForJwt(res.getBasicProfile().getEmail().substring(0, 8), response.data.token)
                 this.props.history.push(`/home/${this.state.username}`)
             }).catch(() => {
                 this.setState({ showSuccessMessage: false })

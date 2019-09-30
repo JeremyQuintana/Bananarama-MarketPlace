@@ -46,7 +46,9 @@ class PostComponent extends Component {
                             {this.state.postInfo.ownerId}
                         </div>
                         <div className="container postSeller"><Link to="/chat/" action="replace">Contact Seller</Link></div>
-                        <div className="container"> <button onClick={this.setEdit}>Edit Post</button></div>
+                        {(sessionStorage.getItem('authenticatedUser') == this.state.postInfo.ownerId) &&
+                          <div className="container"> <button onClick={this.setEdit}>Edit Post</button></div>
+                        }
 
                     </div>
                 );
