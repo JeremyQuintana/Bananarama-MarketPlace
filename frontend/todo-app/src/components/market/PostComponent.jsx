@@ -16,7 +16,7 @@ class PostComponent extends Component {
             postInfo: null,
             editMode: false,
         }
-        this.refreshPostInfo()
+        this.retrieveItemInfo()
 
         this.setEdit = this.setEdit.bind(this);
         this.clearEdit = this.clearEdit.bind(this);
@@ -83,22 +83,13 @@ class PostComponent extends Component {
         // send to backend and redir/show success message
     }
 
-    // update the postings array with backend data
-    refreshPostInfo() {
-        // TODO : update this to get a single post from backend
-        MarketDataService.retrieveAllPosts().then(
+    // update to mitches code
+    // instead of retrieving all posts frontend and doing a search use backed to send only one item of given id
+    retrieveItemInfo() {
+
+        MarketDataService.retrieveSpecificPost(this.props.match.params.postID).then(
             response => {
-                var i;
-                var found = false;
-                console.log(this.props.match.params.postID)
-                for (i = 0; i < response.data.length && !found; i++) {
-                    if (response.data[i].id == this.props.match.params.postID) {
-                        found = true;
-                    }
-                }
-                if (found == true) {
-                    this.setState({ postInfo: response.data[i - 1] })
-                }
+                this.setState({ postInfo: response.data });
             }
         ).catch(error => console.log("network error"));
     }

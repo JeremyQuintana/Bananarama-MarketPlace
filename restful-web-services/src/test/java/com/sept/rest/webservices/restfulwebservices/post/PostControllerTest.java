@@ -98,10 +98,8 @@ class PostControllerTest {
 	void testGetPost() throws Exception {
 		
 		Long id = mockPost1.getId();
-//	    final Post post = new Post(new Long(2), "", " ", "", "", "");
 	    Optional<Post> optionalPost = Optional.of(mockPost1);
 	    Mockito.when(db.findById(id)).thenReturn(optionalPost);
-//		Mockito.when(post).thenReturn(mockPost1);
 		
 		assertEquals(mockPost1, controller.getPost(id));
 	}

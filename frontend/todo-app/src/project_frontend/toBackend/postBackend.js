@@ -13,15 +13,14 @@ class postBackend{
     })
   }
 
-   
+
   searchItemBackend(description, category){
     return axios.post(`${API_URL}/searchitem`, {
-      
+
       description,
       category
     })
   }
-
 }
 
 export default new postBackend()
