@@ -18,4 +18,6 @@ public interface PostRepository extends JpaRepository<Post, Long>
 	public List<Post> findByDescriptionContaining(String description);
 	
 	public List<Post> findByOrderByPriceAsc();
+	public List<Post> findByDescriptionAndCategory(String description, String category);
+	public List<Post> findByOwnerId(String ownerId);
 }

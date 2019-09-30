@@ -15,25 +15,27 @@ import com.sept.rest.webservices.restfulwebservices.post.PostService;
 @Service
 public class UserService {
 
-	@Autowired
-	private JpaRepository<User, String> db;
+//	@Autowired
+//	private JpaRepository<User, String> db;
 
 	// return logged in user
 	public User getLoggedUser() 	
 	{
-		return db.findAll().get(0);
+		return null;
+//		return db.findAll().get(0);
 	}
 	
 	public void logout()
 	{
-		db.deleteAll();
+		
+//		db.deleteAll();
 	}
 	
 	public void login(User user)
 	{
-		if (db.count() > 0)
-			throw new IllegalArgumentException("a user has already been logged in.");
-		db.save(user);
+//		if (db.count() > 0)
+//			throw new IllegalArgumentException("a user has already been logged in.");
+//		db.save(user);
 	}
 
 }
