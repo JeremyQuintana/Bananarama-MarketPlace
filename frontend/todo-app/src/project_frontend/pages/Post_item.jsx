@@ -95,7 +95,7 @@ class Post_item extends Component {
 
   updateStateWithPost() {
     if (this.props.existingId != null) {
-      MarketDataService.retrievePostById(this.props.existingId).then(
+      MarketDataService.retrieveSpecificPost(this.props.existingId).then(
         response => {
           console.log(response)
           this.setState({

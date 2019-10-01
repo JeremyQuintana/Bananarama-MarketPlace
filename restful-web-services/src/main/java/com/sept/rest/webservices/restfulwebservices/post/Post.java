@@ -12,9 +12,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
 import javax.persistence.Column;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.sept.rest.webservices.restfulwebservices.jwt.JwtTokenUtil;
 
 //import com.sept.rest.webservices.restfulwebservices.todo.Post.Column;
 
@@ -97,6 +101,22 @@ public class Post implements Comparable<Post> {
 			e.printStackTrace();
 		}
 	}
+	
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 
 	//edit post column in marketplace
@@ -199,8 +219,7 @@ public class Post implements Comparable<Post> {
 	{
 		double price1 = price != null ? Double.valueOf(price) : -1;
 		double price2 = o.price != null ? Double.valueOf(o.price) : -1;
-		
-		return (int) (price1 - price2);
+		return Double.compare(price1, price2);
 	}
 	
 	

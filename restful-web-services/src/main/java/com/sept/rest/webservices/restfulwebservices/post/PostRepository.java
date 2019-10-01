@@ -19,6 +19,7 @@ public interface PostRepository extends JpaRepository<Post, Long> {
 	public List<Post> findAllByOrderByDatePostedDesc();
 	public List<Post> findAllByOrderByDatePostedAsc();
 	public List<Post> findByStatus(String status);
+	public List<Post> findByOwnerId(String ownerId);
 
 
 
