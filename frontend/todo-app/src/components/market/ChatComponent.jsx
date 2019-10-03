@@ -2,7 +2,9 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { withRouter } from "react-router-dom";
 import ChatService from "../../api/Chat/ChatService.js"
-import MarketDataService from "../../api/market/MarketDataService.js"
+import PropTypes from "prop-types";
+
+
 
 
 
@@ -129,6 +131,13 @@ class MessageList extends Component {
 }
 
 class MessageObjects extends Component {
+   static contextTypes = {
+    router: PropTypes.object
+  }
+
+   constructor(props, context) {
+     super(props, context);
+  }
   create_new_message = message => {
     return (
       <div className="message">
@@ -142,6 +151,7 @@ class MessageObjects extends Component {
   render() {
     const messages = this.props.allMeassages;
     const listMessages = messages.map(this.create_new_message);
+
     this.refreshChatLog();
 
 
@@ -152,15 +162,12 @@ class MessageObjects extends Component {
         var user1 = "user1";
         var user1 = "user2";
 
-        //console.log(this.props.history);
-        //this.props.history.push("");
-
         window.setInterval(function(){
 
-                  ChatService.testFunction().then(
+                  ChatService.getAllTexts("user1","user2").then(
 
           response => {
-           console.log(response[0]); 
+           console.log(response); 
         }
 
           )
