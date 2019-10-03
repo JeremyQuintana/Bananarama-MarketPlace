@@ -9,21 +9,15 @@ class MarketDataService {
         return axios.get(`${API_URL}/posts`);
     }
 
-    retrievesearchByPosts(description, category) {
-
-        return axios.get(`${API_URL}/posts/searchBy/${description}/${category}`);
-      
-    }
-
-    retrievesearchByPostsSort(description, category, sort) {
+    retrieveSearchByPostsSort(description, category, sort) {
 
         return axios.get(`${API_URL}/posts/searchBy/${description}/${category}/${sort}`);
-      
+
     }
 
     retrieveSpecificPost(postId){
         return axios.get(`${API_URL}/posts/${postId}`);
-      }
+    }
 
 
     updateExistingPost(id, description, title, price, category, photo) {

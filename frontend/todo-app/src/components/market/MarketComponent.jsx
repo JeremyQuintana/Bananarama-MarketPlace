@@ -28,11 +28,9 @@ class MarketComponent extends Component {
     var searchSort = this.props.match.params.searchSort;
 
     if (searchDescription == null && searchCategory == null && searchSort == null){
-      this.refreshPosts();
-    } else if (searchCategory != null && searchSort == null){
-      this.refreshsearchPosts(searchDescription, searchCategory);
-    } else if (searchSort != null){
-      this.refreshsearchPostsSort(searchDescription, searchCategory, searchSort);
+      this.getAllPosts();
+    } else {
+      this.refreshSearchPostsSort(searchDescription, searchCategory, searchSort);
     }
 
     this.handleChange = this.handleChange.bind(this)
@@ -97,50 +95,31 @@ class MarketComponent extends Component {
     submitPost(event){
       event.preventDefault();
 
-      if (this.state.sort == ""){
-        this.submitSearch();
-      } else{
-        this.submitSort();
-      }
+      this.submitSearch();
     }
 
     submitSearch(){
       var searchDescription = this.state.description;
       var searchCategory = this.state.category;
-      this.props.history.push(`/market/searchBy/` + searchDescription + `/` + searchCategory);
-    }
-
-    submitSort(){
       var searchSort = this.state.sort;
-      var searchDescription = this.state.description;
-      var searchCategory = this.state.category;
       this.props.history.push(`/market/searchBy/` + searchDescription + `/` + searchCategory + `/` + searchSort);
     }
 
     // update the postings array with backend data
-    refreshPosts() {
-
-        MarketDataService.retrieveAllPosts().then(
-            response => {
-                this.setState({ backPostings: response.data })
-            }
-        ).catch(error => console.log("network error"));
-    }
-
-    refreshsearchPosts(description, category) {
-        MarketDataService.retrievesearchByPosts(description, category).then(
-            response => {
-                this.setState({ backPostings: response.data })
-            }
-        ).catch(error => console.log("network error WTF!"));
-    }
-
-    refreshsearchPostsSort(description, category, sort) {
-          MarketDataService. retrievesearchByPostsSort(description, category, sort).then(
+    refreshSearchPostsSort(description, category, sort) {
+          MarketDataService.retrieveSearchByPostsSort(description, category, sort).then(
               response => {
                   this.setState({ backPostings: response.data })
               }
           ).catch(error => console.log("network error WTF!"));
+    }
+
+    getAllPosts(){
+      MarketDataService.retrieveAllPosts().then(
+          response => {
+              this.setState({ backPostings: response.data })
+          }
+      ).catch(error => console.log("network error WTF!"));
     }
 
 }
