@@ -46,15 +46,15 @@ public class JwtTokenAuthorizationOncePerRequestFilter extends OncePerRequestFil
         logger.debug("Authentication Request For '{}'", request.getRequestURL());
 
         final String requestTokenHeader = request.getHeader(this.tokenHeader);
-        System.out.println(requestTokenHeader);
-        String username = null;
+        System.out.println("Authorization Request with token: " + requestTokenHeader);
+        String id = null;
         String jwtToken = null;
         if (requestTokenHeader != null && requestTokenHeader.startsWith("Bearer ")) {
             jwtToken = requestTokenHeader.substring(7);
             try {
-                username = jwtTokenUtil.getUsernameFromToken(jwtToken);
+                id = jwtTokenUtil.getUsernameFromToken(jwtToken);
                 
-                logger.debug("JWT_TOKEN_USERNAME_VALUE '{}'", username);
+                logger.debug("JWT_TOKEN_USERNAME_VALUE '{}'", id);
                 
                 //really unclean this bit
                 //basically using a class that doesnt entirely fit as it requires passwords and stuff
@@ -65,7 +65,7 @@ public class JwtTokenAuthorizationOncePerRequestFilter extends OncePerRequestFil
                 //copy of original code
                 //rather than passing user info including password i just passed in a string of the username or id obtained from json
                 //need it to allow the token and data to pass through this request
-                UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(username, null, authorities);
+                UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(id, null, authorities);
                 usernamePasswordAuthenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 
                 //this part is what is needed but only accepts a Authentication class

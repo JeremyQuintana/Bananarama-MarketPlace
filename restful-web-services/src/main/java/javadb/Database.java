@@ -18,7 +18,7 @@ import java.util.List;
 
 import java.util.Scanner;
 import java.sql.Date;
-
+																									
 public class Database {
 
 	private static Statement statement;
@@ -118,6 +118,7 @@ public class Database {
 		List<List<String>> list = new ArrayList<List<String>>();
 		BufferedReader br = new BufferedReader(new FileReader("DATABD.txt"));
 		String line= "";
+		
 		while((line=br.readLine()) != null)  {
 			String[] dataarray = line.split(DELIMITER);
 			ArrayList<String> arrayList = new ArrayList<String>(Arrays.asList(dataarray));
