@@ -15,5 +15,10 @@ class ChatService {
             text
         });
     }
+
+    testFunction(){
+    return axios.get(`${API_URL}/chat`);
+    }
+
 }
 export default new ChatService()

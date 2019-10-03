@@ -149,17 +149,23 @@ class MessageObjects extends Component {
   }
 
       refreshChatLog() {
+        var user1 = "user1";
+        var user1 = "user2";
+
+        //console.log(this.props.history);
+        //this.props.history.push("");
+
         window.setInterval(function(){
 
-                  MarketDataService.retrieveAllPosts().then(
+                  ChatService.testFunction().then(
 
           response => {
-           console.log(response); 
+           console.log(response[0]); 
         }
 
           )
 
-}, 1000);
+}, 10000);
 
 
     }
