@@ -26,7 +26,7 @@ import org.springframework.web.bind.annotation.*;
 import com.sept.rest.webservices.restfulwebservices.jwt.JwtTokenUtil;
 
 
-@CrossOrigin(origins="http://localhost:3000")
+@CrossOrigin(origins="${spring.crossorigin.url}")
 @RestController
 public class PostController {
 

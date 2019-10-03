@@ -31,7 +31,7 @@ import org.springframework.web.bind.annotation.RestController;
 //2			Straight fire ...	s128719
 //1			Dont talk to m...	s238197
 
-@CrossOrigin(origins="http://localhost:3000")
+@CrossOrigin(origins="${spring.crossorigin.url}")
 @RestController
 public class ChatController {
 	

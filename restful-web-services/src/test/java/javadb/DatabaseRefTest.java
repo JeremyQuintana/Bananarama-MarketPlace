@@ -8,6 +8,7 @@ import java.util.LinkedList;
 
 import org.junit.AfterClass;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import com.sept.rest.webservices.restfulwebservices.post.Post;
@@ -22,13 +23,13 @@ class DatabaseRefTest {
 	static void setUpBeforeClass() throws Exception {
 		db = new DatabaseRef();
 	}
-
+	
 	@Test
 	void testConnection() {
 		assertTrue(db.canConnect());
 	}
 
-
+	
 	@Test
 	void testCheckId() throws SQLException {
 		assertTrue(db.checkId("s1234567"));
@@ -41,13 +42,13 @@ class DatabaseRefTest {
 		assertTrue(db.checkPassword("s1234567", "123456"));
 		assertFalse(db.checkPassword("s1234567", "4m90348m0v"));
 	}
-
+	
 	@Test
 	void testCheck_for_sale() throws SQLException {
 		for (Post post : db.check_for_sale().values())
 			assertEquals(post.getStatus(), Status.AVAILABLE);
 	}
-
+	
 	@Test
 	void testSearchCategory() throws SQLException {
 		for (Post post : db.searchCategory("Automotive").values())
@@ -59,7 +60,7 @@ class DatabaseRefTest {
 		for (Post post : db.sale_history("s1234567").values())
 			assertEquals(post.getOwnerId(), "s1234567");
 	}
-
+	
 	@Test
 	void testAddPost() throws SQLException {
 		
