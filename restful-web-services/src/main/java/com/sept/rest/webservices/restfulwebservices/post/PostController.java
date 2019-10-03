@@ -1,101 +1,119 @@
 package com.sept.rest.webservices.restfulwebservices.post;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Date;
+import java.util.Collections;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
+import org.springframework.data.domain.Sort;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
 
-import javadb.DatabaseRef;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+import com.sept.rest.webservices.restfulwebservices.jwt.JwtTokenUtil;
 
 
 @CrossOrigin(origins="http://localhost:3000")
 @RestController
 public class PostController {
 
+	@Autowired
+    private JwtTokenUtil jwtTokenUtil;
 
-	@Autowired 
-	private PostRepository db;
-	
-	//random stuff to save
-	
-	// show all posts when viewing marketplace
-	/*@GetMapping("/posts")				
-	public String[][] getAllPosts()
-	{
-		
-		String[][] posts = new String[db.findAll().size()][5];
-		int i=0;
-		for (Post post : db.findAll())
-		{
-			String[] postStr = {Long.toString(post.getId()), post.getTitle(), post.getDescription(), post.getOwnerId(), post.getPrice()};
-			posts[i++] = postStr;
-		}
-		return posts;
-	}*/
-	@GetMapping("/posts")			
+	@Autowired
+	private PostService service;
+
+
+
+	@GetMapping("/posts")
 	public List<Post> getAllPosts()
 	{
-		for (Post post : db.findByDescriptionAndCategory("fandangled mess", "Annoyingly Unnexplained"))
-			System.out.println(post);
-		return db.findAll();
+		return service.getAll();
 	}
 	
-	//HERE IS WHERE THE CONTENTS ON SEARCH COME THROUGH
-	@PostMapping("/searchitem")
-	public void Search_Post(@RequestBody SearchPost search) {
-		
-		search.print();
+	
+	@GetMapping("/posts/searchBy/{description}/{category}/{sort}")
+	public List<Post> Sort(@PathVariable String description, @PathVariable String category, @PathVariable String sort) {
+			
+		List<Post> sorted = service.sortAll(sort);
+		return service.filterByDescriptionAndCategory(description, category, sorted);
 	}
-	
-	//HERE IS WHERE TO "SEND THE RESULTS"
-	@GetMapping("/posts/searchBy{description}and{category}")	
-	public List<Post> getfindByDescriptionAndCategory(@PathVariable String description, @PathVariable String category)
-	{
-		return db.findByDescriptionAndCategory(description, category);
-	}		
-	
+
 
 	// adds a post to marketplace
 	@PostMapping("/postitem")
-	public Post addPost(@RequestBody Post post)
+	public Post addPost(@RequestBody Post post, HttpServletRequest request)
 	{
-		return db.save(post);
+		post.setOwner(getOwnerId(request));
+		return service.update(post);
+	}
+
+	// when need to open a post in marketplace
+	@PutMapping("/posts/{id}")
+	public Post updatePost(@PathVariable Long id, @RequestBody Post edit, HttpServletRequest request)
+	{
+		if (!correctOwner(id, request)) {
+			return null;
+		}
+		edit.setOwner(getOwnerId(request));
+		edit.setId(id);
+		return service.update(edit);
+	}
+
+
+	@DeleteMapping("/posts/{id}")
+	public void deletePost(@PathVariable Long id,  HttpServletRequest request) 
+	{
+		if (correctOwner(id, request))
+			service.delete(id);
 	}
 	
-	
-	// when need to open a post in marketplace
-	@RequestMapping("/market/{id}")
+	@GetMapping("/posts/{id}")
 	public Post getPost(@PathVariable Long id)
 	{
-		return db.findById(id).get();
+		return service.get(id);
+
 	}
 	
-	// when need to open a post in marketplace
-	@PutMapping("/market/{id}")
-	public Post updatePost(@PathVariable Long id, @RequestBody Post post)
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	private String getOwnerId(HttpServletRequest request)
 	{
-		return db.save(post);
+		return jwtTokenUtil.getUsernameFromToken(request.getHeader("Authorization").substring(7));
 	}
 	
-	@DeleteMapping("/market/{id}")
-	public void deletePost(@PathVariable Long id) 
+	private boolean correctOwner(Long id, HttpServletRequest request)
 	{
-		db.deleteById(id);
+		Post realPost = service.get(id);
+		String loggedOwner =getOwnerId(request);
+		
+		if (!realPost.getOwnerId().equals(loggedOwner))
+			throw new NullPointerException("Error Update: Edit User ID " + loggedOwner + " does not match Item Owner ID " + realPost.getOwnerId());
+		return true;
 	}
+
+
+
+
 }
-
-

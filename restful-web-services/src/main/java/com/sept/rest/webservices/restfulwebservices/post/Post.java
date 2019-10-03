@@ -12,16 +12,20 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
 import javax.persistence.Column;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.sept.rest.webservices.restfulwebservices.jwt.JwtTokenUtil;
 
 //import com.sept.rest.webservices.restfulwebservices.todo.Post.Column;
 
 import javadb.DatabaseRef;
 
 @Entity
-public class Post {
+public class Post implements Comparable<Post> {
 	
 	// variables need to be above constructor for json
 	/*to change*/
@@ -30,7 +34,7 @@ public class Post {
 	private String price;
 	private String category;
 	private String photo;
-	private String ownerId = "s1234567";
+	private String ownerId;
 	private Date datePosted = new Date(new java.util.Date().getTime());
 	
 	@Enumerated(EnumType.STRING)
@@ -76,6 +80,10 @@ public class Post {
 		this.datePosted = new Date(new java.util.Date().getTime()); ;
 	}
 	
+	public void setOwner(String ownerId) {
+		this.ownerId = ownerId;
+	}
+	
 	// post creation from a (raw) database
 	@JsonIgnore
 	public Post(ResultSet post)
@@ -93,6 +101,22 @@ public class Post {
 			e.printStackTrace();
 		}
 	}
+	
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 
 	//edit post column in marketplace
@@ -133,8 +157,6 @@ public class Post {
 	{
 		DatabaseRef.update("Update "+ TABLE_NAME +" set " + column.key() + "='"+ value +"' where PostID='"+id+"'");
 	}
-	
-	
 	
 	
 	
@@ -192,6 +214,35 @@ public class Post {
 		return id + " " + ownerId + " " + title + " " + description + " " + price + " " + status + " " + datePosted + " " + category + photo;
 	}
 	
+	@Override
+	public int compareTo(Post o) 
+	{
+		double price1 = price != null ? Double.valueOf(price) : -1;
+		double price2 = o.price != null ? Double.valueOf(o.price) : -1;
+		return Double.compare(price1, price2);
+	}
+	
+	
+	@Override
+	public int hashCode() 
+	{
+		return 31 + ((id == null) ? 0 : id.hashCode());
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) 					return true;
+		if (obj == null) 					return false;
+		if (getClass() != obj.getClass())	return false;
+		Post other = (Post) obj;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		return true;
+	}
+
 	public Long getId()			{return id;}
 	public void setId(Long id)	{this.id = id;}
 	public Status getStatus()		{return status;}
@@ -204,3 +255,5 @@ public class Post {
 	public String getPhoto() {return photo;}
 	
 }
+
+

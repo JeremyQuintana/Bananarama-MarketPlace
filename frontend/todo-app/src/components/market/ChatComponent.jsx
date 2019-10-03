@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { withRouter } from "react-router-dom";
-import axios from 'axios'
-import { API_URL } from '../../Constants'
+import ChatService from "../../api/Chat/ChatService.js"
+
 
 import "./Chat.css";
 const Chats = [
@@ -17,15 +17,6 @@ const Chats = [
   }
 ];
 
-class postBackend{
-
-  postItemBackend(chatid, text){
-    return axios.post(`${API_URL}/postitem`, {
-      chatid,
-      text
-    })
-  }
-}
 
 function CuurentChats() {
   return (
@@ -68,7 +59,7 @@ class ChatComponent extends Component {
     if (newMessageToOutPut.text !== "") {
       const messages = [...this.state.messages, newMessageToOutPut];
       console.log(newMessageToOutPut);
-
+      ChatService.addText("sender","reciver",newMessageToOutPut.text);
       this.setState({
         messages: messages,
         message: { text: "", key: "" }
@@ -146,6 +137,11 @@ class MessageObjects extends Component {
 
     return <ul className="messages">{listMessages}</ul>;
   }
+
+      refreshPosts() {
+    
+        ChatService.getAllTexts("user1", "user2")
+    }
 }
 
 export default withRouter(ChatComponent);

@@ -51,7 +51,7 @@ public class JwtAuthenticationRestController {
 
   @Autowired
   private UserDetailsService jwtInMemoryUserDetailsService;
-  
+
   private static final String validEmailDomain = "@student.rmit.edu.au";
 
   @RequestMapping(value = "${jwt.get.token.uri}", method = RequestMethod.POST)
@@ -69,7 +69,7 @@ public class JwtAuthenticationRestController {
 		  //checks email
 		  if (payload.getEmail().contains(validEmailDomain)) {
 			  //creates a token with a unique id for the email address placed inside
-			  token = jwtTokenUtil.generateToken(payload.getSubject());
+			  token = jwtTokenUtil.generateToken(payload.getEmail().substring(0,8));
 		  } else {
 			  valid = false;
 		  }
@@ -81,6 +81,7 @@ public class JwtAuthenticationRestController {
 	  ResponseEntity<?> retVal = null;
 	  if (valid == true) {
 		  retVal = ResponseEntity.ok(new JwtTokenResponse(token));
+		  System.out.println("Logging in User ID: " + payload.getEmail().substring(0,8));
 	  } else {
 		  throw new AuthenticationException("INVALID_CREDENTIALS", null);
 	  }
