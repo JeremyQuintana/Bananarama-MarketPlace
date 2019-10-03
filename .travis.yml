@@ -15,7 +15,7 @@ branches:
     - master
     - travis_impl
     - feature_docker
-#   - develop
+    - develop
 #env:
 # Make sure gcloud command is on our PATH and the App Engine SDK is in the Python path
 #- GAE_PYTHONPATH=${HOME}/.cache/google_appengine PATH=$PATH:${HOME}/google-cloud-sdk/bin PYTHONPATH=${PYTHONPATH}:${GAE_PYTHONPATH} CLOUDSDK_CORE_DISABLE_PROMPTS=1
@@ -60,13 +60,13 @@ install:
 # Install the dependencies
 script:
 # Run the unit tests
-#- cd ../frontend/todo-app THIS
-#- npm test THIS
-#- cd ../../restful-web-services THIS
-#- mvn test THIS
+- cd ../frontend/todo-app 
+- npm test 
+- cd ../../restful-web-services 
+#- mvn test 
 # [START deploy]
 # Deploy the app
-- mvn -Dmaven.test.skip=true package
+- mvn package
 #- bash docker_login
 - docker build -t gcr.io/sept-248413/market-app:$TRAVIS_JOB_ID .
 - docker push gcr.io/sept-248413/market-app:$TRAVIS_JOB_ID
