@@ -68,16 +68,16 @@ script:
 # Deploy the app
 - mvn -Dmaven.test.skip=true package
 #- bash docker_login
-- docker build -t gcr.io/sept-248413/market-app:TRAVIS_JOB_ID .
-- docker push gcr.io/sept-248413/market-app:TRAVIS_JOB_ID
+- docker build -t gcr.io/sept-248413/market-app:$TRAVIS_JOB_ID .
+- docker push gcr.io/sept-248413/market-app:$TRAVIS_JOB_ID
 - cd ../frontend/todo-app
-- docker build -t gcr.io/sept-248413/market-front:TRAVIS_JOB_ID .
-- docker push gcr.io/sept-248413/market-front:TRAVIS_JOB_ID
+- docker build -t gcr.io/sept-248413/market-front:$TRAVIS_JOB_ID .
+- docker push gcr.io/sept-248413/market-front:$TRAVIS_JOB_ID
 #- gcloud -q app deploy app.yaml --promote
 # Run and end to end test
 - cd ../..
 - bash install_kubectl
 - gcloud container clusters get-credentials bananarama-gke-1 --zone australia-southeast1-a --project sept-248413
-- kubectl set image pod/frontendpod frontendcon=gcr.io/sept-248413/market-front:TRAVIS_JOB_ID
-- kubectl set image pod/backendpod backendcon=gcr.io/sept-248413/market-app:TRAVIS_JOB_ID
+- kubectl set image pod/frontendpod frontendcon=gcr.io/sept-248413/market-front:$TRAVIS_JOB_ID
+- kubectl set image pod/backendpod backendcon=gcr.io/sept-248413/market-app:$TRAVIS_JOB_ID
 # [END deploy]

@@ -22,10 +22,15 @@ class MarketComponent extends Component {
       category: '',
       sort: ''
     }
-
+    var searchDescription = null;
+    var searchCategory = null;
+    var searchSort = null;
+    if(this.props.match != null){
     var searchDescription = this.props.match.params.searchDescription;
     var searchCategory = this.props.match.params.searchCategory;
     var searchSort = this.props.match.params.searchSort;
+    }
+    
 
     if (searchDescription == null && searchCategory == null && searchSort == null){
       this.getAllPosts();
@@ -35,10 +40,12 @@ class MarketComponent extends Component {
 
     this.handleChange = this.handleChange.bind(this)
     this.submitPost = this.submitPost.bind(this)
-
-    this.unlisten = this.props.history.listen((location, action) => {
-      window.location.reload();
-    });
+    if(this.props.history != null){
+      this.unlisten = this.props.history.listen((location, action) => {
+        window.location.reload();
+      });
+    }
+    
   }
 
 

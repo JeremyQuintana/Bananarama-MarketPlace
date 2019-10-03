@@ -86,12 +86,14 @@ class PostComponent extends Component {
     // update to mitches code
     // instead of retrieving all posts frontend and doing a search use backed to send only one item of given id
     retrieveItemInfo() {
-
-        MarketDataService.retrieveSpecificPost(this.props.match.params.postID).then(
-            response => {
-                this.setState({ postInfo: response.data });
-            }
-        ).catch(error => console.log("network error"));
+        if(this.props.match != null){
+            MarketDataService.retrieveSpecificPost(this.props.match.params.postID).then(
+                response => {
+                    this.setState({ postInfo: response.data });
+                }
+            ).catch(error => console.log("network error"));
+        }
+        
     }
 
 }
