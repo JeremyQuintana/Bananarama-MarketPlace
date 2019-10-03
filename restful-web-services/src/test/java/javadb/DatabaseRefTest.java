@@ -10,11 +10,12 @@ import org.junit.AfterClass;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+import org.springframework.test.context.TestPropertySource;
 
 import com.sept.rest.webservices.restfulwebservices.post.Post;
 import com.sept.rest.webservices.restfulwebservices.post.Post.Status;
 
-
+@TestPropertySource(properties = "spring.datasource.url= ${spring.datasource.urltest}")
 class DatabaseRefTest {
 
 	
