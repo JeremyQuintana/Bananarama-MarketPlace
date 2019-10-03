@@ -118,7 +118,7 @@ class MarketComponent extends Component {
               response => {
                   this.setState({ backPostings: response.data })
               }
-          ).catch(error => console.log("network error WTF!"));
+          ).catch(error => console.log("network error"));
     }
 
     getAllPosts(){
@@ -126,7 +126,7 @@ class MarketComponent extends Component {
           response => {
               this.setState({ backPostings: response.data })
           }
-      ).catch(error => console.log("network error WTF!"));
+      ).catch(error => console.log("network error"));
     }
 
 }
