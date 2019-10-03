@@ -1,0 +1,33 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: backendpod
+  labels:
+    app: master
+spec:
+
+  restartPolicy: Never
+
+  containers:
+
+  - name: backendcon
+    image: gcr.io/sept-248413/market-app:v1
+    ports:
+    - containerPort: 8080
+    
+
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: backendserv
+spec:
+  externalTrafficPolicy: Cluster
+  ports:
+  - port: 8080
+    targetPort: 8080
+    name: back
+  selector:
+    app: master
+  type: LoadBalancer

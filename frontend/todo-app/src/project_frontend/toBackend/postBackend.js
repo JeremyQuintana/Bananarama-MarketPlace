@@ -13,11 +13,20 @@ class postBackend{
     })
   }
 
-   
+
   searchItemBackend(description, category){
     return axios.post(`${API_URL}/searchitem`, {
+
       description,
       category
+    })
+  }
+  sortItemBackend(description, category, sort){
+    return axios.post(`${API_URL}/searchitemsort`, {
+
+      description,
+      category,
+      sort
     })
   }
 }

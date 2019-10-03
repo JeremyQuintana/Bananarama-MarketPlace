@@ -7,10 +7,15 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
@@ -21,14 +26,20 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockHttpServletRequest;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+
+import com.sept.rest.webservices.restfulwebservices.jwt.JwtTokenUtil;
+import com.sept.rest.webservices.restfulwebservices.jwt.resource.JwtTokenResponse;
 
 
 /*we cannot test the link and request*/
 
 @RunWith(SpringRunner.class)
+@TestPropertySource(properties = "spring.datasource.url= ${spring.datasource.urltest}")
 @SpringBootTest
 // this don't work, application context error
 //@WebMvcTest(PostController.class)
@@ -36,35 +47,54 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 class PostControllerTest {
 
 	@MockBean
-	private PostRepository db;
+	private PostService service;
 	@Autowired
 	private PostController controller;
 	
 	@Autowired
 	private MockMvc mvc;
 	
-	private static Post mockPost1;
-	private static Post mockPost2;
+	@Autowired
+	private JwtTokenUtil jwtTokenUtil;
+	
+	private static Post post1;
+	private static Post post2;
+	private static Post post3;
+	private static MockHttpServletRequest mockAuthentication;
+	private static List<Post> posts;
 	
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
-		mockPost1 = new Post(new Long(2), "s1234567", "Appleberry's", "Delicious", "2.222", "Fruit");
-		mockPost1 = new Post(new Long(5), "s1234567", "doodoo boo", "Cleans the backend leaving no traces", "9999", "Baby Wipes");
+		post1 = new Post(new Long(2), "s1234567", "Appleberry's", "Delicious", "2.222", "Fruit");
+		post2 = new Post(new Long(5), "s1234567", "doodoo boo", "Cleans the backend leaving no traces", "9999", "Baby Wipes");
+		post3 = new Post(new Long(6), "s3717497", "Pill", "Pickpocketed off Morpheus", "2", "Medecine");
+		
+		posts = new ArrayList<>();
+		posts.add(post1);
+		posts.add(post2);
+		posts.add(post3);
+		
+	}
+	
+	@BeforeEach
+	void setUp() {
+		mockAuthentication = new MockHttpServletRequest();
 	}
 
 	@Test
 	void testAddPost() {
-		Mockito.when(db.save(mockPost1)).thenReturn(mockPost1);
-		assertEquals(mockPost1, controller.addPost(mockPost1));
+		addOwnerIDToHeader("s1234567");
+		Mockito.when(service.update(post1)).thenReturn(post1);
+		assertEquals(post1, controller.addPost(post1, mockAuthentication));
 	}
 	
 	@Test
 	void testGetAllPosts() throws Exception {
 		List<Post> posts = new ArrayList<>();
-		posts.add(mockPost1);
-		posts.add(mockPost2);
+		posts.add(post1);
+		posts.add(post2);
 		
-		Mockito.when(db.findAll()).thenReturn(posts);
+		Mockito.when(service.getAll()).thenReturn(posts);
 		
 		/*this isn't working as @...(secure = false) HAS BEEN DEPRECATED*/
 //		mvc.perform(get("/posts")
@@ -78,22 +108,49 @@ class PostControllerTest {
 	@Test
 	void testGetPost() throws Exception {
 		
-		Long id = mockPost1.getId();
-//	    final Post post = new Post(new Long(2), "", " ", "", "", "");
-	    Optional<Post> optionalPost = Optional.of(mockPost1);
-	    Mockito.when(db.findById(id)).thenReturn(optionalPost);
-//		Mockito.when(post).thenReturn(mockPost1);
-		
-		assertEquals(mockPost1, controller.getPost(id));
+		Long id = post1.getId();
+	    Mockito.when(service.get(id)).thenReturn(post1);
+		assertEquals(post1, controller.getPost(id));
 	}
 	
 	@Test
 	void testUpdatePost() throws Exception 
 	{
-		Mockito.when(db.save(mockPost1)).thenReturn(mockPost1);
-		assertEquals(mockPost1, controller.updatePost(mockPost1.getId(), mockPost1));
+		addOwnerIDToHeader("s1234567");
+		Mockito.when(service.update(post1)).thenReturn(post1);
+		Mockito.when(service.get(post1.getId())).thenReturn(post1);
+		
+		assertEquals(post1, controller.updatePost(post1.getId(), post1, mockAuthentication));
+		
 	}
 	
+	@Test 
+	void testUpdatePostInvalidID() throws Exception 
+	{
+		addOwnerIDToHeader("random");
+		Mockito.when(service.update(post1)).thenReturn(post1);
+		Mockito.when(service.get(post1.getId())).thenReturn(post1);
+		
+		assertThrows(NullPointerException.class, () -> {
+				controller.updatePost(post1.getId(), post1, mockAuthentication);
+		});
+	}
+	
+	
+	
+	
+	@Test
+	void testSort()
+	{
+		
+//		Mockito.when().thenReturn();
+		
+	}
+	
+	private void addOwnerIDToHeader(String ownerId)
+	{
+		mockAuthentication.addHeader("Authorization", "Bearer: " + jwtTokenUtil.generateToken(ownerId));
+	}
 	
 //	@Test
 //	public void testGetTicketByEmail() throws Exception {

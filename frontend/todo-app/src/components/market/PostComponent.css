@@ -1,0 +1,11 @@
+.topFix {
+    margin-top: 80px;
+}
+  
+.editForm textArea{
+    width: auto;
+}
+
+.centerFix {
+    text-align: center;
+}

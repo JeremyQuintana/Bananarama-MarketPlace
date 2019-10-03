@@ -1,31 +1,21 @@
-.Search_item {
+.Search_item{
   margin-top: 20px;
-  }
+  margin-bottom: 20px;
+  height: 30px;
+}
 
-.input-icons i, .inputnot { 
-  position: absolute; 
-  } 
+.refineItem{
+  height: 30px;
+  margin-left: 5px;
+  margin-right: 5px;
+  display: inline-block;
+  vertical-align: middle;
+}
 
- .inputnot{
-  margin-left: -32%;
-  height:35px;  
-  }
- 
+#description{
+  width: 500px;
+}
 
-.icon { 
-  padding: 2px; 
-  text-align: center; 
-  } 
-
-.inputfield, .search_words { 
-  width: 40%; 
-  height:35px;
-  padding: 4px; 
-  text-align: center; 
-  font-size: 15px;
-  }
-
-.marketTitle{
-  margin-top: -60px;
-  margin-bottom: 15px;
-  } 
+.posting{
+  margin-bottom: 10px;
+}
