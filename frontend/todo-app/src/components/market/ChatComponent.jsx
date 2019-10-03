@@ -47,9 +47,13 @@ class ChatComponent extends Component {
   }
   handleInput = e => {
     const itemText = e.target.value;
-    const message = { text: itemText, key: Date.now() };
+
+    // needs to be some username at some poiunt
+    var username = "thisUsername";
+    const message = { text: itemText, username };
     this.setState({
-      message
+      message,
+      username
     });
   };
   addMessage = e => {
@@ -59,7 +63,10 @@ class ChatComponent extends Component {
     if (newMessageToOutPut.text !== "") {
       const messages = [...this.state.messages, newMessageToOutPut];
       console.log(newMessageToOutPut);
+
+      // calling it here 
       ChatService.addText("sender","reciver",newMessageToOutPut.text);
+
       this.setState({
         messages: messages,
         message: { text: "", key: "" }
@@ -138,9 +145,11 @@ class MessageObjects extends Component {
     return <ul className="messages">{listMessages}</ul>;
   }
 
-      refreshPosts() {
+      refreshChatLog() {
     
-        ChatService.getAllTexts("user1", "user2")
+        ChatService.getAllTexts("user1", "user2").then(
+
+          )
     }
 }
 
