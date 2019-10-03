@@ -20,8 +20,7 @@ import LogoutComponent from '../todo/LogoutComponent.jsx'
 import WelcomeComponent from '../todo/WelcomeComponent.jsx'
 import TodoComponent from '../todo/TodoComponent.jsx'
 import Post_item from '../../project_frontend/pages/Post_item.jsx';
-import SearchComponent from './SearchComponent.jsx';
-import SearchComponentSort from './SearchComponentSort.jsx';
+
 //   <AuthenticatedRoute path="/posts/searchBy" exact component={SearchComponent} />
 //<AuthenticatedRoute path="/posts/searchBy/:description/:item_category" exact component={SearchComponent} />
 // This component organises all the other components together
