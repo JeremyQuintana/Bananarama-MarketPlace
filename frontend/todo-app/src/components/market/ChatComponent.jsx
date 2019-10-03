@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { withRouter } from "react-router-dom";
 import ChatService from "../../api/Chat/ChatService.js"
+import MarketDataService from "../../api/market/MarketDataService.js"
+
 
 
 import "./Chat.css";
@@ -140,16 +142,26 @@ class MessageObjects extends Component {
   render() {
     const messages = this.props.allMeassages;
     const listMessages = messages.map(this.create_new_message);
+    this.refreshChatLog();
 
 
     return <ul className="messages">{listMessages}</ul>;
   }
 
       refreshChatLog() {
-    
-        ChatService.getAllTexts("user1", "user2").then(
+        window.setInterval(function(){
+
+                  MarketDataService.retrieveAllPosts().then(
+
+          response => {
+           console.log(response); 
+        }
 
           )
+
+}, 1000);
+
+
     }
 }
 
