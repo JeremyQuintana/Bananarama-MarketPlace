@@ -4,7 +4,7 @@ language: node_js
 node_js: 
   - "stable"
 
-# Cache Google Cloud SDK between commands
+# Cache our Gcloud SDK between commands
 cache:
   directories:
   - "$HOME/google-cloud-sdk/"
@@ -13,12 +13,19 @@ cache:
 branches:
   only:
     - master
-#    - travis_impl
-#    - feature_docker
+    - travis_impl
+    - feature_docker
     - develop
-
+#env:
+# Make sure gcloud command is on our PATH and the App Engine SDK is in the Python path
+#- GAE_PYTHONPATH=${HOME}/.cache/google_appengine PATH=$PATH:${HOME}/google-cloud-sdk/bin PYTHONPATH=${PYTHONPATH}:${GAE_PYTHONPATH} CLOUDSDK_CORE_DISABLE_PROMPTS=1
 before_install:
-
+#- sudo apt-get install expect
+# Install Google App Engine Python SDK
+#- if [ ! -d "${GAE_PYTHONPATH}" ]; then
+#    python scripts/fetch_gae_sdk.py $(dirname "${GAE_PYTHONPATH}");
+#  fi
+# [START auth]
 # Decrypt the credentials we added to the repo using the key we added with the Travis command line tool
 - openssl aes-256-cbc -K $encrypted_0981bbf19127_key -iv $encrypted_0981bbf19127_iv -in credentials.tar.gz.enc -out credentials.tar.gz -d
 # If the SDK is not already cached, download it and unpack it
@@ -28,22 +35,25 @@ before_install:
 - tar -xzf credentials.tar.gz
 - mkdir -p lib
 # Here we use the decrypted service account credentials to authenticate the command line tool
-
+#- gcloud components install docker-credential-gcloud
 - gcloud auth activate-service-account --key-file client-secret.json
 - bash docker_cred_fix
-# Docker configuration:
+#- gcloud auth configure-docker
 - docker-credential-gcr configure-docker
 - gcloud config set project sept-248413
 
 
+#- docker 
+#- ./docker_auth.sh
+#- spawn "gcloud auth configure-docker"
+#- expect "Do you want to continue (Y/n)?" { send "Y\r" }
 
-
-before_install:
-# Download frontend dependencies
+# [END auth]
+#before_install:
 - cd frontend/todo-app
 - npm ci
 - cd ../../restful-web-services
-#- mvn compile not needed as tests are run from 'mvn package' anyway
+#- mvn compile THIS
 install:
 # Set the correct project to deploy to
 #- gcloud config set project sept-248413
@@ -53,20 +63,21 @@ script:
 - cd ../frontend/todo-app 
 - npm test 
 - cd ../../restful-web-services 
-#- mvn test - > not needed as tests are automatically run in 'mvn package'
-
+#- mvn test 
+# [START deploy]
+# Deploy the app
 - mvn package
-
-# Deploy the app to Docker
+#- bash docker_login
 - docker build -t gcr.io/sept-248413/market-app:$TRAVIS_BUILD_ID .
 - docker push gcr.io/sept-248413/market-app:$TRAVIS_BUILD_ID
 - cd ../frontend/todo-app
 - docker build -t gcr.io/sept-248413/market-front:$TRAVIS_BUILD_ID .
 - docker push gcr.io/sept-248413/market-front:$TRAVIS_BUILD_ID
-
-# Deploy to Google Cloud via kubernetes
+#- gcloud -q app deploy app.yaml --promote
+# Run and end to end test
 - cd ../..
 - bash install_kubectl
 - gcloud container clusters get-credentials bananarama-gke-1 --zone australia-southeast1-a --project sept-248413
 - kubectl set image pod/frontendpod frontendcon=gcr.io/sept-248413/market-front:$TRAVIS_BUILD_ID
 - kubectl set image pod/backendpod backendcon=gcr.io/sept-248413/market-app:$TRAVIS_BUILD_ID
+# [END deploy]
