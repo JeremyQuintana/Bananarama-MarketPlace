@@ -19,7 +19,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 //if doing eg: public List<String> stuff()
 //rest controller will AUTO CONVERT to json, and send to frontend
 
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "${spring.crossorigin.url}")
 @RestController
 public class TodoResource {
 
