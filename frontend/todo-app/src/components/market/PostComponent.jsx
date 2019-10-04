@@ -93,7 +93,7 @@ class PostComponent extends Component {
                 }
             ).catch(error => console.log("network error"));
         }
-        
+
     }
 
 }
