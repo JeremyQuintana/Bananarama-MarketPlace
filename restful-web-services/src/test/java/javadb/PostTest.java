@@ -7,12 +7,14 @@ import java.sql.SQLException;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+import org.springframework.test.context.TestPropertySource;
 
 import com.sept.rest.webservices.restfulwebservices.post.Post;
 import com.sept.rest.webservices.restfulwebservices.post.Post.Column;
 import com.sept.rest.webservices.restfulwebservices.post.Post.Status;
-
+@TestPropertySource(properties = "spring.datasource.url= ${spring.datasource.urltest}")
 class PostTest {
 
 	
@@ -54,7 +56,7 @@ class PostTest {
 		assertEquals(post.getTitle(), "EditedName");
 		testDatabaseCellChange(Column.NAME, post.getId(), "EditedName");
 	}
-
+	
 	@Test
 	void testDelete() throws SQLException {
 		post.delete();
@@ -62,7 +64,7 @@ class PostTest {
 		assertEquals(post.getStatus(), Status.DELETED);
 		testDatabaseCellChange(Column.STATUS, post.getId(), "D");
 	}
-
+	
 	@Test
 	void testSold() throws SQLException {
 		post.sold();

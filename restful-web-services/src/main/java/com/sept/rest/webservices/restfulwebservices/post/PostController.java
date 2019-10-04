@@ -24,9 +24,13 @@ import org.springframework.stereotype.Repository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import com.sept.rest.webservices.restfulwebservices.jwt.JwtTokenUtil;
+import com.sept.rest.webservices.restfulwebservices.post.Post.Status;
 
 
-@CrossOrigin(origins="http://localhost:3000")
+
+
+
+@CrossOrigin(origins="${spring.crossorigin.url}")
 @RestController
 public class PostController {
 
@@ -34,102 +38,24 @@ public class PostController {
     private JwtTokenUtil jwtTokenUtil;
 
 	@Autowired
-	private PostRepository db;
+	private PostService service;
 
 
-
+	// posts that are for sale
 	@GetMapping("/posts")
-	public List<Post> getAllPosts()
+	public List<Post> getAllAvailablePosts()
 	{
-		//ArrayList<Post> posts = new ArrayList<>(db.findAll());
-		return db.findAll();
-		//posts.retainAll(db.findByStatus("AVAILABLE"));
-	//	for (int i = 0; i < posts.size(); i++) {
-		//	System.out.println(posts.get(i));}
-		//return posts;
-
+		return service.getAllAvailable();
 	}
-
-
-	@GetMapping("/posts/searchBy/{description}/{category}")
-	public List<Post> getByDescriptionAndCategory(@PathVariable String description, @PathVariable String category)
-	{
-		ArrayList<Post> posts = new ArrayList<>(db.findAll());
-		if (!description.equals("undefined")) {
-			posts.retainAll(db.findByDescriptionContaining(description));
-		}
-		if (!category.equals("all")) {
-			posts.retainAll(db.findByCategory(category));
-		}
-
-		return posts;
-	}
-
+	
+	
 	@GetMapping("/posts/searchBy/{description}/{category}/{sort}")
 	public List<Post> Sort(@PathVariable String description, @PathVariable String category, @PathVariable String sort) {
-
-
-		if(sort.equals("High")){
-			ArrayList<Post> sortsPost = new ArrayList<>(db.findAll());
-			if (!description.equals("undefined")) {
-				sortsPost.retainAll(db.findByDescriptionContaining(description));
-			}
-
-			if (!category.equals("all")) {
-				sortsPost.retainAll(db.findByCategory(category));
-			}
-
-			Collections.sort(sortsPost, new SortPost());
-			Collections.reverse(sortsPost);
-			return sortsPost;
-		}
-
-
-		if(sort.equals("Low")){
-			ArrayList<Post> sortsPost = new ArrayList<>(db.findAll());
-			if (!description.equals("undefined")) {
-				sortsPost.retainAll(db.findByDescriptionContaining(description));
-			}
-
-			if (!category.equals("all")) {
-				sortsPost .retainAll(db.findByCategory(category));
-			}
-
-			Collections.sort(sortsPost, new SortPost());
-			return sortsPost;
-		}
-
-
-		if(sort.equals("Old")){
-			ArrayList<Post> sortsPost = new ArrayList<>(db.findAllByOrderByDatePostedAsc());
-			System.out.println("Date");
-			if (!description.equals("undefined")) {
-				sortsPost .retainAll(db.findByDescriptionContaining(description));
-			}
-
-			if (!category.equals("all")) {
-				sortsPost .retainAll(db.findByCategory(category));
-			}
-			return sortsPost;
-		}
-
-
-		ArrayList<Post> sortsPost = new ArrayList<>(db.findAllByOrderByDatePostedDesc());
-		System.out.println("Date");
-		if (!description.equals("undefined")) {
-			System.out.print("1");
-
-			sortsPost .retainAll(db.findByDescriptionContaining(description));
-		}
-
-		if (!category.equals("all")) {
-			System.out.print("2");
-
-			sortsPost .retainAll(db.findByCategory(category));
-		}
-
-		System.out.println("returning New Date sorted");
-		return sortsPost;
+			
+		// sort all available posts
+		List<Post> sorted = service.sortAll(sort);
+		sorted.retainAll(service.getAllAvailable());
+		return service.filterByDescriptionAndCategory(description, category, sorted);
 	}
 
 
@@ -137,22 +63,15 @@ public class PostController {
 	@PostMapping("/postitem")
 	public Post addPost(@RequestBody Post post, HttpServletRequest request)
 	{
-		System.out.println("Request Post From ID: " + getOwnerId(request));
-		
 		post.setOwner(getOwnerId(request));
-		return db.save(post);
+		return service.update(post);
 	}
 
 	// when need to open a post in marketplace
 	@PutMapping("/posts/{id}")
 	public Post updatePost(@PathVariable Long id, @RequestBody Post edit, HttpServletRequest request)
 	{
-		if (!correctOwner(id, request)) {
-			return null;
-		}
-		edit.setOwner(getOwnerId(request));
-		edit.setId(id);
-		return db.save(edit);
+		return correctOwner(id, request) ? service.update(edit) : null;
 	}
 
 
@@ -160,8 +79,19 @@ public class PostController {
 	public void deletePost(@PathVariable Long id,  HttpServletRequest request) 
 	{
 		if (correctOwner(id, request))
-			db.deleteById(id);
+			service.delete(id);
 	}
+	
+	@GetMapping("/posts/{id}")
+	public Post getPost(@PathVariable Long id)
+	{
+		return service.get(id);
+	}
+	
+	
+	
+	
+	
 	
 	
 	
@@ -176,21 +106,15 @@ public class PostController {
 	
 	private boolean correctOwner(Long id, HttpServletRequest request)
 	{
-		Post realPost = db.findById(id).get();
+		Post realPost = service.get(id);
 		String loggedOwner =getOwnerId(request);
 		
 		if (!realPost.getOwnerId().equals(loggedOwner))
 			throw new NullPointerException("Error Update: Edit User ID " + loggedOwner + " does not match Item Owner ID " + realPost.getOwnerId());
 		return true;
 	}
-}
 
-	@GetMapping("/posts/{id}")
-	public Post getPost(@PathVariable Long id)
-	{
-		return db.findById(id).get();
 
-	}
 
 
 }

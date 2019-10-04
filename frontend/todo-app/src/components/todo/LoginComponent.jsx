@@ -30,7 +30,7 @@ class LoginComponent extends Component {
     async responseGoogle(res) {
 
         console.log('THIS IS THE GOOGLE INFO', res);
-
+        console.log("THIS IS THE ULTIMATE TEST");
         var idToken = res.getAuthResponse().id_token;
 
         AuthenticationService
@@ -123,6 +123,7 @@ class LoginComponent extends Component {
                       onSuccess={this.responseGoogle}
                       onFailure={this.responseGoogle}
                     />
+                    
                 </div>
             </div>
         )

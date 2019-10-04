@@ -37,7 +37,7 @@ import com.sept.rest.webservices.restfulwebservices.jwt.JwtTokenUtil;
 import com.sept.rest.webservices.restfulwebservices.jwt.JwtUserDetails;
 
 @RestController
-@CrossOrigin(origins="http://localhost:3000")
+@CrossOrigin(origins="${spring.crossorigin.url}")
 public class JwtAuthenticationRestController {
 
   @Value("${jwt.http.request.header}")
@@ -131,6 +131,7 @@ public class JwtAuthenticationRestController {
     }
   }
 
+ 
   @ExceptionHandler({ AuthenticationException.class })
   public ResponseEntity<String> handleAuthenticationException(AuthenticationException e) {
     return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
