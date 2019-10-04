@@ -13,9 +13,7 @@ cache:
 branches:
   only:
     - master
-    - travis_impl
-    - feature_docker
-    - develop
+
 #env:
 # Make sure gcloud command is on our PATH and the App Engine SDK is in the Python path
 #- GAE_PYTHONPATH=${HOME}/.cache/google_appengine PATH=$PATH:${HOME}/google-cloud-sdk/bin PYTHONPATH=${PYTHONPATH}:${GAE_PYTHONPATH} CLOUDSDK_CORE_DISABLE_PROMPTS=1
