@@ -60,7 +60,7 @@ public class DatabaseRef {
 		{
 			
 			String driver = "com.mysql.cj.jdbc.Driver";
-			String url = "jdbc:mysql://35.189.1.213:3306/sept";
+			String url = "jdbc:mysql://35.189.1.213:3306/sept?useUnicode=true&characterEncoding=UTF-8&characterSetResults=UTF-8&verifyServerCertificate=true&useSSL=true&requireSSL=true&clientCertificateKeyStoreUrl=file:keys/clientkeystore.jks&clientCertificateKeyStorePassword=password&trustCertificateKeyStoreUrl=file:keys/serverTrust.jks&trustCertificateKeyStorePassword=password";
 			String username = "root";
 			String password = "bananasept";
 			Class.forName(driver);

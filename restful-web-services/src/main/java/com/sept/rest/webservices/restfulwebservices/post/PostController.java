@@ -1,85 +1,120 @@
 package com.sept.rest.webservices.restfulwebservices.post;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Date;
+import java.util.Collections;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
+import org.springframework.data.domain.Sort;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
 
-import javadb.DatabaseRef;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+import com.sept.rest.webservices.restfulwebservices.jwt.JwtTokenUtil;
+import com.sept.rest.webservices.restfulwebservices.post.Post.Status;
 
 
-@CrossOrigin(origins="http://localhost:3000")
+
+
+
+@CrossOrigin(origins="${spring.crossorigin.url}")
 @RestController
 public class PostController {
-	
-	@Autowired 
-	private PostRepository db;
-	
-	
-	
-	// show all posts when viewing marketplace
-//	@GetMapping("/posts")				
-//	public String[][] getAllPosts()
-//	{
-//		
-//		String[][] posts = new String[db.findAll().size()][5];
-//		int i=0;
-//		for (Post post : db.findAll())
-//		{
-//			String[] postStr = {Long.toString(post.getId()), post.getTitle(), post.getDescription(), post.getOwnerId(), post.getPrice()};
-//			posts[i++] = postStr;
-//		}
-//		return posts;
-//	}
-	
-	// show all posts when viewing marketplace
-	@GetMapping("/posts")				/*WRONG URLS>>>???*/    /*some methods seem simpler than requireed*/
-	public List<Post> getAllPosts()
+
+	@Autowired
+    private JwtTokenUtil jwtTokenUtil;
+
+	@Autowired
+	private PostService service;
+
+
+	// posts that are for sale
+	@GetMapping("/posts")
+	public List<Post> getAllAvailablePosts()
 	{
-		return db.findAll();
+		return service.getAllAvailable();
 	}
 	
+	
+	@GetMapping("/posts/searchBy/{description}/{category}/{sort}")
+	public List<Post> Sort(@PathVariable String description, @PathVariable String category, @PathVariable String sort) {
+			
+		// sort all available posts
+		List<Post> sorted = service.sortAll(sort);
+		sorted.retainAll(service.getAllAvailable());
+		return service.filterByDescriptionAndCategory(description, category, sorted);
+	}
+
+
 	// adds a post to marketplace
 	@PostMapping("/postitem")
-	public Post addPost(@RequestBody Post post)
+	public Post addPost(@RequestBody Post post, HttpServletRequest request)
 	{
-		return db.save(post);
+		post.setOwner(getOwnerId(request));
+		return service.update(post);
+	}
+
+	// when need to open a post in marketplace
+	@PutMapping("/posts/{id}")
+	public Post updatePost(@PathVariable Long id, @RequestBody Post edit, HttpServletRequest request)
+	{
+		return correctOwner(id, request) ? service.update(edit) : null;
+	}
+
+
+	@DeleteMapping("/posts/{id}")
+	public void deletePost(@PathVariable Long id,  HttpServletRequest request) 
+	{
+		if (correctOwner(id, request))
+			service.delete(id);
 	}
 	
-	
-	// when need to open a post in marketplace
-	@RequestMapping("/market/{id}")
+	@GetMapping("/posts/{id}")
 	public Post getPost(@PathVariable Long id)
 	{
-		return db.findById(id).get();
+		return service.get(id);
 	}
 	
-	// when need to open a post in marketplace
-	@PutMapping("/market/{id}")
-	public Post updatePost(@PathVariable Long id, @RequestBody Post post)
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	private String getOwnerId(HttpServletRequest request)
 	{
-		return db.save(post);
+		return jwtTokenUtil.getUsernameFromToken(request.getHeader("Authorization").substring(7));
 	}
 	
-	@DeleteMapping("/market/{id}")
-	public void deletePost(@PathVariable Long id) 
+	private boolean correctOwner(Long id, HttpServletRequest request)
 	{
-		db.deleteById(id);
+		Post realPost = service.get(id);
+		String loggedOwner =getOwnerId(request);
+		
+		if (!realPost.getOwnerId().equals(loggedOwner))
+			throw new NullPointerException("Error Update: Edit User ID " + loggedOwner + " does not match Item Owner ID " + realPost.getOwnerId());
+		return true;
 	}
+
+
+
+
 }
-
-
