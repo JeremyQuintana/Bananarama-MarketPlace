@@ -41,7 +41,7 @@ class MarketDataService {
         })
     }
 
-    updateExistingPost(status) {
+    updateExistingPost(id, status) {
 
         return axios.put(`${API_URL}/posts/${id}`, {
             status
