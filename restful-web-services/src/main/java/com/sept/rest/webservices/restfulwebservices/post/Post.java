@@ -243,16 +243,17 @@ public class Post implements Comparable<Post> {
 		return true;
 	}
 
-	public Long getId()			{return id;}
-	public void setId(Long id)	{this.id = id;}
-	public Status getStatus()		{return status;}
-	public String getOwnerId()	{return ownerId;}
+	public Long getId()						{return id;}
+	public void setId(Long id)				{this.id = id;}
+	public Status getStatus()				{return status;}
+	public void setStatus(Status status) 	{this.status = status;}
+	public String getOwnerId()				{return ownerId;}
 
-	public String getTitle() {return title;}
-	public String getDescription() {return description;}
-	public String getCategory() {return category;}
-	public String getPrice() {return price;}
-	public String getPhoto() {return photo;}
+	public String getTitle() 				{return title;}
+	public String getDescription() 			{return description;}
+	public String getCategory() 			{return category;}
+	public String getPrice() 				{return price;}
+	public String getPhoto() 				{return photo;}
 	
 }
 

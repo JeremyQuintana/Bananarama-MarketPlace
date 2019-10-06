@@ -33,6 +33,13 @@ class MarketDataService {
         })
     }
 
+    updateExistingPost(status) {
+
+        return axios.put(`${API_URL}/posts/${id}`, {
+            status
+        })
+    }
+
 }
 export const googleauth = data => {
     return async dispatch => {
