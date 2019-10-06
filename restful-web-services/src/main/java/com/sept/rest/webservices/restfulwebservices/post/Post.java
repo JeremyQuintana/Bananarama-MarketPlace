@@ -62,6 +62,15 @@ public class Post implements Comparable<Post> {
 	}
 	
 	@JsonIgnore
+	public Post(Long id)
+	{
+		
+		this.id = id;
+	}
+	
+	
+	
+	@JsonIgnore
 	public Post(Long id, String owner, String title, String description, String price, String category)
 	{
 		this(owner, title, description, price, category);
