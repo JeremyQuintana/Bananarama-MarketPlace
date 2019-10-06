@@ -45,11 +45,17 @@ public class PostService {
 		return db.save(post);
 	}	
 
-	public void delete(Long id)
-	{
-		db.deleteById(id);
-	}
 	
+	
+	
+	
+	
+	//public void delete(long id)
+	//{
+	//	System.out.println("In POST SERVICE TO SETSTATUS");
+	//	db.setStatusForPost(id, Status.DELETED);
+///	}
+	//
 	
 	
 	

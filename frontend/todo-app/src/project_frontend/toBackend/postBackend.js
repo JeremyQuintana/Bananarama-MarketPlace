@@ -13,6 +13,20 @@ class postBackend{
     })
   }
 
+  updateDeletePost(id) {
+
+    return axios.post(`${API_URL}/postsdelete`, {
+        id            
+    })
+  }
+
+  updateSoldPost(id) {
+
+    return axios.post(`${API_URL}/postssold`, {
+        id            
+    })
+  }
+
 
   searchItemBackend(description, category){
     return axios.post(`${API_URL}/searchitem`, {
