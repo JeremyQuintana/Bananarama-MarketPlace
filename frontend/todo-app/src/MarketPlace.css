@@ -82,6 +82,9 @@ span.postPrice{
 .postPrice::after{
   clear:both;
 }
+.postCategory {
+  font-weight: bolder;
+}
 
 .marketTitle{
   text-align:center;
