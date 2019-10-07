@@ -44,6 +44,11 @@ public class PostService {
 	{
 		return db.save(post);
 	}	
+	
+	public void delete(Post post)
+	{
+		db.delete(post);
+	}
 
 	
 	

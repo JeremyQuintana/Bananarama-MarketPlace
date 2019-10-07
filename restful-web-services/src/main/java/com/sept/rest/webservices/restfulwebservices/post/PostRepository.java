@@ -28,11 +28,6 @@ public interface PostRepository extends JpaRepository<Post, Long> {
 	public List<Post> findByOwnerId(String ownerId);
 	public List<Post> findByStatus(Status available);
 	
-	@Transactional
-	@Modifying
-	@Query(value = "update Post p set status = :status where p.id= :id")
-	void updateStatus(@Param("id") long id, @Param("status") Status status);
-	
 
 
 }
