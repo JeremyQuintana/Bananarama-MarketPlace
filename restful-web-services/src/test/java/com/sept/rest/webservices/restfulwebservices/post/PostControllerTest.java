@@ -94,7 +94,7 @@ class PostControllerTest {
 		posts.add(post1);
 		posts.add(post2);
 		
-		Mockito.when(service.getAll()).thenReturn(posts);
+		Mockito.when(service.getAllAvailable()).thenReturn(posts);
 		
 		/*this isn't working as @...(secure = false) HAS BEEN DEPRECATED*/
 //		mvc.perform(get("/posts")
@@ -102,7 +102,7 @@ class PostControllerTest {
 //			      .andExpect(status().isOk())
 //			      .andExpect(jsonPath("$.employees").exists())
 //			      .andExpect(jsonPath("$.employees[*].employeeId").isNotEmpty());
-		assertEquals(controller.getAllPosts(), posts);
+		assertEquals(controller.getAllAvailablePosts(), posts);
 	}
 
 	@Test

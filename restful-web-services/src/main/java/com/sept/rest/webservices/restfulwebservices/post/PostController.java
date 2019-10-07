@@ -24,6 +24,10 @@ import org.springframework.stereotype.Repository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import com.sept.rest.webservices.restfulwebservices.jwt.JwtTokenUtil;
+import com.sept.rest.webservices.restfulwebservices.post.Post.Status;
+
+
+
 
 
 @CrossOrigin(origins="${spring.crossorigin.url}")
@@ -35,20 +39,24 @@ public class PostController {
 
 	@Autowired
 	private PostService service;
+	
+	@Autowired
+	private PostRepository db;
 
-
-
+	// posts that are for sale
 	@GetMapping("/posts")
-	public List<Post> getAllPosts()
+	public List<Post> getAllAvailablePosts()
 	{
-		return service.getAll();
+		return service.getAllAvailable();
 	}
 	
 	
 	@GetMapping("/posts/searchBy/{description}/{category}/{sort}")
 	public List<Post> Sort(@PathVariable String description, @PathVariable String category, @PathVariable String sort) {
 			
+		// sort all available posts
 		List<Post> sorted = service.sortAll(sort);
+		sorted.retainAll(service.getAllAvailable());
 		return service.filterByDescriptionAndCategory(description, category, sorted);
 	}
 
@@ -65,28 +73,29 @@ public class PostController {
 	@PutMapping("/posts/{id}")
 	public Post updatePost(@PathVariable Long id, @RequestBody Post edit, HttpServletRequest request)
 	{
-		if (!correctOwner(id, request)) {
-			return null;
-		}
-		edit.setOwner(getOwnerId(request));
-		edit.setId(id);
-		return service.update(edit);
+		return correctOwner(id, request) ? service.update(edit) : null;
 	}
 
 
-	@DeleteMapping("/posts/{id}")
-	public void deletePost(@PathVariable Long id,  HttpServletRequest request) 
-	{
-		if (correctOwner(id, request))
-			service.delete(id);
+	@PostMapping("/postsdelete")
+	public void deletePosts(@RequestBody Post post, HttpServletRequest request)
+	{	
+		db.updateStatus(post.getId(), Status.DELETED);
 	}
+	
+	@PostMapping("/postssold")
+	public void soldPosts(@RequestBody Post post, HttpServletRequest request)
+	{	
+		db.updateStatus(post.getId(), Status.SOLD);
+	}
+	
 	
 	@GetMapping("/posts/{id}")
 	public Post getPost(@PathVariable Long id)
 	{
 		return service.get(id);
-
 	}
+	
 	
 	
 	
