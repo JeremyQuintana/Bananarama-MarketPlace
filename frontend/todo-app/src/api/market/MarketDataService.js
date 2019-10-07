@@ -41,13 +41,13 @@ class MarketDataService {
         })
     }
 
-    updateExistingPost(id, status) {
-
-        return axios.put(`${API_URL}/posts/${id}`, {
-            status
-        })
+    updatePostStatus(id, status) {
+        return axios.post(`${API_URL}/posts/${id}/${status}`)
     }
 
+    deletePost(id) {
+        return axios.delete(`${API_URL}/posts/${id}`)
+    }
 }
 export const googleauth = data => {
     return async dispatch => {

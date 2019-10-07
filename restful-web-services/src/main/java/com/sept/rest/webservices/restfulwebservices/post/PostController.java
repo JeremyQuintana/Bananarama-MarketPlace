@@ -63,6 +63,7 @@ public class PostController {
 	@PostMapping("/postitem")
 	public Post addPost(@RequestBody Post post, HttpServletRequest request)
 	{
+		System.out.println("adding post: " + post);
 		post.setOwner(getOwnerId(request));
 		return service.update(post);
 	}
@@ -71,38 +72,31 @@ public class PostController {
 	@PutMapping("/posts/{id}")
 	public Post updatePost(@PathVariable Long id, @RequestBody Post edit, HttpServletRequest request)
 	{
+		System.out.println("received post backend: " + edit);
 		return correctOwner(id, request) ? service.update(edit) : null;
 	}
 	
 	@DeleteMapping("/posts/{id}")
-	public void deletePost(@RequestBody Post post, HttpServletRequest request)
+	public void deletePost(@PathVariable Long id, HttpServletRequest request)
 	{	
-		service.delete(post);
+		service.delete(service.get(id));
 	}
-
-	
-	
-
-	@PostMapping("/postsdelete")
-	public Post tempDeletePosts(@RequestBody Post post, HttpServletRequest request)
-	{	
-		post.setStatus(Status.DELETED);
-		return updatePost(post.getId(), post, request);
-		
-	}
-	
-	@PostMapping("/postssold")
-	public Post soldPosts(@RequestBody Post post, HttpServletRequest request)
-	{	
-		post.setStatus(Status.SOLD);
-		return updatePost(post.getId(), post, request);
-	}
-	
 	
 	@GetMapping("/posts/{id}")
 	public Post getPost(@PathVariable Long id)
 	{
 		return service.get(id);
+	}
+
+	
+	
+
+	@PostMapping("/posts/{id}/{status}")
+	public Post updatePostStatus(@PathVariable Long id, @PathVariable Status status, HttpServletRequest request)
+	{	
+		Post post = service.get(id);
+		post.setStatus(status);
+		return updatePost(id, post, request);
 	}
 	
 	
