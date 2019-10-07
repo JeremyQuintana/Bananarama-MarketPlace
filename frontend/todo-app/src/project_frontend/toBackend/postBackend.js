@@ -13,19 +13,20 @@ class postBackend{
     })
   }
 
-  updateDeletePost(id) {
+// replaced by updatePostStatus in MarketDataService
+  // updateDeletePost(id) {
 
-    return axios.post(`${API_URL}/postsdelete`, {
-        id            
-    })
-  }
+  //   return axios.post(`${API_URL}/postsdelete`, {
+  //       id            
+  //   })
+  // }
 
-  updateSoldPost(id) {
+  // updateSoldPost(id) {
 
-    return axios.post(`${API_URL}/postssold`, {
-        id            
-    })
-  }
+  //   return axios.post(`${API_URL}/postssold`, {
+  //       id            
+  //   })
+  // }
 
 
   searchItemBackend(description, category){

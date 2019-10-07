@@ -87,14 +87,14 @@ class Post_item extends Component {
     var costRegex = /^\d*(\.\d{0,2})?$/;
     var costResult = ((costRegex.test(this.state.item_cost)) && (this.state.item_cost > 0));
     var catagoryResult =
-          (this.state.item_catagory == "" ||
-           this.state.item_catagory == "Exceptionally Random" ||
-           this.state.item_catagory == "Ridiculously Complicated" ||
-           this.state.item_catagory == "Annoyingly Unnexplained" ||
-           this.state.item_catagory == "Disturbingly Simple" ||
-           this.state.item_catagory == "Spectacularly Failing")
+          (this.state.item_catagory === "" ||
+           this.state.item_catagory === "Exceptionally Random" ||
+           this.state.item_catagory === "Ridiculously Complicated" ||
+           this.state.item_catagory === "Annoyingly Unnexplained" ||
+           this.state.item_catagory === " Disturbingly Simple" ||
+           this.state.item_catagory === "Spectacularly Failing")
 
-    var nameResult = !(this.state.item_name == "");
+    var nameResult = !(this.state.item_name === "");
 
     var valid = (costResult && catagoryResult && nameResult) ;
 
