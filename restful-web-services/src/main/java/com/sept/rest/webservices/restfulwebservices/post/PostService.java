@@ -50,12 +50,24 @@ public class PostService {
 	
 	
 	
-	//public void delete(long id)
-	//{
-	//	System.out.println("In POST SERVICE TO SETSTATUS");
-	//	db.setStatusForPost(id, Status.DELETED);
-///	}
-	//
+	public void markedasdelete(long id)
+	{
+	
+		db.updateStatus(id, Status.DELETED);
+	}
+	
+	public void markedassold(long id)
+	{
+
+		db.updateStatus(id, Status.SOLD);
+	}
+	
+	public void delete(long id)
+	{
+		System.out.println("In POST SERVICE TO SETSTATUS");
+		db.deletePost(id);
+	}
+	
 	
 	
 	

@@ -25,6 +25,7 @@ class PostComponent extends Component {
         this.saveInfo = this.saveInfo.bind(this);
         this.updateDelete = this.updateDelete.bind(this);
         this.updateSold = this.updateSold.bind(this);
+        this.updatePermDelete = this.updatePermDelete.bind(this);
     }
   // 
                           
@@ -55,9 +56,10 @@ class PostComponent extends Component {
                         {(sessionStorage.getItem('authenticatedUser') == this.state.postInfo.ownerId) &&
                           <div className="container"> <button onClick={this.setEdit}>Edit Post</button>
                           <button onClick={this.updateSold}>Sold</button>
+                          <button onClick={this.updateDelete}>Delete</button>
                           <input name="Delete" id="Delete" type="image" className="DeleterefineItem"
                              src={require("./delete.png")}
-                            alt ="Delete"   onClick={this.updateDelete} /></div>
+                            alt ="Delete"   onClick={this.updatePermDelete} /></div>
                         
                         }
 
@@ -115,6 +117,18 @@ class PostComponent extends Component {
              }
            );
     
+    }
+
+    updatePermDelete() {
+        var posttID= this.state.postInfo.id;
+    
+        postBackend.updatePermDeletePost(posttID).then(
+            response => {
+      
+              alert("Your Post Has Been Deleted FOREVER");
+              this.props.history.push(`/home/${sessionStorage.getItem("authenticatedUser")}`);
+            }
+          );
     }
 
     saveInfo() {

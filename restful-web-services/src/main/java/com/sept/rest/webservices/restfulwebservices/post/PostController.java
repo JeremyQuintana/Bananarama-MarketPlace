@@ -40,8 +40,7 @@ public class PostController {
 	@Autowired
 	private PostService service;
 	
-	@Autowired
-	private PostRepository db;
+
 
 	// posts that are for sale
 	@GetMapping("/posts")
@@ -80,15 +79,20 @@ public class PostController {
 	@PostMapping("/postsdelete")
 	public void deletePosts(@RequestBody Post post, HttpServletRequest request)
 	{	
-		db.updateStatus(post.getId(), Status.DELETED);
+		service.markedasdelete(post.getId());
 	}
 	
 	@PostMapping("/postssold")
 	public void soldPosts(@RequestBody Post post, HttpServletRequest request)
 	{	
-		db.updateStatus(post.getId(), Status.SOLD);
+		service.markedassold(post.getId());
 	}
 	
+	@PostMapping("/postspermdelete")
+	public void DeletePosts(@RequestBody Post post, HttpServletRequest request)
+	{	
+		service.delete(post.getId());
+	}
 	
 	@GetMapping("/posts/{id}")
 	public Post getPost(@PathVariable Long id)

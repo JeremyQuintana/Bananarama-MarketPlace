@@ -33,6 +33,11 @@ public interface PostRepository extends JpaRepository<Post, Long> {
 	@Query(value = "update Post p set status = :status where p.id= :id")
 	void updateStatus(@Param("id") long id, @Param("status") Status status);
 	
+	@Transactional
+	@Modifying
+	@Query(value = "Delete Post p where p.id= :id")
+	void deletePost(@Param("id") long id);
+	
 
 
 }

@@ -27,6 +27,13 @@ class postBackend{
     })
   }
 
+  updatePermDeletePost(id) {
+
+    return axios.post(`${API_URL}/postspermdelete`, {
+        id            
+    })
+  }
+
 
   searchItemBackend(description, category){
     return axios.post(`${API_URL}/searchitem`, {
