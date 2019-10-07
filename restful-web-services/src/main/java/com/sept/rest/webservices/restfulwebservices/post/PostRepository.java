@@ -28,6 +28,9 @@ public interface PostRepository extends JpaRepository<Post, Long> {
 	public List<Post> findByOwnerId(String ownerId);
 	public List<Post> findByStatus(Status available);
 	
+	public List<Post> findByOwnerIdAndStatus(String ownerId, Status available);
+	
+	
 	@Transactional
 	@Modifying
 	@Query(value = "update Post p set status = :status where p.id= :id")

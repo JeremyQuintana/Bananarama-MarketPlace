@@ -100,7 +100,15 @@ public class PostController {
 		return service.get(id);
 	}
 	
+	//logic for account history incase u need to sort them into groups like all marked as sold, all marked as deleted etc
 	
+	//return service.getAllAvailableByOwner(ownerId);
+	//return service.getAllSoldByOwner(ownerId);
+	//return service.getAllDelectedByOwner(ownerId)
+	
+	
+	
+	//endhere
 	
 	
 	

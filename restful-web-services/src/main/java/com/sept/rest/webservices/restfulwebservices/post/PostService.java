@@ -84,6 +84,28 @@ public class PostService {
 		return db.findByStatus(Status.AVAILABLE);
 	}
 	
+	
+	//logic incase history needs to be sorted by groups by status
+	public List<Post> getAllAvailableByOwner(String ownerId)
+	{
+		return db.findByOwnerIdAndStatus(ownerId, Status.AVAILABLE);
+	}
+	
+	public List<Post> getAllSoldByOwner(String ownerId)
+	{
+		return db.findByOwnerIdAndStatus(ownerId, Status.SOLD);
+	}
+	
+	public List<Post> getAllDelectedByOwner(String ownerId)
+	{
+		return db.findByOwnerIdAndStatus(ownerId, Status.DELETED);
+	}
+	
+	
+
+	
+	
+	
 	public List<Post> sortAll(String sort)
 	{
 		List<Post> posts = db.findAll();
