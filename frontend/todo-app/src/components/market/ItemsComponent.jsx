@@ -26,7 +26,6 @@ class ItemsComponent extends Component {
       render() {
           var retVal = [];
           
-          console.log(this.state.backPostings);
           // loop through the postings from backend
           for (var r = 0; r < this.state.backPostings.length; r++) {
               let postId = this.state.backPostings[r].id;

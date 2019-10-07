@@ -29,10 +29,11 @@ describe('<ItemsComponent />', () => {
         const items = shallow(<ItemsComponent backPostings={[[
             { id: 'id', value: '1' },
             { id: 'title', value: '1' },
+            { id: 'category', value: '1' },
             { id: 'photo', value: '1' },
             { id: 'description', value: '1' },
             { id: 'price', value: '1' },
             { id: 'ownerId', value: '1' }]]} />);
-        expect(items.find('span').length).toEqual(4);
+        expect(items.find('span').length).toEqual(5);
     });
 });
