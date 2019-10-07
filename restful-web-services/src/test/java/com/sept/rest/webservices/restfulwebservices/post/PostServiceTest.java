@@ -129,7 +129,6 @@ class PostServiceTest {
 		Mockito.when(db.findByCategory("Medecine")).thenReturn(matchDescAndCate);
 		assertEquals(matchDesc, service.filterByDescriptionAndCategory("Pickpocketed", "all", posts));
 		assertEquals(matchDescAndCate, service.filterByDescriptionAndCategory("Pickpocketed", "Medecine", posts));
-			
 	}
 	
 	@Test

@@ -19,15 +19,32 @@ class MarketDataService {
         return axios.get(`${API_URL}/posts/${postId}`);
     }
 
+  //  updateDeletePost(id) {
 
-    updateExistingPost(id, description, title, price, category, photo) {
+ //       return axios.put(`${API_URL}/posts/${id}`, {
+  //          id            
+ //       })
+ //   }
+//
+
+
+    updateExistingPost(id, description, title, price, category, photo, ownerId) {
+
         return axios.put(`${API_URL}/posts/${id}`, {
             id,
             description,
             title,
             price,
             category,
-            photo
+            photo, 
+            ownerId
+        })
+    }
+
+    updateExistingPost(id, status) {
+
+        return axios.put(`${API_URL}/posts/${id}`, {
+            status
         })
     }
 

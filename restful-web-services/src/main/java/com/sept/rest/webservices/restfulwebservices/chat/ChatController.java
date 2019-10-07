@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 
+
+// OLD 
 //chat_overhead:
 //Chat!D		User1 		User2 		
 //-------------------------------
@@ -31,6 +33,16 @@ import org.springframework.web.bind.annotation.RestController;
 //2			Straight fire ...	s128719
 //1			Dont talk to m...	s238197
 
+// NEW
+//Text			Receiver			Sender
+//-------------------------------------------
+//Howdy 		s1234567			s1299929
+//Hey its dun..	s3717777			s1234567
+//Straight fi.. s1234567			s1234567
+//Dont talk t.. s1234567			s1234567
+
+
+
 @CrossOrigin(origins="${spring.crossorigin.url}")
 @RestController
 public class ChatController {
@@ -44,28 +56,9 @@ public class ChatController {
 	@GetMapping("/chat/{user1}and{user2}")
 	public List<Chat> loadChat(@PathVariable String user1, @PathVariable String user2) throws SQLException
 	{					
-//		if (!usersExist(user1, user2))				
-//			throw new NullPointerException("Users do not exist in database.");
-//		
-//		// users have chatted before
-//		if (overheadAlreadyExists(user1, user2))
-//			return allTexts(user1, user2);
-//			
-//		// insert user1, user2 into overhead repository
-//		overheadDB.save(new Overhead(user1, user2));
-//		// new chat so no messages
-//		return new ArrayList<>();
-		
-		
-		List<Chat> hardcoded = new ArrayList<>();
-		hardcoded.add(new Chat("The database doesn't work.", user1, user2));
-		hardcoded.add(new Chat("Wait what?", user2, user1));
-		hardcoded.add(new Chat("Ye, something with ssl configuration.", user1, user2));
-		hardcoded.add(new Chat("Not to worry, I've hardcoded some texts, so we can still work on the other stuffs.", user1, user2));
-		hardcoded.add(new Chat("Oh THANK goodness!.", user2, user1));
-		hardcoded.add(new Chat("First lets check if we can add texts without refreshing.", user1, user2));
-		return hardcoded;
-//		return service.allChats(user1, user2);
+//		for (Chat chat : service.allChats(user1, user2))
+//			System.out.println(chat);
+		return service.allChats(user1, user2);
 	}
 	
 	
@@ -73,21 +66,7 @@ public class ChatController {
 	@PostMapping("/chat")
 	public void addChat(@RequestBody Chat chat) throws SQLException
 	{															
-//		// both chat id and sender should already exist
-//		if (!senderANDChatIDCorrect(text.getChatID(), text.getSender()))	
-//			throw new NullPointerException("wrong sender in chat.");
-//		
-//		textDB.save(text);
-		System.out.println(chat);
-		System.out.println("chat technically stored (database doesn't actually work however)");
-		
-		
-		
-		
-		
-		
-		
-//		service.addChat(chat);
+		service.addChat(chat);
 	}
 
 	
