@@ -106,14 +106,14 @@ public class PostController {
 	public List<Post> getCurrentPosts(@PathVariable String ownerId) {
 		return service.getAllAvailableByOwner(ownerId);
 	}
-	@GetMapping("/{ownerId}/posts")
-	public List<Post> getSoldPosts(@PathVariable String ownerId) {
-		return service.getAllSoldByOwner(ownerId);
-	}
-	@GetMapping("/{ownerId}/posts")
-	public List<Post> getDeletedPosts(@PathVariable String ownerId) {
-		return service.getAllDeletedByOwner(ownerId);
-	}
+	//@GetMapping("/{ownerId}/posts")
+	//public List<Post> getSoldPosts(@PathVariable String ownerId) {
+	//	return service.getAllSoldByOwner(ownerId);
+	//}
+//	@GetMapping("/{ownerId}/posts")
+//	public List<Post> getDeletedPosts(@PathVariable String ownerId) {
+//		return service.getAllDeletedByOwner(ownerId);
+//	}
 			
 		
 	
