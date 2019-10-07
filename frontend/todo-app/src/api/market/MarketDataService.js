@@ -28,8 +28,25 @@ class MarketDataService {
             price,
             category,
             photo
-        })
+        });
     }
+
+    retrievePastPostsBySeller(userId){
+        return axios.get(`${API_URL}/${userId}/posts`);
+    }
+
+    retrieveCurrentPostsBySeller(userId){
+        return axios.get(`${API_URL}/${userId}/posts`);
+    }
+
+    retrieveDeletedPostsBySeller(userId){
+        return axios.get(`${API_URL}/${userId}/posts`);
+    }
+
+    retrieveChatsByUser(userId){
+        return axios.get(`${API_URL}/${userId}/chats`);
+    }
+
 
 }
 export const googleauth = data => {

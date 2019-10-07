@@ -10,12 +10,19 @@ class LoginComponent extends Component {
 
     constructor(props) {
         super(props)
-
+        var loginErrorTemp = false;
+        if(props.location == null || props.location.state == null){
+            loginErrorTemp = false;
+        } else {
+            loginErrorTemp = props.location.state.loginError;
+            this.props.location.state.loginError = false;
+        }
         this.state = {
             username: 'sept',
             password: '',
             hasLoginFailed: false,
-            showSuccessMessage: false
+            showSuccessMessage: false,
+            loginError: loginErrorTemp
         }
         // this.handleUsernameChange = this.handleUsernameChange.bind(this)
         // this.handlePasswordChange = this.handlePasswordChange.bind(this)
@@ -114,6 +121,7 @@ class LoginComponent extends Component {
                 
                     {/*<ShowInvalidCredentials hasLoginFailed={this.state.hasLoginFailed}/>*/}
                     {this.state.hasLoginFailed && <div className="alert alert-warning">Invalid Credentials or something is wrong</div>}
+                    {this.state.loginError && <div className="alert alert-warning">You must be logged in to access that!</div>}
                     {this.state.showSuccessMessage && <div>Login Sucessful</div>}
                     {/*<ShowLoginSuccessMessage showSuccessMessage={this.state.showSuccessMessage}/>*/}
                     <h3>Please Login with your RMIT Google Account</h3>
