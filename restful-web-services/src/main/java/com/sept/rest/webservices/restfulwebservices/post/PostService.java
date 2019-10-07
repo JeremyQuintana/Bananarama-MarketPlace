@@ -96,7 +96,7 @@ public class PostService {
 		return db.findByOwnerIdAndStatus(ownerId, Status.SOLD);
 	}
 	
-	public List<Post> getAllDelectedByOwner(String ownerId)
+	public List<Post> getAllDeletedByOwner(String ownerId)
 	{
 		return db.findByOwnerIdAndStatus(ownerId, Status.DELETED);
 	}

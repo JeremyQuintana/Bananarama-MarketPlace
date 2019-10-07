@@ -101,11 +101,21 @@ public class PostController {
 	}
 	
 	//logic for account history incase u need to sort them into groups like all marked as sold, all marked as deleted etc
-	
-	//return service.getAllAvailableByOwner(ownerId);
-	//return service.getAllSoldByOwner(ownerId);
-	//return service.getAllDelectedByOwner(ownerId)
-	
+
+	@GetMapping("/{ownerId}/posts")
+	public List<Post> getCurrentPosts(@PathVariable String ownerId) {
+		return service.getAllAvailableByOwner(ownerId);
+	}
+	@GetMapping("/{ownerId}/posts")
+	public List<Post> getSoldPosts(@PathVariable String ownerId) {
+		return service.getAllSoldByOwner(ownerId);
+	}
+	@GetMapping("/{ownerId}/posts")
+	public List<Post> getDeletedPosts(@PathVariable String ownerId) {
+		return service.getAllDeletedByOwner(ownerId);
+	}
+			
+		
 	
 	
 	//endhere
