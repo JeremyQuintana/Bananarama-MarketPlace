@@ -1,5 +1,8 @@
 .topFix {
-    margin-top: 80px;
+    margin: 80px;
+    background: #ffe4a0;
+    box-shadow: -5px 2px rgba(0,0,0,0.2);
+    /* background-color: #61d0fc; */
 }
   
 .editForm textArea{
@@ -9,6 +12,18 @@
 .centerFix {
     text-align: center;
 }
+
 .DeleterefineItem{
-    margin-left: 600px;
+    margin-left: 100px;
+    background-color: #61d0fc;
+    padding: 15px 15px;
+    border-radius: 10px;
+    filter: invert(100%);
+}
+
+#btn{
+    margin: 20px;
+}
+#btn2{
+    background-color: brown;
 }
