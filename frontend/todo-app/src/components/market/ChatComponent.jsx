@@ -69,7 +69,7 @@ class ChatComponent extends Component {
       console.log(newMessageToOutPut);
 
       // calling it here 
-      ChatService.addText("sender","reciver",newMessageToOutPut.text);
+      ChatService.addChat("user1","user2",newMessageToOutPut.text);
 
       this.setState({
         messages: messages,
@@ -158,24 +158,22 @@ class MessageObjects extends Component {
     return <ul className="messages">{listMessages}</ul>;
   }
 
-      refreshChatLog() {
-        var user1 = "user1";
-        var user1 = "user2";
+  refreshChatLog() {
 
-        window.setInterval(function(){
-
-                  ChatService.getAllTexts("user1","user2").then(
-
-          response => {
-           console.log(response); 
+    window.setInterval(function(){
+      // change this vvv
+      ChatService.loadAllChats("user1", "user2").then(
+        response => {
+          console.log(response); 
         }
+      )
+      // to look like
+      // ChatService.loadChatsAfter(lastChat);
+      // this "lastChat" object is the one sent to you from backend
+      // eg: when you call loadAllChats (you get a list of chats)
 
-          )
-
-}, 10000);
-
-
-    }
+    }, 100000);
+  }
 }
 
 export default withRouter(ChatComponent);
