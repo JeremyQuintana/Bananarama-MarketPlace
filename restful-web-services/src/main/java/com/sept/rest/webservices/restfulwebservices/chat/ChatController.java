@@ -50,9 +50,6 @@ public class ChatController {
 	@Autowired
 	private ChatService service;
 	
-	
-	
-	
 	@GetMapping("/chat/{user1}and{user2}")
 	public List<Chat> loadChat(@PathVariable String user1, @PathVariable String user2) throws SQLException
 	{					

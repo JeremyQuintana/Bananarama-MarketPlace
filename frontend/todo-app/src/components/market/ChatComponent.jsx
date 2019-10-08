@@ -2,6 +2,10 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { withRouter } from "react-router-dom";
 import ChatService from "../../api/Chat/ChatService.js"
+import PropTypes from "prop-types";
+
+
+
 
 
 import "./Chat.css";
@@ -47,9 +51,13 @@ class ChatComponent extends Component {
   }
   handleInput = e => {
     const itemText = e.target.value;
-    const message = { text: itemText, key: Date.now() };
+
+    // needs to be some username at some poiunt
+    var username = "thisUsername";
+    const message = { text: itemText, username };
     this.setState({
-      message
+      message,
+      username
     });
   };
   addMessage = e => {
@@ -59,7 +67,10 @@ class ChatComponent extends Component {
     if (newMessageToOutPut.text !== "") {
       const messages = [...this.state.messages, newMessageToOutPut];
       console.log(newMessageToOutPut);
+
+      // calling it here 
       ChatService.addText("sender","reciver",newMessageToOutPut.text);
+
       this.setState({
         messages: messages,
         message: { text: "", key: "" }
@@ -120,6 +131,13 @@ class MessageList extends Component {
 }
 
 class MessageObjects extends Component {
+   static contextTypes = {
+    router: PropTypes.object
+  }
+
+   constructor(props, context) {
+     super(props, context);
+  }
   create_new_message = message => {
     return (
       <div className="message">
@@ -134,13 +152,29 @@ class MessageObjects extends Component {
     const messages = this.props.allMeassages;
     const listMessages = messages.map(this.create_new_message);
 
+    this.refreshChatLog();
+
 
     return <ul className="messages">{listMessages}</ul>;
   }
 
-      refreshPosts() {
-    
-        ChatService.getAllTexts("user1", "user2")
+      refreshChatLog() {
+        var user1 = "user1";
+        var user1 = "user2";
+
+        window.setInterval(function(){
+
+                  ChatService.getAllTexts("user1","user2").then(
+
+          response => {
+           console.log(response); 
+        }
+
+          )
+
+}, 10000);
+
+
     }
 }
 
