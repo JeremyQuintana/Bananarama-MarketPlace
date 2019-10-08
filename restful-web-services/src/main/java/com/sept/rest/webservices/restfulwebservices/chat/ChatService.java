@@ -3,8 +3,10 @@ package com.sept.rest.webservices.restfulwebservices.chat;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -50,6 +52,21 @@ public class ChatService {
 	public List<Chat> getChatsAfter(Long id)
 	{
 		return db.findByIdGreaterThan(id);
+	}
+	
+
+	public List<String> allUsersInteractedWith(String owner)
+	{
+		Set<String> users = new HashSet<>();
+		for (Chat chat : db.findBySenderOrReceiver(owner, owner))
+		{
+			// if the receiver is the owner, the sender is someone else (the user)
+			// and vice versa
+			String receiver = chat.getReceiver();
+			String sender = chat.getSender();
+			users.add(chat.getSender().equals(owner) ? receiver : sender);
+		}
+		return new ArrayList<String>(users);
 	}
 	
 }
