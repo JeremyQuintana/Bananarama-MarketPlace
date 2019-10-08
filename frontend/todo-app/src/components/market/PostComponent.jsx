@@ -40,6 +40,9 @@ class PostComponent extends Component {
 
                     <div className="topFix">
                         <h1 className="marketTitle">{this.state.postInfo.title}</h1>
+                        <div className="container postCategory">
+                            {this.state.postInfo.category}
+                        </div>
                         <div className="container postDescription">
                             <img src={'../post_images/' + this.state.postInfo.photo + '.jpg'}></img>
                             {/*PLACEHOLDER IMAGE*/}

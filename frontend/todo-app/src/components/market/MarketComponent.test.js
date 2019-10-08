@@ -24,7 +24,7 @@ describe('<MarketComponent />', () => {
         const market = shallow(<MarketComponent.WrappedComponent />);
         expect(market.find('div').length).toEqual(2);
         expect(market.find('h1').length).toEqual(1);
-        expect(market.find('Items').length).toEqual(1);
+        expect(market.find('ItemsComponent').length).toEqual(1);
     });
 });
 
