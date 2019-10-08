@@ -55,25 +55,6 @@ public class PostService {
 	
 	
 	
-	public void markedasdelete(long id)
-	{
-	
-		db.updateStatus(id, Status.DELETED);
-	}
-	
-	public void markedassold(long id)
-	{
-
-		db.updateStatus(id, Status.SOLD);
-	}
-	
-	public void delete(long id)
-	{
-		System.out.println("In POST SERVICE TO SETSTATUS");
-		db.deletePost(id);
-	}
-	
-	
 	
 	
 	
@@ -89,22 +70,28 @@ public class PostService {
 		return db.findByStatus(Status.AVAILABLE);
 	}
 	
-	
-	//logic incase history needs to be sorted by groups by status
-	public List<Post> getAllAvailableByOwner(String ownerId)
+	//	calling directly as you can't have multiple urls
+	public List<Post> getOwnerPosts(String ownerId, Status status)
 	{
-		return db.findByOwnerIdAndStatus(ownerId, Status.AVAILABLE);
+		return db.findByOwnerIdAndStatus(ownerId, status);
 	}
 	
-	public List<Post> getAllSoldByOwner(String ownerId)
-	{
-		return db.findByOwnerIdAndStatus(ownerId, Status.SOLD);
-	}
 	
-	public List<Post> getAllDeletedByOwner(String ownerId)
-	{
-		return db.findByOwnerIdAndStatus(ownerId, Status.DELETED);
-	}
+//	//logic incase history needs to be sorted by groups by status
+//	public List<Post> getAllAvailableByOwner(String ownerId)
+//	{
+//		return db.findByOwnerIdAndStatus(ownerId, Status.AVAILABLE);
+//	}
+//	
+//	public List<Post> getAllSoldByOwner(String ownerId)
+//	{
+//		return db.findByOwnerIdAndStatus(ownerId, Status.SOLD);
+//	}
+//	
+//	public List<Post> getAllDeletedByOwner(String ownerId)
+//	{
+//		return db.findByOwnerIdAndStatus(ownerId, Status.DELETED);
+//	}
 	
 	
 

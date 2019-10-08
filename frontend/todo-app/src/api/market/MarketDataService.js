@@ -48,21 +48,17 @@ class MarketDataService {
     deletePost(id) {
         return axios.delete(`${API_URL}/posts/${id}`)
     }
-    retrievePastPostsBySeller(userId){
-        return axios.get(`${API_URL}/${userId}/posts`);
+
+    // java does not recognize different methods with same urls
+    retrievePostsBySeller(userId, status){
+        return axios.get(`${API_URL}/${userId}/posts/${status}`);
     }
 
-    retrieveCurrentPostsBySeller(userId){
-        return axios.get(`${API_URL}/${userId}/posts`);
-    }
-
-    retrieveDeletedPostsBySeller(userId){
-        return axios.get(`${API_URL}/${userId}/posts`);
-    }
-
-    retrieveChatsByUser(userId){
-        return axios.get(`${API_URL}/${userId}/chats`);
-    }
+    // these show when you load the chats for each user
+    // in the chat page (chat service)
+    // retrieveChatsByUser(userId){
+    //     return axios.get(`${API_URL}/${userId}/chats`);
+    // }
 
 
 }

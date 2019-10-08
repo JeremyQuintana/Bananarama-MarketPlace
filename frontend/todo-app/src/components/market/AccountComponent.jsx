@@ -14,9 +14,12 @@ class AccountComponent extends Component {
             allChats: [],
         }
 
-        this.refreshPastPosts();
-        this.refreshCurrentPosts();
-        this.refreshDeletedPosts();
+        // this.refreshPastPosts();
+        // this.refreshCurrentPosts();
+        // this.refreshDeletedPosts();
+        this.refreshPosts("SOLD");
+        this.refreshPosts("AVAILABLE");
+        this.refreshPosts("DELETED");
         //this.refreshChatHistory();
     }
 
@@ -71,37 +74,55 @@ class AccountComponent extends Component {
         return retVal;
     }
 
-    refreshPastPosts() {
-        MarketDataService.retrievePastPostsBySeller(sessionStorage.getItem('authenticatedUser')).then(
-            response => {
-                this.setState({ pastPosts: response.data })
-            }
-        ).catch(error => console.log("network error: ", error));
-    }
+    // refreshPastPosts() {
+    //     MarketDataService.retrievePastPostsBySeller(sessionStorage.getItem('authenticatedUser')).then(
+    //         response => {
+    //             this.setState({ pastPosts: response.data })
+    //         }
+    //     ).catch(error => console.log("network error: ", error));
+    // }
 
-    refreshCurrentPosts() {
-        MarketDataService.retrieveCurrentPostsBySeller(sessionStorage.getItem('authenticatedUser')).then(
-            response => {
-                this.setState({ currentPosts: response.data })
-            }
-        ).catch(error => console.log("network error: ", error));
-    }
+    // refreshCurrentPosts() {
+    //     MarketDataService.retrieveCurrentPostsBySeller(sessionStorage.getItem('authenticatedUser')).then(
+    //         response => {
+    //             this.setState({ currentPosts: response.data })
+    //         }
+    //     ).catch(error => console.log("network error: ", error));
+    // }
 
-    refreshDeletedPosts() {
-        MarketDataService.retrieveDeletedPostsBySeller(sessionStorage.getItem('authenticatedUser')).then(
-            response => {
-                this.setState({ deletedPosts: response.data })
-            }
-        ).catch(error => console.log("network error: ", error));
-    }
+    // refreshDeletedPosts() {
+    //     MarketDataService.retrieveDeletedPostsBySeller(sessionStorage.getItem('authenticatedUser')).then(
+    //         response => {
+    //             this.setState({ deletedPosts: response.data })
+    //         }
+    //     ).catch(error => console.log("network error: ", error));
+    // }
 
-    /*refreshChatHistory() {
-        MarketDataService.retrieveChatsByUser(sessionStorage.getItem('authenticatedUser')).then(
+
+
+
+
+
+
+
+
+
+    /* 
+        is it possible to make axios.get return the actual array / response.data
+        it doesn't work when you call response.data outside the promise
+     */
+    refreshPosts(status) {
+        MarketDataService.retrievePostsBySeller(sessionStorage.getItem('authenticatedUser'), status).then(
             response => {
-                this.setState({ allChats: response.data })
+                switch (status)
+                {
+                    case "AVAILABLE" : this.setState({ currentPosts: response.data }); break;
+                    case "SOLD" : this.setState({ pastPosts: response.data });      break;
+                    case "DELETED" : this.setState({ deletedPosts: response.data }); break;
+                }
             }
-        ).catch(error => console.log("network error: ", error));
-    }*/
+        );
+    }
 }
 
 export default withRouter(AccountComponent);
