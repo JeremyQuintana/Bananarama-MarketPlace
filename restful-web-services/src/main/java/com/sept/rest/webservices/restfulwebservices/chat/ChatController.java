@@ -81,6 +81,12 @@ public class ChatController {
 		
 	}
 
+	// returns a list of owner id's
+	@GetMapping("/chat/{owner}") 
+	public List<String> userList(@PathVariable String owner)
+	{
+		return service.allUsersInteractedWith(owner);
+	}
 	
 	
 	

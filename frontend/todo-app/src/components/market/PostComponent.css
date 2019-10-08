@@ -14,12 +14,27 @@
     text-align: center;
 }
 
-.DeleterefineItem{
-    margin-left: 100px;
-    background-color: #61d0fc;
-    padding: 15px 15px;
-    border-radius: 10px;
-    filter: invert(100%);
+.container {
+    position: relative;
+}
+
+.imgButton{
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+    /* background-color: #61d0fc; */
+    /* padding: 10px 10px;
+    border-radius: 10px; */
+    /* filter: invert(100%); */
+}
+.imgButton2{
+    position: absolute;
+    right: 75px;
+    bottom: 10px;
+    /* background-color: #61d0fc; */
+    /* padding: 10px 10px;
+    border-radius: 10px; */
+    /* filter: invert(100%); */
 }
 
 #btn{

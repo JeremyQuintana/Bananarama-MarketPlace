@@ -48,6 +48,19 @@ class MarketDataService {
     deletePost(id) {
         return axios.delete(`${API_URL}/posts/${id}`)
     }
+
+    // java does not recognize different methods with same urls
+    retrievePostsBySeller(userId, status){
+        return axios.get(`${API_URL}/${userId}/posts/${status}`);
+    }
+
+    // these show when you load the chats for each user
+    // in the chat page (chat service)
+    // retrieveChatsByUser(userId){
+    //     return axios.get(`${API_URL}/${userId}/chats`);
+    // }
+
+
 }
 export const googleauth = data => {
     return async dispatch => {

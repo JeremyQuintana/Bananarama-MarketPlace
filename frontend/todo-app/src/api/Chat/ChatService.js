@@ -37,6 +37,11 @@ class ChatService {
         return axios.delete(`${API_URL}/chat/${user1}and${user2}`);
     }
 
+    // returns list of ownerId's that have previously interacted with the owner
+    userList(owner) {
+        return axios.get(`${API_URL}/chat/${owner}`);
+    }
+
 
     testFunction(){
     return axios.get(`${API_URL}/chat`);
