@@ -25,7 +25,7 @@ class PostComponent extends Component {
         this.saveInfo = this.saveInfo.bind(this);
         this.updateDelete = this.updateDelete.bind(this);
         this.updateSold = this.updateSold.bind(this);
-        this.permanentDelete = this.permanentDelete.bind(this);
+        this.updatePermDelete = this.updatePermDelete.bind(this);
     }
   // 
                           
@@ -57,14 +57,12 @@ class PostComponent extends Component {
                         </div>
                         <div className="container postSeller"><Link to="/chat/" action="replace">Contact Seller</Link></div>
                         {(sessionStorage.getItem('authenticatedUser') == this.state.postInfo.ownerId) &&
-                            <div className="container"> 
-                                <button onClick={this.setEdit}      id="btn">Edit Post</button>
-                                <button onClick={this.updateSold}   id="btn">Sold</button>
-                                <button onClick={this.updateDelete} id="btn"> Delete </button>
-                                {/* <button onClick={this.updateDelete} id="btn2"> <img src={require("./delete.png")}></img></button> */}
-                                <input name="Delete" id="Delete" type="image" className="DeleterefineItem" 
-                                       src={require("./delete.png")} alt ="Delete"   onClick={this.permanentDelete} />
-                            </div>
+                          <div className="container"> <button onClick={this.setEdit}>Edit Post</button>
+                          <button onClick={this.updateSold}>Sold</button>
+                          <button onClick={this.updateDelete}>Delete</button>
+                          <input name="Delete" id="Delete" type="image" className="DeleterefineItem"
+                             src={require("./delete.png")}
+                            alt ="Delete"   onClick={this.updatePermDelete} /></div>
                         
                         }
 
@@ -119,10 +117,16 @@ class PostComponent extends Component {
         this.props.history.push(`/home/${sessionStorage.getItem("authenticatedUser")}`);
     }
 
-    permanentDelete() {
-        MarketDataService.deletePost(this.state.postInfo.id);
-        alert("Your Post Has Been Deleted");
-        this.props.history.push(`/home/${sessionStorage.getItem("authenticatedUser")}`);
+    updatePermDelete() {
+        var posttID= this.state.postInfo.id;
+    
+        postBackend.updatePermDeletePost(posttID).then(
+            response => {
+      
+              alert("Your Post Has Been Deleted FOREVER");
+              this.props.history.push(`/home/${sessionStorage.getItem("authenticatedUser")}`);
+            }
+          );
     }
 
     saveInfo() {

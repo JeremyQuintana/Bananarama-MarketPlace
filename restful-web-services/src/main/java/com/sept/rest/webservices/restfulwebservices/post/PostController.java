@@ -41,6 +41,7 @@ public class PostController {
 	private PostService service;
 	
 
+
 	// posts that are for sale
 	@GetMapping("/posts")
 	public List<Post> getAllAvailablePosts()
@@ -75,11 +76,24 @@ public class PostController {
 		System.out.println("received post backend: " + edit);
 		return correctOwner(id, request) ? service.update(edit) : null;
 	}
+
+
+	@PostMapping("/postsdelete")
+	public void deletePosts(@RequestBody Post post, HttpServletRequest request)
+	{	
+		service.markedasdelete(post.getId());
+	}
 	
 	@DeleteMapping("/posts/{id}")
 	public void deletePost(@PathVariable Long id, HttpServletRequest request)
 	{	
 		service.delete(service.get(id));
+	}
+	
+	@PostMapping("/postspermdelete")
+	public void DeletePosts(@RequestBody Post post, HttpServletRequest request)
+	{	
+		service.delete(post.getId());
 	}
 	
 	@GetMapping("/posts/{id}")
@@ -89,6 +103,22 @@ public class PostController {
 	}
 
 	
+	//logic for account history incase u need to sort them into groups like all marked as sold, all marked as deleted etc
+
+	@GetMapping("/{ownerId}/posts")
+	public List<Post> getCurrentPosts(@PathVariable String ownerId) {
+		return service.getAllAvailableByOwner(ownerId);
+	}
+	//@GetMapping("/{ownerId}/posts")
+	//public List<Post> getSoldPosts(@PathVariable String ownerId) {
+	//	return service.getAllSoldByOwner(ownerId);
+	//}
+//	@GetMapping("/{ownerId}/posts")
+//	public List<Post> getDeletedPosts(@PathVariable String ownerId) {
+//		return service.getAllDeletedByOwner(ownerId);
+//	}
+			
+		
 	
 
 	@PostMapping("/posts/{id}/{status}")
@@ -99,7 +129,7 @@ public class PostController {
 		return updatePost(id, post, request);
 	}
 	
-	
+	//endhere
 	
 	
 	
