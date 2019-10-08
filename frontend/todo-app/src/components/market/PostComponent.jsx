@@ -25,6 +25,7 @@ class PostComponent extends Component {
         this.saveInfo = this.saveInfo.bind(this);
         this.updateDelete = this.updateDelete.bind(this);
         this.updateSold = this.updateSold.bind(this);
+        this.updateAvailable = this.updateAvailable.bind(this);
         this.updatePermDelete = this.updatePermDelete.bind(this);
     }
   // 
@@ -36,6 +37,7 @@ class PostComponent extends Component {
         // create a div with all the singular posts information
         if (this.state.postInfo != null) {
             if (!this.state.editMode) {
+
                 retVal = (
 
                     <div className="topFix">
@@ -56,18 +58,26 @@ class PostComponent extends Component {
                             {this.state.postInfo.ownerId}
                         </div>
                         <div className="container postSeller"><Link to="/chat/" action="replace">Contact Seller</Link></div>
+                        
                         {(sessionStorage.getItem('authenticatedUser') == this.state.postInfo.ownerId) &&
-                          <div className="container"> <button onClick={this.setEdit}>Edit Post</button>
-                          <button onClick={this.updateSold}>Sold</button>
-                          <button onClick={this.updateDelete}>Delete</button>
-                          <input name="Delete" id="Delete" type="image" className="DeleterefineItem"
-                             src={require("./delete.png")}
-                            alt ="Delete"   onClick={this.updatePermDelete} /></div>
+                            <div className="container"> 
+                                <button onClick={this.updateSold}>Sold</button>
+                                <button onClick={this.updateDelete}>Delete</button>
+                                <button onClick={this.updateAvailable}>Available</button>
+                                
+                                <input type="image" className="imgButton" src={require("./delete.svg")} alt ="Delete"   onClick={this.updatePermDelete} />
+                                <input type="image" className="imgButton2" src={require("./edit.svg")} alt ="edit"   onClick={this.setEdit} />
+                            </div>
                         
                         }
 
                     </div>
                 );
+
+                            /*                 ^^^^
+                                the buttons sold, delete, available need if conditions so:
+                                an already available post does not have "available" button 
+                            */
             } else {
                 retVal = (
                     <div className="topFix">
@@ -107,6 +117,9 @@ class PostComponent extends Component {
     }
     updateSold() {
         this.updateStatus("SOLD");
+    }
+    updateAvailable() {
+        this.updateStatus("AVAILABLE");
     }
 
     updateStatus(status) {
