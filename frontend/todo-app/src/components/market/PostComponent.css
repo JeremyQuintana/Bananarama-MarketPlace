@@ -22,19 +22,17 @@
     position: absolute;
     right: 10px;
     bottom: 10px;
-    /* background-color: #61d0fc; */
-    /* padding: 10px 10px;
-    border-radius: 10px; */
-    /* filter: invert(100%); */
 }
 .imgButton2{
     position: absolute;
     right: 75px;
     bottom: 10px;
-    /* background-color: #61d0fc; */
-    /* padding: 10px 10px;
-    border-radius: 10px; */
-    /* filter: invert(100%); */
+}
+.imgButton:hover{
+    filter: invert(25%) sepia(41%) saturate(1753%) hue-rotate(325deg) brightness(98%) contrast(106%);
+}
+.imgButton2:hover{
+    filter: brightness(95%) contrast(93%);
 }
 
 #btn{
