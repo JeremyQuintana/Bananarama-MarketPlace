@@ -28,9 +28,9 @@ class PostComponent extends Component {
         this.updateAvailable = this.updateAvailable.bind(this);
         this.updatePermDelete = this.updatePermDelete.bind(this);
     }
-  // 
+ 
                           
-                          // <button onClick={this.setDelete}>Delete</button></div>
+                          
     render() {
         let retVal;
         // get the row from the backend array, based on the postID param in props
@@ -38,7 +38,24 @@ class PostComponent extends Component {
         if (this.state.postInfo != null) {
             if (!this.state.editMode) {
 
-                retVal = (
+                var ItemButtons;
+                if (this.state.postInfo.status == "AVAILABLE" && (sessionStorage.getItem('authenticatedUser') == this.state.postInfo.ownerId)) {
+                    ItemButtons =  <div className="containerbuttons ">
+                                    <button onClick={this.updateSold}>Sold</button>
+                                   <button onClick={this.updateDelete}>Delete</button>
+                                   
+                                   <input type="image" className="imgButton2" src={require("./edit.svg")} alt ="edit"   onClick={this.setEdit} />
+                                    </div>}
+                if ((this.state.postInfo.status == "DELETED" || this.state.postInfo.status == "SOLD") && (sessionStorage.getItem('authenticatedUser') == this.state.postInfo.ownerId)) {
+                    ItemButtons =  <div className="containerbuttons ">
+                                    
+                                   <button onClick={this.updateAvailable}>Available</button>
+                                   <input type="image" className="imgButton" src={require("./delete.svg")} alt ="Delete"   onClick={this.updatePermDelete} />
+                                   
+                                    </div>}
+                
+
+            retVal = (
 
                     <div className="topFix">
                         <h1 className="marketTitle">{this.state.postInfo.title}</h1>
@@ -59,25 +76,14 @@ class PostComponent extends Component {
                         </div>
                         <div className="container postSeller"><Link to="/chat/" action="replace">Contact Seller</Link></div>
                         
-                        {(sessionStorage.getItem('authenticatedUser') == this.state.postInfo.ownerId) &&
-                            <div className="container"> 
-                                <button onClick={this.updateSold}>Sold</button>
-                                <button onClick={this.updateDelete}>Delete</button>
-                                <button onClick={this.updateAvailable}>Available</button>
-                                
-                                <input type="image" className="imgButton" src={require("./delete.svg")} alt ="Delete"   onClick={this.updatePermDelete} />
-                                <input type="image" className="imgButton2" src={require("./edit.svg")} alt ="edit"   onClick={this.setEdit} />
-                            </div>
-                        
-                        }
-
+                        <div className="container">
+                        {ItemButtons}
+                        </div>
+                       
                     </div>
                 );
 
-                            /*                 ^^^^
-                                the buttons sold, delete, available need if conditions so:
-                                an already available post does not have "available" button 
-                            */
+                          
             } else {
                 retVal = (
                     <div className="topFix">
@@ -135,8 +141,8 @@ class PostComponent extends Component {
     
         postBackend.updatePermDeletePost(posttID).then(
             response => {
-      
-              alert("Your Post Has Been Deleted FOREVER");
+                
+              alert("Your Post Has Been PERMANENTLY DELETED");
               this.props.history.push(`/home/${sessionStorage.getItem("authenticatedUser")}`);
             }
           );
@@ -163,6 +169,9 @@ class PostComponent extends Component {
         }
 
     }
+
+
+
 
 }
 
