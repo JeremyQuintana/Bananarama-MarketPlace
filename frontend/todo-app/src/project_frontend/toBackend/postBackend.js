@@ -13,16 +13,24 @@ class postBackend{
     })
   }
 
-  updateDeletePost(id) {
+// replaced by updatePostStatus in MarketDataService
+  // updateDeletePost(id) {
 
-    return axios.post(`${API_URL}/postsdelete`, {
-        id            
-    })
-  }
+  //   return axios.post(`${API_URL}/postsdelete`, {
+  //       id            
+  //   })
+  // }
 
-  updateSoldPost(id) {
+  // updateSoldPost(id) {
 
-    return axios.post(`${API_URL}/postssold`, {
+  //   return axios.post(`${API_URL}/postssold`, {
+  //       id            
+  //   })
+  // }
+
+  updatePermDeletePost(id) {
+
+    return axios.post(`${API_URL}/postspermdelete`, {
         id            
     })
   }

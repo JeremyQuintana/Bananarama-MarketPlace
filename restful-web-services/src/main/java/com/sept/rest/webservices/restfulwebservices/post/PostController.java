@@ -41,6 +41,7 @@ public class PostController {
 	private PostService service;
 	
 
+
 	// posts that are for sale
 	@GetMapping("/posts")
 	public List<Post> getAllAvailablePosts()
@@ -63,6 +64,7 @@ public class PostController {
 	@PostMapping("/postitem")
 	public Post addPost(@RequestBody Post post, HttpServletRequest request)
 	{
+		System.out.println("adding post: " + post);
 		post.setOwner(getOwnerId(request));
 		return service.update(post);
 	}
@@ -71,39 +73,79 @@ public class PostController {
 	@PutMapping("/posts/{id}")
 	public Post updatePost(@PathVariable Long id, @RequestBody Post edit, HttpServletRequest request)
 	{
+		System.out.println("received post backend: " + edit);
 		return correctOwner(id, request) ? service.update(edit) : null;
 	}
+
 	
 	@DeleteMapping("/posts/{id}")
-	public void deletePost(@RequestBody Post post, HttpServletRequest request)
+	public void deletePost(@PathVariable Long id, HttpServletRequest request)
 	{	
-		service.delete(post);
+		if (correctOwner(id, request))
+			service.delete(service.get(id));
 	}
-
-	
-	
-
-	@PostMapping("/postsdelete")
-	public Post tempDeletePosts(@RequestBody Post post, HttpServletRequest request)
-	{	
-		post.setStatus(Status.DELETED);
-		return updatePost(post.getId(), post, request);
-		
-	}
-	
-	@PostMapping("/postssold")
-	public Post soldPosts(@RequestBody Post post, HttpServletRequest request)
-	{	
-		post.setStatus(Status.SOLD);
-		return updatePost(post.getId(), post, request);
-	}
-	
 	
 	@GetMapping("/posts/{id}")
 	public Post getPost(@PathVariable Long id)
 	{
 		return service.get(id);
 	}
+	
+	@PostMapping("/posts/{id}/{status}")
+	public Post updatePostStatus(@PathVariable Long id, @PathVariable Status status, HttpServletRequest request)
+	{	
+		Post post = service.get(id);
+		post.setStatus(status);
+		return updatePost(id, post, request);
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+//	reused /posts/{id}/{status} (already done for sold, available)
+//	@PostMapping("/postsdelete")
+//	public void deletePosts(@RequestBody Post post, HttpServletRequest request)
+//	{	
+//		if (correctOwner(post.getId(), request))
+//			post.setStatus(Status.DELETED);
+//	}
+	
+	@PostMapping("/postspermdelete")
+	public void DeletePosts(@RequestBody Post post, HttpServletRequest request)
+	{	
+		if (correctOwner(post.getId(), request))
+			service.delete(service.get(post.getId()));
+	}
+	
+
+
+	
+	//logic for account history incase u need to sort them into groups like all marked as sold, all marked as deleted etc
+	// directly putting status, as you need to mention this in the url anyway
+	
+	@GetMapping("/{ownerId}/posts/{status}")
+	public List<Post> getCurrentPosts(@PathVariable String ownerId, @PathVariable Status status) 
+	{
+		System.out.println("requested status: " + status);
+		for (Post post : service.getOwnerPosts(ownerId, status))
+		{
+			System.out.println(post);
+		}
+		return service.getOwnerPosts(ownerId, status);
+	}
+			
+		
+	
+
+
 	
 	
 	

@@ -7,6 +7,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.sept.rest.webservices.restfulwebservices.post.Post;
 
 @Entity
 @Table
@@ -33,7 +34,27 @@ public class Chat
 	
 	public String toString()
 	{
-		return String.format("Text: %s, Sender: %s, Receiver: %s", text, sender, receiver);
+		return String.format("Id: %d, Text: %s, Sender: %s, Receiver: %s", id, text, sender, receiver);
+	}
+	
+	@Override
+	public int hashCode() 
+	{
+		return 31 + ((id == null) ? 0 : id.hashCode());
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) 					return true;
+		if (obj == null) 					return false;
+		if (getClass() != obj.getClass())	return false;
+		Chat other = (Chat) obj;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		return true;
 	}
 	
 	public String getSender() {return sender;}

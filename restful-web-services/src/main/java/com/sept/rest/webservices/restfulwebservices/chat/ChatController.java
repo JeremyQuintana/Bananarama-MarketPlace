@@ -8,6 +8,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -50,25 +51,42 @@ public class ChatController {
 	@Autowired
 	private ChatService service;
 	
-	
-	
-	
 	@GetMapping("/chat/{user1}and{user2}")
 	public List<Chat> loadChat(@PathVariable String user1, @PathVariable String user2) throws SQLException
 	{					
-//		for (Chat chat : service.allChats(user1, user2))
-//			System.out.println(chat);
 		return service.allChats(user1, user2);
+	}
+	
+	//when you want the latest chats between 2 users 
+	// give the last chat that is stored frontend 
+	// and any chats after will be returned 
+	@GetMapping("/chat/{user1}and{user2}afterID{lastId}") 
+	public List<Chat> loadChatAfter(@PathVariable String user1, @PathVariable String user2, @PathVariable Long lastId) throws SQLException 
+	{ 
+		return service.allChatsAfterId(lastId, user1, user2);
+	}
+	
+	@DeleteMapping("/chat/{user1}and{user2}")
+	public void deleteChat(@PathVariable String user1, @PathVariable String user2) throws SQLException
+	{
+		service.deleteAllChats(user1, user2);
 	}
 	
 	
 	
 	@PostMapping("/chat")
 	public void addChat(@RequestBody Chat chat) throws SQLException
-	{															
-		service.addChat(chat);
+	{					
+		service.add(chat);
+		
 	}
 
+	// returns a list of owner id's
+	@GetMapping("/chat/{owner}") 
+	public List<String> userList(@PathVariable String owner)
+	{
+		return service.allUsersInteractedWith(owner);
+	}
 	
 	
 	
