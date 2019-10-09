@@ -33,7 +33,7 @@ class ChatService {
     }
 
     deleteChats(user1, user2) {
-        alert('deleting');
+        // alert('deleting');
         return axios.delete(`${API_URL}/chat/${user1}and${user2}`);
     }
 

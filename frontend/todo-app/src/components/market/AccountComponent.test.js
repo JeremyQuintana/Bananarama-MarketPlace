@@ -4,14 +4,14 @@ import { shallow, configure } from 'enzyme';
 import AccountComponent from './AccountComponent';
 import Adapter from 'enzyme-adapter-react-16';
 
-var defaultPosts = [[
-    { id: 'id', value: '1' },
-    { id: 'title', value: '1' },
-    { id: 'category', value: '1' },
-    { id: 'photo', value: '1' },
-    { id: 'description', value: '1' },
-    { id: 'price', value: '1' },
-    { id: 'ownerId', value: '1' }]];
+var defaultPosts = [
+    { id: 1, title: '1', category: 1, photo: 1, description: 1, price: 1, ownerId: 1 }
+];
+
+var defaultChats = [
+    { senderId: 's1234567', receiverId: 's7654321' },
+    { senderId: 's1234567', receiverId: 's5678910' }
+];
 
 beforeAll(() => {
     configure({ adapter: new Adapter() })
@@ -29,12 +29,12 @@ describe('<AccountComponent />', () => {
 describe('<AccountComponent />', () => {
     it('renders basic structure', () => {
         const account = shallow(<AccountComponent.WrappedComponent />);
-        expect(account.find('div').length).toEqual(10);
+        expect(account.find('div').length).toEqual(13);
         expect(account.find('h1').length).toEqual(1);
-        expect(account.find('h3').length).toEqual(3);
+        expect(account.find('h3').length).toEqual(4);
 
         expect(account.find('ItemsComponent').length).toEqual(0);
-        expect(account.find('div.alert').length).toEqual(3);
+        expect(account.find('div.alert').length).toEqual(4);
     });
 });
 
@@ -44,9 +44,11 @@ describe('<AccountComponent />', () => {
         account.setState({
             pastPosts: defaultPosts,
             currentPosts: defaultPosts,
-            deletedPosts: defaultPosts
+            deletedPosts: defaultPosts,
+            allChats: defaultChats
         });
         expect(account.find('ItemsComponent').length).toEqual(3);
+        expect(account.find('ChatListComponent').length).toEqual(1);
         expect(account.find('div.alert').length).toEqual(0);
     });
 });
@@ -54,27 +56,36 @@ describe('<AccountComponent />', () => {
 describe('<AccountComponent />', () => {
     it('renders past post group', () => {
         const account = shallow(<AccountComponent.WrappedComponent />);
-        account.setState({pastPosts: defaultPosts});
+        account.setState({ pastPosts: defaultPosts });
         expect(account.find('ItemsComponent').length).toEqual(1);
-        expect(account.find('div.alert').length).toEqual(2);
+        expect(account.find('div.alert').length).toEqual(3);
     });
 });
 
 describe('<AccountComponent />', () => {
-    it('renders past post group', () => {
+    it('renders current post group', () => {
         const account = shallow(<AccountComponent.WrappedComponent />);
-        account.setState({currentPosts: defaultPosts});
+        account.setState({ currentPosts: defaultPosts });
         expect(account.find('ItemsComponent').length).toEqual(1);
-        expect(account.find('div.alert').length).toEqual(2);
+        expect(account.find('div.alert').length).toEqual(3);
     });
 });
 
 describe('<AccountComponent />', () => {
-    it('renders past post group', () => {
+    it('renders deleted post group', () => {
         const account = shallow(<AccountComponent.WrappedComponent />);
-        account.setState({deletedPosts: defaultPosts});
+        account.setState({ deletedPosts: defaultPosts });
         expect(account.find('ItemsComponent').length).toEqual(1);
-        expect(account.find('div.alert').length).toEqual(2);
+        expect(account.find('div.alert').length).toEqual(3);
+    });
+});
+
+describe('<AccountComponent />', () => {
+    it('renders chats group', () => {
+        const account = shallow(<AccountComponent.WrappedComponent />);
+        account.setState({ allChats: defaultChats });
+        expect(account.find('ChatListComponent').length).toEqual(1);
+        expect(account.find('div.alert').length).toEqual(3);
     });
 });
 

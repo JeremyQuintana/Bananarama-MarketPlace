@@ -35,7 +35,7 @@ class PostComponent extends Component {
         let retVal;
         // get the row from the backend array, based on the postID param in props
         // create a div with all the singular posts information
-        if (this.state.postInfo !== null) {
+        if (this.state.postInfo != null) {
             if (!this.state.editMode) {
 
                 var ItemButtons;
@@ -160,7 +160,7 @@ class PostComponent extends Component {
     // update to mitches code
     // instead of retrieving all posts frontend and doing a search use backed to send only one item of given id
     retrieveItemInfo() {
-        if(this.props.match !== null){
+        if(this.props.match != null){
             MarketDataService.retrieveSpecificPost(this.props.match.params.postID).then(
                 response => {
                     this.setState({ postInfo: response.data });

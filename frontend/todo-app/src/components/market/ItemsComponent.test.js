@@ -26,14 +26,9 @@ describe('<ItemsComponent />', () => {
 
 describe('<ItemsComponent />', () => {
     it('renders based on state', () => {
-        const items = shallow(<ItemsComponent backPostings={[[
-            { id: 'id', value: '1' },
-            { id: 'title', value: '1' },
-            { id: 'category', value: '1' },
-            { id: 'photo', value: '1' },
-            { id: 'description', value: '1' },
-            { id: 'price', value: '1' },
-            { id: 'ownerId', value: '1' }]]} />);
-        expect(items.find('span').length).toEqual(5);
+        const items = shallow(<ItemsComponent backPostings={[
+            { id: 1, title: '1', category: 1, photo: 1, description: 1, price: 1, ownerId: 1 },
+        ]} />);
+        expect(items.find('span').length).toEqual(4);
     });
 });
