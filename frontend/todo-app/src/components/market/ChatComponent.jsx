@@ -2,6 +2,10 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { withRouter } from "react-router-dom";
 import ChatService from "../../api/Chat/ChatService.js"
+import PropTypes from "prop-types";
+
+
+
 
 
 import "./Chat.css";
@@ -47,9 +51,13 @@ class ChatComponent extends Component {
   }
   handleInput = e => {
     const itemText = e.target.value;
-    const message = { text: itemText, key: Date.now() };
+
+    // needs to be some username at some poiunt
+    var username = "thisUsername";
+    const message = { text: itemText, username };
     this.setState({
-      message
+      message,
+      username
     });
   };
   addMessage = e => {
@@ -59,7 +67,10 @@ class ChatComponent extends Component {
     if (newMessageToOutPut.text !== "") {
       const messages = [...this.state.messages, newMessageToOutPut];
       console.log(newMessageToOutPut);
-      ChatService.addText("sender","reciver",newMessageToOutPut.text);
+
+      // calling it here 
+      ChatService.addChat("user1","user2",newMessageToOutPut.text);
+
       this.setState({
         messages: messages,
         message: { text: "", key: "" }
@@ -120,6 +131,13 @@ class MessageList extends Component {
 }
 
 class MessageObjects extends Component {
+   static contextTypes = {
+    router: PropTypes.object
+  }
+
+   constructor(props, context) {
+     super(props, context);
+  }
   create_new_message = message => {
     return (
       <div className="message">
@@ -134,14 +152,28 @@ class MessageObjects extends Component {
     const messages = this.props.allMeassages;
     const listMessages = messages.map(this.create_new_message);
 
+    this.refreshChatLog();
+
 
     return <ul className="messages">{listMessages}</ul>;
   }
 
-      refreshPosts() {
-    
-        ChatService.getAllTexts("user1", "user2")
-    }
+  refreshChatLog() {
+
+    window.setInterval(function(){
+      // change this vvv
+      ChatService.loadAllChats("user1", "user2").then(
+        response => {
+          console.log(response); 
+        }
+      )
+      // to look like
+      // ChatService.loadChatsAfter(lastChat);
+      // this "lastChat" object is the one sent to you from backend
+      // eg: when you call loadAllChats (you get a list of chats)
+
+    }, 100000);
+  }
 }
 
 export default withRouter(ChatComponent);

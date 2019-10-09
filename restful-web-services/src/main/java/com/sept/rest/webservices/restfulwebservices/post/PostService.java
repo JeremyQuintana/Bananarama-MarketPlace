@@ -11,6 +11,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
+import com.sept.rest.webservices.restfulwebservices.post.Post.Status;
+
+
 @Service
 public class PostService {
 
@@ -41,11 +44,15 @@ public class PostService {
 	{
 		return db.save(post);
 	}	
-
-	public void delete(Long id)
+	
+	public void delete(Post post)
 	{
-		db.deleteById(id);
+		db.delete(post);
 	}
+
+	
+	
+	
 	
 	
 	
@@ -57,6 +64,39 @@ public class PostService {
 	{
 		return db.findByOwnerId(ownerId);
 	}
+	
+	public List<Post> getAllAvailable()
+	{
+		return db.findByStatus(Status.AVAILABLE);
+	}
+	
+	//	calling directly as you can't have multiple urls
+	public List<Post> getOwnerPosts(String ownerId, Status status)
+	{
+		return db.findByOwnerIdAndStatus(ownerId, status);
+	}
+	
+	
+//	//logic incase history needs to be sorted by groups by status
+//	public List<Post> getAllAvailableByOwner(String ownerId)
+//	{
+//		return db.findByOwnerIdAndStatus(ownerId, Status.AVAILABLE);
+//	}
+//	
+//	public List<Post> getAllSoldByOwner(String ownerId)
+//	{
+//		return db.findByOwnerIdAndStatus(ownerId, Status.SOLD);
+//	}
+//	
+//	public List<Post> getAllDeletedByOwner(String ownerId)
+//	{
+//		return db.findByOwnerIdAndStatus(ownerId, Status.DELETED);
+//	}
+	
+	
+
+	
+	
 	
 	public List<Post> sortAll(String sort)
 	{
