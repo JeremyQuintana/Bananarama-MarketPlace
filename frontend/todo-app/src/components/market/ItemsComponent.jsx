@@ -1,7 +1,6 @@
 
 import React, { Component } from 'react'
 
-import { withRouter } from "react-router-dom";
 import './Market.css';
 
 // Helper class to render  the post rows
@@ -35,7 +34,7 @@ class ItemsComponent extends Component {
               }
               // Append the row of post information
               retVal.push(
-                  <div className="posting container" onClick={() => this.routeChange(postId)}>
+                  <div className="posting container" key={r} onClick={() => this.routeChange(postId)}>
                       <span className="postTitle"><img src={'post_images/' + this.state.backPostings[r].photo + '.jpg'}></img>{this.state.backPostings[r].title}</span> <br></br>
                       <span className="postCategory">{this.state.backPostings[r].category}</span> <br></br>
                       {/* <span className="postDescription">{trimmedDescription}</span> <br></br> */}

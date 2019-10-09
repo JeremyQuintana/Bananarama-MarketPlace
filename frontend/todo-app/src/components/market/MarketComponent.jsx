@@ -26,7 +26,7 @@ constructor(props){
   var searchDescription = null;
   var searchCategory = null;
   var searchSort = null;
-  if(this.props.match != null){
+  if(this.props.match !== null){
   var searchDescription = this.props.match.params.searchDescription;
   var searchCategory = this.props.match.params.searchCategory;
   var searchSort = this.props.match.params.searchSort;
@@ -41,7 +41,7 @@ constructor(props){
 
   this.handleChange = this.handleChange.bind(this)
   this.submitPost = this.submitPost.bind(this)
-  if(this.props.history != null){
+  if(this.props.history !== null){
     this.unlisten = this.props.history.listen((location, action) => {
       window.location.reload();
     });

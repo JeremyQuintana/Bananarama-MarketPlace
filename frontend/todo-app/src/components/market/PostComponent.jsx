@@ -35,18 +35,18 @@ class PostComponent extends Component {
         let retVal;
         // get the row from the backend array, based on the postID param in props
         // create a div with all the singular posts information
-        if (this.state.postInfo != null) {
+        if (this.state.postInfo !== null) {
             if (!this.state.editMode) {
 
                 var ItemButtons;
-                if (this.state.postInfo.status == "AVAILABLE" && (sessionStorage.getItem('authenticatedUser') == this.state.postInfo.ownerId)) {
+                if (this.state.postInfo.status === "AVAILABLE" && (sessionStorage.getItem('authenticatedUser') === this.state.postInfo.ownerId)) {
                     ItemButtons =  <div className="containerbuttons ">
                                     <button onClick={this.updateSold}>Sold</button>
                                    <button onClick={this.updateDelete}>Delete</button>
                                    
                                    <input type="image" className="imgButton2" src={require("./edit.svg")} alt ="edit"   onClick={this.setEdit} />
                                     </div>}
-                if ((this.state.postInfo.status == "DELETED" || this.state.postInfo.status == "SOLD") && (sessionStorage.getItem('authenticatedUser') == this.state.postInfo.ownerId)) {
+                if ((this.state.postInfo.status === "DELETED" || this.state.postInfo.status === "SOLD") && (sessionStorage.getItem('authenticatedUser') === this.state.postInfo.ownerId)) {
                     ItemButtons =  <div className="containerbuttons ">
                                     
                                    <button onClick={this.updateAvailable}>Available</button>
@@ -160,7 +160,7 @@ class PostComponent extends Component {
     // update to mitches code
     // instead of retrieving all posts frontend and doing a search use backed to send only one item of given id
     retrieveItemInfo() {
-        if(this.props.match != null){
+        if(this.props.match !== null){
             MarketDataService.retrieveSpecificPost(this.props.match.params.postID).then(
                 response => {
                     this.setState({ postInfo: response.data });

@@ -55,7 +55,7 @@ class Post_item extends Component {
               </select>
               <input type="file" name="item_photo" id="item_photo" className="input" accept="image/*" value={this.state.item_photo} onChange={this.handleChange}/>
             </div>
-            {this.props.existingId != null && <div className="container alert alert-warning">If no new photo is uploaded, the existing photo will be kept</div>}
+            {this.props.existingId !== null && <div className="container alert alert-warning">If no new photo is uploaded, the existing photo will be kept</div>}
           </div>
           <input type="submit" value="Submit" name="itemSubmit" />
 
@@ -115,7 +115,7 @@ class Post_item extends Component {
   }
 
   updateStateWithPost() {
-    if (this.props.existingId != null) {
+    if (this.props.existingId !== null) {
       MarketDataService.retrieveSpecificPost(this.props.existingId).then(
         response => {
           console.log(response)

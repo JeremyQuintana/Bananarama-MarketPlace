@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { API_URL, JPA_API_URL } from '../../Constants'
+import { API_URL } from '../../Constants'
 
 // This is a data service for getting market items data from the backend
 class MarketDataService {
@@ -59,7 +59,7 @@ class MarketDataService {
     // retrieveChatsByUser(userId){
     //     return axios.get(`${API_URL}/${userId}/chats`);
     // }
-
+    
 
 }
 export const googleauth = data => {
