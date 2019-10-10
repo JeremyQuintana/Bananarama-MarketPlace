@@ -8,7 +8,7 @@ class HeaderComponent extends Component {
     render() {
         axios.interceptors.request.use(
             (config) => {
-                if (!(sessionStorage.getItem("authenticatedUser") === null)) {
+                if (!(sessionStorage.getItem("authenticatedUser") == null)) {
                     config.headers.authorization = sessionStorage.getItem("jwtToken")
                 }
                 return config

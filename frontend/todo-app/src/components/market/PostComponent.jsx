@@ -39,14 +39,14 @@ class PostComponent extends Component {
             if (!this.state.editMode) {
 
                 var ItemButtons;
-                if (this.state.postInfo.status == "AVAILABLE" && (sessionStorage.getItem('authenticatedUser') == this.state.postInfo.ownerId)) {
+                if (this.state.postInfo.status === "AVAILABLE" && (sessionStorage.getItem('authenticatedUser') === this.state.postInfo.ownerId)) {
                     ItemButtons =  <div className="containerbuttons ">
                                     <button onClick={this.updateSold}>Sold</button>
                                    <button onClick={this.updateDelete}>Delete</button>
                                    
                                    <input type="image" className="imgButton2" src={require("./edit.svg")} alt ="edit"   onClick={this.setEdit} />
                                     </div>}
-                if ((this.state.postInfo.status == "DELETED" || this.state.postInfo.status == "SOLD") && (sessionStorage.getItem('authenticatedUser') == this.state.postInfo.ownerId)) {
+                if ((this.state.postInfo.status === "DELETED" || this.state.postInfo.status === "SOLD") && (sessionStorage.getItem('authenticatedUser') === this.state.postInfo.ownerId)) {
                     ItemButtons =  <div className="containerbuttons ">
                                     
                                    <button onClick={this.updateAvailable}>Available</button>
