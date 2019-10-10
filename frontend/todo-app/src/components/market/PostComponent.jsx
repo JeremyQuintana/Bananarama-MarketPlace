@@ -54,14 +54,11 @@ class PostComponent extends Component {
                                    
                                     </div>}
                 
-                if ((this.state.postInfo.status == "DELETED" || this.state.postInfo.status == "SOLD") && (sessionStorage.getItem('authenticatedUser') !== this.state.postInfo.ownerId)) {
+                   if ((this.state.postInfo.status == "DELETED" || this.state.postInfo.status == "SOLD") && (sessionStorage.getItem('authenticatedUser') !== this.state.postInfo.ownerId)) {
                     ItemButtons =  
-                                    alert("THIS POST IS NO LONGER AVAILABLE");
+                                    alert("THIS ITEM HAS BEEN "+ this.state.postInfo.status);
                                     this.props.history.push(`/home/${sessionStorage.getItem("authenticatedUser")}`);
                                    }
-
-                
-                
 
             retVal = (
 
