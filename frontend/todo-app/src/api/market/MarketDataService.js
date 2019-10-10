@@ -19,18 +19,35 @@ class MarketDataService {
         return axios.get(`${API_URL}/posts/${postId}`);
     }
 
+  //  updateDeletePost(id) {
 
-    updateExistingPost(id, description, title, price, category, photo) {
+ //       return axios.put(`${API_URL}/posts/${id}`, {
+  //          id            
+ //       })
+ //   }
+//
+
+
+    updateExistingPost(id, description, title, price, category, photo, ownerId) {
+
         return axios.put(`${API_URL}/posts/${id}`, {
             id,
             description,
             title,
             price,
             category,
-            photo
+            photo, 
+            ownerId
         })
     }
 
+    updatePostStatus(id, status) {
+        return axios.post(`${API_URL}/posts/${id}/${status}`)
+    }
+
+    deletePost(id) {
+        return axios.delete(`${API_URL}/posts/${id}`)
+    }
 }
 export const googleauth = data => {
     return async dispatch => {

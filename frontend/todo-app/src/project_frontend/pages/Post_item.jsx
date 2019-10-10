@@ -15,6 +15,7 @@ class Post_item extends Component {
       item_cost: '',
       item_photo: '',
       item_catagory: '',
+      item_ownerId: ''
     }
 
     this.updateStateWithPost();
@@ -86,14 +87,14 @@ class Post_item extends Component {
     var costRegex = /^\d*(\.\d{0,2})?$/;
     var costResult = ((costRegex.test(this.state.item_cost)) && (this.state.item_cost > 0));
     var catagoryResult =
-          (this.state.item_catagory == "" ||
-           this.state.item_catagory == "Exceptionally Random" ||
-           this.state.item_catagory == "Ridiculously Complicated" ||
-           this.state.item_catagory == "Annoyingly Unnexplained" ||
-           this.state.item_catagory == "Disturbingly Simple" ||
-           this.state.item_catagory == "Spectacularly Failing")
+          (this.state.item_catagory === "" ||
+           this.state.item_catagory === "Exceptionally Random" ||
+           this.state.item_catagory === "Ridiculously Complicated" ||
+           this.state.item_catagory === "Annoyingly Unnexplained" ||
+           this.state.item_catagory === " Disturbingly Simple" ||
+           this.state.item_catagory === "Spectacularly Failing")
 
-    var nameResult = !(this.state.item_name == "");
+    var nameResult = !(this.state.item_name === "");
 
     var valid = (costResult && catagoryResult && nameResult) ;
 
@@ -103,7 +104,7 @@ class Post_item extends Component {
   updateExistingPost(event) {
     console.log("SUCCESS");
     event.preventDefault();
-    MarketDataService.updateExistingPost(this.props.existingId, this.state.item_description, this.state.item_name, this.state.item_cost, this.state.item_catagory, this.state.item_photo).then(
+    MarketDataService.updateExistingPost(this.props.existingId, this.state.item_description, this.state.item_name, this.state.item_cost, this.state.item_catagory, this.state.item_photo, this.state.item_ownerId).then(
       response => {
 
         alert("Your item has been updated");
@@ -123,6 +124,7 @@ class Post_item extends Component {
             item_cost: response.data.price,
             //item_photo: response.data.photo,
             item_catagory: response.data.category,
+            item_ownerId: response.data.ownerId
           })
         }
       )

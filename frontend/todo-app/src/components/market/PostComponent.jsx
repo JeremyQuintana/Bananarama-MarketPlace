@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom'
 import Post_item from '../../project_frontend/pages/Post_item.jsx'
 import './PostComponent.css'
 import MarketDataService from "../../api/market/MarketDataService.js"
+import postBackend from '../../project_frontend/toBackend/postBackend.js';
+
 
 // This class is for an individual post's page
 class PostComponent extends Component {
@@ -21,8 +23,13 @@ class PostComponent extends Component {
         this.setEdit = this.setEdit.bind(this);
         this.clearEdit = this.clearEdit.bind(this);
         this.saveInfo = this.saveInfo.bind(this);
+        this.updateDelete = this.updateDelete.bind(this);
+        this.updateSold = this.updateSold.bind(this);
+        this.permanentDelete = this.permanentDelete.bind(this);
     }
-
+  // 
+                          
+                          // <button onClick={this.setDelete}>Delete</button></div>
     render() {
         let retVal;
         // get the row from the backend array, based on the postID param in props
@@ -47,7 +54,15 @@ class PostComponent extends Component {
                         </div>
                         <div className="container postSeller"><Link to="/chat/" action="replace">Contact Seller</Link></div>
                         {(sessionStorage.getItem('authenticatedUser') == this.state.postInfo.ownerId) &&
-                          <div className="container"> <button onClick={this.setEdit}>Edit Post</button></div>
+                            <div className="container"> 
+                                <button onClick={this.setEdit}      id="btn">Edit Post</button>
+                                <button onClick={this.updateSold}   id="btn">Sold</button>
+                                <button onClick={this.updateDelete} id="btn"> Delete </button>
+                                {/* <button onClick={this.updateDelete} id="btn2"> <img src={require("./delete.png")}></img></button> */}
+                                <input name="Delete" id="Delete" type="image" className="DeleterefineItem" 
+                                       src={require("./delete.png")} alt ="Delete"   onClick={this.permanentDelete} />
+                            </div>
+                        
                         }
 
                     </div>
@@ -70,6 +85,9 @@ class PostComponent extends Component {
         return retVal;
     }
 
+
+
+
     setEdit() {
 
         this.setState({ editMode: true });
@@ -79,9 +97,39 @@ class PostComponent extends Component {
         this.setState({ editMode: false });
     }
 
+
+
+
+
+    updateDelete() {
+        this.updateStatus("DELETED");
+    }
+    updateSold() {
+        this.updateStatus("SOLD");
+    }
+
+    updateStatus(status) {
+        var postID= this.state.postInfo.id;
+        
+        MarketDataService.updatePostStatus(postID, status);
+        alert("Your Post Has Been Marked As " + status);
+        this.props.history.push(`/home/${sessionStorage.getItem("authenticatedUser")}`);
+    }
+
+    permanentDelete() {
+        MarketDataService.deletePost(this.state.postInfo.id);
+        alert("Your Post Has Been Deleted");
+        this.props.history.push(`/home/${sessionStorage.getItem("authenticatedUser")}`);
+    }
+
     saveInfo() {
         // send to backend and redir/show success message
     }
+
+
+
+
+
 
     // update to mitches code
     // instead of retrieving all posts frontend and doing a search use backed to send only one item of given id

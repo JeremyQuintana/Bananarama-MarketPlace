@@ -22,15 +22,34 @@ public class ChatService {
 
 	
 	
-	public List<Chat> allChats(String user1, String user2) throws SQLException
+	public List<Chat> allChats(String user1, String user2) 
 	{
 		List<Chat> allChats = db.findBySenderAndReceiver(user1, user2);
 		allChats.addAll(db.findBySenderAndReceiver(user2, user1));
 		return allChats;
 	}
 	
-	public void addChat(Chat chat)
+	public List<Chat> allChatsAfterId(Long lastID, String user1, String user2) 
+	{
+		List<Chat> chats = allChats(user1, user2);
+		chats.retainAll(getChatsAfter(lastID));
+		return chats;
+	}
+	
+	public void deleteAllChats(String user1, String user2)
+	{
+		db.deleteBySenderAndReceiver(user1, user2);
+		db.deleteBySenderAndReceiver(user2, user1);
+	}
+	
+	public void add(Chat chat)
 	{
 		db.save(chat);
 	}
+	
+	public List<Chat> getChatsAfter(Long id)
+	{
+		return db.findByIdGreaterThan(id);
+	}
+	
 }

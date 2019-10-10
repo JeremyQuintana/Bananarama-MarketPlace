@@ -11,6 +11,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
+import com.sept.rest.webservices.restfulwebservices.post.Post.Status;
+
+
 @Service
 public class PostService {
 
@@ -41,12 +44,23 @@ public class PostService {
 	{
 		return db.save(post);
 	}	
-
-	public void delete(Long id)
-	{
-		db.deleteById(id);
-	}
 	
+	public void delete(Post post)
+	{
+		db.delete(post);
+	}
+
+	
+	
+	
+	
+	
+	//public void delete(long id)
+	//{
+	//	System.out.println("In POST SERVICE TO SETSTATUS");
+	//	db.setStatusForPost(id, Status.DELETED);
+///	}
+	//
 	
 	
 	
@@ -56,6 +70,11 @@ public class PostService {
 	public List<Post> getAllUserPosts(String ownerId)
 	{
 		return db.findByOwnerId(ownerId);
+	}
+	
+	public List<Post> getAllAvailable()
+	{
+		return db.findByStatus(Status.AVAILABLE);
 	}
 	
 	public List<Post> sortAll(String sort)
