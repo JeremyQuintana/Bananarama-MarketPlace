@@ -79,7 +79,11 @@ class Post_item extends Component {
     reader.readAsDataURL(files[0]);
 
     reader.onload=(e)=>{
-      this.setState({item_photo: e.target.result})
+      if (e.target.result.length < 10000){
+        this.setState({item_photo: e.target.result})
+      } else {
+        alert("Image exceeds 100KB and will not be uploaded");
+      }
     }
   }
 
@@ -108,7 +112,9 @@ class Post_item extends Component {
 
     var nameResult = !(this.state.item_name === "");
 
-    var valid = (costResult && catagoryResult && nameResult) ;
+    var photoSize = (this.state.item_photo.length < 100000)
+
+    var valid = (costResult && catagoryResult && nameResult && photoSize) ;
 
     return valid;
   }

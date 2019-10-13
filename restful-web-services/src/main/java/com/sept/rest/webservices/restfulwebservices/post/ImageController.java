@@ -30,14 +30,16 @@ public class ImageController {
 		}	
 	}
 	
-	public String uploadImage(String image, String id) {
+	public void uploadImage(String image, String id) {
 		byte [] data = Base64.getDecoder().decode(image.split(",")[1]);
-
 		
-	    BlobId blobId = BlobId.of("sept-image-store", id);
-		BlobInfo blobInfo = BlobInfo.newBuilder(blobId).setContentType("text/plain").build();
-		Blob blob = storage.create(blobInfo, data);
-		return blob.getName();
+		if (data.length < 100000) {
+		    BlobId blobId = BlobId.of("sept-image-store", id);
+			BlobInfo blobInfo = BlobInfo.newBuilder(blobId).setContentType("text/plain").build();
+			Blob blob = storage.create(blobInfo, data);
+		} else {
+			System.out.println("ERROR - Image exceeds 50KB");
+		}
 	}
 	
 	public void deleteImage(String name) {
