@@ -60,14 +60,17 @@ class PostControllerTest {
 	private static Post post1;
 	private static Post post2;
 	private static Post post3;
+	private static PostSubmission post1Submission;
 	private static MockHttpServletRequest mockAuthentication;
 	private static List<Post> posts;
 	
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
 		post1 = new Post(new Long(2), "s1234567", "Appleberry's", "Delicious", "2.222", "Fruit");
+		post1Submission = new PostSubmission("Appleberry's", "Delicious", "2.222", "Fruit", null);
 		post2 = new Post(new Long(5), "s1234567", "doodoo boo", "Cleans the backend leaving no traces", "9999", "Baby Wipes");
 		post3 = new Post(new Long(6), "s3717497", "Pill", "Pickpocketed off Morpheus", "2", "Medecine");
+		
 		
 		posts = new ArrayList<>();
 		posts.add(post1);
@@ -84,8 +87,18 @@ class PostControllerTest {
 	@Test
 	void testAddPost() {
 		addOwnerIDToHeader("s1234567");
-		Mockito.when(service.update(post1)).thenReturn(post1);
-		assertEquals(post1, controller.addPost(post1, mockAuthentication));
+		Post toUpload = new Post(
+				"s1234567",
+				post1Submission.getTitle(),
+				post1Submission.getDescription(),
+				post1Submission.getPrice(),
+				post1Submission.getCategory());
+		Mockito.when(service.update(toUpload)).thenReturn(post1);
+		Post post = controller.addPost(post1Submission, mockAuthentication);
+		assertEquals(post1Submission.getDescription(), post.getDescription());
+		assertEquals(post1Submission.getPrice(), post.getPrice());
+		assertEquals(post1Submission.getTitle(), post.getTitle());
+		assertEquals(post1Submission.getCategory(), post.getCategory());
 	}
 	
 	@Test
@@ -117,10 +130,22 @@ class PostControllerTest {
 	void testUpdatePost() throws Exception 
 	{
 		addOwnerIDToHeader("s1234567");
-		Mockito.when(service.update(post1)).thenReturn(post1);
-		Mockito.when(service.get(post1.getId())).thenReturn(post1);
+		Post toUpload = new Post(
+				"s1234567",
+				post1Submission.getTitle(),
+				post1Submission.getDescription(),
+				post1Submission.getPrice(),
+				post1Submission.getCategory());
 		
-		assertEquals(post1, controller.updatePost(post1.getId(), post1, mockAuthentication));
+		Mockito.when(service.update(toUpload)).thenReturn(post1);
+		Mockito.when(service.get(post1.getId())).thenReturn(post1);
+
+		Post post = controller.updatePost(post1.getId(), post1Submission, mockAuthentication);;
+		
+		assertEquals(post1Submission.getDescription(), post.getDescription());
+		assertEquals(post1Submission.getPrice(), post.getPrice());
+		assertEquals(post1Submission.getTitle(), post.getTitle());
+		assertEquals(post1Submission.getCategory(), post.getCategory());
 		
 	}
 	
@@ -132,7 +157,7 @@ class PostControllerTest {
 		Mockito.when(service.get(post1.getId())).thenReturn(post1);
 		
 		assertThrows(NullPointerException.class, () -> {
-				controller.updatePost(post1.getId(), post1, mockAuthentication);
+				controller.updatePost(post1.getId(), post1Submission, mockAuthentication);
 		});
 	}
 	

@@ -17,21 +17,21 @@ class postBackend{
   // updateDeletePost(id) {
 
   //   return axios.post(`${API_URL}/postsdelete`, {
-  //       id            
+  //       id
   //   })
   // }
 
   // updateSoldPost(id) {
 
   //   return axios.post(`${API_URL}/postssold`, {
-  //       id            
+  //       id
   //   })
   // }
 
   updatePermDeletePost(id) {
 
     return axios.post(`${API_URL}/postspermdelete`, {
-        id            
+        id
     })
   }
 

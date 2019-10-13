@@ -14,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.Column;
 
@@ -33,7 +34,7 @@ public class Post implements Comparable<Post> {
 	private String title;
 	private String price;
 	private String category;
-	private String photo;
+//	private String photo;
 	private String ownerId;
 	private Date datePosted = new Date(new java.util.Date().getTime());
 	
@@ -220,7 +221,7 @@ public class Post implements Comparable<Post> {
 	
 	public String toString()
 	{
-		return id + " " + ownerId + " " + title + " " + description + " " + price + " " + status + " " + datePosted + " " + category + photo;
+		return id + " " + ownerId + " " + title + " " + description + " " + price + " " + status + " " + datePosted + " " + category;
 	}
 	
 	@Override
@@ -262,7 +263,7 @@ public class Post implements Comparable<Post> {
 	public String getDescription() 			{return description;}
 	public String getCategory() 			{return category;}
 	public String getPrice() 				{return price;}
-	public String getPhoto() 				{return photo;}
+//	public String getPhoto() 				{return photo;}
 	
 }
 

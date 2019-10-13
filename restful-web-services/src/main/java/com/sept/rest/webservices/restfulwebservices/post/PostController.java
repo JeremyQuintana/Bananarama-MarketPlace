@@ -40,7 +40,7 @@ public class PostController {
 	@Autowired
 	private PostService service;
 	
-
+	private ImageController imageController = new ImageController();
 
 	// posts that are for sale
 	@GetMapping("/posts")
@@ -62,20 +62,46 @@ public class PostController {
 
 	// adds a post to marketplace
 	@PostMapping("/postitem")
-	public Post addPost(@RequestBody Post post, HttpServletRequest request)
+	public Post addPost(@RequestBody PostSubmission submissionPost, HttpServletRequest request)
 	{
-		System.out.println("adding post: " + post);
-		post.setOwner(getOwnerId(request));
-		return service.update(post);
+		System.out.println("adding post: " + submissionPost);
+		Post toUpload = new Post(
+				getOwnerId(request),
+				submissionPost.getTitle(),
+				submissionPost.getDescription(),
+				submissionPost.getPrice(),
+				submissionPost.getCategory());
+		Post uploadedPost = service.update(toUpload);
+		if (!submissionPost.getPhoto().equals("")) {
+			imageController.uploadImage(submissionPost.getPhoto(), uploadedPost.getId().toString());
+		}
+		return uploadedPost;
 	}
-
-	// when need to open a post in marketplace
+	
 	@PutMapping("/posts/{id}")
-	public Post updatePost(@PathVariable Long id, @RequestBody Post edit, HttpServletRequest request)
+	public Post updatePost(@PathVariable Long id, @RequestBody PostSubmission edit, HttpServletRequest request)
 	{
 		System.out.println("received post backend: " + edit);
-		return correctOwner(id, request) ? service.update(edit) : null;
+		System.out.println(edit.getPhoto());
+		
+		if (correctOwner(id, request)) {
+			if (!edit.getPhoto().equals("")) {
+				imageController.uploadImage(edit.getPhoto(), id.toString());
+			}
+			Post toUpload = new Post(
+					id,
+					getOwnerId(request),
+					edit.getTitle(),
+					edit.getDescription(),
+					edit.getPrice(),
+					edit.getCategory());
+			return service.update(toUpload);
+		}
+		else {
+			return null;
+		}
 	}
+
 
 	
 	@DeleteMapping("/posts/{id}")
@@ -96,7 +122,7 @@ public class PostController {
 	{	
 		Post post = service.get(id);
 		post.setStatus(status);
-		return updatePost(id, post, request);
+		return correctOwner(id, request) ? service.update(post) : null;
 	}
 	
 	
@@ -121,8 +147,10 @@ public class PostController {
 	@PostMapping("/postspermdelete")
 	public void DeletePosts(@RequestBody Post post, HttpServletRequest request)
 	{	
-		if (correctOwner(post.getId(), request))
+		if (correctOwner(post.getId(), request)) {
 			service.delete(service.get(post.getId()));
+			imageController.deleteImage(post.getId().toString());
+		}
 	}
 	
 

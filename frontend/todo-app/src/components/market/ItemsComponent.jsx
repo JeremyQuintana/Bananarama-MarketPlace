@@ -14,7 +14,7 @@ class ItemsComponent extends Component {
         }
         return null;
       }
-    
+
       constructor(props) {
           super(props);
           // State stores the posts from backend
@@ -22,10 +22,10 @@ class ItemsComponent extends Component {
               backPostings: this.props.backPostings,
           }
       }
-    
+
       render() {
           var retVal = [];
-          
+
           // loop through the postings from backend
           for (var r = 0; r < this.state.backPostings.length; r++) {
               let postId = this.state.backPostings[r].id;
@@ -36,26 +36,26 @@ class ItemsComponent extends Component {
               // Append the row of post information
               retVal.push(
                   <div className="posting container" onClick={() => this.routeChange(postId)}>
-                      <span className="postTitle"><img src={'post_images/' + this.state.backPostings[r].photo + '.jpg'}></img>{this.state.backPostings[r].title}</span> <br></br>
+                      <span className="postTitle"><img src={`https://storage.googleapis.com/sept-image-store/${this.state.backPostings[r].id}`}></img>{this.state.backPostings[r].title}</span> <br></br>
                       <span className="postCategory">{this.state.backPostings[r].category}</span> <br></br>
                       {/* <span className="postDescription">{trimmedDescription}</span> <br></br> */}
                       <span className="postSeller">{this.state.backPostings[r].ownerId}</span>
                       <span className="postPrice">${this.state.backPostings[r].price}</span> <br></br>
-    
+
                       <br></br>
                   </div>
-    
+
             );
           }
-    
-    
+
+
           return retVal;
       }
-    
+
       // Method for when a user clicks on a post, route them to post page
       routeChange(x) {
           this.props.history.push("/market/" + x);
       }
-    
+
     }
 export default ItemsComponent
