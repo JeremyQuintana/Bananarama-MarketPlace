@@ -20,12 +20,16 @@ public class ChatService {
 	@Autowired
 	private ChatRepository db;
 
-	
+
 	
 	public List<Chat> allChats(String user1, String user2) 
 	{
 		List<Chat> allChats = db.findBySenderAndReceiver(user1, user2);
 		allChats.addAll(db.findBySenderAndReceiver(user2, user1));
+		
+		for (int i = 0; i < allChats.size(); i++) {
+			System.out.println(allChats.get(i));
+		}
 		return allChats;
 	}
 	

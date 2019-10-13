@@ -10,7 +10,7 @@ class ChatService {
         // params.append('user1', user1);
         // params.append('user2', user2);
         // return axios.get(`${API_URL}/chat`, params);
-        return axios.get(`${API_URL}/chat/${user1}and${user2}`);
+        return axios.get(`${API_URL}/chat/${user1}/${user2}`);
     }
 
     // you have to pass in a chat object sent from backend
