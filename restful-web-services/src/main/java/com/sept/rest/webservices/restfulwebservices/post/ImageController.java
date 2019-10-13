@@ -8,10 +8,13 @@ import com.google.cloud.storage.BlobInfo;
 import com.google.cloud.storage.Storage;
 import com.google.cloud.storage.StorageOptions;
 
+import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Base64;
+import java.util.zip.Deflater;
+import java.util.zip.DeflaterOutputStream;
 
 public class ImageController {
 	Storage storage;
@@ -28,7 +31,9 @@ public class ImageController {
 	}
 	
 	public String uploadImage(String image, String id) {
-	    byte [] data = Base64.getDecoder().decode(image.split(",")[1]);
+		byte [] data = Base64.getDecoder().decode(image.split(",")[1]);
+
+		
 	    BlobId blobId = BlobId.of("sept-image-store", id);
 		BlobInfo blobInfo = BlobInfo.newBuilder(blobId).setContentType("text/plain").build();
 		Blob blob = storage.create(blobInfo, data);
