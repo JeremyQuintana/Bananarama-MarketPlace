@@ -74,7 +74,7 @@ class PostComponent extends Component {
                         <div className="container postSeller">
                             {this.state.postInfo.ownerId}
                         </div>
-                        <div className="container postSeller"><Link to="/chat/" action="replace">Contact Seller</Link></div>
+                        <div className="container postSeller"><Link to={"/chat/" + this.state.postInfo.ownerId} action="replace">Contact Seller</Link></div>
                         
                         <div className="container">
                         {ItemButtons}

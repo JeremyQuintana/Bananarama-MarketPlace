@@ -20,6 +20,12 @@ button{
 
 .message_receiver {
     margin: 20px 0;
+    float:right;
+
+}
+
+.message_receiver::after {
+    clear:both;
 
 }
 
@@ -58,12 +64,16 @@ h1 {
 }
 
 .message_receiver .receiver_message-text {
-       background: #3399FF;
+    background: #3399FF;
     color: white;
     display: inline;
     padding: 4px 8px;
     border-radius: 15px;
+    /* float: right; */
+}
 
+.message_receiver::after .receiver_message-text::after {
+    clear:both;
 }
 
 
@@ -74,7 +84,7 @@ h1 {
     height: 500px;
     overflow: scroll;
     background: #EEEEEE;
-      text-align: left;
+    text-align: left;
 
 
 
@@ -131,3 +141,43 @@ h1 {
   font-size: 30px;
   text-align: left;
 }
+
+
+.wideButton {
+    width: auto;
+    float:right;
+}
+
+
+.wideButton::after{
+    clear:both;
+}
+
+.chatListItem{
+    background: #ffe4a0;
+    border: 5px solid white;
+    box-shadow: -8px 4px rgba(0,0,0,0.2);
+    overflow: auto;
+    padding: 10px;
+}
+  
+.chatListItem:hover{
+    cursor:pointer;
+    background: #ffdb7c;
+    box-shadow: -6px 3px rgba(0,0,0,0.4);
+    transform: scale(0.995, 0.995);
+}
+
+.chatTitle{
+    font-size: 150%;
+}
+
+.chatDeleteIcon{
+    float:right;
+}
+
+
+.chatDeleteIcon::after{
+    clear:both;
+}
+

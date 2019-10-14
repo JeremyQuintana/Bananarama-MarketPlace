@@ -2,59 +2,46 @@ import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import ChatService from "../../api/Chat/ChatService.js"
 import PropTypes from "prop-types";
-
-
-
-
-
+import ChatListComponent from "./ChatListComponent"
 import "./Chat.css";
-const Chats = [
-  {
-    Chat: "Reuben"
-  },
-  {
-    Chat: "Val"
-  },
-  {
-    Chat: "Mitch"
-  }
-];
 
-
-function CuurentChats() {
-  return (
-    <div>
-      {" "}
-      {Chats.map((message, index) => {
-        return (
-          <div key={index} className="chats">
-            <div className="chat_text">{message.Chat}</div>
-          </div>
-        );
-      })}
-    </div>
-  );
-}
 
 class ChatComponent extends Component {
   inputElement = React.createRef();
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       messages: [],
       message: {
         text: "",
         key: ""
-      }
+      },
+      currentChats: [],
     };
+
+    this.refreshChatHistory();
   }
+
+  refreshChatHistory() {
+    ChatService.userList(sessionStorage.getItem('authenticatedUser')).then(
+      (response) => {
+        this.setState({ currentChats: response.data });
+        // FOR TESTING: 
+        // this.setState({currentChats: [
+        //     { senderId: 's3707187', receiverId: 'user1' },
+        //     { senderId: 's3707187', receiverId: 'user2' }]});
+      }
+    );
+  }
+
+
   handleInput = e => {
     const itemText = e.target.value;
 
     // needs to be some username at some poiunt
     //var username = "thisUsername";
     // var username = sessionStorage.getItem('authenticatedUser');
-    var username = "user1";
+    var username = sessionStorage.getItem('authenticatedUser')
 
     const message = { text: itemText, username };
     this.setState({
@@ -72,7 +59,7 @@ class ChatComponent extends Component {
 
       // calling it here 
       // ChatService.addChat("user1","user2",newMessageToOutPut.text);
-      ChatService.addChat("user1", "user2", newMessageToOutPut.text);
+      ChatService.addChat(sessionStorage.getItem('authenticatedUser'), this.props.match.params.receiverId, newMessageToOutPut.text);
       this.setState({
         messages: messages,
         message: { text: "", key: "" }
@@ -80,20 +67,28 @@ class ChatComponent extends Component {
     }
   };
   render() {
+    var chatHistory = <div className="container alert alert-warning">No chats found!</div>
+    if (this.state.currentChats.length > 1) {
+      // console.log(this.state.currentChats[1])
+      chatHistory = <ChatListComponent history={this.props.history} chats={this.state.currentChats} historyMode={false}></ChatListComponent>
+    }
     return (
 
 
       <div className="grid-container">
-        <div className="grid-item">
-          <h1>Chats     </h1>
+        <div className="container">
+          <h1>Chats</h1>
+          <div className="container chatUserList">
+            {chatHistory}
+          </div>
 
-          <CuurentChats></CuurentChats>
         </div>
         <div className="grid-item">
           <div className="chat">
             <div className="message-list">
 
               <MessageObjects
+                match={this.props.match}
                 allMeassages={this.state.messages}
                 deleteItem={this.deleteItem}
               />
@@ -152,10 +147,16 @@ class MessageObjects extends Component {
     }
   }
   create_new_message = message => {
+    var outerClassName = "message";
+    var innerClassName = "message-text"
+    if (message.receiver === sessionStorage.getItem('authenticatedUser')) {
+      var outerClassName = "message_receiver";
+      innerClassName = "receiver_message-text"
+    }
     return (
-      <div className="message">
-        <div className="username_id">{"user1"}</div>
-        <div className="message-text" key={message.key}>
+      <div className={outerClassName}>
+        <div className="username_id">{sessionStorage.getItem('authenticatedUser')}</div>
+        <div className={innerClassName} key={message.key}>
           {message.text}
         </div>
       </div>
@@ -164,7 +165,7 @@ class MessageObjects extends Component {
 
   componentDidMount() {
     this.fetchMessages()
-    this.timer = setInterval(() => this.fetchMessages(), 500000);
+    this.timer = setInterval(() => this.fetchMessages(), 5000);
   }
 
   componentWillUnmount() {
@@ -174,7 +175,7 @@ class MessageObjects extends Component {
 
   fetchMessages() {
     console.log("poll")
-    ChatService.loadAllChats("user1", "user2").then(
+    ChatService.loadAllChats(sessionStorage.getItem('authenticatedUser'), this.props.match.params.receiverId).then(
       response => {
         this.setState({ newmessages: response.data })
 
@@ -184,22 +185,11 @@ class MessageObjects extends Component {
 
 
   render() {
-    const messages = this.props.allMeassages;
-    const listMessages = messages.map(this.create_new_message);
-
-  //  this.fetchMessages();
-
-
-    //return <ul className="messages">{listMessages}</ul>;
 
     var retVal = [];
     for (var r = 0; r < this.state.newmessages.length; r++) {
       retVal.push(
-        // <div className="message">
-        //   <span className="messages username_id">{this.state.newmessages[r].sender}</span><br></br>
 
-        //   <span className="messages message-sender">{this.state.newmessages[r].text}</span><br></br>
-        // </div>
         this.create_new_message(this.state.newmessages[r])
 
       );
@@ -210,7 +200,7 @@ class MessageObjects extends Component {
 
   }
 
-  
+
 }
 
 

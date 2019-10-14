@@ -21,26 +21,27 @@ class ChatListComponent extends Component {
     // State stores the chats from backend
     this.state = {
       chats: this.props.chats,
+      historyMode: this.props.historyMode
     }
   }
 
   render() {
     var retVal = [];
     // loop through the chats from backend
-    for (var r = 0; r < this.state.chats.length; r++) {
-      
-      let receiverId = this.state.chats[r].receiverId;
-      var senderId = this.state.chats[r].senderId;
+    for (var r = 1; r < this.state.chats.length; r++) {
+      // console.log(this.state.chats[r] + "MCMODE")
+      let receiverId = this.state.chats[r]
+      // var senderId = this.state.chats[r].senderId;
       console.log(receiverId);
-      console.log(senderId);
+      // console.log(senderId);
       //var chatId = receiverId + '/' + senderId;
 
       // Append the row of chat information
       retVal.push(
-        <div className="posting container" /*onClick={() => this.routeChange(chatId)}*/>
-          <span className="postTitle">{this.state.chats[r].receiverId}</span> <br></br>
-          <input type="image" src={require("./delete.svg")} onClick = {() =>  this.permDeleteChat(senderId, receiverId)}></input> <br></br>
-          <button onClick={() => this.routeChange(receiverId)}>View Chat</button>
+        <div className="chatListItem container" onClick={() => this.routeChange(receiverId)}>
+          <span className="postTitle">{receiverId}</span> 
+          {/* <button className = "btn btn-outline-dark wideButton" onClick={() => this.routeChange(receiverId)}>View Chat</button> */}
+          {this.state.historyMode && <input className = "chatDeleteIcon" type="image" src={require("./delete.svg")} onClick={(event) => this.permDeleteChat(event, sessionStorage.getItem('authenticatedUser'), receiverId)}></input>}
           <br></br>
         </div>
 
@@ -58,15 +59,18 @@ class ChatListComponent extends Component {
     this.props.history.push("/chat/" + receiverId);
   }
 
-  permDeleteChat(senderId, receiverId) {
+  permDeleteChat(event, senderId, receiverId) {
+    event.stopPropagation();
+
     ChatService.deleteChats(senderId, receiverId).then(
-        (response) => {
-            
-          alert("Your messages to" + receiverId + " have been PERMANENTLY DELETED");
-          this.props.history.push(`/account`);
-        }
-      );
-}
+      (response) => {
+
+        alert("Your messages to" + receiverId + " have been PERMANENTLY DELETED");
+        window.location.reload();
+      }
+    );
+
+  }
 
 }
 export default ChatListComponent
