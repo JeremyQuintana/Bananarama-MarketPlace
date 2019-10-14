@@ -35,7 +35,7 @@ class ItemsComponent extends Component {
               // Append the row of post information
               retVal.push(
                   <div className="posting container" onClick={() => this.routeChange(postId)}>
-                      <span className="postTitle"><img src={`https://storage.googleapis.com/sept-image-store/${this.state.backPostings[r].id}`}></img>{this.state.backPostings[r].title}</span> <br></br>
+                      <span className="postTitle"><img className="marketImage" src={`https://storage.googleapis.com/sept-image-store/${this.state.backPostings[r].id}`}></img>{this.state.backPostings[r].title}</span> <br></br>
                       <span className="postCategory">{this.state.backPostings[r].category}</span> <br></br>
                       {/* <span className="postDescription">{trimmedDescription}</span> <br></br> */}
                       <span className="postSeller">{this.state.backPostings[r].ownerId}</span>

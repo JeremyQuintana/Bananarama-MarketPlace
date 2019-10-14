@@ -84,10 +84,10 @@ class Post_item extends Component {
     reader.readAsDataURL(files[0]);
 
     reader.onload=(e)=>{
-      if (e.target.result.length < 10000){
+      if (e.target.result.length < 50000){
         this.setState({item_photo: e.target.result})
       } else {
-        alert("Image exceeds 100KB and will not be uploaded");
+        alert("Image exceeds 500KB and will not be uploaded");
       }
     }
   }

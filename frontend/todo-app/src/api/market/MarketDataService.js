@@ -35,7 +35,8 @@ class MarketDataService {
             title,
             price,
             category,
-            photo
+            photo,
+            ownerId
         })
     }
 
@@ -57,7 +58,7 @@ class MarketDataService {
     // retrieveChatsByUser(userId){
     //     return axios.get(`${API_URL}/${userId}/chats`);
     // }
-    
+
 
 }
 export const googleauth = data => {

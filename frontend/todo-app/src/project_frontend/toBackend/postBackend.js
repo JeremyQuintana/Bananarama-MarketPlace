@@ -4,12 +4,13 @@ import { API_URL } from '../../Constants'
 class postBackend{
 
   postItemBackend(description, title, price, category, photo){
-    
-    return axios.post(`${API_URL}/postitem${photo}`, {
+
+    return axios.post(`${API_URL}/postitem`, {
       description,
       title,
       price,
-      category
+      category,
+      photo
     })
   }
 
@@ -33,7 +34,7 @@ class postBackend{
   // updatePermDeletePost(id) {
 
   //   return axios.post(`${API_URL}/postspermdelete`, {
-  //       id            
+  //       id
   //   })
   // }
 

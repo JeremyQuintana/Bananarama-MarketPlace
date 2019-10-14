@@ -54,6 +54,14 @@
 
 }
 
+.postImages{
+  height:200px;
+}
+
+.marketImage{
+  height:50px !important;
+}
+
 .posting{
   background: #ffe4a0;
   border: 5px solid white;
@@ -82,7 +90,7 @@
 
 .postPrice{
   font-weight: bolder;
-  
+
 }
 
 span.postPrice{
@@ -102,4 +110,3 @@ span.postPrice{
 div.postPrice {
   text-align: right;
 }
-

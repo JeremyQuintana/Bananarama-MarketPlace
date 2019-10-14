@@ -73,17 +73,21 @@ public class PostController {
 		// we cannot affort to 
 		String photo = post.getPhoto();
 		post.setPhoto(null);
-		post = service.update(post);
 		post.setOwner(checker.getOwnerId(request));
-		
-		imageController.uploadImage(photo, post.getId() + "");
+		post = service.update(post);
+		if (!photo.equals(""))imageController.uploadImage(photo, post.getId() + "");
 		return post;
 	}
 	
 	@PutMapping("/posts/{id}")
 	public Post updatePost(@PathVariable Long id, @RequestBody Post edit, HttpServletRequest request)
 	{
-		return addPost(edit, request);
+		String photo = edit.getPhoto();
+		edit.setPhoto(null);
+		edit.setId(id);
+		if (checker.getOwnerId(request).equals(edit.getOwnerId())) edit = service.update(edit);
+		if (!photo.equals("")) imageController.uploadImage(photo, edit.getId() + "");
+		return edit;
 	}
 
 

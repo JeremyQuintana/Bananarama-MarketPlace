@@ -35,8 +35,8 @@ public class ImageController {
 		if (image.equals("") || image == null)
 			throw new NullPointerException("No image sent in");
 		byte [] data = Base64.getDecoder().decode(image.split(",")[1]);
-		if (data.length >= 100000)
-			throw new IllegalArgumentException("Image exceeds 50KB");
+		if (data.length >= 500000)
+			throw new IllegalArgumentException("Image exceeds 500KB");
 		
 	    BlobId blobId = BlobId.of("sept-image-store", id);
 		BlobInfo blobInfo = BlobInfo.newBuilder(blobId).setContentType("text/plain").build();

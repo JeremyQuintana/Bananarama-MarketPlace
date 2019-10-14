@@ -88,7 +88,7 @@ class LoginComponent extends Component {
                 <img src={require("./banana.png")} width="200" height="300" />
               </div>
             <div className="App1">
-          
+
               <img src={require("./RMIT.png")} width="200" height="300" />
             </div>
 
@@ -110,14 +110,12 @@ class LoginComponent extends Component {
             {this.state.showSuccessMessage && <div>Login Sucessful</div>}
             {/*<ShowLoginSuccessMessage showSuccessMessage={this.state.showSuccessMessage}/>*/}
 
-            <div className="btn btn-danger">
               <GoogleLogin
                 clientId={config.googleclientid}
                 buttonText="LOGIN"
                 onSuccess={this.responseGoogle}
                 onFailure={this.responseGoogle}
               />
-            </div>
         </div>
       </div>
     );

@@ -43,7 +43,7 @@ class PostComponent extends Component {
                     ItemButtons =  <div className="containerbuttons ">
                                     <button class="btn btn-dark" onClick={this.updateSold}>Sold</button>
                                    <button class="btn btn-dark" onClick={this.updateDelete}>Delete</button>
-                                   
+
                                    <input type="image" className="imgButton2" src={require("./edit.svg")} alt ="edit"   onClick={this.setEdit} />
                                     </div>}
                 if ((this.state.postInfo.status === "DELETED" || this.state.postInfo.status === "SOLD") && (sessionStorage.getItem('authenticatedUser') === this.state.postInfo.ownerId)) {
@@ -68,7 +68,7 @@ class PostComponent extends Component {
                             {this.state.postInfo.category}
                         </div>
                         <div className="container postDescription">
-                            <img src={`https://storage.googleapis.com/sept-image-store/${this.state.postInfo.id}`}></img>
+                            <img className="postImages" src={`https://storage.googleapis.com/sept-image-store/${this.state.postInfo.id}`}></img>
                             {/*PLACEHOLDER IMAGE*/}
                             {/*<img src={'../post_images/1.jpg'}></img>*/}
                             {this.state.postInfo.description}
@@ -80,7 +80,7 @@ class PostComponent extends Component {
                             {this.state.postInfo.ownerId}
                         </div>
                         <div className="container postSeller"><Link to={"/chat/" + this.state.postInfo.ownerId} action="replace">Contact Seller</Link></div>
-                        
+
                         <div className="container">
                         {ItemButtons}
                         </div>
@@ -143,7 +143,7 @@ class PostComponent extends Component {
 
     updatePermDelete() {
         var posttID= this.state.postInfo.id;
-    
+
         MarketDataService.deletePost(posttID);
         alert("Your Post Has Been PERMANENTLY DELETED");
         this.props.history.push(`/home/${sessionStorage.getItem("authenticatedUser")}`);
