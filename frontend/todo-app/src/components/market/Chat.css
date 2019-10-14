@@ -8,27 +8,31 @@ button{
     width: 20%;
 
 }
-.message-list {
 
-    width: 50%;
-}
 
 .message_sender {
-    margin: 20px 0;
+    margin: 5px 0;
 
 }
 
 .message_receiver {
-    margin: 20px 0;
+    margin: 5px 0;
+    clear:both;
+    text-align:right;
 
 }
 
-.chats {
+.message_receiver::after {
+    clear:both;
+
+}
+
+/*.chats {
 padding: 10px;
 margin-left: 50%;
 text-align: right;
 
-}
+}*/
 h1 {
 
     text-align: right;
@@ -37,45 +41,47 @@ h1 {
 }
 
 
-.chats:hover {
+/*.chats:hover {
   text-decoration: underline;
 }
 .chats .chat_text {
 
     color: black;
-    display: inline;
+    display: block;
     padding: 5px 5px;
     font-size: 30px;
 
-}
+}*/
 
 .message .message-text {
     background: #9B59B6 ;
     color: white;
-    display: inline;
+    display: inline-block;
     padding: 4px 8px;
     border-radius: 15px;
 }
 
 .message_receiver .receiver_message-text {
-       background: #3399FF;
+    background: #3399FF;
     color: white;
-    display: inline;
+    display: inline-block;
     padding: 4px 8px;
     border-radius: 15px;
-
 }
+
+
 
 
 .message-list {
     box-sizing: border-box;
-    padding-left: 6px;
+    padding: 6px;
     width: 100%;
+    max-width: 800px;
     height: 500px;
-    overflow: scroll;
+    overflow-y: scroll;
     background: #EEEEEE;
-      text-align: left;
-
+    text-align: left;
+    
 
 
     border-radius: 10px;
@@ -90,7 +96,7 @@ h1 {
 
     padding-left: 6px;
     height: 100%;
-    overflow: scroll;
+    overflow: auto;
 }
 
 .InputBox input {
@@ -126,8 +132,80 @@ h1 {
     grid-template-columns: auto auto;
     padding-bottom: 400px;
 }
-.grid-item {
+.grid-item2 {
         background: #34495E;
   font-size: 30px;
   text-align: left;
 }
+
+
+
+.grid-item2 {
+  padding: 35px;
+  font-size: 40px;
+  text-align: center;
+  background-color: #fdce57;
+
+  top: -10px;
+
+
+
+}
+
+.grid-item2{
+    color:black;
+
+}
+
+
+.grid-item2 img{
+    color:black;
+    width: 50%;
+
+    padding-bottom: 5px;
+
+}
+
+
+.wideButton {
+    width: auto;
+    float:right;
+}
+
+
+.wideButton::after{
+    clear:both;
+}
+
+.chatListItem{
+    background: #ffe4a0;
+    border: 5px solid white;
+    box-shadow: -8px 4px rgba(0,0,0,0.2);
+    overflow: auto;
+    padding: 10px;
+}
+  
+.chatListItem:hover{
+    cursor:pointer;
+    background: #ffdb7c;
+    box-shadow: -6px 3px rgba(0,0,0,0.4);
+    transform: scale(0.995, 0.995);
+}
+
+.chatTitle{
+    font-size: 150%;
+}
+
+.chatDeleteIcon{
+    float:right;
+}
+
+
+.chatDeleteIcon::after{
+    clear:both;
+}
+
+.chatUserList {
+    width: auto;
+}
+

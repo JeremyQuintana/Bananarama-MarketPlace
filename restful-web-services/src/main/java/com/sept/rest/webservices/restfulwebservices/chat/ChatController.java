@@ -62,9 +62,11 @@ public class ChatController {
 	@Autowired
 	private ChatService service;
 	
-	@GetMapping("/chat/{user1}and{user2}")
+	@GetMapping("/chat/{user1}/{user2}")
 	public List<Chat> loadChat(@PathVariable String user1, @PathVariable String user2) throws SQLException
-	{					
+	{	System.out.println(user1);
+	System.out.println(user2);
+	
 		return service.allChats(user1, user2);
 	}
 	

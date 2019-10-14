@@ -31,22 +31,25 @@ class Post_item extends Component {
 
   render() {
     return (
-      <div className="Post_item">
-
+      <div>
+         <div className = "makepost"><h1>Make Post</h1></div>
+      <div className="Post_item">   
         <form onSubmit={(this.props.existingId == null) ? this.submitPost : this.updateExistingPost} data-testid="form">
           <div className="form">
             <div className="formDefinitions">
-              <label htmlFor="item_description" className="definitions">Item Description: </label>
               <label htmlFor="item_name" className="definitions">Item Name: </label>
               <label htmlFor="item_cost" className="definitions">Item Cost: </label>
+              <label htmlFor="item_description" className="definitions">Item Description: </label>
+
               <label htmlFor="item_catagory" className="definitions">Item Catagory: </label>
               <label htmlFor="item_photo" className="definitions"> Item Photo: </label>
             </div>
             <div className="formInputs">
-              <textarea name="item_description" id="item_description" className="input" placeholder="Mushy Explanation" value={this.state.item_description} onChange={this.handleChange} />
-              <input required type="text" name="item_name" id="item_name" className="input" placeholder="Banana Name" value={this.state.item_name} onChange={this.handleChange} />
-              <input required type="number" name="item_cost" id="item_cost" className="input" placeholder="$000.00" min="000.01" step="0.01" pattern="\d.\d" value={this.state.item_cost} onChange={this.handleChange} />
-              <select name="item_catagory" id="item_catagory" className="input" onChange={this.handleChange} value={this.state.item_catagory}>
+              <input required type="text" name="item_name" id="item_name" className="form-control" placeholder="Banana Name" value={this.state.item_name} onChange={this.handleChange} />
+              <input required type="number" name="item_cost" id="item_cost" className="form-control" placeholder="$000.00" min="000.01" step="0.01" pattern="\d.\d" value={this.state.item_cost} onChange={this.handleChange} />
+             <textarea name="item_description" id="item_description" className="form-control" placeholder="Mushy Explanation" value={this.state.item_description} onChange={this.handleChange} />
+
+              <select name="item_catagory" id="item_catagory" className="form-control" onChange={this.handleChange} value={this.state.item_catagory}>
                 <option value="" default>No Catagory</option>
                 <option value="Exceptionally Random">Exceptionally Random</option>
                 <option value="Ridiculously Complicated">Ridiculously Complicated</option>
@@ -58,10 +61,12 @@ class Post_item extends Component {
             </div>
             {this.props.existingId != null && <div className="container alert alert-warning">If no new photo is uploaded, the existing photo will be kept</div>}
           </div>
-          <input type="submit" value="Submit" name="itemSubmit" />
-
+          
+          <button type="submit" class="btn btn-dark" value="Submit" name="itemSubmit">Submit</button>
         </form>
       </div>
+            </div>
+
     );
   }
 
