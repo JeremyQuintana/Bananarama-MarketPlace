@@ -126,8 +126,37 @@ h1 {
     grid-template-columns: auto auto;
     padding-bottom: 400px;
 }
-.grid-item {
+.grid-item2 {
         background: #34495E;
   font-size: 30px;
   text-align: left;
 }
+
+
+.grid-item2 {
+  padding: 35px;
+  font-size: 40px;
+  text-align: center;
+  background-color: #fdce57;
+
+  top: -10px;
+
+
+
+}
+
+.grid-item2{
+    color:black;
+
+}
+
+
+.grid-item2 img{
+    color:black;
+    width: 50%;
+
+    padding-bottom: 5px;
+
+}
+
+
