@@ -23,8 +23,10 @@ import org.springframework.stereotype.Repository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
 import com.sept.rest.webservices.restfulwebservices.jwt.JwtTokenUtil;
 import com.sept.rest.webservices.restfulwebservices.post.Post.Status;
+import com.sept.rest.webservices.restfulwebservices.user.UserService;
 
 
 
@@ -36,6 +38,9 @@ public class PostController {
 
 	@Autowired
     private JwtTokenUtil jwtTokenUtil;
+	
+	@Autowired
+    private UserService checker;
 
 	@Autowired
 	private PostService service;
@@ -64,8 +69,7 @@ public class PostController {
 	@PostMapping("/postitem")
 	public Post addPost(@RequestBody Post post, HttpServletRequest request)
 	{
-		System.out.println("adding post: " + post);
-		post.setOwner(getOwnerId(request));
+		post.setOwner(checker.getOwnerId(request));
 		return service.update(post);
 	}
 
@@ -73,16 +77,17 @@ public class PostController {
 	@PutMapping("/posts/{id}")
 	public Post updatePost(@PathVariable Long id, @RequestBody Post edit, HttpServletRequest request)
 	{
-		System.out.println("received post backend: " + edit);
-		return correctOwner(id, request) ? service.update(edit) : null;
+		return checker.isEqual(edit.getOwnerId(), request) ? service.update(edit) : null;
 	}
 
 	
 	@DeleteMapping("/posts/{id}")
 	public void deletePost(@PathVariable Long id, HttpServletRequest request)
 	{	
-		if (correctOwner(id, request))
+		Post toDelete = service.get(id);
+		if (checker.isEqual(toDelete.getOwnerId(), request)) {
 			service.delete(service.get(id));
+		}
 	}
 	
 	@GetMapping("/posts/{id}")
@@ -117,13 +122,14 @@ public class PostController {
 //		if (correctOwner(post.getId(), request))
 //			post.setStatus(Status.DELETED);
 //	}
-	
-	@PostMapping("/postspermdelete")
-	public void DeletePosts(@RequestBody Post post, HttpServletRequest request)
-	{	
-		if (correctOwner(post.getId(), request))
-			service.delete(service.get(post.getId()));
-	}
+//	
+// 	
+//	@PostMapping("/postspermdelete")
+//	public void DeletePosts(@RequestBody Post post, HttpServletRequest request)
+//	{	
+//		if (correctOwner(post.getId(), request))
+//			service.delete(service.get(post.getId()));
+//	}
 	
 
 
@@ -134,11 +140,6 @@ public class PostController {
 	@GetMapping("/{ownerId}/posts/{status}")
 	public List<Post> getCurrentPosts(@PathVariable String ownerId, @PathVariable Status status) 
 	{
-		System.out.println("requested status: " + status);
-		for (Post post : service.getOwnerPosts(ownerId, status))
-		{
-			System.out.println(post);
-		}
 		return service.getOwnerPosts(ownerId, status);
 	}
 			
@@ -158,20 +159,20 @@ public class PostController {
 	
 	
 	
-	private String getOwnerId(HttpServletRequest request)
-	{
-		return jwtTokenUtil.getUsernameFromToken(request.getHeader("Authorization").substring(7));
-	}
-	
-	private boolean correctOwner(Long id, HttpServletRequest request)
-	{
-		Post realPost = service.get(id);
-		String loggedOwner =getOwnerId(request);
-		
-		if (!realPost.getOwnerId().equals(loggedOwner))
-			throw new NullPointerException("Error Update: Edit User ID " + loggedOwner + " does not match Item Owner ID " + realPost.getOwnerId());
-		return true;
-	}
+//	private String getOwnerId(HttpServletRequest request)
+//	{
+//		return jwtTokenUtil.getUsernameFromToken(request.getHeader("Authorization").substring(7));
+//	}
+//	
+//	private boolean correctOwner(Long id, HttpServletRequest request)
+//	{
+//		Post realPost = service.get(id);
+//		String loggedOwner =getOwnerId(request);
+//		
+//		if (!realPost.getOwnerId().equals(loggedOwner))
+//			throw new NullPointerException("Error Update: Edit User ID " + loggedOwner + " does not match Item Owner ID " + realPost.getOwnerId());
+//		return true;
+//	}
 
 
 

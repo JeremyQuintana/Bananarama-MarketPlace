@@ -29,40 +29,15 @@ import javadb.DatabaseRef;
 @RestController
 public class UserController {
 
-
-	@Autowired 
-	private UserService service;
 	@Autowired
 	private PostService postService;
 	
-
-	// when need to open a post in marketplace
-	@GetMapping("/user")
-	public User getUser()
-	{
-		return service.getLoggedUser();
-	}
 	
-	// may not need 
-//	@DeleteMapping("/user")
-//	public void logout() 
+//	@GetMapping("/{ownerId}/posts")
+//	public List<Post> getAllUserPosts(@PathVariable String ownerId)
 //	{
-//		service.logout();
+//		return postService.getAllUserPosts(ownerId);
 //	}
-//	
-//	
-//	@PostMapping("/user")
-//	public void login(User user)
-//	{
-//		service.login(user);
-//	}
-	
-	@GetMapping("/user/posts")
-	public List<Post> getAllUserPosts()
-	{
-		String userId = service.getLoggedUser().getId();
-		return postService.getAllUserPosts(userId);
-	}
 }
 
 

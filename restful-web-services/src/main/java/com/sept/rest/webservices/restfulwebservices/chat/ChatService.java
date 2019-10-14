@@ -38,10 +38,9 @@ public class ChatService {
 		return chats;
 	}
 	
-	public void deleteAllChats(String user1, String user2)
+	public void deleteAllChats(String sender, String receiver)
 	{
-		db.deleteBySenderAndReceiver(user1, user2);
-		db.deleteBySenderAndReceiver(user2, user1);
+		db.deleteBySenderAndReceiver(sender, receiver);
 	}
 	
 	public void add(Chat chat)
@@ -64,7 +63,7 @@ public class ChatService {
 			// and vice versa
 			String receiver = chat.getReceiver();
 			String sender = chat.getSender();
-			users.add(chat.getSender().equals(owner) ? receiver : sender);
+			users.add(sender.equals(owner) ? receiver : sender);
 		}
 		return new ArrayList<String>(users);
 	}
