@@ -28,12 +28,14 @@ class postBackend{
   //   })
   // }
 
-  updatePermDeletePost(id) {
+  // need to verify owner + delete mapping
+  //
+  // updatePermDeletePost(id) {
 
-    return axios.post(`${API_URL}/postspermdelete`, {
-        id            
-    })
-  }
+  //   return axios.post(`${API_URL}/postspermdelete`, {
+  //       id            
+  //   })
+  // }
 
 
   searchItemBackend(description, category){

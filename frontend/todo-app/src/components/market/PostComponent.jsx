@@ -144,13 +144,9 @@ class PostComponent extends Component {
     updatePermDelete() {
         var posttID= this.state.postInfo.id;
     
-        postBackend.updatePermDeletePost(posttID).then(
-            response => {
-                
-              alert("Your Post Has Been PERMANENTLY DELETED");
-              this.props.history.push(`/home/${sessionStorage.getItem("authenticatedUser")}`);
-            }
-          );
+        MarketDataService.deletePost(posttID);
+        alert("Your Post Has Been PERMANENTLY DELETED");
+        this.props.history.push(`/home/${sessionStorage.getItem("authenticatedUser")}`);
     }
 
     saveInfo() {

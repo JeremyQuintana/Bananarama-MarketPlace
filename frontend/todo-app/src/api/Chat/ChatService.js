@@ -32,9 +32,9 @@ class ChatService {
         });
     }
 
-    deleteChats(user1, user2) {
+    deleteChats(sender, receiver) {
         // alert('deleting');
-        return axios.delete(`${API_URL}/chat/${user1}and${user2}`);
+        return axios.delete(`${API_URL}/chat/${sender}and${receiver}`);
     }
 
     // returns list of ownerId's that have previously interacted with the owner
