@@ -32,7 +32,7 @@ class Post_item extends Component {
     return (
       <div>
          <div className = "makepost"><h1>Make Post</h1></div>
-      <div className="Post_item">   
+      <div className="Post_item">
         <form onSubmit={(this.props.existingId == null) ? this.submitPost : this.updateExistingPost} data-testid="form">
           <div className="form">
             <div className="formDefinitions">
@@ -60,7 +60,7 @@ class Post_item extends Component {
             </div>
             {this.props.existingId != null && <div className="container alert alert-warning">If no new photo is uploaded, the existing photo will be kept</div>}
           </div>
-          
+
           <button type="submit" class="btn btn-dark" value="Submit" name="itemSubmit">Submit</button>
         </form>
       </div>

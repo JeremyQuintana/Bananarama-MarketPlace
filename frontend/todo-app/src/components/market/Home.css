@@ -1,7 +1,6 @@
 .grid-container-home {
   display: grid;
   grid-template-columns: auto auto ;
-  padding: 2%;
     background-color: #fdce57;
         height:20%;
           box-shadow: 0px 0 10px rgba(0, 0, 0, 0.1);
@@ -50,7 +49,7 @@
 
 }
 .grid-item:hover{
-        filter: blur(2px);
+        background: #ffe187;
 
 }
 
