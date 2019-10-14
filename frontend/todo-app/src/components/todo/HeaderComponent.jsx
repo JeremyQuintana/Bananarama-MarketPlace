@@ -8,7 +8,7 @@ class HeaderComponent extends Component {
     render() {
         axios.interceptors.request.use(
             (config) => {
-                if (!(sessionStorage.getItem("authenticatedUser") === null)) {
+                if (!(sessionStorage.getItem("authenticatedUser") == null)) {
                     config.headers.authorization = sessionStorage.getItem("jwtToken")
                 }
                 return config
@@ -23,11 +23,12 @@ class HeaderComponent extends Component {
                     <div><a href="https://www.rmit.edu.au/" className="navbar-brand">RMIT</a></div>
                     <ul className="navbar-nav">
                         {isUserLoggedIn && <li><Link className="nav-link" to="/home/sept">Home</Link></li>}
-                        {/*isUserLoggedIn && <li><Link className="nav-link" to="/todos">Todos</Link></li>*/}
+                        
 
                         {isUserLoggedIn && <li><Link className="nav-link" to="/post">Post</Link></li>}
 
                         {isUserLoggedIn && <li><Link className="nav-link" to="/market">Market</Link></li>}
+                        {isUserLoggedIn && <li><Link className="nav-link" to="/account">Account</Link></li>}
 
 
                     </ul>
