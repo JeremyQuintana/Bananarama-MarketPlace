@@ -83,7 +83,6 @@ class LoginComponent extends Component {
   render() {
     return (
       <div className="container">
-        <div className="container yellow-bg">
           <div className="heading">
              <div className="banana">
                 <img src={require("./banana.png")} width="200" height="300" />
@@ -119,7 +118,6 @@ class LoginComponent extends Component {
                 onFailure={this.responseGoogle}
               />
             </div>
-          </div>
         </div>
       </div>
     );
