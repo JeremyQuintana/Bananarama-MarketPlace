@@ -83,7 +83,7 @@ class ChatComponent extends Component {
 
 
       <div className="grid-container">
-        <div className="container">
+        <div className="grid-item2">
           <h2 className="centerFix">Chats</h2>
           <div className="container chatUserList">
             {chatHistory}
@@ -107,7 +107,7 @@ class ChatComponent extends Component {
 */}
 
         </div>
-        <div className="grid-item-2">
+        <div className="grid-item2">
           <div className="chat">
             {renderChatSystem && <h2>Chatting with: {this.props.match.params.receiverId}</h2>}
             <div className="message-list" id="messageScrollID">
