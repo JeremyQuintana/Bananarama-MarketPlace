@@ -79,9 +79,9 @@ class ChatComponent extends Component {
     return (
 
 
-        {/*<div className="grid-container">
-          <div className="grid-item2">
-                     <h1>Chats     </h1>*/}
+        // {/*<div className="grid-container">
+        //   <div className="grid-item2">
+        //              <h1>Chats     </h1>*/}
 
 
       <div className="grid-container">
