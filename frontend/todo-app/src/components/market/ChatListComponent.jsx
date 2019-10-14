@@ -32,7 +32,7 @@ class ChatListComponent extends Component {
       // console.log(this.state.chats[r] + "MCMODE")
       let receiverId = this.state.chats[r]
       // var senderId = this.state.chats[r].senderId;
-      console.log(receiverId);
+      // console.log(receiverId);
       // console.log(senderId);
       //var chatId = receiverId + '/' + senderId;
 

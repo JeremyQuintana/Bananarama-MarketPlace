@@ -21,7 +21,7 @@ button{
 .message_receiver {
     margin: 5px 0;
     clear:both;
-    float:right;
+    text-align:right;
 
 }
 
@@ -50,7 +50,7 @@ h1 {
 .chats .chat_text {
 
     color: black;
-    display: inline;
+    display: block;
     padding: 5px 5px;
     font-size: 30px;
 
@@ -67,7 +67,7 @@ h1 {
 .message_receiver .receiver_message-text {
     background: #3399FF;
     color: white;
-    /* display: inline; */
+    display: inline;
     padding: 4px 8px;
     border-radius: 15px;
 }
