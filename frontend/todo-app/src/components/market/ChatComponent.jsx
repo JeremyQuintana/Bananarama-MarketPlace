@@ -193,7 +193,7 @@ class MessageObjects extends Component {
   componentDidMount() {
     this.__isMounted = true;
     this.fetchMessages()
-    this.interval = setInterval(() => this.fetchMessages(), 5000);
+    this.interval = setInterval(() => this.fetchMessages(), 1000);
   }
 
 
