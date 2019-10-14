@@ -45,7 +45,7 @@ public class PostController {
 	@Autowired
 	private PostService service;
 	
-
+	private ImageController imageController = new ImageController();
 
 	// posts that are for sale
 	@GetMapping("/posts")
@@ -66,19 +66,26 @@ public class PostController {
 
 
 	// adds a post to marketplace
+	// security check: if you are NOT the owner, will make the post in your name
 	@PostMapping("/postitem")
 	public Post addPost(@RequestBody Post post, HttpServletRequest request)
 	{
+		// we cannot affort to 
+		String photo = post.getPhoto();
+		post.setPhoto(null);
+		post = service.update(post);
 		post.setOwner(checker.getOwnerId(request));
-		return service.update(post);
+		
+		imageController.uploadImage(photo, post.getId() + "");
+		return post;
 	}
-
-	// when need to open a post in marketplace
+	
 	@PutMapping("/posts/{id}")
 	public Post updatePost(@PathVariable Long id, @RequestBody Post edit, HttpServletRequest request)
 	{
-		return checker.isEqual(edit.getOwnerId(), request) ? service.update(edit) : null;
+		return addPost(edit, request);
 	}
+
 
 	
 	@DeleteMapping("/posts/{id}")
@@ -101,7 +108,7 @@ public class PostController {
 	{	
 		Post post = service.get(id);
 		post.setStatus(status);
-		return updatePost(id, post, request);
+		return correctOwner(id, request) ? service.update(post) : null;
 	}
 	
 	

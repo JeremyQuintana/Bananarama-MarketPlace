@@ -22,7 +22,7 @@ class MarketDataService {
   //  updateDeletePost(id) {
 
  //       return axios.put(`${API_URL}/posts/${id}`, {
-  //          id            
+  //          id
  //       })
  //   }
 //
@@ -31,13 +31,11 @@ class MarketDataService {
     updateExistingPost(id, description, title, price, category, photo, ownerId) {
 
         return axios.put(`${API_URL}/posts/${id}`, {
-            id,
             description,
             title,
             price,
             category,
-            photo, 
-            ownerId
+            photo
         })
     }
 

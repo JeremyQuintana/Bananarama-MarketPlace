@@ -51,7 +51,6 @@ class MarketPlaceApp extends Component {
                             <AuthenticatedRoute path="/account" component={AccountComponent} />
                             <AuthenticatedRoute path="/todos/:id" component={TodoComponent} />
                             <AuthenticatedRoute path="/todos" component={ListTodosComponent} />
-                            <Route path="/logout" component={LogoutComponent} />
                             <Route path="*" exact component={LoginComponent} />
 
                         </Switch>
