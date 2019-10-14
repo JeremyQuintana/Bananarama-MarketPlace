@@ -79,9 +79,7 @@ class ChatComponent extends Component {
     return (
 
 
-        {/*<div className="grid-container">
-          <div className="grid-item2">
-                     <h1>Chats     </h1>*/}
+        
 
 
       <div className="grid-container">
@@ -109,7 +107,7 @@ class ChatComponent extends Component {
 */}
 
         </div>
-        <div className="grid-item">
+        <div className="grid-item-2">
           <div className="chat">
             {renderChatSystem && <h2>Chatting with: {this.props.match.params.receiverId}</h2>}
             <div className="message-list" id="messageScrollID">
