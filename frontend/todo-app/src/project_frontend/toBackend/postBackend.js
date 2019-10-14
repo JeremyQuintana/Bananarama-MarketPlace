@@ -4,12 +4,12 @@ import { API_URL } from '../../Constants'
 class postBackend{
 
   postItemBackend(description, title, price, category, photo){
-    return axios.post(`${API_URL}/postitem`, {
+    
+    return axios.post(`${API_URL}/postitem${photo}`, {
       description,
       title,
       price,
-      category,
-      photo
+      category
     })
   }
 

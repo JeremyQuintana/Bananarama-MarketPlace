@@ -34,7 +34,7 @@ public class Post implements Comparable<Post> {
 	private String title;
 	private String price;
 	private String category;
-//	private String photo;
+	private String photo;
 	private String ownerId;
 	private Date datePosted = new Date(new java.util.Date().getTime());
 	
@@ -69,7 +69,12 @@ public class Post implements Comparable<Post> {
 		this.id = id;
 	}
 	
-	
+	@JsonIgnore
+	public Post(Long id, String owner, String title, String description, String price, String category, String photo)
+	{
+		this(id, owner, title, description, price, category);
+		this.id = id;
+	}
 	
 	@JsonIgnore
 	public Post(Long id, String owner, String title, String description, String price, String category)
@@ -263,7 +268,8 @@ public class Post implements Comparable<Post> {
 	public String getDescription() 			{return description;}
 	public String getCategory() 			{return category;}
 	public String getPrice() 				{return price;}
-//	public String getPhoto() 				{return photo;}
+	public String getPhoto() 				{return photo;}
+	public void setPhoto(String photo)	{this.photo = photo;}
 	
 }
 

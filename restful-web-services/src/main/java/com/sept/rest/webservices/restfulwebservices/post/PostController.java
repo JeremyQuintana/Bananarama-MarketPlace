@@ -61,45 +61,24 @@ public class PostController {
 
 
 	// adds a post to marketplace
+	// security check: if you are NOT the owner, will make the post in your name
 	@PostMapping("/postitem")
-	public Post addPost(@RequestBody PostSubmission submissionPost, HttpServletRequest request)
+	public Post addPost(@RequestBody Post post, HttpServletRequest request)
 	{
-		System.out.println("adding post: " + submissionPost);
-		Post toUpload = new Post(
-				getOwnerId(request),
-				submissionPost.getTitle(),
-				submissionPost.getDescription(),
-				submissionPost.getPrice(),
-				submissionPost.getCategory());
-		Post uploadedPost = service.update(toUpload);
-		if (!submissionPost.getPhoto().equals("")) {
-			imageController.uploadImage(submissionPost.getPhoto(), uploadedPost.getId().toString());
-		}
-		return uploadedPost;
+		// we cannot affort to 
+		String photo = post.getPhoto();
+		post.setPhoto(null);
+		post = service.update(post);
+		post.setOwner(getOwnerId(request));
+		
+		imageController.uploadImage(photo, post.getId() + "");
+		return post;
 	}
 	
 	@PutMapping("/posts/{id}")
-	public Post updatePost(@PathVariable Long id, @RequestBody PostSubmission edit, HttpServletRequest request)
+	public Post updatePost(@PathVariable Long id, @RequestBody Post edit, HttpServletRequest request)
 	{
-		System.out.println("received post backend: " + edit);
-		System.out.println(edit.getPhoto());
-		
-		if (correctOwner(id, request)) {
-			if (!edit.getPhoto().equals("")) {
-				imageController.uploadImage(edit.getPhoto(), id.toString());
-			}
-			Post toUpload = new Post(
-					id,
-					getOwnerId(request),
-					edit.getTitle(),
-					edit.getDescription(),
-					edit.getPrice(),
-					edit.getCategory());
-			return service.update(toUpload);
-		}
-		else {
-			return null;
-		}
+		return addPost(edit, request);
 	}
 
 
