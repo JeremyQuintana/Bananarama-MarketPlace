@@ -14,12 +14,13 @@ button{
 }
 
 .message_sender {
-    margin: 20px 0;
+    margin: 5px 0;
 
 }
 
 .message_receiver {
-    margin: 20px 0;
+    margin: 5px 0;
+    clear:both;
     float:right;
 
 }
@@ -69,12 +70,9 @@ h1 {
     display: inline;
     padding: 4px 8px;
     border-radius: 15px;
-    /* float: right; */
 }
 
-.message_receiver::after .receiver_message-text::after {
-    clear:both;
-}
+
 
 
 .message-list {

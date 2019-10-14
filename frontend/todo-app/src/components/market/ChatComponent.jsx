@@ -134,6 +134,7 @@ class MessageList extends Component {
 }
 
 class MessageObjects extends Component {
+  __isMounted = false;
   static contextTypes = {
     router: PropTypes.object
   }
@@ -146,8 +147,8 @@ class MessageObjects extends Component {
 
     }
   }
-  create_new_message = message => {
-    var outerClassName = "message";
+  create_new_message(message, showName) {
+    var outerClassName = "message message_sender";
     var innerClassName = "message-text"
     if (message.receiver === sessionStorage.getItem('authenticatedUser')) {
       var outerClassName = "message_receiver";
@@ -155,7 +156,7 @@ class MessageObjects extends Component {
     }
     return (
       <div className={outerClassName}>
-        <div className="username_id">{sessionStorage.getItem('authenticatedUser')}</div>
+        {showName && <div className="username_id">{message.sender}</div>}
         <div className={innerClassName} key={message.key}>
           {message.text}
         </div>
@@ -164,12 +165,15 @@ class MessageObjects extends Component {
   };
 
   componentDidMount() {
+    this.__isMounted = true;
     this.fetchMessages()
-    this.timer = setInterval(() => this.fetchMessages(), 5000);
+    this.interval = setInterval(() => this.fetchMessages(), 5000);
   }
 
   componentWillUnmount() {
-    this.timer = null;
+    this.__isMounted = false;
+
+    this.interval = null;
   }
 
 
@@ -188,9 +192,15 @@ class MessageObjects extends Component {
 
     var retVal = [];
     for (var r = 0; r < this.state.newmessages.length; r++) {
+      var showName = true;
+      if(r > 0){
+        if(this.state.newmessages[r-1].sender === this.state.newmessages[r].sender){
+          showName = false;
+        }
+      }
       retVal.push(
 
-        this.create_new_message(this.state.newmessages[r])
+        this.create_new_message(this.state.newmessages[r], showName)
 
       );
     }
