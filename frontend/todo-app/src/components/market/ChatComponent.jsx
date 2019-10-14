@@ -80,8 +80,6 @@ class ChatComponent extends Component {
 
 
 
-
-
       <div className="grid-container">
         <div className="grid-item2">
           <h2 className="centerFix">Chats</h2>

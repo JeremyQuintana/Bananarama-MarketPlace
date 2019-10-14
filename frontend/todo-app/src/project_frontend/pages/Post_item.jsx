@@ -20,6 +20,7 @@ class Post_item extends Component {
 
     this.updateStateWithPost();
     this.handleChange = this.handleChange.bind(this)
+    this.handleImageChange = this.handleImageChange.bind(this)
 
     this.submitPost = this.submitPost.bind(this)
 
@@ -56,7 +57,7 @@ class Post_item extends Component {
                 <option value="Disturbingly Simple">Disturbingly Simple</option>
                 <option value="Spectacularly Failing">Spectacularly Failing</option>
               </select>
-              <input type="file" name="item_photo" id="item_photo" className="custom-file" accept="image/*" value={this.state.item_photo} onChange={this.handleChange}/>
+              <input type="file" name="item_photo" id="item_photo" className="input" accept="image/*" onChange={this.handleImageChange}/>
             </div>
             {this.props.existingId != null && <div className="container alert alert-warning">If no new photo is uploaded, the existing photo will be kept</div>}
           </div>
@@ -75,6 +76,20 @@ class Post_item extends Component {
         [event.target.name]: event.target.value
       }
     )
+  }
+
+  handleImageChange(event){
+    let files=event.target.files;
+    let reader = new FileReader();
+    reader.readAsDataURL(files[0]);
+
+    reader.onload=(e)=>{
+      if (e.target.result.length < 10000){
+        this.setState({item_photo: e.target.result})
+      } else {
+        alert("Image exceeds 100KB and will not be uploaded");
+      }
+    }
   }
 
 
@@ -102,7 +117,9 @@ class Post_item extends Component {
 
     var nameResult = !(this.state.item_name === "");
 
-    var valid = (costResult && catagoryResult && nameResult) ;
+    var photoSize = (this.state.item_photo.length < 100000)
+
+    var valid = (costResult && catagoryResult && nameResult && photoSize) ;
 
     return valid;
   }
@@ -115,6 +132,7 @@ class Post_item extends Component {
 
         alert("Your item has been updated");
         this.props.history.push(`/home/${sessionStorage.getItem("authenticatedUser")}`);
+        window.location.reload();
       }
     );
   }
