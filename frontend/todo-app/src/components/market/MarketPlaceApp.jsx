@@ -20,6 +20,8 @@ import LogoutComponent from '../todo/LogoutComponent.jsx'
 import WelcomeComponent from '../todo/WelcomeComponent.jsx'
 import TodoComponent from '../todo/TodoComponent.jsx'
 import Post_item from '../../project_frontend/pages/Post_item.jsx';
+import "./Market.css";
+
 
 //   <AuthenticatedRoute path="/posts/searchBy" exact component={SearchComponent} />
 //<AuthenticatedRoute path="/posts/searchBy/:description/:item_category" exact component={SearchComponent} />
@@ -59,7 +61,6 @@ class MarketPlaceApp extends Component {
                             <Route path="*" exact component={LoginComponent} />
 
                         </Switch>
-                        <FooterComponent/>
                     </>
                 </Router>
             </div>

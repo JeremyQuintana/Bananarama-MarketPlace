@@ -79,12 +79,34 @@ class ChatComponent extends Component {
     return (
 
 
+        {/*<div className="grid-container">
+          <div className="grid-item2">
+                     <h1>Chats     </h1>*/}
+
+
       <div className="grid-container">
         <div className="container">
           <h2 className="centerFix">Chats</h2>
           <div className="container chatUserList">
             {chatHistory}
           </div>
+          {/*
+          <div className="grid-item2">
+            <div className="chat">
+              <div className="message-list">
+
+                <MessageObjects
+                  allMeassages={this.state.messages}
+                  deleteItem={this.deleteItem}
+                />
+              </div>
+
+              <MessageList
+                addMessage={this.addMessage}
+                inputElement={this.inputElement}
+                handleInput={this.handleInput}
+                message={this.state.message}
+*/}
 
         </div>
         <div className="grid-item">
@@ -96,6 +118,7 @@ class ChatComponent extends Component {
                 match={this.props.match}
                 allMeassages={this.state.messages}
                 deleteItem={this.deleteItem}
+
               />
             </div>
 
@@ -112,7 +135,9 @@ class ChatComponent extends Component {
         </div>
 
 
+
       </div>
+
 
     );
   }

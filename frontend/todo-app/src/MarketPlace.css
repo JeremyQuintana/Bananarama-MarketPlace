@@ -2,13 +2,14 @@
   position: sticky;
   bottom: 0;
   width: 100%;
-  height: 40px;
-  background-color: #222222;
+  height: 100%;
+  background-color: #fdce57;
 }
 
 .MarketPlaceApp{
-    height: 100%;
-    background-color: #ffecb8;
+    height: 2000px;
+    width: 100%;
+  background-color: #fdce57;
 }
 
 .App {
@@ -47,8 +48,9 @@
 
 .container img {
   height: 50px;
-  border: 1px solid black;
   margin: 10px 10px 10px 0px;
+      height: 100%;
+
 }
 
 .posting{
