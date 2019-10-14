@@ -55,13 +55,6 @@ public class PostService {
 	
 	
 	
-	//public void delete(long id)
-	//{
-	//	System.out.println("In POST SERVICE TO SETSTATUS");
-	//	db.setStatusForPost(id, Status.DELETED);
-///	}
-	//
-	
 	
 	
 	
@@ -76,6 +69,34 @@ public class PostService {
 	{
 		return db.findByStatus(Status.AVAILABLE);
 	}
+	
+	//	calling directly as you can't have multiple urls
+	public List<Post> getOwnerPosts(String ownerId, Status status)
+	{
+		return db.findByOwnerIdAndStatus(ownerId, status);
+	}
+	
+	
+//	//logic incase history needs to be sorted by groups by status
+//	public List<Post> getAllAvailableByOwner(String ownerId)
+//	{
+//		return db.findByOwnerIdAndStatus(ownerId, Status.AVAILABLE);
+//	}
+//	
+//	public List<Post> getAllSoldByOwner(String ownerId)
+//	{
+//		return db.findByOwnerIdAndStatus(ownerId, Status.SOLD);
+//	}
+//	
+//	public List<Post> getAllDeletedByOwner(String ownerId)
+//	{
+//		return db.findByOwnerIdAndStatus(ownerId, Status.DELETED);
+//	}
+	
+	
+
+	
+	
 	
 	public List<Post> sortAll(String sort)
 	{

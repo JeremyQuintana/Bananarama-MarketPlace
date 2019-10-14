@@ -1,6 +1,7 @@
 .topFix {
     margin: 80px;
     background: #ffe4a0;
+    border: 5px solid white;
     box-shadow: -5px 2px rgba(0,0,0,0.2);
     /* background-color: #61d0fc; */
 }
@@ -13,12 +14,25 @@
     text-align: center;
 }
 
-.DeleterefineItem{
-    margin-left: 100px;
-    background-color: #61d0fc;
-    padding: 15px 15px;
-    border-radius: 10px;
-    filter: invert(100%);
+.container {
+    position: relative;
+}
+
+.imgButton{
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+}
+.imgButton2{
+    position: absolute;
+    right: 75px;
+    bottom: 10px;
+}
+.imgButton:hover{
+    filter: invert(25%) sepia(41%) saturate(1753%) hue-rotate(325deg) brightness(98%) contrast(106%);
+}
+.imgButton2:hover{
+    filter: brightness(95%) contrast(93%);
 }
 
 #btn{

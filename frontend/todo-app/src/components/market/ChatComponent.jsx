@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
 import { withRouter } from "react-router-dom";
 import ChatService from "../../api/Chat/ChatService.js"
 import PropTypes from "prop-types";

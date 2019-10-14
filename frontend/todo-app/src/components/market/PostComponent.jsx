@@ -25,21 +25,48 @@ class PostComponent extends Component {
         this.saveInfo = this.saveInfo.bind(this);
         this.updateDelete = this.updateDelete.bind(this);
         this.updateSold = this.updateSold.bind(this);
-        this.permanentDelete = this.permanentDelete.bind(this);
+        this.updateAvailable = this.updateAvailable.bind(this);
+        this.updatePermDelete = this.updatePermDelete.bind(this);
     }
-  // 
+ 
                           
-                          // <button onClick={this.setDelete}>Delete</button></div>
+                          
     render() {
         let retVal;
         // get the row from the backend array, based on the postID param in props
         // create a div with all the singular posts information
         if (this.state.postInfo != null) {
             if (!this.state.editMode) {
-                retVal = (
+
+                var ItemButtons;
+                if (this.state.postInfo.status === "AVAILABLE" && (sessionStorage.getItem('authenticatedUser') === this.state.postInfo.ownerId)) {
+                    ItemButtons =  <div className="containerbuttons ">
+                                    <button onClick={this.updateSold}>Sold</button>
+                                   <button onClick={this.updateDelete}>Delete</button>
+                                   
+                                   <input type="image" className="imgButton2" src={require("./edit.svg")} alt ="edit"   onClick={this.setEdit} />
+                                    </div>}
+                if ((this.state.postInfo.status === "DELETED" || this.state.postInfo.status === "SOLD") && (sessionStorage.getItem('authenticatedUser') === this.state.postInfo.ownerId)) {
+                    ItemButtons =  <div className="containerbuttons ">
+                                    
+                                   <button onClick={this.updateAvailable}>Available</button>
+                                   <input type="image" className="imgButton" src={require("./delete.svg")} alt ="Delete"   onClick={this.updatePermDelete} />
+                                   
+                                    </div>}
+                
+                   if ((this.state.postInfo.status == "DELETED" || this.state.postInfo.status == "SOLD") && (sessionStorage.getItem('authenticatedUser') !== this.state.postInfo.ownerId)) {
+                    ItemButtons =  
+                                    alert("THIS ITEM HAS BEEN "+ this.state.postInfo.status);
+                                    this.props.history.push(`/home/${sessionStorage.getItem("authenticatedUser")}`);
+                                   }
+
+            retVal = (
 
                     <div className="topFix">
                         <h1 className="marketTitle">{this.state.postInfo.title}</h1>
+                        <div className="container postCategory">
+                            {this.state.postInfo.category}
+                        </div>
                         <div className="container postDescription">
                             <img src={'../post_images/' + this.state.postInfo.photo + '.jpg'}></img>
                             {/*PLACEHOLDER IMAGE*/}
@@ -53,20 +80,15 @@ class PostComponent extends Component {
                             {this.state.postInfo.ownerId}
                         </div>
                         <div className="container postSeller"><Link to="/chat/" action="replace">Contact Seller</Link></div>
-                        {(sessionStorage.getItem('authenticatedUser') == this.state.postInfo.ownerId) &&
-                            <div className="container"> 
-                                <button onClick={this.setEdit}      id="btn">Edit Post</button>
-                                <button onClick={this.updateSold}   id="btn">Sold</button>
-                                <button onClick={this.updateDelete} id="btn"> Delete </button>
-                                {/* <button onClick={this.updateDelete} id="btn2"> <img src={require("./delete.png")}></img></button> */}
-                                <input name="Delete" id="Delete" type="image" className="DeleterefineItem" 
-                                       src={require("./delete.png")} alt ="Delete"   onClick={this.permanentDelete} />
-                            </div>
                         
-                        }
-
+                        <div className="container">
+                        {ItemButtons}
+                        </div>
+                       
                     </div>
                 );
+
+                          
             } else {
                 retVal = (
                     <div className="topFix">
@@ -107,6 +129,9 @@ class PostComponent extends Component {
     updateSold() {
         this.updateStatus("SOLD");
     }
+    updateAvailable() {
+        this.updateStatus("AVAILABLE");
+    }
 
     updateStatus(status) {
         var postID= this.state.postInfo.id;
@@ -116,9 +141,11 @@ class PostComponent extends Component {
         this.props.history.push(`/home/${sessionStorage.getItem("authenticatedUser")}`);
     }
 
-    permanentDelete() {
-        MarketDataService.deletePost(this.state.postInfo.id);
-        alert("Your Post Has Been Deleted");
+    updatePermDelete() {
+        var posttID= this.state.postInfo.id;
+    
+        MarketDataService.deletePost(posttID);
+        alert("Your Post Has Been PERMANENTLY DELETED");
         this.props.history.push(`/home/${sessionStorage.getItem("authenticatedUser")}`);
     }
 
@@ -143,6 +170,9 @@ class PostComponent extends Component {
         }
 
     }
+
+
+
 
 }
 
