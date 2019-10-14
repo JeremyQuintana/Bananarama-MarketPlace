@@ -172,7 +172,7 @@ class MessageObjects extends Component {
 
   componentWillUnmount() {
     this.__isMounted = false;
-
+    clearInterval(this.interval);
     this.interval = null;
   }
 
