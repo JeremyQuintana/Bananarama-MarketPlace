@@ -10,9 +10,14 @@ class HomeComponent extends Component {
   render() {
     let retVal = (
       <div className="homeContainer">
-        <App1></App1>
+            <h1>Home</h1>
+
+         <div className="inner">
         <Grid history = {this.props.history}></Grid>
       </div>
+
+      </div>
+
     );
     return retVal;
   }
@@ -22,21 +27,20 @@ class HomeComponent extends Component {
   }
 }
 
-const App1 = () => {
-  return (
-    <div className="App1">
-      <img src={require("./BANANA.png")} />
-    </div>
-  );
-}
 
 const Grid = (props) => {
   return (
+    <div>
     <div class="grid-container">
-      <div class="grid-item" onClick={() => props.history.push('/post')}>Post <img src={require("./big-bill.png")} /></div>
-      <div class="grid-item" onClick={() => props.history.push('/market')}>MarketPlace <img src={require("./market-basket-.png")} /></div>
-      <div class="grid-item" onClick={() => props.history.push('/chat')}>Chat <img src={require("./chat.png")} /></div>
-      <div class="grid-item" onClick={() => props.history.push('/account')}>Account <img src={require("./avatar.png")} /></div>
+      <div class="grid-item" onClick={() => props.history.push('/post')}>Post <img class = "img-fluid" src={require("./big-bill.png")} /></div>
+      <div class="grid-item" onClick={() => props.history.push('/market')}>MarketPlace <img class = "img-fluid" src={require("./market-basket-.png")} /></div>
+      <div class="grid-item" onClick={() => props.history.push('/chat')}>Chat <img class = "img-fluid" src={require("./chat.png")} /></div>
+      <div class="grid-item" onClick={() => props.history.push('/account')}>Account <img class = "img-fluid" src={require("./avatar.png")} /></div>
+          </div>
+
+  <div className="App2">
+      <img class = "img-fluid" src={require("./background_ban.jpeg")} />
+    </div>
     </div>
   );
 }

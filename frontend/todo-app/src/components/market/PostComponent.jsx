@@ -41,8 +41,8 @@ class PostComponent extends Component {
                 var ItemButtons;
                 if (this.state.postInfo.status === "AVAILABLE" && (sessionStorage.getItem('authenticatedUser') === this.state.postInfo.ownerId)) {
                     ItemButtons =  <div className="containerbuttons ">
-                                    <button onClick={this.updateSold}>Sold</button>
-                                   <button onClick={this.updateDelete}>Delete</button>
+                                    <button class="btn btn-dark" onClick={this.updateSold}>Sold</button>
+                                   <button class="btn btn-dark" onClick={this.updateDelete}>Delete</button>
                                    
                                    <input type="image" className="imgButton2" src={require("./edit.svg")} alt ="edit"   onClick={this.setEdit} />
                                     </div>}
@@ -93,7 +93,7 @@ class PostComponent extends Component {
                 retVal = (
                     <div className="topFix">
                         <Post_item existingId = {this.props.match.params.postID} history={this.props.history}></Post_item>
-                        <div className="container centerFix"><button onClick={this.clearEdit}>Cancel</button> </div>
+                        <div className="container centerFix"><button  onClick={this.clearEdit}>Cancel</button> </div>
 
                     </div>
                 )

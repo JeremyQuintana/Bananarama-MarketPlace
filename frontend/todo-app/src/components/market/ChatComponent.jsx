@@ -81,12 +81,12 @@ class ChatComponent extends Component {
      
 
         <div className="grid-container">
-          <div className="grid-item">
+          <div className="grid-item2">
                      <h1>Chats     </h1>
 
             <CuurentChats></CuurentChats>
           </div>
-          <div className="grid-item">
+          <div className="grid-item2">
             <div className="chat">
               <div className="message-list">
 
@@ -105,7 +105,6 @@ class ChatComponent extends Component {
             </div>
           </div>
         </div>
-      
     );
   }
 }
