@@ -31,7 +31,7 @@ class HomeComponent extends Component {
 const Grid = (props) => {
   return (
     <div>
-    <div class="grid-container">
+    <div class="grid-container-home">
       <div class="grid-item" onClick={() => props.history.push('/post')}>Post <img class = "img-fluid" src={require("./big-bill.png")} /></div>
       <div class="grid-item" onClick={() => props.history.push('/market')}>MarketPlace <img class = "img-fluid" src={require("./market-basket-.png")} /></div>
       <div class="grid-item" onClick={() => props.history.push('/chat')}>Chat <img class = "img-fluid" src={require("./chat.png")} /></div>

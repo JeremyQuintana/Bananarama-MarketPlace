@@ -27,7 +27,7 @@ class ChatComponent extends Component {
     ChatService.userList(sessionStorage.getItem('authenticatedUser')).then(
       (response) => {
         this.setState({ currentChats: response.data });
-        // FOR TESTING: 
+        // FOR TESTING:
         // this.setState({currentChats: [
         //     { senderId: 's3707187', receiverId: 'user1' },
         //     { senderId: 's3707187', receiverId: 'user2' }]});
@@ -35,7 +35,7 @@ class ChatComponent extends Component {
     );
   }
 
-  
+
   handleInput = e => {
     const itemText = e.target.value;
 
@@ -58,7 +58,7 @@ class ChatComponent extends Component {
       const messages = [...this.state.messages, newMessageToOutPut];
       console.log(newMessageToOutPut);
 
-      // calling it here 
+      // calling it here
       // ChatService.addChat("user1","user2",newMessageToOutPut.text);
       ChatService.addChat(sessionStorage.getItem('authenticatedUser'), this.props.match.params.receiverId, newMessageToOutPut.text);
       this.setState({
@@ -79,7 +79,7 @@ class ChatComponent extends Component {
     return (
 
 
-        
+
 
 
       <div className="grid-container">
@@ -260,6 +260,3 @@ class MessageObjects extends Component {
 
 
 export default withRouter(ChatComponent);
-
-
-
