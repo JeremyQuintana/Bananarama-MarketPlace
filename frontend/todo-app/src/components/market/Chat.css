@@ -67,7 +67,7 @@ h1 {
 .message_receiver .receiver_message-text {
     background: #3399FF;
     color: white;
-    display: inline;
+    /* display: inline; */
     padding: 4px 8px;
     border-radius: 15px;
 }
