@@ -17,6 +17,7 @@ class ChatComponent extends Component {
         key: ""
       },
       currentChats: [],
+      currentReceiverID: ""
     };
 
     this.refreshChatHistory();
@@ -34,7 +35,7 @@ class ChatComponent extends Component {
     );
   }
 
-
+  
   handleInput = e => {
     const itemText = e.target.value;
 
@@ -64,6 +65,7 @@ class ChatComponent extends Component {
         messages: messages,
         message: { text: "", key: "" }
       });
+
     }
   };
   render() {
@@ -72,12 +74,14 @@ class ChatComponent extends Component {
       // console.log(this.state.currentChats[1])
       chatHistory = <ChatListComponent history={this.props.history} chats={this.state.currentChats} historyMode={false}></ChatListComponent>
     }
+
+    var renderChatSystem = this.props.match.params.receiverId != null;
     return (
 
 
       <div className="grid-container">
         <div className="container">
-          <h1>Chats</h1>
+          <h2 className="centerFix">Chats</h2>
           <div className="container chatUserList">
             {chatHistory}
           </div>
@@ -85,7 +89,8 @@ class ChatComponent extends Component {
         </div>
         <div className="grid-item">
           <div className="chat">
-            <div className="message-list">
+            {renderChatSystem && <h2>Chatting with: {this.props.match.params.receiverId}</h2>}
+            <div className="message-list" id="messageScrollID">
 
               <MessageObjects
                 match={this.props.match}
@@ -94,13 +99,13 @@ class ChatComponent extends Component {
               />
             </div>
 
-            <MessageList
+            {renderChatSystem && <MessageList
               addMessage={this.addMessage}
               inputElement={this.inputElement}
               handleInput={this.handleInput}
               message={this.state.message}
 
-            />
+            />}
             {/* <TestChats> </TestChats> */}
           </div>
 
@@ -144,7 +149,7 @@ class MessageObjects extends Component {
 
     this.state = {
       newmessages: [],
-
+      switch: false
     }
   }
   create_new_message(message, showName) {
@@ -170,6 +175,8 @@ class MessageObjects extends Component {
     this.interval = setInterval(() => this.fetchMessages(), 5000);
   }
 
+
+
   componentWillUnmount() {
     this.__isMounted = false;
     clearInterval(this.interval);
@@ -181,7 +188,11 @@ class MessageObjects extends Component {
     console.log("poll")
     ChatService.loadAllChats(sessionStorage.getItem('authenticatedUser'), this.props.match.params.receiverId).then(
       response => {
-        this.setState({ newmessages: response.data })
+        if (this.state.newmessages.length != response.data.length) {
+          this.setState({ newmessages: response.data })
+          var chatInput = document.getElementById("messageScrollID")
+          chatInput.scrollTop = chatInput.scrollHeight;
+        }
 
       }
     ).catch(error => console.log("refreshing chat failed", error));
@@ -193,8 +204,8 @@ class MessageObjects extends Component {
     var retVal = [];
     for (var r = 0; r < this.state.newmessages.length; r++) {
       var showName = true;
-      if(r > 0){
-        if(this.state.newmessages[r-1].sender === this.state.newmessages[r].sender){
+      if (r > 0) {
+        if (this.state.newmessages[r - 1].sender === this.state.newmessages[r].sender) {
           showName = false;
         }
       }

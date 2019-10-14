@@ -8,10 +8,7 @@ button{
     width: 20%;
 
 }
-.message-list {
 
-    width: 50%;
-}
 
 .message_sender {
     margin: 5px 0;
@@ -30,12 +27,12 @@ button{
 
 }
 
-.chats {
+/*.chats {
 padding: 10px;
 margin-left: 50%;
 text-align: right;
 
-}
+}*/
 h1 {
 
     text-align: right;
@@ -44,7 +41,7 @@ h1 {
 }
 
 
-.chats:hover {
+/*.chats:hover {
   text-decoration: underline;
 }
 .chats .chat_text {
@@ -54,12 +51,12 @@ h1 {
     padding: 5px 5px;
     font-size: 30px;
 
-}
+}*/
 
 .message .message-text {
     background: #9B59B6 ;
     color: white;
-    display: inline;
+    display: inline-block;
     padding: 4px 8px;
     border-radius: 15px;
 }
@@ -67,7 +64,7 @@ h1 {
 .message_receiver .receiver_message-text {
     background: #3399FF;
     color: white;
-    display: inline;
+    display: inline-block;
     padding: 4px 8px;
     border-radius: 15px;
 }
@@ -77,13 +74,14 @@ h1 {
 
 .message-list {
     box-sizing: border-box;
-    padding-left: 6px;
+    padding: 6px;
     width: 100%;
+    max-width: 800px;
     height: 500px;
-    overflow: scroll;
+    overflow-y: scroll;
     background: #EEEEEE;
     text-align: left;
-
+    
 
 
     border-radius: 10px;
@@ -98,7 +96,7 @@ h1 {
 
     padding-left: 6px;
     height: 100%;
-    overflow: scroll;
+    overflow: auto;
 }
 
 .InputBox input {
@@ -179,3 +177,6 @@ h1 {
     clear:both;
 }
 
+.chatUserList {
+    width: auto;
+}
