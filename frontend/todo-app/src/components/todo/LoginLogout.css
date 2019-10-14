@@ -1,6 +1,5 @@
 .container{
-    height:1500px;
-  background-color: #fdce57;
+    /* height:1500px; */
       margin: auto;
   width: 50%;
   padding: 10px;
@@ -38,6 +37,7 @@
 	width: 20%;
 	padding-bottom: 4%;
 }
+
 
 
 

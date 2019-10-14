@@ -27,7 +27,7 @@ class ChatComponent extends Component {
     ChatService.userList(sessionStorage.getItem('authenticatedUser')).then(
       (response) => {
         this.setState({ currentChats: response.data });
-        // FOR TESTING: 
+        // FOR TESTING:
         // this.setState({currentChats: [
         //     { senderId: 's3707187', receiverId: 'user1' },
         //     { senderId: 's3707187', receiverId: 'user2' }]});
@@ -35,7 +35,7 @@ class ChatComponent extends Component {
     );
   }
 
-  
+
   handleInput = e => {
     const itemText = e.target.value;
 
@@ -58,7 +58,7 @@ class ChatComponent extends Component {
       const messages = [...this.state.messages, newMessageToOutPut];
       console.log(newMessageToOutPut);
 
-      // calling it here 
+      // calling it here
       // ChatService.addChat("user1","user2",newMessageToOutPut.text);
       ChatService.addChat(sessionStorage.getItem('authenticatedUser'), this.props.match.params.receiverId, newMessageToOutPut.text);
       this.setState({
@@ -79,13 +79,9 @@ class ChatComponent extends Component {
     return (
 
 
-        // {/*<div className="grid-container">
-        //   <div className="grid-item2">
-        //              <h1>Chats     </h1>*/}
-
 
       <div className="grid-container">
-        <div className="container">
+        <div className="grid-item2">
           <h2 className="centerFix">Chats</h2>
           <div className="container chatUserList">
             {chatHistory}
@@ -109,7 +105,7 @@ class ChatComponent extends Component {
 */}
 
         </div>
-        <div className="grid-item">
+        <div className="grid-item2">
           <div className="chat">
             {renderChatSystem && <h2>Chatting with: {this.props.match.params.receiverId}</h2>}
             <div className="message-list" id="messageScrollID">
@@ -262,6 +258,3 @@ class MessageObjects extends Component {
 
 
 export default withRouter(ChatComponent);
-
-
-

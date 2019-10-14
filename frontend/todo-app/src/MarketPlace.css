@@ -7,7 +7,8 @@
 }
 
 .MarketPlaceApp{
-    height: 2000px;
+    /* height: 2000px; */
+    height:100%;
     width: 100%;
   background-color: #fdce57;
 }
@@ -57,6 +58,7 @@
   background: #ffe4a0;
   border: 5px solid white;
   box-shadow: -8px 4px rgba(0,0,0,0.2);
+  margin-bottom: 10px;
 }
 
 .posting:hover{
