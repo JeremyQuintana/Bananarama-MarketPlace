@@ -40,9 +40,9 @@ class AccountComponent extends Component {
             deletedPostItems = <ItemsComponent history={this.props.history} backPostings={this.state.deletedPosts}></ItemsComponent>
         }
         var chatHistory =  <div className="container alert alert-warning">No chats found!</div>
-        if(this.state.allChats.length !== 0){
+        if(this.state.allChats.length > 1){
             
-            chatHistory = <ChatListComponent history={this.props.history} chats={this.state.allChats}></ChatListComponent>
+            chatHistory = <ChatListComponent history={this.props.history} chats={this.state.allChats} historyMode = {true}></ChatListComponent>
         }
 
         let retVal = (

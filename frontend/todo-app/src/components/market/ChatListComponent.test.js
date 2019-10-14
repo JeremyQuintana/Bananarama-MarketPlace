@@ -29,6 +29,6 @@ describe('<ChatListComponent />', () => {
         const chatList = shallow(<ChatListComponent chats={[
             { senderId: 's1234567', receiverId: 's7654321' },
             { senderId: 's1234567', receiverId: 's5678910' }]} />);
-        expect(chatList.find('span').length).toEqual(2);
+        expect(chatList.find('span').length).toEqual(1);
     });
 });
