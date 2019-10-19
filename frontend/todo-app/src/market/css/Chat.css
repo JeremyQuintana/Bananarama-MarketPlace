@@ -1,0 +1,101 @@
+
+.communication button{
+     background:#F1C40F;
+    border-radius: 5px;
+    border-width: thick;
+    border-color: black;
+    border-color:#F1C40F;
+    width: 20%;
+
+}
+
+.communication .message_sender {
+    margin: 5px 0;
+}
+
+.communication .message_receiver {
+    margin: 5px 0;
+    clear:both;
+    text-align:right;
+}
+
+.communication .message_receiver::after {
+    clear:both;
+}
+
+.communication .message .message-text {
+    background: #9B59B6 ;
+    color: white;
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 15px;
+}
+
+.communication .message_receiver .receiver_message-text {
+    background: #3399FF;
+    color: white;
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 15px;
+}
+
+.communication .message-list {
+    box-sizing: border-box;
+    padding: 6px;
+    width: 100%;
+    height: 500px;
+    overflow-y: scroll;
+    background: #EEEEEE;
+    text-align: left;
+    border-radius: 10px;
+}
+
+.communication .InputBox {
+    background: #F7DC6F  ;
+    display: flex;
+    border-radius: 10px;
+    border-style: solid;
+    border-color:#34495E;
+
+    padding-left: 6px;
+    height: 100%;
+    overflow: auto;
+}
+
+.communication .InputBox input {
+    width: 100%;
+    border-style: none;
+    background:#F7DC6F;
+    font-weight: 200;
+
+}
+
+.communication .InputBox input:focus {
+    outline-width: 0;
+}
+
+.communication .chat{
+    width: 90%;
+}
+
+.communication {
+    background: #34495E;
+    padding-top: 20px;
+    padding-left: 5%;
+    display: grid;
+    grid-template-columns: 500px auto;
+    background-color: #fdce57;
+    height:100%;
+}
+
+.communication .grid-item {
+  margin: 0px 10px;
+  font-size: 30px;
+  text-align: center;
+}
+
+.communication .grid-item img{
+    color:black;
+    width: 50%;
+    padding-bottom: 5px;
+}
