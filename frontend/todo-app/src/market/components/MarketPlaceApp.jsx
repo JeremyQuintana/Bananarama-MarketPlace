@@ -14,9 +14,6 @@ import LoginComponent from './LoginComponent.jsx'
 import Post_item from './Post_item.jsx';
 import "../css/Market.css";
 
-
-//   <AuthenticatedRoute path="/posts/searchBy" exact component={SearchComponent} />
-//<AuthenticatedRoute path="/posts/searchBy/:description/:item_category" exact component={SearchComponent} />
 // This component organises all the other components together
 class MarketPlaceApp extends Component {
     render() {

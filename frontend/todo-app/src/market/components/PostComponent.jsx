@@ -95,21 +95,12 @@ class PostComponent extends Component {
         return retVal;
     }
 
-
-
-
     setEdit() {
-
         this.setState({ editMode: true });
-        //console.log(this.state.editMode);
     }
     clearEdit() {
         this.setState({ editMode: false });
     }
-
-
-
-
 
     updateDelete() {
         this.updateStatus("DELETED");
@@ -137,17 +128,6 @@ class PostComponent extends Component {
         this.props.history.push(`/home/${sessionStorage.getItem("authenticatedUser")}`);
     }
 
-    saveInfo() {
-        // send to backend and redir/show success message
-    }
-
-
-
-
-
-
-    // update to mitches code
-    // instead of retrieving all posts frontend and doing a search use backed to send only one item of given id
     retrieveItemInfo() {
         if(this.props.match != null){
             MarketDataService.retrieveSpecificPost(this.props.match.params.postID).then(

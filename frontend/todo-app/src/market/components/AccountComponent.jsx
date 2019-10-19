@@ -93,10 +93,6 @@ class AccountComponent extends Component {
         ChatService.userList(sessionStorage.getItem('authenticatedUser')).then(
             (response) => {
                 this.setState({allChats: response.data});
-                // FOR TESTING:
-                /*this.setState({allChats: [
-                    { senderId: 's1234567', receiverId: 's7654321' },
-                    { senderId: 's1234567', receiverId: 's5678910' }]});*/
             }
         );
     }

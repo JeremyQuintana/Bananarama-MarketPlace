@@ -27,10 +27,6 @@ class ChatComponent extends Component {
     ChatService.userList(sessionStorage.getItem('authenticatedUser')).then(
       (response) => {
         this.setState({ currentChats: response.data });
-        // FOR TESTING:
-        // this.setState({currentChats: [
-        //     { senderId: 's3707187', receiverId: 'user1' },
-        //     { senderId: 's3707187', receiverId: 'user2' }]});
       }
     );
   }
@@ -39,9 +35,6 @@ class ChatComponent extends Component {
   handleInput = e => {
     const itemText = e.target.value;
 
-    // needs to be some username at some poiunt
-    //var username = "thisUsername";
-    // var username = sessionStorage.getItem('authenticatedUser');
     var username = sessionStorage.getItem('authenticatedUser')
 
     const message = { text: itemText, username };
@@ -58,8 +51,6 @@ class ChatComponent extends Component {
       const messages = [...this.state.messages, newMessageToOutPut];
       console.log(newMessageToOutPut);
 
-      // calling it here
-      // ChatService.addChat("user1","user2",newMessageToOutPut.text);
       ChatService.addChat(sessionStorage.getItem('authenticatedUser'), this.props.match.params.receiverId, newMessageToOutPut.text);
       this.setState({
         messages: messages,
@@ -71,7 +62,6 @@ class ChatComponent extends Component {
   render() {
     var chatHistory = <div className="container alert alert-warning">No chats found!</div>
     if (this.state.currentChats.length > 1) {
-      // console.log(this.state.currentChats[1])
       chatHistory = <ChatListComponent history={this.props.history} chats={this.state.currentChats} historyMode={false}></ChatListComponent>
     }
 
@@ -109,7 +99,6 @@ class ChatComponent extends Component {
               message={this.state.message}
 
             />}
-            {/* <TestChats> </TestChats> */}
           </div>
 
         </div>

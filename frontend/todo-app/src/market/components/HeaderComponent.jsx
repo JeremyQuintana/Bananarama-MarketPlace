@@ -15,7 +15,6 @@ class HeaderComponent extends Component {
             }
         )
         const isUserLoggedIn = AuthenticationService.isUserLoggedIn();
-        //console.log(isUserLoggedIn);
 
         return (
             <header>

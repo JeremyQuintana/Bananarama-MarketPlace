@@ -48,12 +48,9 @@ class LoginComponent extends Component {
         this.setState({ showSuccessMessage: false });
         this.setState({ hasLoginFailed: true });
       });
-
-    //      await this.props.googleauth(res.accessToken);
   }
 
   handleChange(event) {
-    //console.log(this.state);
     this.setState({
       [event.target.name]: event.target.value
     });

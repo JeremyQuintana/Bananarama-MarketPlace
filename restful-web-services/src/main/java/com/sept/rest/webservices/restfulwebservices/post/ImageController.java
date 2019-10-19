@@ -20,6 +20,7 @@ public class ImageController {
 	Storage storage;
 	
 	public ImageController(){
+		//initiate credetials and obtain access to the storage on google cloud
 		Credentials credentials;
 		try {
 			credentials = GoogleCredentials.fromStream(new FileInputStream("sept-b15e60f11201.json"));
@@ -31,7 +32,7 @@ public class ImageController {
 	}
 	
 	public void uploadImage(String image, String id) {
-		
+		//performs size checks and uploads if its approved
 		if (image.equals("") || image == null)
 			throw new NullPointerException("No image sent in");
 		byte [] data = Base64.getDecoder().decode(image.split(",")[1]);
@@ -44,6 +45,7 @@ public class ImageController {
 	}
 	
 	public void deleteImage(String name) {
+		//deletes image if present in storage
 		BlobId blobId = BlobId.of("sept-image-store", name);
 		boolean deleted = storage.delete(blobId);
 		if (!deleted) {
