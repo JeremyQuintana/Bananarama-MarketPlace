@@ -39,14 +39,14 @@
   height:50px;
 }
 
-.product .btn-dark{
+.product .containerbuttons .btn-dark{
   height:50px;
   width: 200px;
+  margin-right:10px;
 }
 
 .product .containerbuttons .editBtn, .deleteBtn{
   float:right;
-  margin-right: 10px;
 }
 
 .product .cancel .cancel{

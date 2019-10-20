@@ -1,37 +1,33 @@
 import axios from 'axios'
-import { API_URL, JPA_API_URL } from '../../Constants'
+import { API_URL } from '../../Constants'
 
 // This is a data service for getting market items data from the backend
 class ChatService {
 
+    //load the entire chat history between two users
     loadAllChats(user1, user2) {
-
-        // var params = new URLSearchParams();
-        // params.append('user1', user1);
-        // params.append('user2', user2);
-        // return axios.get(`${API_URL}/chat`, params);
         return axios.get(`${API_URL}/chat/${user1}/${user2}`);
     }
 
-    // you have to pass in a chat object sent from backend
-    // eg: from a list of chats 
+    //load chat history between two user after a given message
     loadChatsAfter(lastChat) {
         var user1 = lastChat.sender;
         var user2 = lastChat.receiver;
-        var text = lastChat.text;
         var id = lastChat.id;
 
         return axios.get(`${API_URL}/chat/${user1}and${user2}afterID${id}`)
     }
 
+    //send message to user through backend
     addChat(sender, receiver, text) {
         return axios.post(`${API_URL}/chat`, {
-            sender, 
-            receiver, 
+            sender,
+            receiver,
             text
         });
     }
 
+    //delete all messages you sent to a user
     deleteChats(sender, receiver) {
         // alert('deleting');
         return axios.delete(`${API_URL}/chat/${sender}and${receiver}`);
@@ -41,11 +37,5 @@ class ChatService {
     userList(owner) {
         return axios.get(`${API_URL}/chat/${owner}`);
     }
-
-
-    testFunction(){
-    return axios.get(`${API_URL}/chat`);
-    }
-
 }
 export default new ChatService()

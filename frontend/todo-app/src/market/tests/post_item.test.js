@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Post_item from '../components/Post_item';
+import PostItem from '../components/PostItem';
 import postBackend from '../DataServices/PostDataService';
 import { cleanup, render, fireEvent } from '@testing-library/react'
 
@@ -8,33 +8,33 @@ afterEach(cleanup);
 
 it('renders without crashing', () => {
   const div = document.createElement('div');
-  ReactDOM.render(<Post_item />, div);
+  ReactDOM.render(<PostItem />, div);
   ReactDOM.unmountComponentAtNode(div);
 });
 
 it("submit calls submission function", () => {
-  const spy = jest.spyOn(Post_item.prototype, 'submitPost');
+  const spy = jest.spyOn(PostItem.prototype, 'submitPost');
   jest.spyOn(window, 'alert').mockImplementation(() => {});
   const historyMock = { push: jest.fn() };
-  const { getByTestId } = render(<Post_item onSubmit={spy} history={historyMock} />);
+  const { getByTestId } = render(<PostItem onSubmit={spy} history={historyMock} />);
   fireEvent.submit(getByTestId("form"));
-  expect(Post_item.prototype.submitPost).toHaveBeenCalled();
+  expect(PostItem.prototype.submitPost).toHaveBeenCalled();
 });
 
 it("submit calls validation function", () => {
-  const spy = jest.spyOn(Post_item.prototype, 'validate');
+  const spy = jest.spyOn(PostItem.prototype, 'validate');
   jest.spyOn(window, 'alert').mockImplementation(() => {});
   const historyMock = { push: jest.fn() };
-  const { getByTestId } = render(<Post_item onSubmit={spy} history={historyMock} />);
+  const { getByTestId } = render(<PostItem onSubmit={spy} history={historyMock} />);
   fireEvent.submit(getByTestId("form"));
-  expect(Post_item.prototype.submitPost).toHaveBeenCalled();
+  expect(PostItem.prototype.submitPost).toHaveBeenCalled();
 });
 
 it("submit rejects on no cost", () => {
   const spy = jest.spyOn(postBackend, 'postItemBackend');
   jest.spyOn(window, 'alert').mockImplementation(() => {});
   const historyMock = { push: jest.fn() };
-  const component = render(<Post_item onSubmit={spy} history={historyMock}/>);
+  const component = render(<PostItem onSubmit={spy} history={historyMock}/>);
   const { getByTestId } = component;
 
   const inputName = component.getByLabelText('Item Name:');
@@ -48,7 +48,7 @@ it("submit rejects on invalid cost", () => {
   const spy = jest.spyOn(postBackend, 'postItemBackend');
   jest.spyOn(window, 'alert').mockImplementation(() => {});
   const historyMock = { push: jest.fn() };
-  const component = render(<Post_item onSubmit={spy} history={historyMock}/>);
+  const component = render(<PostItem onSubmit={spy} history={historyMock}/>);
   const { getByTestId } = component;
 
   const inputCost = component.getByLabelText('Item Cost:');
@@ -65,7 +65,7 @@ it("submit rejects on invalid cost", () => {
   const spy = jest.spyOn(postBackend, 'postItemBackend');
   jest.spyOn(window, 'alert').mockImplementation(() => {});
   const historyMock = { push: jest.fn() };
-  const component = render(<Post_item onSubmit={spy} history={historyMock}/>);
+  const component = render(<PostItem onSubmit={spy} history={historyMock}/>);
   const { getByTestId } = component;
 
   const inputCost = component.getByLabelText('Item Cost:');
@@ -82,7 +82,7 @@ it("submit rejects on no name", () => {
   const spy = jest.spyOn(postBackend, 'postItemBackend');
   jest.spyOn(window, 'alert').mockImplementation(() => {});
   const historyMock = { push: jest.fn() };
-  const component = render(<Post_item onSubmit={spy} history={historyMock}/>);
+  const component = render(<PostItem onSubmit={spy} history={historyMock}/>);
   const { getByTestId } = component;
 
   const inputCost = component.getByLabelText('Item Cost:');
@@ -96,7 +96,7 @@ it("submit calls to backend function", () => {
   const spy = jest.spyOn(postBackend, 'postItemBackend');
   jest.spyOn(window, 'alert').mockImplementation(() => {});
   const historyMock = { push: jest.fn() };
-  const component = render(<Post_item onSubmit={spy} history={historyMock}/>);
+  const component = render(<PostItem onSubmit={spy} history={historyMock}/>);
   const { getByTestId } = component;
 
   const inputCost = component.getByLabelText('Item Cost:');

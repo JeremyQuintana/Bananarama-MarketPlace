@@ -9,27 +9,20 @@ class MarketDataService {
         return axios.get(`${API_URL}/posts`);
     }
 
+    //get posts by search criteria
     retrieveSearchByPostsSort(description, category, sort) {
 
         return axios.get(`${API_URL}/posts/searchBy/${description}/${category}/${sort}`);
 
     }
 
+    //get a post
     retrieveSpecificPost(postId){
         return axios.get(`${API_URL}/posts/${postId}`);
     }
 
-  //  updateDeletePost(id) {
-
- //       return axios.put(`${API_URL}/posts/${id}`, {
-  //          id
- //       })
- //   }
-//
-
-
+    //update existing current post
     updateExistingPost(id, description, title, price, category, photo, ownerId) {
-
         return axios.put(`${API_URL}/posts/${id}`, {
             description,
             title,
@@ -40,30 +33,20 @@ class MarketDataService {
         })
     }
 
+    //update status of a post
     updatePostStatus(id, status) {
         return axios.post(`${API_URL}/posts/${id}/${status}`)
     }
 
+    //delete a post
     deletePost(id) {
         return axios.delete(`${API_URL}/posts/${id}`)
     }
 
-    // java does not recognize different methods with same urls
+    //get all posts by a seller
     retrievePostsBySeller(userId, status){
         return axios.get(`${API_URL}/${userId}/posts/${status}`);
     }
 
-    // these show when you load the chats for each user
-    // in the chat page (chat service)
-    // retrieveChatsByUser(userId){
-    //     return axios.get(`${API_URL}/${userId}/chats`);
-    // }
-
-
-}
-export const googleauth = data => {
-    return async dispatch => {
-        console.log('NO MORE CORS?', data)
-    }
 }
 export default new MarketDataService()

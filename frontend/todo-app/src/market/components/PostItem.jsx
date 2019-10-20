@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 
 import PostDataService from '../DataServices/PostDataService.js'
-import '../css/Post_item.css'
+import '../css/PostItem.css'
 import MarketDataService from '../DataServices/MarketDataService.js';
 
 
-class Post_item extends Component {
+class PostItem extends Component {
   constructor(props) {
     super(props)
 
@@ -30,6 +30,7 @@ class Post_item extends Component {
   }
 
   render() {
+    //form structure for posts and determines whether it is in editing or posting mode
     return (
       <div className="post">
          <div className = "makepost"><h1>MAKE POST</h1></div>
@@ -70,6 +71,7 @@ class Post_item extends Component {
     );
   }
 
+  //handler to change the states when an input is changed
   handleChange(event) {
     this.setState(
       {
@@ -78,6 +80,7 @@ class Post_item extends Component {
     )
   }
 
+  //handles when an image is uploaded
   handleImageChange(event){
     let files=event.target.files;
     let reader = new FileReader();
@@ -92,7 +95,7 @@ class Post_item extends Component {
     }
   }
 
-
+  //handles what happens when the submission button is pressed
   submitPost(event) {
     event.preventDefault();
     if (this.validate() === true){
@@ -104,6 +107,7 @@ class Post_item extends Component {
     }
   }
 
+  //validates all inputs of the form
   validate(){
     var costRegex = /^\d*(\.\d{0,2})?$/;
     var costResult = ((costRegex.test(this.state.item_cost)) && (this.state.item_cost > 0));
@@ -124,6 +128,7 @@ class Post_item extends Component {
     return valid;
   }
 
+  //function to handle an editing of a post
   updateExistingPost(event) {
     console.log("SUCCESS");
     event.preventDefault();
@@ -137,6 +142,7 @@ class Post_item extends Component {
     );
   }
 
+  //if editing then update the states
   updateStateWithPost() {
     if (this.props.existingId != null) {
       MarketDataService.retrieveSpecificPost(this.props.existingId).then(
@@ -152,10 +158,9 @@ class Post_item extends Component {
           })
         }
       )
-
     }
   }
 
 }
 
-export default Post_item
+export default PostItem

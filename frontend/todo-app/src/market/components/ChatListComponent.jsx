@@ -29,42 +29,34 @@ class ChatListComponent extends Component {
     var retVal = [];
     // loop through the chats from backend
     for (var r = 1; r < this.state.chats.length; r++) {
-      // console.log(this.state.chats[r] + "MCMODE")
       let receiverId = this.state.chats[r]
-      // var senderId = this.state.chats[r].senderId;
-      // console.log(receiverId);
-      // console.log(senderId);
-      //var chatId = receiverId + '/' + senderId;
 
       // Append the row of chat information
       retVal.push(
         <div className="chatListItem container" onClick={() => this.routeChange(receiverId)}>
           <span className="postTitle">{receiverId}</span>
-          {/* <button className = "btn btn-outline-dark wideButton" onClick={() => this.routeChange(receiverId)}>View Chat</button> */}
-          {this.state.historyMode && <input className = "chatDeleteIcon" type="image" src={require("../images/delete.svg")} onClick={(event) => this.permDeleteChat(event, sessionStorage.getItem('authenticatedUser'), receiverId)}></input>}
+          {this.state.historyMode && <input className = "chatDeleteIcon" type="image" alt="delete" src={require("../images/delete.svg")} onClick={(event) => this.permDeleteChat(event, sessionStorage.getItem('authenticatedUser'), receiverId)}></input>}
           <br></br>
         </div>
-
       );
     }
-
-
-
     return retVal;
   }
 
-  // Method for when a user clicks on a post, route them to post page
+  //method for when a user clicks on a post, route them to post page
+  //redirects them to the relevant chat page
   routeChange(receiverId) {
-    // Something like this?
     this.props.history.push("/chat/" + receiverId);
   }
 
+  //function called when delete button is pressed on the chat
   permDeleteChat(event, senderId, receiverId) {
+    //required to stop the change to new page
     event.stopPropagation();
 
+    //delete all message sent by the user to the reciever
     ChatService.deleteChats(senderId, receiverId).then(
       (response) => {
-
         alert("Your messages to" + receiverId + " have been PERMANENTLY DELETED");
         window.location.reload();
       }

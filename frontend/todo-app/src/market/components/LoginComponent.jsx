@@ -24,66 +24,19 @@ class LoginComponent extends Component {
       loginError: loginErrorTemp
     };
 
-    this.handleChange = this.handleChange.bind(this);
-    this.loginClicked = this.loginClicked.bind(this);
-
     this.responseGoogle = this.responseGoogle.bind(this);
   }
 
-    async responseGoogle(res) {
-    var idToken = res.getAuthResponse().id_token;
-
-    AuthenticationService.executeGoogleJwtAuthenticationService(idToken)
-      .then(response => {
-        AuthenticationService.registerSuccessfulLoginForJwt(
-          res
-            .getBasicProfile()
-            .getEmail()
-            .substring(0, 8),
-          response.data.token
-        );
-        this.props.history.push(`/home/${sessionStorage.getItem("authenticatedUser")}`);
-      })
-      .catch(() => {
-        this.setState({ showSuccessMessage: false });
-        this.setState({ hasLoginFailed: true });
-      });
-  }
-
-  handleChange(event) {
-    this.setState({
-      [event.target.name]: event.target.value
-    });
-  }
-
-  loginClicked() {
-
-    AuthenticationService.executeJwtAuthenticationService(
-      this.state.username,
-      this.state.password
-    )
-      .then(response => {
-        AuthenticationService.registerSuccessfulLoginForJwt(
-          this.state.username,
-          response.data.token
-        );
-        this.props.history.push(`/home/${this.state.username}`);
-      })
-      .catch(() => {
-        this.setState({ showSuccessMessage: false });
-        this.setState({ hasLoginFailed: true });
-      });
-  }
-
+  //render all components
   render() {
     return (
       <div className="loginComponent">
         <div className="details">
-          <img className="institute" src={require("../images/RMIT.png")}/>
+          <img className="institute" src={require("../images/RMIT.png")} alt="RMIT"/>
           <h4>By: Bananarama</h4>
         </div>
         <div className="bananaLogo">
-          <img className="banana" src={require("../images/banana.png")}/>
+          <img className="banana" src={require("../images/banana.png")} alt="banana"/>
           <div className="title">
             <h1>Banana<br/>
             Place</h1>
@@ -110,5 +63,30 @@ class LoginComponent extends Component {
       </div>
     );
   }
+
+  //function that handles the response from google after google login
+  async responseGoogle(res) {
+    var idToken = res.getAuthResponse().id_token;
+
+    //authenticates email backend
+    AuthenticationService.executeGoogleJwtAuthenticationService(idToken)
+      .then(response => {
+        //if authenticated backend then set the succesfull lgoin
+        AuthenticationService.registerSuccessfulLoginForJwt(
+          res
+            .getBasicProfile()
+            .getEmail()
+            .substring(0, 8),
+          response.data.token
+        );
+        this.props.history.push(`/home/${sessionStorage.getItem("authenticatedUser")}`);
+      })
+      .catch(() => {
+        //else show an error message
+        this.setState({ showSuccessMessage: false });
+        this.setState({ hasLoginFailed: true });
+      });
+  }
+
 }
 export default LoginComponent;

@@ -28,16 +28,12 @@ class ItemsComponent extends Component {
           // loop through the postings from backend
           for (var r = 0; r < this.state.backPostings.length; r++) {
               let postId = this.state.backPostings[r].id;
-              var receivedDescription = this.state.backPostings[r].description
-              if(receivedDescription != null){
-                var trimmedDescription = receivedDescription.length > 100 ? receivedDescription.substring(0,97) + "..." : receivedDescription;
-              }
               // Append the row of post information
+              //image is stored on the cloud publicly readable and sorted by id
               retVal.push(
                   <div className="posting container" onClick={() => this.routeChange(postId)}>
-                      <span className="postTitle"><img className="marketImage" src={`https://storage.googleapis.com/sept-image-store/${this.state.backPostings[r].id}`}></img>{this.state.backPostings[r].title}</span> <br></br>
+                      <span className="postTitle"><img className="marketImage" alt="" src={`https://storage.googleapis.com/sept-image-store/${this.state.backPostings[r].id}`}></img>{this.state.backPostings[r].title}</span> <br></br>
                       <span className="postCategory">{this.state.backPostings[r].category}</span> <br></br>
-                      {/* <span className="postDescription">{trimmedDescription}</span> <br></br> */}
                       <span className="postSeller">{this.state.backPostings[r].ownerId}</span>
                       <span className="postPrice">${this.state.backPostings[r].price}</span> <br></br>
 
