@@ -31,7 +31,7 @@ public class ImageController {
 		}	
 	}
 	
-	public void uploadImage(String image, String id) {
+	public void uploadImage(String image, String id){
 		//performs size checks and uploads if its approved
 		if (image.equals("") || image == null)
 			throw new NullPointerException("No image sent in");
