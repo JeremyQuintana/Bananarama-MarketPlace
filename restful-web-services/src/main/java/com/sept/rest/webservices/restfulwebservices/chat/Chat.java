@@ -13,6 +13,10 @@ import com.sept.rest.webservices.restfulwebservices.post.Post;
 @Table
 public class Chat
 {
+	
+	// instead of having a double table for storing the overhead of a chat
+	// every chat has the sender and receiver
+	// simple to access
 	private String text;
 	private String sender;
 	private String receiver;
