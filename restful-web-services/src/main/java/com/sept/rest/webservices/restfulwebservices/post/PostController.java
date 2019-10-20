@@ -45,7 +45,7 @@ public class PostController {
 	@Autowired
 	private PostService service;
 	
-
+	private ImageController imageController = new ImageController();
 
 	// posts that are for sale
 	@GetMapping("/posts")
@@ -66,28 +66,38 @@ public class PostController {
 
 
 	// adds a post to marketplace
+	// security check: if you are NOT the owner, will make the post in your name
 	@PostMapping("/postitem")
 	public Post addPost(@RequestBody Post post, HttpServletRequest request)
 	{
+		// we cannot affort to 
+		String photo = post.getPhoto();
+		post.setPhoto(null);
 		post.setOwner(checker.getOwnerId(request));
-		return service.update(post);
+		post = service.update(post);
+		if (!photo.equals(""))imageController.uploadImage(photo, post.getId() + "");
+		return post;
 	}
-
-	// when need to open a post in marketplace
+	
 	@PutMapping("/posts/{id}")
 	public Post updatePost(@PathVariable Long id, @RequestBody Post edit, HttpServletRequest request)
 	{
-		return checker.isEqual(edit.getOwnerId(), request) ? service.update(edit) : null;
+		String photo = edit.getPhoto();
+		edit.setPhoto(null);
+		edit.setId(id);
+		if (checker.getOwnerId(request).equals(edit.getOwnerId())) edit = service.update(edit);
+		if (!photo.equals("")) imageController.uploadImage(photo, edit.getId() + "");
+		return edit;
 	}
+
 
 	
 	@DeleteMapping("/posts/{id}")
 	public void deletePost(@PathVariable Long id, HttpServletRequest request)
 	{	
 		Post toDelete = service.get(id);
-		if (checker.isEqual(toDelete.getOwnerId(), request)) {
+		if (checker.isEqual(toDelete.getOwnerId(), request)) 
 			service.delete(service.get(id));
-		}
 	}
 	
 	@GetMapping("/posts/{id}")
@@ -101,7 +111,7 @@ public class PostController {
 	{	
 		Post post = service.get(id);
 		post.setStatus(status);
-		return updatePost(id, post, request);
+		return checker.isEqual(post.getOwnerId(), request) ? service.update(post) : null;
 	}
 	
 	
@@ -115,24 +125,8 @@ public class PostController {
 	
 	
 	
-//	reused /posts/{id}/{status} (already done for sold, available)
-//	@PostMapping("/postsdelete")
-//	public void deletePosts(@RequestBody Post post, HttpServletRequest request)
-//	{	
-//		if (correctOwner(post.getId(), request))
-//			post.setStatus(Status.DELETED);
-//	}
-//	
-// 	
-//	@PostMapping("/postspermdelete")
-//	public void DeletePosts(@RequestBody Post post, HttpServletRequest request)
-//	{	
-//		if (correctOwner(post.getId(), request))
-//			service.delete(service.get(post.getId()));
-//	}
 	
-
-
+	
 	
 	//logic for account history incase u need to sort them into groups like all marked as sold, all marked as deleted etc
 	// directly putting status, as you need to mention this in the url anyway
@@ -143,38 +137,6 @@ public class PostController {
 		return service.getOwnerPosts(ownerId, status);
 	}
 			
-		
-	
-
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-//	private String getOwnerId(HttpServletRequest request)
-//	{
-//		return jwtTokenUtil.getUsernameFromToken(request.getHeader("Authorization").substring(7));
-//	}
-//	
-//	private boolean correctOwner(Long id, HttpServletRequest request)
-//	{
-//		Post realPost = service.get(id);
-//		String loggedOwner =getOwnerId(request);
-//		
-//		if (!realPost.getOwnerId().equals(loggedOwner))
-//			throw new NullPointerException("Error Update: Edit User ID " + loggedOwner + " does not match Item Owner ID " + realPost.getOwnerId());
-//		return true;
-//	}
-
-
 
 
 }
