@@ -33,8 +33,12 @@ class PostServiceTest {
 
 	@BeforeEach
 	void setUp() {
+		
+		// try various prices to test robustness of the comparator
 		post1 = new Post(new Long(2), "s1234567", "Appleberry's", "Delicious", "2.222", "Fruit");
 		post2 = new Post(new Long(5), "s1234567", "doodoo boo", "Cleans the backend leaving no traces", "9999", "Baby Wipes");
+		
+		// we do this because repository searches for a keyword in the description
 		post3 = new Post(new Long(6), "s3717497", "Pill", "Pickpocketed off Morpheus", "2", "Medecine");
 		post4 = new Post(new Long(7), "s3717497", "Pill", "Pickpocketed off Morpheus", "3", "Food");
 		post5 = new Post(new Long(8), "s3717497", "Pill", "Pickpocketed off Mateo", "4", "Food");
@@ -68,6 +72,7 @@ class PostServiceTest {
 		assertEquals(expected, service.getAllUserPosts("s1234567"));
 	}
 
+	// try sorting by price in ascending and descending order
 	@Test
 	void testSortPrice() {
 
@@ -87,23 +92,6 @@ class PostServiceTest {
 		sortedDesc.add(post1);
 		sortedDesc.add(post3);
 		
-//		System.out.println("Expected: ");
-//		for (Post post : sortedAsc)
-//			System.out.println(post);
-//		
-//		System.out.println("\n\n\n\nExpected: ");
-//		for (Post post : sortedDesc)
-//			System.out.println(post);
-		
-		
-		
-		System.out.println("\nActual: ");
-		for (Post post : service.sortAll("High"))
-			System.out.println(post);
-		System.out.println("\nActual: ");
-		for (Post post : service.sortAll("Low"))
-			System.out.println(post);
-		
 		Mockito.when(db.findAll()).thenReturn(posts);
 		assertEquals(sortedAsc, service.sortAll("Low"));
 		assertEquals(sortedDesc, service.sortAll("High"));
@@ -111,11 +99,13 @@ class PostServiceTest {
 	}
 	
 
+	// try filtering witht various parameters 
 	@Test
 	void testFilter() {
 		List<Post> matchDesc = new ArrayList<>();
 		List<Post> matchDescAndCate = new ArrayList<>();
 		
+		// only get posts that match the description and/or category, to compare
 		for (Post post : posts)
 			for (String word :post.getDescription().split(" "))
 				if (word.equals("Pickpocketed"))
@@ -131,6 +121,8 @@ class PostServiceTest {
 		assertEquals(matchDescAndCate, service.filterByDescriptionAndCategory("Pickpocketed", "Medecine", posts));
 	}
 	
+	// cannot try sorting with a wrong input condition
+	// to be safe this will simply output all posts unchanged
 	@Test
 	void testSortWithWrongCondition() {
 		
@@ -141,6 +133,8 @@ class PostServiceTest {
 		assertEquals(posts, service.sortAll("Homeopathy"));
 	}
 	
+	
+	// keywords for undefined only work
 	@Test
 	void testFilterEmptyConditions() {
 		Mockito.when(db.findAll()).thenReturn(posts);
