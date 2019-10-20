@@ -20,7 +20,7 @@ describe('<MarketPlace />', () => {
   it('renders basic structure', () => {
     const market = shallow(<MarketPlace />);
     expect(market.find('div').length).toEqual(1);
-    expect(market.find('MarketPlaceApp').length).toEqual(1);
+    expect(marketMarketPlaceApp').length).toEqual(1);
     expect(market.find('div').hasClass('MarketPlace')).toBeTruthy();
   });
 });
