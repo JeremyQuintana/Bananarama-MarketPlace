@@ -16,6 +16,7 @@ public interface ChatRepository  extends JpaRepository<Chat, Long>
 	public void deleteBySenderAndReceiver(String sender, String receiver);
 	public List<Chat> findByIdGreaterThan(Long id);
 	
+	// regardless of order, get the chat if the 2 users match
 	@Transactional
 	@Modifying
 	@Query(value = "select p from Chat p where p.sender = :user1 and p.receiver = :user2 or  p.sender = :user2 and p.receiver = :user1")

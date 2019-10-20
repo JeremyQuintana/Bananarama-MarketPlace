@@ -105,13 +105,6 @@ class PostControllerTest {
 		posts.add(post2);
 		
 		Mockito.when(service.getAllAvailable()).thenReturn(posts);
-		
-		/*this isn't working as @...(secure = false) HAS BEEN DEPRECATED*/
-//		mvc.perform(get("/posts")
-//			      .accept(MediaType.APPLICATION_JSON))
-//			      .andExpect(status().isOk())
-//			      .andExpect(jsonPath("$.employees").exists())
-//			      .andExpect(jsonPath("$.employees[*].employeeId").isNotEmpty());
 		assertEquals(controller.getAllAvailablePosts(), posts);
 	}
 
@@ -169,36 +162,4 @@ class PostControllerTest {
 		mockAuthentication.addHeader("Authorization", "Bearer: " + jwtTokenUtil.generateToken(ownerId));
 	}
 	
-//	@Test
-//	public void testGetTicketByEmail() throws Exception {
-//		Ticket mockTicket = new Ticket();
-//		mockTicket.setTicketId(1);
-//		mockTicket.setPassengerName("Martin Bingel");
-//		mockTicket.setSourceStation("Kolkata");
-//		mockTicket.setDestStation("Delhi");
-//		mockTicket.setBookingDate(new Date());
-//		mockTicket.setEmail("martin.s2017@gmail.com");
-//		
-//		String expectedJson = this.mapToJson(mockTicket);
-//		
-//		Mockito.when(ticketBookingService.getTicketByEmail(Mockito.anyString())).thenReturn(mockTicket);
-//		
-//		String URI = "/api/tickets/email/martin.s2017@gmail.com";
-//		RequestBuilder requestBuilder = MockMvcRequestBuilders.get(
-//				URI).accept(
-//				MediaType.APPLICATION_JSON);
-//
-//		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
-//		String outputInJson = result.getResponse().getContentAsString();
-//		assertThat(outputInJson).isEqualTo(expectedJson);
-//	
-//	}
-//
-//	/**
-//	 * Maps an Object into a JSON String. Uses a Jackson ObjectMapper.
-//	 */
-//	private String mapToJson(Object object) throws JsonProcessingException {
-//		ObjectMapper objectMapper = new ObjectMapper();
-//		return objectMapper.writeValueAsString(object);
-//	}
 }
