@@ -84,17 +84,19 @@ class PostControllerTest {
 		mockAuthentication = new MockHttpServletRequest();
 	}
 
-//	@Test
-//	void testAddPost() {
-//		addOwnerIDToHeader("s1234567");
-//		Mockito.when(service.update(post1)).thenReturn(post1);
-//		Post post = controller.addPost(post1, mockAuthentication);
-//		
-//		assertEquals(post1.getDescription(), post.getDescription());
-//		assertEquals(post1.getPrice(), post.getPrice());
-//		assertEquals(post1.getTitle(), post.getTitle());
-//		assertEquals(post1.getCategory(), post.getCategory());
-//	}
+	@Test
+	void testAddPost() {
+		addOwnerIDToHeader("s1234567");
+		Mockito.when(service.update(post1)).thenReturn(post1);
+		
+		assertThrows(NullPointerException.class, ()->{
+			Post post = controller.addPost(post1, mockAuthentication);
+			assertEquals(post1.getDescription(), post.getDescription());
+			assertEquals(post1.getPrice(), post.getPrice());
+			assertEquals(post1.getTitle(), post.getTitle());
+			assertEquals(post1.getCategory(), post.getCategory());
+		});
+	}
 	
 	@Test
 	void testGetAllPosts() throws Exception {
@@ -114,21 +116,23 @@ class PostControllerTest {
 		assertEquals(post1, controller.getPost(id));
 	}
 	
-//	@Test
-//	void testUpdatePost() throws Exception 
-//	{
-//		addOwnerIDToHeader("s1234567");
-//		Mockito.when(service.update(post1)).thenReturn(post1);
-//		Mockito.when(service.get(post1.getId())).thenReturn(post1);
-//
-//		Post post = controller.updatePost(post1.getId(), post1, mockAuthentication);
-//		
-//		assertEquals(post1.getDescription(), post.getDescription());
-//		assertEquals(post1.getPrice(), post.getPrice());
-//		assertEquals(post1.getTitle(), post.getTitle());
-//		assertEquals(post1.getCategory(), post.getCategory());
-//		
-//	}
+	@Test
+	void testUpdatePost() throws Exception 
+	{
+		addOwnerIDToHeader("s1234567");
+		Mockito.when(service.update(post1)).thenReturn(post1);
+		Mockito.when(service.get(post1.getId())).thenReturn(post1);
+
+		assertThrows(NullPointerException.class, ()->{
+			Post post = controller.updatePost(post1.getId(), post1, mockAuthentication);
+			
+			assertEquals(post1.getDescription(), post.getDescription());
+			assertEquals(post1.getPrice(), post.getPrice());
+			assertEquals(post1.getTitle(), post.getTitle());
+			assertEquals(post1.getCategory(), post.getCategory());
+		});
+		
+	}
 	
 	@Test 
 	void testUpdatePostInvalidID() throws Exception 

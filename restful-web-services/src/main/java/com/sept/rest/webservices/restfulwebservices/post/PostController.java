@@ -75,7 +75,7 @@ public class PostController {
 		post.setPhoto(null);
 		post.setOwner(checker.getOwnerId(request));
 		post = service.update(post);
-		if (!photo.equals(""))imageController.uploadImage(photo, post.getId() + "");
+		imageController.uploadImage(photo, post.getId() + "");
 		return post;
 	}
 	
@@ -86,8 +86,12 @@ public class PostController {
 		String photo = edit.getPhoto();
 		edit.setPhoto(null);
 		edit.setId(id);
-		if (checker.getOwnerId(request).equals(edit.getOwnerId())) edit = service.update(edit);
-		if (!photo.equals("")) imageController.uploadImage(photo, edit.getId() + "");
+		if (checker.getOwnerId(request).equals(edit.getOwnerId())) {
+			edit = service.update(edit);
+			imageController.uploadImage(photo, edit.getId() + "");
+		} else {
+			throw new NullPointerException("Incorrect ID");
+		}
 		return edit;
 	}
 

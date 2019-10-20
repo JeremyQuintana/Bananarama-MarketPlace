@@ -32,8 +32,7 @@ public class ImageController {
 			System.out.println("ERROR - Can not find credentials file");
 		} catch (IOException e) {}
 	}
-	
-	//performs size checks and uploads if its approved
+
 	public void uploadImage(String image, String id) 
 	{	
 		if (image.equals("") || image == null)
