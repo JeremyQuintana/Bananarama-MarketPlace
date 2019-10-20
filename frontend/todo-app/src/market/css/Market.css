@@ -1,0 +1,33 @@
+.market .Search_item{
+  margin-top: 20px;
+  margin-bottom: 20px;
+  height: 30px;
+}
+
+.market form{
+  text-align: center;
+}
+
+.market .refineItem{
+  height: 30px;
+  margin-left: 5px;
+  margin-right: 5px;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.market .marketTitle{
+  text-align: center;
+  line-height: 100px;
+  font-size: 80px;
+  margin-top:20px;
+  margin-bottom:10px;
+}
+
+.market #description{
+  width: 500px;
+}
+
+.market .posting{
+  margin-bottom: 10px;
+}

@@ -4,12 +4,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
-import MarketPlace from './MarketPlace';
-import Post_item from './project_frontend/pages/Post_item.jsx'
+import MarketPlace from './market/components/MarketPlace';
 import * as serviceWorker from './serviceWorker';
-//import GoogleLogin from 'react-google-login';
-//import config from './config.json';
 
 
 //ReactDOM.render(<App />, document.getElementById('root'));
