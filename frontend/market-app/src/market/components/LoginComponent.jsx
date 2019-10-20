@@ -44,7 +44,7 @@ class LoginComponent extends Component {
         </div>
         {this.state.hasLoginFailed && (
           <div className="alert alert-warning">
-            Invalid Credentials or something is wrong
+            You must sign in with RMIT Google credentials.
           </div>
         )}
         {this.state.loginError && (
