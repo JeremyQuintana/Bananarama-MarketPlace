@@ -37,18 +37,4 @@ describe('<MarketComponent />', () => {
     });
 });
 
-// describe('<MarketComponent />', () => {
-//     it('search states show filtered posts', () => {
-//       const spy = jest.spyOn(MarketComponent.WrappedComponent.prototype, 'getAllPosts');
-//       jest.spyOn(window, 'alert').mockImplementation(() => {});
-//       const matchMock = {
-//           params: {
-//             searchDescription: "anyDescription",
-//             searchCategory: "anyCategory",
-//             searchSort: "anySort"
-//           }
-//       }
-//       const { getByTestId } = render(<Router><MarketComponent match={matchMock}/></Router>);
-//       expect(MarketComponent.WrappedComponent.prototype.getAllPosts).toHaveBeenCalled();
-//     });
-// });
+
