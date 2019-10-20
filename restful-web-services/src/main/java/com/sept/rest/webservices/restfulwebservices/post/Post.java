@@ -21,9 +21,6 @@ import javax.persistence.Column;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sept.rest.webservices.restfulwebservices.jwt.JwtTokenUtil;
 
-//import com.sept.rest.webservices.restfulwebservices.todo.Post.Column;
-
-import javadb.DatabaseRef;
 
 @Entity
 public class Post implements Comparable<Post> {
@@ -133,45 +130,6 @@ public class Post implements Comparable<Post> {
 	
 	
 	
-
-	//edit post column in marketplace
-	public void edit(Column column, String edit) throws SQLException {
-		update(column, edit);
-		update(column, edit, "" + id);
-
-	}
-
-	//Delete item from Marketplace
-	public void delete() throws SQLException {
-		update(Column.STATUS, "D");
-		update(Column.STATUS, "D", "" + id);
-	}
-
-	//Marked Item as sold on Marketplace
-	public void sold() throws SQLException {
-		update(Column.STATUS, "S");
-		update(Column.STATUS, "S", "" + id);
-	}
-	
-	// update THIS CLASS
-	private void update(Column column, String edit)
-	{
-		switch (column)
-		{
-			case NAME : 	title = edit;					break;
-			case DESC : 	description = edit;				break;
-			case STATUS :	status = Status.getStatus(edit);break;
-			case CATEGORY : category = edit;				break;
-			case PRICE : price = edit;						break;
-			default: throw new NullPointerException("cannot change this");
-		}
-	}
-	
-	// update DATABASE
-	public static void update(Column column, String value, String id) throws SQLException
-	{
-		DatabaseRef.update("Update "+ TABLE_NAME +" set " + column.key() + "='"+ value +"' where PostID='"+id+"'");
-	}
 	
 	
 	
@@ -181,15 +139,6 @@ public class Post implements Comparable<Post> {
 	
 	
 	
-	
-	
-	
-	
-	// any way to manipulate a post
-	public enum Action
-	{
-		SELL, SOLD, DELETE, EDIT
-	}
 	
 	public enum Status
 	{

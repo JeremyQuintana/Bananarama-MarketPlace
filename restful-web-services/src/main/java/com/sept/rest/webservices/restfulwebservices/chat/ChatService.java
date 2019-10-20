@@ -26,12 +26,7 @@ public class ChatService {
 	
 	public List<Chat> allChats(String user1, String user2) 
 	{
-		//List<Chat> allChats = db.findBySenderAndReceiver(user1, user2);
-		//allChats.addAll(db.findBySenderAndReceiver(user2, user1));
 		List<Chat> allChats = db.findall(user1, user2);
-		for (int i = 0; i < allChats.size(); i++) {
-			System.out.println(allChats.get(i));
-		}
 		return allChats;
 	}
 	

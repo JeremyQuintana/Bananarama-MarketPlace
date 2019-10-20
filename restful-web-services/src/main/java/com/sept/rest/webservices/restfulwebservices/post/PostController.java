@@ -26,7 +26,6 @@ import org.springframework.web.bind.annotation.*;
 
 import com.sept.rest.webservices.restfulwebservices.jwt.JwtTokenUtil;
 import com.sept.rest.webservices.restfulwebservices.post.Post.Status;
-import com.sept.rest.webservices.restfulwebservices.user.UserService;
 
 
 
@@ -36,8 +35,6 @@ import com.sept.rest.webservices.restfulwebservices.user.UserService;
 @RestController
 public class PostController {
 
-	@Autowired
-    private JwtTokenUtil jwtTokenUtil;
 	
 	@Autowired
     private UserService checker;
