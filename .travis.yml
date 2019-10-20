@@ -48,7 +48,7 @@ before_install:
 
 # [END auth]
 #before_install:
-- cd frontend/todo-app
+- cd frontend/market-app
 - npm ci
 - cd ../../restful-web-services
 #- mvn compile THIS
@@ -58,7 +58,7 @@ install:
 # Install the dependencies
 script:
 # Run the unit tests
-- cd ../frontend/todo-app 
+- cd ../frontend/market-app
 - npm test 
 - cd ../../restful-web-services 
 #- mvn test 
@@ -68,7 +68,7 @@ script:
 #- bash docker_login
 - docker build -t gcr.io/sept-248413/market-app:$TRAVIS_BUILD_ID .
 - docker push gcr.io/sept-248413/market-app:$TRAVIS_BUILD_ID
-- cd ../frontend/todo-app
+- cd ../frontend/market-app
 - docker build -t gcr.io/sept-248413/market-front:$TRAVIS_BUILD_ID .
 - docker push gcr.io/sept-248413/market-front:$TRAVIS_BUILD_ID
 #- gcloud -q app deploy app.yaml --promote

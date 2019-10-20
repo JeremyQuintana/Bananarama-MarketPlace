@@ -130,7 +130,6 @@ class PostItem extends Component {
 
   //function to handle an editing of a post
   updateExistingPost(event) {
-    console.log("SUCCESS");
     event.preventDefault();
     MarketDataService.updateExistingPost(this.props.existingId, this.state.item_description, this.state.item_name, this.state.item_cost, this.state.item_catagory, this.state.item_photo, this.state.item_ownerId).then(
       response => {
@@ -147,7 +146,6 @@ class PostItem extends Component {
     if (this.props.existingId != null) {
       MarketDataService.retrieveSpecificPost(this.props.existingId).then(
         response => {
-          console.log(response)
           this.setState({
             item_description: response.data.description,
             item_name: response.data.title,
