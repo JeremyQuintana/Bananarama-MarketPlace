@@ -3,8 +3,10 @@ package com.sept.rest.webservices.restfulwebservices.chat;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -20,17 +22,54 @@ public class ChatService {
 	@Autowired
 	private ChatRepository db;
 
+
 	
-	
-	public List<Chat> allChats(String user1, String user2) throws SQLException
+	public List<Chat> allChats(String user1, String user2) 
 	{
-		List<Chat> allChats = db.findBySenderAndReceiver(user1, user2);
-		allChats.addAll(db.findBySenderAndReceiver(user2, user1));
+		//List<Chat> allChats = db.findBySenderAndReceiver(user1, user2);
+		//allChats.addAll(db.findBySenderAndReceiver(user2, user1));
+		List<Chat> allChats = db.findall(user1, user2);
+		for (int i = 0; i < allChats.size(); i++) {
+			System.out.println(allChats.get(i));
+		}
 		return allChats;
 	}
 	
-	public void addChat(Chat chat)
+	public List<Chat> allChatsAfterId(Long lastID, String user1, String user2) 
+	{
+		List<Chat> chats = allChats(user1, user2);
+		chats.retainAll(getChatsAfter(lastID));
+		return chats;
+	}
+	
+	public void deleteAllChats(String sender, String receiver)
+	{
+		db.deleteBySenderAndReceiver(sender, receiver);
+	}
+	
+	public void add(Chat chat)
 	{
 		db.save(chat);
 	}
+	
+	public List<Chat> getChatsAfter(Long id)
+	{
+		return db.findByIdGreaterThan(id);
+	}
+	
+
+	public List<String> allUsersInteractedWith(String owner)
+	{
+		Set<String> users = new HashSet<>();
+		for (Chat chat : db.findBySenderOrReceiver(owner, owner))
+		{
+			// if the receiver is the owner, the sender is someone else (the user)
+			// and vice versa
+			String receiver = chat.getReceiver();
+			String sender = chat.getSender();
+			users.add(sender.equals(owner) ? receiver : sender);
+		}
+		return new ArrayList<String>(users);
+	}
+	
 }

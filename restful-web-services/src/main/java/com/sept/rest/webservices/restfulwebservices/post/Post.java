@@ -14,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.Column;
 
@@ -59,6 +60,20 @@ public class Post implements Comparable<Post> {
 	{
 		this(id, owner, title, description, price, category);
 		this.datePosted = date;
+	}
+	
+	@JsonIgnore
+	public Post(Long id)
+	{
+		
+		this.id = id;
+	}
+	
+	@JsonIgnore
+	public Post(Long id, String owner, String title, String description, String price, String category, String photo)
+	{
+		this(id, owner, title, description, price, category);
+		this.id = id;
 	}
 	
 	@JsonIgnore
@@ -211,7 +226,7 @@ public class Post implements Comparable<Post> {
 	
 	public String toString()
 	{
-		return id + " " + ownerId + " " + title + " " + description + " " + price + " " + status + " " + datePosted + " " + category + photo;
+		return id + " " + ownerId + " " + title + " " + description + " " + price + " " + status + " " + datePosted + " " + category;
 	}
 	
 	@Override
@@ -243,16 +258,18 @@ public class Post implements Comparable<Post> {
 		return true;
 	}
 
-	public Long getId()			{return id;}
-	public void setId(Long id)	{this.id = id;}
-	public Status getStatus()		{return status;}
-	public String getOwnerId()	{return ownerId;}
+	public Long getId()						{return id;}
+	public void setId(Long id)				{this.id = id;}
+	public Status getStatus()				{return status;}
+	public void setStatus(Status status) 	{this.status = status;}
+	public String getOwnerId()				{return ownerId;}
 
-	public String getTitle() {return title;}
-	public String getDescription() {return description;}
-	public String getCategory() {return category;}
-	public String getPrice() {return price;}
-	public String getPhoto() {return photo;}
+	public String getTitle() 				{return title;}
+	public String getDescription() 			{return description;}
+	public String getCategory() 			{return category;}
+	public String getPrice() 				{return price;}
+	public String getPhoto() 				{return photo;}
+	public void setPhoto(String photo)	{this.photo = photo;}
 	
 }
 

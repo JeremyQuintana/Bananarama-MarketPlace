@@ -23,7 +23,13 @@ import org.springframework.stereotype.Repository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
 import com.sept.rest.webservices.restfulwebservices.jwt.JwtTokenUtil;
+import com.sept.rest.webservices.restfulwebservices.post.Post.Status;
+import com.sept.rest.webservices.restfulwebservices.user.UserService;
+
+
+
 
 
 @CrossOrigin(origins="${spring.crossorigin.url}")
@@ -32,60 +38,80 @@ public class PostController {
 
 	@Autowired
     private JwtTokenUtil jwtTokenUtil;
+	
+	@Autowired
+    private UserService checker;
 
 	@Autowired
 	private PostService service;
+	
+	private ImageController imageController = new ImageController();
 
-
-
+	// posts that are for sale
 	@GetMapping("/posts")
-	public List<Post> getAllPosts()
+	public List<Post> getAllAvailablePosts()
 	{
-		return service.getAll();
+		return service.getAllAvailable();
 	}
 	
 	
 	@GetMapping("/posts/searchBy/{description}/{category}/{sort}")
 	public List<Post> Sort(@PathVariable String description, @PathVariable String category, @PathVariable String sort) {
 			
+		// sort all available posts
 		List<Post> sorted = service.sortAll(sort);
+		sorted.retainAll(service.getAllAvailable());
 		return service.filterByDescriptionAndCategory(description, category, sorted);
 	}
 
 
 	// adds a post to marketplace
+	// security check: if you are NOT the owner, will make the post in your name
 	@PostMapping("/postitem")
 	public Post addPost(@RequestBody Post post, HttpServletRequest request)
 	{
-		post.setOwner(getOwnerId(request));
-		return service.update(post);
+		// we cannot affort to 
+		String photo = post.getPhoto();
+		post.setPhoto(null);
+		post.setOwner(checker.getOwnerId(request));
+		post = service.update(post);
+		if (!photo.equals(""))imageController.uploadImage(photo, post.getId() + "");
+		return post;
 	}
-
-	// when need to open a post in marketplace
+	
 	@PutMapping("/posts/{id}")
 	public Post updatePost(@PathVariable Long id, @RequestBody Post edit, HttpServletRequest request)
 	{
-		if (!correctOwner(id, request)) {
-			return null;
-		}
-		edit.setOwner(getOwnerId(request));
+		String photo = edit.getPhoto();
+		edit.setPhoto(null);
 		edit.setId(id);
-		return service.update(edit);
+		if (checker.getOwnerId(request).equals(edit.getOwnerId())) edit = service.update(edit);
+		if (!photo.equals("")) imageController.uploadImage(photo, edit.getId() + "");
+		return edit;
 	}
 
 
+	
 	@DeleteMapping("/posts/{id}")
-	public void deletePost(@PathVariable Long id,  HttpServletRequest request) 
-	{
-		if (correctOwner(id, request))
-			service.delete(id);
+	public void deletePost(@PathVariable Long id, HttpServletRequest request)
+	{	
+		Post toDelete = service.get(id);
+		if (checker.isEqual(toDelete.getOwnerId(), request)) 
+			service.delete(service.get(id));
 	}
 	
 	@GetMapping("/posts/{id}")
 	public Post getPost(@PathVariable Long id)
 	{
 		return service.get(id);
-
+	}
+	
+	@PostMapping("/posts/{id}/{status}")
+	public Post updatePostStatus(@PathVariable Long id, @PathVariable Status status, HttpServletRequest request)
+	{	
+		Post post = service.get(id);
+		post.setStatus(status);
+		return checker.isEqual(post.getOwnerId(), request) ? service.update(post) : null;
 	}
 	
 	
@@ -98,22 +124,19 @@ public class PostController {
 	
 	
 	
-	private String getOwnerId(HttpServletRequest request)
+	
+	
+	
+	
+	//logic for account history incase u need to sort them into groups like all marked as sold, all marked as deleted etc
+	// directly putting status, as you need to mention this in the url anyway
+	
+	@GetMapping("/{ownerId}/posts/{status}")
+	public List<Post> getCurrentPosts(@PathVariable String ownerId, @PathVariable Status status) 
 	{
-		return jwtTokenUtil.getUsernameFromToken(request.getHeader("Authorization").substring(7));
+		return service.getOwnerPosts(ownerId, status);
 	}
-	
-	private boolean correctOwner(Long id, HttpServletRequest request)
-	{
-		Post realPost = service.get(id);
-		String loggedOwner =getOwnerId(request);
-		
-		if (!realPost.getOwnerId().equals(loggedOwner))
-			throw new NullPointerException("Error Update: Edit User ID " + loggedOwner + " does not match Item Owner ID " + realPost.getOwnerId());
-		return true;
-	}
-
-
+			
 
 
 }

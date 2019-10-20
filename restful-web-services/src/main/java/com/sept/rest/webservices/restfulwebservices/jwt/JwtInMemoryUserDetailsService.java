@@ -9,7 +9,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-//dont need this class
 @Service
 public class JwtInMemoryUserDetailsService implements UserDetailsService {
 

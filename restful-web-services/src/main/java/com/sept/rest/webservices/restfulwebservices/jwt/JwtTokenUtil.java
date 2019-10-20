@@ -34,15 +34,7 @@ public class JwtTokenUtil implements Serializable {
 	  String thing = getClaimFromToken(token, Claims::getSubject);
     return thing;
   }
-
-  public Date getIssuedAtDateFromToken(String token) {
-    return getClaimFromToken(token, Claims::getIssuedAt);
-  }
-
-  public Date getExpirationDateFromToken(String token) {
-    return getClaimFromToken(token, Claims::getExpiration);
-  }
-
+  
   public <T> T getClaimFromToken(String token, Function<Claims, T> claimsResolver) {
     final Claims claims = getAllClaimsFromToken(token);
     return claimsResolver.apply(claims);
@@ -50,16 +42,6 @@ public class JwtTokenUtil implements Serializable {
 
   private Claims getAllClaimsFromToken(String token) {
     return Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody();
-  }
-
-  private Boolean isTokenExpired(String token) {
-    final Date expiration = getExpirationDateFromToken(token);
-    return expiration.before(clock.now());
-  }
-
-  private Boolean ignoreTokenExpiration(String token) {
-    // here you specify tokens, for that the expiration is ignored
-    return false;
   }
 
   public String generateToken(String userDetails) {
@@ -73,29 +55,6 @@ public class JwtTokenUtil implements Serializable {
 
     return Jwts.builder().setClaims(claims).setSubject(subject).setIssuedAt(createdDate)
         .setExpiration(expirationDate).signWith(SignatureAlgorithm.HS512, secret).compact();
-  }
-
-  public Boolean canTokenBeRefreshed(String token) {
-    return (!isTokenExpired(token) || ignoreTokenExpiration(token));
-  }
-
-  public String refreshToken(String token) {
-    final Date createdDate = clock.now();
-    final Date expirationDate = calculateExpirationDate(createdDate);
-
-    final Claims claims = getAllClaimsFromToken(token);
-    claims.setIssuedAt(createdDate);
-    claims.setExpiration(expirationDate);
-
-    return Jwts.builder().setClaims(claims).signWith(SignatureAlgorithm.HS512, secret).compact();
-  }
-
-  //not needed due to secret key ensuring tokens recieved are all from this
-  //need to verify that it can recieve a username from token
-  public Boolean validateToken(String token, UserDetails userDetails) {
-    JwtUserDetails user = (JwtUserDetails) userDetails;
-    final String username = getUsernameFromToken(token);
-    return (username.equals(user.getUsername()) && !isTokenExpired(token));
   }
 
   private Date calculateExpirationDate(Date createdDate) {
