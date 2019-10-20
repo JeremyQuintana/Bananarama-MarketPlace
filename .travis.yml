@@ -14,17 +14,8 @@ branches:
   only:
     - master
 
-#env:
-# Make sure gcloud command is on our PATH and the App Engine SDK is in the Python path
-#- GAE_PYTHONPATH=${HOME}/.cache/google_appengine PATH=$PATH:${HOME}/google-cloud-sdk/bin PYTHONPATH=${PYTHONPATH}:${GAE_PYTHONPATH} CLOUDSDK_CORE_DISABLE_PROMPTS=1
 before_install:
-#- sudo apt-get install expect
-# Install Google App Engine Python SDK
-#- if [ ! -d "${GAE_PYTHONPATH}" ]; then
-#    python scripts/fetch_gae_sdk.py $(dirname "${GAE_PYTHONPATH}");
-#  fi
-# [START auth]
-# Decrypt the credentials we added to the repo using the key we added with the Travis command line tool
+# Decrypt the credentials we added to the repo using the key 
 - openssl aes-256-cbc -K $encrypted_0981bbf19127_key -iv $encrypted_0981bbf19127_iv -in credentials.tar.gz.enc -out credentials.tar.gz -d
 # If the SDK is not already cached, download it and unpack it
 - if [ ! -d ${HOME}/google-cloud-sdk ]; then
@@ -32,50 +23,38 @@ before_install:
   fi
 - tar -xzf credentials.tar.gz
 - mkdir -p lib
-# Here we use the decrypted service account credentials to authenticate the command line tool
-#- gcloud components install docker-credential-gcloud
+# Authenticate use of gcloud commands using credentials
 - gcloud auth activate-service-account --key-file client-secret.json
 - bash docker_cred_fix
-#- gcloud auth configure-docker
 - docker-credential-gcr configure-docker
+
+
+
+install:
+# Set the correct project to deploy to
 - gcloud config set project sept-248413
-
-
-#- docker 
-#- ./docker_auth.sh
-#- spawn "gcloud auth configure-docker"
-#- expect "Do you want to continue (Y/n)?" { send "Y\r" }
-
-# [END auth]
-#before_install:
+# Install the dependencies
 - cd frontend/market-app
 - npm ci
 - cd ../../restful-web-services
-#- mvn compile THIS
-install:
-# Set the correct project to deploy to
-#- gcloud config set project sept-248413
-# Install the dependencies
 script:
 # Run the unit tests
 - cd ../frontend/market-app
 - npm test 
 - cd ../../restful-web-services 
-#- mvn test 
-# [START deploy]
-# Deploy the app
+
+# Package the backend via maven - this will automatically run tests
 - mvn package
-#- bash docker_login
+# Build backend and push to GCR
 - docker build -t gcr.io/sept-248413/market-app:$TRAVIS_BUILD_ID .
 - docker push gcr.io/sept-248413/market-app:$TRAVIS_BUILD_ID
+# Build frontend and push to GCR
 - cd ../frontend/market-app
 - docker build -t gcr.io/sept-248413/market-front:$TRAVIS_BUILD_ID .
 - docker push gcr.io/sept-248413/market-front:$TRAVIS_BUILD_ID
-#- gcloud -q app deploy app.yaml --promote
-# Run and end to end test
 - cd ../..
+# Update Kubernetes pods
 - bash install_kubectl
 - gcloud container clusters get-credentials bananarama-gke-1 --zone australia-southeast1-a --project sept-248413
 - kubectl set image pod/frontendpod frontendcon=gcr.io/sept-248413/market-front:$TRAVIS_BUILD_ID
 - kubectl set image pod/backendpod backendcon=gcr.io/sept-248413/market-app:$TRAVIS_BUILD_ID
-# [END deploy]
