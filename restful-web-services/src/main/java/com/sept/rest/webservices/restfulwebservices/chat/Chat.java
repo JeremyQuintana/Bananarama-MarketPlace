@@ -13,6 +13,10 @@ import com.sept.rest.webservices.restfulwebservices.post.Post;
 @Table
 public class Chat
 {
+	
+	// instead of having a double table for storing the overhead of a chat
+	// every chat has the sender and receiver
+	// simple to access
 	private String text;
 	private String sender;
 	private String receiver;
@@ -31,6 +35,15 @@ public class Chat
 		this.sender = sender;
 		this.receiver = receiver;
 	}
+	
+	// we use this for chat testing (find chats are equal by their id)
+	@JsonIgnore
+	public Chat(Long id, String text, String sender, String receiver)
+	{
+		this(text, sender, receiver);
+		this.id = id;
+	}
+	
 	
 	public String toString()
 	{
@@ -60,4 +73,7 @@ public class Chat
 	public String getSender() {return sender;}
 	public String getReceiver() {return receiver;}
 	public String getText() {return text;}
+	public Long getId() {return id;}
+	// we use this for eg: chat testing (find chats are equal by their id)
+	public void setId(Long id) {this.id = id;}
 }

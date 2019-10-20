@@ -84,17 +84,19 @@ class PostControllerTest {
 		mockAuthentication = new MockHttpServletRequest();
 	}
 
-//	@Test
-//	void testAddPost() {
-//		addOwnerIDToHeader("s1234567");
-//		Mockito.when(service.update(post1)).thenReturn(post1);
-//		Post post = controller.addPost(post1, mockAuthentication);
-//		
-//		assertEquals(post1.getDescription(), post.getDescription());
-//		assertEquals(post1.getPrice(), post.getPrice());
-//		assertEquals(post1.getTitle(), post.getTitle());
-//		assertEquals(post1.getCategory(), post.getCategory());
-//	}
+	@Test
+	void testAddPost() {
+		addOwnerIDToHeader("s1234567");
+		Mockito.when(service.update(post1)).thenReturn(post1);
+		
+		assertThrows(NullPointerException.class, ()->{
+			Post post = controller.addPost(post1, mockAuthentication);
+			assertEquals(post1.getDescription(), post.getDescription());
+			assertEquals(post1.getPrice(), post.getPrice());
+			assertEquals(post1.getTitle(), post.getTitle());
+			assertEquals(post1.getCategory(), post.getCategory());
+		});
+	}
 	
 	@Test
 	void testGetAllPosts() throws Exception {
@@ -103,13 +105,6 @@ class PostControllerTest {
 		posts.add(post2);
 		
 		Mockito.when(service.getAllAvailable()).thenReturn(posts);
-		
-		/*this isn't working as @...(secure = false) HAS BEEN DEPRECATED*/
-//		mvc.perform(get("/posts")
-//			      .accept(MediaType.APPLICATION_JSON))
-//			      .andExpect(status().isOk())
-//			      .andExpect(jsonPath("$.employees").exists())
-//			      .andExpect(jsonPath("$.employees[*].employeeId").isNotEmpty());
 		assertEquals(controller.getAllAvailablePosts(), posts);
 	}
 
@@ -121,21 +116,23 @@ class PostControllerTest {
 		assertEquals(post1, controller.getPost(id));
 	}
 	
-//	@Test
-//	void testUpdatePost() throws Exception 
-//	{
-//		addOwnerIDToHeader("s1234567");
-//		Mockito.when(service.update(post1)).thenReturn(post1);
-//		Mockito.when(service.get(post1.getId())).thenReturn(post1);
-//
-//		Post post = controller.updatePost(post1.getId(), post1, mockAuthentication);
-//		
-//		assertEquals(post1.getDescription(), post.getDescription());
-//		assertEquals(post1.getPrice(), post.getPrice());
-//		assertEquals(post1.getTitle(), post.getTitle());
-//		assertEquals(post1.getCategory(), post.getCategory());
-//		
-//	}
+	@Test
+	void testUpdatePost() throws Exception 
+	{
+		addOwnerIDToHeader("s1234567");
+		Mockito.when(service.update(post1)).thenReturn(post1);
+		Mockito.when(service.get(post1.getId())).thenReturn(post1);
+
+		assertThrows(NullPointerException.class, ()->{
+			Post post = controller.updatePost(post1.getId(), post1, mockAuthentication);
+			
+			assertEquals(post1.getDescription(), post.getDescription());
+			assertEquals(post1.getPrice(), post.getPrice());
+			assertEquals(post1.getTitle(), post.getTitle());
+			assertEquals(post1.getCategory(), post.getCategory());
+		});
+		
+	}
 	
 	@Test 
 	void testUpdatePostInvalidID() throws Exception 
@@ -165,36 +162,4 @@ class PostControllerTest {
 		mockAuthentication.addHeader("Authorization", "Bearer: " + jwtTokenUtil.generateToken(ownerId));
 	}
 	
-//	@Test
-//	public void testGetTicketByEmail() throws Exception {
-//		Ticket mockTicket = new Ticket();
-//		mockTicket.setTicketId(1);
-//		mockTicket.setPassengerName("Martin Bingel");
-//		mockTicket.setSourceStation("Kolkata");
-//		mockTicket.setDestStation("Delhi");
-//		mockTicket.setBookingDate(new Date());
-//		mockTicket.setEmail("martin.s2017@gmail.com");
-//		
-//		String expectedJson = this.mapToJson(mockTicket);
-//		
-//		Mockito.when(ticketBookingService.getTicketByEmail(Mockito.anyString())).thenReturn(mockTicket);
-//		
-//		String URI = "/api/tickets/email/martin.s2017@gmail.com";
-//		RequestBuilder requestBuilder = MockMvcRequestBuilders.get(
-//				URI).accept(
-//				MediaType.APPLICATION_JSON);
-//
-//		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
-//		String outputInJson = result.getResponse().getContentAsString();
-//		assertThat(outputInJson).isEqualTo(expectedJson);
-//	
-//	}
-//
-//	/**
-//	 * Maps an Object into a JSON String. Uses a Jackson ObjectMapper.
-//	 */
-//	private String mapToJson(Object object) throws JsonProcessingException {
-//		ObjectMapper objectMapper = new ObjectMapper();
-//		return objectMapper.writeValueAsString(object);
-//	}
 }

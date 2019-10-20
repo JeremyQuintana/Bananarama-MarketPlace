@@ -131,14 +131,11 @@ class PostItem extends Component {
   //function to handle an editing of a post
   updateExistingPost(event) {
     event.preventDefault();
-    MarketDataService.updateExistingPost(this.props.existingId, this.state.item_description, this.state.item_name, this.state.item_cost, this.state.item_catagory, this.state.item_photo, this.state.item_ownerId).then(
-      response => {
+    MarketDataService.updateExistingPost(this.props.existingId, this.state.item_description, this.state.item_name, this.state.item_cost, this.state.item_catagory, this.state.item_photo, this.state.item_ownerId)
 
-        alert("Your item has been updated");
-        this.props.history.push(`/home/${sessionStorage.getItem("authenticatedUser")}`);
-        window.location.reload();
-      }
-    );
+    alert("Your item has been updated");
+    this.props.history.push(`/home/${sessionStorage.getItem("authenticatedUser")}`);
+    window.location.reload();
   }
 
   //if editing then update the states

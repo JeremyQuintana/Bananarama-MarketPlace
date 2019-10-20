@@ -36,15 +36,15 @@ import com.sept.rest.webservices.restfulwebservices.user.UserService;
 @RestController
 public class PostController {
 
-	@Autowired
-    private JwtTokenUtil jwtTokenUtil;
-	
+	// refactor the user authentication with this class
 	@Autowired
     private UserService checker;
 
 	@Autowired
 	private PostService service;
 	
+	// cannot use the database due to space constraints, so using google bucket
+	// to store photos
 	private ImageController imageController = new ImageController();
 
 	// posts that are for sale
@@ -54,7 +54,7 @@ public class PostController {
 		return service.getAllAvailable();
 	}
 	
-	
+	// can also handle for empty input for either parameters
 	@GetMapping("/posts/searchBy/{description}/{category}/{sort}")
 	public List<Post> Sort(@PathVariable String description, @PathVariable String category, @PathVariable String sort) {
 			
@@ -75,27 +75,32 @@ public class PostController {
 		post.setPhoto(null);
 		post.setOwner(checker.getOwnerId(request));
 		post = service.update(post);
-		if (!photo.equals(""))imageController.uploadImage(photo, post.getId() + "");
+		imageController.uploadImage(photo, post.getId() + "");
 		return post;
 	}
 	
+	// security decision: users can change the id, however any bad-will changes will create a post in their name
 	@PutMapping("/posts/{id}")
 	public Post updatePost(@PathVariable Long id, @RequestBody Post edit, HttpServletRequest request)
 	{
 		String photo = edit.getPhoto();
 		edit.setPhoto(null);
 		edit.setId(id);
-		if (checker.getOwnerId(request).equals(edit.getOwnerId())) edit = service.update(edit);
-		if (!photo.equals("")) imageController.uploadImage(photo, edit.getId() + "");
+		if (checker.getOwnerId(request).equals(edit.getOwnerId())) {
+			edit = service.update(edit);
+			imageController.uploadImage(photo, edit.getId() + "");
+		} else {
+			throw new NullPointerException("Incorrect ID");
+		}
 		return edit;
 	}
 
 
-	
 	@DeleteMapping("/posts/{id}")
 	public void deletePost(@PathVariable Long id, HttpServletRequest request)
 	{	
 		Post toDelete = service.get(id);
+		// will not do anything if the owner does not match
 		if (checker.isEqual(toDelete.getOwnerId(), request)) 
 			service.delete(service.get(id));
 	}
@@ -106,6 +111,8 @@ public class PostController {
 		return service.get(id);
 	}
 	
+	
+	// a user can update their post to sold, (temp) deleted, or back to available
 	@PostMapping("/posts/{id}/{status}")
 	public Post updatePostStatus(@PathVariable Long id, @PathVariable Status status, HttpServletRequest request)
 	{	
@@ -129,8 +136,6 @@ public class PostController {
 	
 	
 	//logic for account history incase u need to sort them into groups like all marked as sold, all marked as deleted etc
-	// directly putting status, as you need to mention this in the url anyway
-	
 	@GetMapping("/{ownerId}/posts/{status}")
 	public List<Post> getCurrentPosts(@PathVariable String ownerId, @PathVariable Status status) 
 	{
