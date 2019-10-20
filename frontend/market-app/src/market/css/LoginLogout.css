@@ -1,0 +1,54 @@
+.loginComponent{
+  text-align: center;
+}
+
+.loginComponent .details .institute{
+  height: 50px;
+  display: block;
+  margin:auto;
+}
+
+.loginComponent .details h4{
+  margin:0px;
+}
+
+.loginComponent .details{
+  padding-top:10px;
+  padding-bottom:10px;
+  margin-top:50px;
+  background-color: #fff5cc;
+}
+
+.loginComponent .alert{
+  background-color: #fff5cc;
+}
+
+.loginComponent .bananaLogo{
+  margin-top: 20px;
+  margin-bottom: 20px;
+  display: block;
+}
+
+.loginComponent .bananaLogo img{
+  height: 150px;
+  display:inline-block;
+  top:0px;
+}
+
+.loginComponent .bananaLogo .title{
+  display:inline-block;
+  padding-left: 10px;
+  height:150px;
+  vertical-align: bottom;
+}
+
+.loginComponent .bananaLogo h1{
+  width: auto;
+  display:inline-block;
+  text-align: left;
+  line-height: 75px;
+  font-size: 75px;
+  padding:0px;
+  margin:0px;
+  font-weight: bold;
+}
