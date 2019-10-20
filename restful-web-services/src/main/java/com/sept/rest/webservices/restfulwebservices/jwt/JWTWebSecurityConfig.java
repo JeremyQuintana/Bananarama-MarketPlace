@@ -14,6 +14,9 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -22,6 +25,12 @@ public class JWTWebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private UserDetailsService jwtInMemoryUserDetailsService;
+    
+    @Autowired	
+    private JwtUnAuthorizedResponseAuthenticationEntryPoint jwtUnAuthorizedResponseAuthenticationEntryPoint;
+    
+    @Autowired	
+    private JwtTokenAuthorizationOncePerRequestFilter jwtAuthenticationTokenFilter;
 
     @Value("${jwt.get.token.uri}")
     private String authenticationPath;
@@ -42,6 +51,24 @@ public class JWTWebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
+    }
+    
+    @Override	
+    protected void configure(HttpSecurity httpSecurity) throws Exception {	
+        httpSecurity	
+            .csrf().disable()	
+            .exceptionHandling().authenticationEntryPoint(jwtUnAuthorizedResponseAuthenticationEntryPoint).and()	
+            .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()	
+            .authorizeRequests()	
+            .anyRequest().authenticated();	
+
+       httpSecurity	
+            .addFilterBefore(jwtAuthenticationTokenFilter, UsernamePasswordAuthenticationFilter.class);	
+
+        httpSecurity	
+            .headers()	
+            .frameOptions().sameOrigin()  //H2 Console Needs this setting	
+            .cacheControl(); //disable caching	
     }
 
     @Override

@@ -5,10 +5,8 @@ import '../css/PostComponent.css'
 import MarketDataService from "../DataServices/MarketDataService.js"
 import PostDataService from '../DataServices/PostDataService.js';
 
-
 // This class is for an individual post's page
 class PostComponent extends Component {
-
 
     constructor(props) {
         super(props);
