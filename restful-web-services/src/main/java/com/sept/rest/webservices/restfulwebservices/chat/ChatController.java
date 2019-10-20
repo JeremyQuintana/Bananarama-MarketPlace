@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.sept.rest.webservices.restfulwebservices.jwt.JwtTokenUtil;
 import com.sept.rest.webservices.restfulwebservices.post.Post;
-import com.sept.rest.webservices.restfulwebservices.post.UserService;
+import com.sept.rest.webservices.restfulwebservices.user.UserService;
 
 
 

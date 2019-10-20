@@ -23,13 +23,16 @@ public class ChatService {
 	private ChatRepository db;
 
 
-	
+	// returns all chats between the 2 users, regardless of who is user1/user2
 	public List<Chat> allChats(String user1, String user2) 
 	{
-		List<Chat> allChats = db.findall(user1, user2);
-		return allChats;
+		if (user1.equals(user2))
+			throw new IllegalArgumentException("You can't chat with yourself!");
+		return db.findall(user1, user2);
 	}
 	
+	// this is so we can call the latest chats frontend, whenever frontend makes a call
+	// while a chat is ongoing
 	public List<Chat> allChatsAfterId(Long lastID, String user1, String user2) 
 	{
 		List<Chat> chats = allChats(user1, user2);
@@ -37,6 +40,7 @@ public class ChatService {
 		return chats;
 	}
 	
+	// ONLY delete those that the sender sent.
 	public void deleteAllChats(String sender, String receiver)
 	{
 		db.deleteBySenderAndReceiver(sender, receiver);
@@ -53,6 +57,7 @@ public class ChatService {
 	}
 	
 
+	// any user the owner has had a chat with before
 	public List<String> allUsersInteractedWith(String owner)
 	{
 		Set<String> users = new HashSet<>();

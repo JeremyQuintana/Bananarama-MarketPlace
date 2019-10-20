@@ -32,6 +32,15 @@ public class Chat
 		this.receiver = receiver;
 	}
 	
+	// we use this for chat testing (find chats are equal by their id)
+	@JsonIgnore
+	public Chat(Long id, String text, String sender, String receiver)
+	{
+		this(text, sender, receiver);
+		this.id = id;
+	}
+	
+	
 	public String toString()
 	{
 		return String.format("Id: %d, Text: %s, Sender: %s, Receiver: %s", id, text, sender, receiver);
@@ -60,4 +69,7 @@ public class Chat
 	public String getSender() {return sender;}
 	public String getReceiver() {return receiver;}
 	public String getText() {return text;}
+	public Long getId() {return id;}
+	// we use this for eg: chat testing (find chats are equal by their id)
+	public void setId(Long id) {this.id = id;}
 }
