@@ -90,7 +90,6 @@ class ChatComponent extends Component {
     const newMessageToOutPut = this.state.message;
     if (newMessageToOutPut.text !== "") {
       const messages = [...this.state.messages, newMessageToOutPut];
-      console.log(newMessageToOutPut);
 
       //submits message of who sent to who towards backend
       ChatService.addChat(sessionStorage.getItem('authenticatedUser'), this.props.match.params.receiverId, newMessageToOutPut.text);
@@ -190,7 +189,6 @@ class MessageObjects extends Component {
 
   //function to get the messages in backend for the person we have selected
   fetchMessages() {
-    console.log("poll")
     ChatService.loadAllChats(sessionStorage.getItem('authenticatedUser'), this.props.match.params.receiverId).then(
       response => {
         //if the amount of messages is different from amount already held by
