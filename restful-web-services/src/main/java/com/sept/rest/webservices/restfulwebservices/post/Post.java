@@ -11,17 +11,11 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Table;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.multipart.MultipartFile;
-
-import javax.persistence.Column;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.sept.rest.webservices.restfulwebservices.jwt.JwtTokenUtil;
 
 
+// this object stores posts that users can sell at the marketplace
 @Entity
 public class Post implements Comparable<Post> {
 	
@@ -50,8 +44,7 @@ public class Post implements Comparable<Post> {
 	// annoyingly jpa 2.0 needs this
 	public Post(){}
 	
-// cannot create multiple constructors
-	
+	// cannot create multiple constructors
 	@JsonIgnore
 	public Post(Long id, String owner, String title, String description, String price, Date date, String category)
 	{
@@ -178,6 +171,7 @@ public class Post implements Comparable<Post> {
 		return id + " " + ownerId + " " + title + " " + description + " " + price + " " + status + " " + datePosted + " " + category;
 	}
 	
+	// a basic compareto as an alternative to repository method using jquery
 	@Override
 	public int compareTo(Post o) 
 	{
@@ -193,6 +187,7 @@ public class Post implements Comparable<Post> {
 		return 31 + ((id == null) ? 0 : id.hashCode());
 	}
 
+	// simply check if id equals
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) 					return true;
